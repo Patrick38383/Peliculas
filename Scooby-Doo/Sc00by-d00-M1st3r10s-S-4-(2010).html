@@ -1,0 +1,2287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Series</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	
+	<style type="text/css">
+	  
+	  @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: #090909;
+	font-family: 'Open Sans', sans-serif;
+}
+
+a {
+	text-decoration: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.contenedor {
+	width: 90%;
+	max-width: 1000px;
+	margin: auto;
+	padding: 10px 0;
+}
+
+.selectbox {
+	width: 50%;
+	margin: auto;
+	position: relative;
+}
+
+.select {
+	background: #222;
+	width: 100%;
+	border-radius: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 5px;
+	padding: 10px 0 10px 10px;
+	position: relative;
+}
+
+.select i {
+	font-size: 23px;
+	margin-right: 13px;
+	color: #ddd;
+}
+
+.titulo {
+	margin-bottom: 10px;
+	color: #ddd;
+	font-weight: 600;
+	font-size: 16px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.descripcion {
+	font-size: 14px;
+	color: #ddd;
+}
+
+.opciones {
+	background: #191919;
+	border-radius: 10px;
+	max-height: 400px;
+	overflow: auto;
+	width: 100%;
+	display: none;
+}
+
+.opciones.active {
+	display: block;
+	animation: fadeIn .3s forwards;
+}
+
+@keyframes fadeIn {
+	from {
+		transform: translateY(-100px) scale(.5);
+	}
+	to {
+		transform: translateY(0) scale(1);
+	}
+}
+
+.textos {
+  width: 100%;
+}
+
+.contenido-opcion {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	transition: .2s ease all;
+}
+
+.opciones .contenido-opcion {
+	padding: 9px;
+}
+
+.opciones .contenido-opcion:hover {
+  background: #101010;
+}
+
+.sinopsis {
+  padding: 0 15px;
+  color: #eee;
+  font-size: 13px;
+  text-align: justify;
+  margin-bottom: 10px;
+}
+
+/*Chapters*/
+
+.episodes {
+	overflow: auto;
+	z-index: 100;
+	width: 100%;
+	display: block;
+}
+
+.episodes .contenido-opcion {
+	background: #090909;
+	padding: 0 10px 14px 10px;
+}
+
+.episodes .contenido-opcion:hover {
+  background: #000;
+}
+
+.contenido-opcion img {
+	width: auto;
+	height: 50px;
+	margin-right: 20px;
+	border-radius: 2px;
+}
+
+/*Responsive*/
+
+@media screen and (max-width: 800px){
+	.selectbox {
+		width: 100%;
+	}
+}
+
+
+
+
+
+
+/*Cards*/
+.card {
+	width: 100%;
+	height: 100vh;
+	max-width: 1100px;
+	position: fixed;
+  font-family: 'Montserrat', sans-serif;
+  top: 50%;
+  transform: translateY(-50%);
+	background: rgba(2, 2, 2, .7);
+	display: none;
+}
+
+.contenedor-card {
+  width: 95%;
+  position: fixed;
+  background: #111;
+  border-radius: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+
+.card .contenido-card h4 {
+  text-align: center;
+	margin-bottom: 10px;
+	color: #ddd;
+}
+
+.card .contenido-card p {
+  padding: 0 10px 10px ;
+	line-height: 1.5;
+	color: #ddd;
+	font-size: 14px;
+	margin-bottom: 5px;
+	text-align: justify;
+}
+
+iframe {
+  border-radius: 7px 7px 0 0;
+}
+
+.close {
+  font-size: 50px;
+  color: #fff;
+  position: absolute;
+  display: flex;
+  top: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.season2 {
+  display: none;
+}
+	  
+	</style>
+</head>
+<body id="body">
+	
+	<div class="contenedor">
+		<form action="">
+			<div class="selectbox">
+				<div class="select" id="select">
+					<div class="contenido-select">
+						<h1 class="titulo">Temporada 1</h1>
+					</div>
+					<i class="bi bi-chevron-down"></i>
+				</div>
+
+				<div class="opciones" id="opciones">
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season1">Temporada 1</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season2">Temporada 2</h1>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<input type="hidden" id="inputSelect" value="">
+		</form>
+
+	</div>
+	
+	<!--Sinopsis-->
+	
+	<div class="sinopsis">
+	  <p>Un pueblo pequeño y tranquilo cuenta con una larga historia de avistamientos de fantasmas, duendes, posesión de demonios y otros sucesos paranormales. Este pueblo es el hogar del famoso grupo conocido como "Misterio a la Orden", compuesto por los adolescentes Fred Jones, Daphne Blake, Vilma Dinkley, Shaggy Rogers y por supuesto, el gran danés Scooby-Doo, donde ellos viven junto a sus familias.</p>
+	</div>
+	
+	
+<!--Season1-->
+	
+	<div class="episodes" id="season1">
+					<a class="opcion" id="btn-t1e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/rKz3pHWucvxPi2eWn4eB07eGJLa.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Cuidado con la Bestia de las Alcantarillas</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/3kvZXfMpqJSXESbLmiUht8qmWSA.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Los Cocodrilos</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/aK3KxfNNoc43pyh4OjCBTqxKPP9.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. El Fantasma de la Carretera</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/vprx4TSNGT4Xm3CAbU3zPKC5lVX.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. La Venganza del Hombre Cangrejo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/nnqfBCX2g9Frkx43Rl6hpUSFH9M.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. La Canción Misteriosa</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/4Hon7VSM8Y1DC0CyFhxII4EWtDU.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. La leyenda de Alice May</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/gEy1ZLXglOUZFQVOzCXSgrxyOsA.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. El Fantasma Aterrorizante</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/8uymmWz2s8y5KuyLOv5YkDHrVLc.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. El Ataque del Gnomo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/32ZHdJcW9fsaCRwoNSxo4rR3zEu.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. La batalla de los Humungonautas</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/3EZQ0D0S8BCkEYJRUQfAANeVFoz.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. El Sabueso Endemoniado</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/noig7eRTfUSsgkvmNBaF1YCXhmR.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. La Poción de la Juventud</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/hRBzHj9Teo5vVgbvMtfKqzGRSbW.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Una bestia de otra Dimensión</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/LAytlNIBcR7dzK6XbjudVk21tp.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Cuando la Cigarra Llama</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e14">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/gT72cJFflRKaUg7PRDJTML8LWdF.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. Finales del Club de Misterios por Resolver</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e15">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/hTzsTlaWVI37zKB7fcjeYDJLjBQ.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. La Pandilla Salvaje</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e16">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/cHW0X0IJ6JCIgKt4Ahf0JqJPKL1.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. La Venganza de Afrodita</h1>
+								<p class="descripcion">20min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e17">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/6FmTAqihEOS8lBt3F2nTPpcS4Jr.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. Escape de la Mansión</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e18">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/xsy4Q3q6QvdqLnfT51tHCeKpDHk.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. El Secreto del Dragón</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e19">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/aRBrCb5QXIcZZ0bG58lgSeOFvDh.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">19. Noche de Miedo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e20">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/buksTJtjxDqeqVIIz5lLd6L0Ye5.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">20. El Canto de la Sirena</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e21">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/A3h8UugR24wolNgh38R55EzRbzg.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">21. La Amenaza del Manticora</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e22">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/taEQfCtWrawtMVU9xX6tOEw4Q0g.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">22. El Ataque del Monstruo Sin Cabeza</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e23">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/vKSIiD52Ocrr3xG4SeGaWPW2tDj.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">23. Una Aparición en Crystal Cove</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e24">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/aAPzdmgbf7arfWvEU6HNBoWi0dh.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">24. La Justicia Muerta</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e25">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/acrqciz6nrVZJ8db8cFYDtEYmoR.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">25. La Verdadera Identidad</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e26">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/ewcNZjJe7nh1QA2IjJVxeeZQgpV.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">26. El Fenómeno de Cueva Cristal</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season2-->
+			
+	<div class="episodes season2" id="season2">
+					<a class="opcion" id="btn-t2e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/okGIlc2jUYkFmn0THR47dZBnea.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. La Noche en que el Payaso Lloró</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/6S5Ni5PFTUI0Cnw7pZMpkS4ZGlm.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. La Casa de la Bruja Pesadilla</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/lQhOd5g9UlO9b7flCVmGr1hsWsh.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. La Noche en que el Payaso Lloró: Segunda parte</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/9NCD9A3SW1LduToUSv86f4DHZlr.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. La Telaraña del Tejedor de Sueños</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/jMPwl4o4jdU7JBjRFnRwgjgE9zi.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. El Hodag de Terror</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/a6X5hCqAoFIiAmM4UXSPt2scn7n.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Arte Oscuro</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/ymwufvZkMroEhJ3Ab66alae7MlO.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. El Fenómeno de la Gruta de Cristal</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/etUztJ4U9C92KaVqQXp0NZuepZ5.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. La Noche en la Montaña Embrujada</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/qmxyPkwU1o5jmPVfEiuOnoQjRK6.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. El Juicio de Grim</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/r4KwECMjl0abCq6FMba83vg3MWj.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Terrores Nocturnos</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/2Jf13G7GMjlXAObjg3k0UmEwFUf.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Dimensión Desconocida</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/lHzeFO927s63nccgaqf4quBzEsa.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. El Oso Monstruoso</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/6P0IFIxUyLpH5d9SocrUGykTAIG.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. La Ira de Krampus</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e14">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/yxHCWawO2mokM9P69MJgL1pHzDw.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. Corazón de Maldad</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e15">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/3SjnbbcdqOCWcoLJAyMVWTcQyLU.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. El Teatro de la Perdición</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e16">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/3H8v0QaTINppMxcSu65IYBwHDCg.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. Alienígenas entre Nosotros</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e17">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/tSUCRq2QUUv7U0hD7UuYjwgdtJx.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. La Manada del Horror</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e18">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/66hgOBckW4w44OxxyS7tOPzKLnl.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. Danza de los No Muertos</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e19">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/uS9WzUAirOiJvpxnhUhxQ3ajTJV.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">19. El Devorador</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e20">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/s7KI5xkEikAFI43l092rLdcZ4uP.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">20. El Dinero o la Vida</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e21">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/kDgpX2o7UrCZKLXHL9993F3E2Xa.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">21. El Hombre del Espejo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e22">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/ufpcrNAldCxtDzjZr8cuntxzsOM.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">22. Pesadilla en Rojo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e23">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/p1f4lj72V1pVUsZN1GSNRBZXpFK.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">23. Noche Oscura de los Cazadores</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e24">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/nm4kuRKV62F60OavMxnZbY0403v.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">24. Puertas de la Oscuridad</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e25">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/8enRwi1JC3Am2ndvrEoKMim8PEO.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">25. A Través de la Cortina</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e26">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/bUEONQMdknVpzRH9gZHYqB31olW.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">26. Liberados</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div> 
+	
+
+
+
+
+
+
+	<!--Season1-->
+<div class="card" id="modal_t1e1">
+  
+<div class="close" id="close-t1e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Cuidado con la Bestia de las Alcantarillas</h4>
+		<p>Después de ser encarcelados por resolver otro misterio, la pandilla de Mystery Inc. tropieza con otro misterio: un monstruo espantoso que acecha debajo de la ciudad y envuelve a todos los que se acercan en goop verde.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e2">
+  
+<div class="close" id="close-t1e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Los Cocodrilos</h4>
+		<p>La banda decide iniciar una investigación sobre la existencia de un mítico pueblo fantasma que se cree que ha sido poblado por caimanes.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e3">
+  
+<div class="close" id="close-t1e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. El Fantasma de la Carretera</h4>
+		<p>Cosas extrañas continúan sucediendo en Crystal Cove, cuando los pomos de las puertas desaparecen repentinamente y un diamante de valor inesciable se esconde en algún lugar. Para colmo, un misterioso camionero fantasma también está asustando a la ciudad.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e4">
+  
+<div class="close" id="close-t1e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. La Venganza del Hombre Cangrejo</h4>
+		<p>Un hombre cangrejo ataca la playa de Crystal Cove durante un torneo de voleibol para la mezcla de dieta Triquid de Trickell. La pandilla debe detenerlo y resolver este misterio antes de que las jugadoras del torneo, a quienes el Cangrejo Hombre le ha tomado cariño, se pongan en peligro. Mientras tanto, Velma recibe algunos consejos de relación de Daphne.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e5">
+  
+<div class="close" id="close-t1e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. La Canción Misteriosa</h4>
+		<p>Los niños de Crystal Cove están siendo convertidos en monstruos por una criatura llamada Que Horrifico, asustando a todos los adultos de la ciudad. Como resultado, abandonan a sus hijos y corren por sus vidas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e6">
+  
+<div class="close" id="close-t1e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. La leyenda de Alice May</h4>
+		<p>Fred se convierte en el objetivo de un flechazo de la escuela secundaria cuando la nueva chica Alice May se enamora de él. Sin embargo, Alice May es en realidad un fantasma con una reputación de llevar a los chicos con ella y hacerlos desaparecer para siempre.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e7">
+  
+<div class="close" id="close-t1e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. El Fantasma Aterrorizante</h4>
+		<p>Las Hex Girls (formadas por Thorne, Dusk y Luna), la banda favorita de Velma, llegan a Crystal Cove y planean dar un concierto a la pandilla. Pero las cosas se tuercen cuando The Phantom, un espectro malvado, aparece de repente con la intención de sacar permanentemente a The Hex Girls del negocio de la música.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e8">
+  
+<div class="close" id="close-t1e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. El Ataque del Gnomo</h4>
+		<p>La pandilla asiste a la Royal Knights Faire en Crystal Cove, pero también lo hace un invitado inesperado. Un gnomo de aspecto aterrador está paralizando a todos los que usan trajes de pirata en la feria.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e9">
+  
+<div class="close" id="close-t1e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. La batalla de los Humungonautas</h4>
+		<p>Cuando dos monstruos gigantes comienzan a atacar Crystal Cove, el alcalde Jones le pide a Fred y a la pandilla que lo ayuden a él y al sheriff a capturarlos. Mientras tanto, Shaggy tiene que elegir entre su relación con Velma y su amistad con Scooby.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e10">
+  
+<div class="close" id="close-t1e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. El Sabueso Endemoniado</h4>
+		<p>Un monstruo llamado Fright Hound comienza a atacar Crystal Cove y la gente cree que Scooby-Doo está detrás de él. ¿Podría Scooby ser el que ataca la ciudad o alguien lo está preparando?</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e11">
+  
+<div class="close" id="close-t1e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. La Poción de la Juventud</h4>
+		<p>Hay un vampiro suelto en Crystal Cove, aterrorizando a los residentes y robando una extraña variedad de botín. Cuando la pandilla olfatea un poco, descubren a un sospechoso poco probable ... La MADRE de Daphne. Las cosas ya están tensas dentro de Mystery Inc., y con este último golpe, la pandilla está realmente dividida por la mitad. Chicas por un lado, chicos por el otro.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e12">
+  
+<div class="close" id="close-t1e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Una bestia de otra Dimensión</h4>
+		<p>Con Mystery Inc. desconsuelta, la pandilla decide revisar la vida después de la escuela secundaria y pasar un fin de semana en DARROW COLLEGE. Pero las cosas no salen según lo planeado cuando una criatura llamada CHAR GAR GOTHAKON comienza a aterrorizar el campus. Resulta que esta bestia es un personaje ficticio que cobra vida. Una creación del autor H.P. HATECRAFT que es profesor en la escuela.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e13">
+  
+<div class="close" id="close-t1e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Cuando la Cigarra Llama</h4>
+		<p>La pandilla investiga después de que Crystal Cove comienza a sufrir una infestación de insectos mortales que apunta a los trabajadores de la compañía Destroido, la compañía que fabrica los bocadillos favoritos de Shaggy y Scooby.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e14">
+  
+<div class="close" id="close-t1e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. Finales del Club de Misterios por Resolver</h4>
+		<p>Enfermo en la cama justo antes de las grandes finales estatales del Mystery Solvers Club, Scooby sueña con ir a la competencia y asociarse con sus compañeros solucionadores de misterios Speed Buggy, Jabberjaw, Captain Caveman y The Funky Phantom para rescatar a sus amigos de las garras del demoníaco Lord Infernicus.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e15">
+  
+<div class="close" id="close-t1e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. La Pandilla Salvaje</h4>
+		<p>Cuando Fred invita a la pandilla en su segunda cita y la de Daphne, empuja a Daphne a los brazos de Obnarb, el líder de un grupo de orcos moteros llamado Wild Brood que han llegado a la ciudad. Cuando ocurre un robo en la armería y se roba un arma peligrosa, los Wild Brood son los principales sospechosos. Depende de la pandilla resolver este misterio, salvar a la Cría Salvaje y encontrar al impostor Orc Biker.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e16">
+  
+<div class="close" id="close-t1e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. La Venganza de Afrodita</h4>
+		<p>Cuando toda la ciudad de Crystal Cove es tomada por el hechizo de amor de Afrodita, solo Scooby-Doo y el profesor Pericles recientemente escapado pueden salvar a la pandilla del hechizo y resolver el misterio. Pero, ¿tiene el profesor Pericles motivos ocultos?</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e17">
+  
+<div class="close" id="close-t1e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. Escape de la Mansión</h4>
+		<p>Cuando la pandilla va en una búsqueda para averiguar qué le sucedió al grupo original de Mystery Incorporated en su último caso de la desaparición de la familia Darrow y su mansión, de 75 años, se encuentran atrapados en la mansión subterránea de Darrow, que ha sido atrapada explosivamente. ¿Resolverá la pandilla el misterio y escapará con sus vidas?</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e18">
+  
+<div class="close" id="close-t1e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. El Secreto del Dragón</h4>
+		<p>En el China Town de Crystal Cove, una joven anda buscando un misterioso anillo. Al parecer alguien más está interesado en el.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e19">
+  
+<div class="close" id="close-t1e19"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e19" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>19. Noche de Miedo</h4>
+		<p>Un conocido actor de películas de terror es amenazado en su propia casa por un extraño ser que se hace llamar Nightfright. Nuestros amigos podrán fin a tan extraño suceso.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e20">
+  
+<div class="close" id="close-t1e20"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e20" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>20. El Canto de la Sirena</h4>
+		<p>Sintiéndose fuera del grupo, Velma va en solitario a investigar los ataques de los anfibios "Fish Freaks" en el área alrededor de una plataforma petrolera abandonada, solo para encontrar a un amigo propio ... en forma de sirena!</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e21">
+  
+<div class="close" id="close-t1e21"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e21" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>21. La Amenaza del Manticora</h4>
+		<p>Un ser alado hace su presencia en el parque de atracciones de Crystal Cove. Un nuevo misterio que el equipo deberá resolver.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e22">
+  
+<div class="close" id="close-t1e22"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e22" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>22. El Ataque del Monstruo Sin Cabeza</h4>
+		<p>El explorador favorito de Fred, Rick Spartan, ha llegado a la ciudad para hacerse cargo de la clase de biología de la escuela, pero Rick no está solo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e23">
+  
+<div class="close" id="close-t1e23"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e23" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>23. Una Aparición en Crystal Cove</h4>
+		<p>Cuando el padre de Fred está siendo atacado por una figura sombría desconocida, depende de Scooby y la pandilla llegar al fondo del misterio. ¿Podrán hacerlo, o Fred tendrá que renunciar a la resolución de misterios para siempre? ¿Y qué tiene que ver la pieza del rompecabezas que posee el padre de Fred con todo esto?</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e24">
+  
+<div class="close" id="close-t1e24"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e24" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>24. La Justicia Muerta</h4>
+		<p>El fantasma del sheriff más famoso de Crystal Cove, Death Justice, ha regresado de su tumba para hacer que el sheriff Stone renuncie a su trabajo atrapando a los principales criminales de Crystal Cove. ¿Pueden Scooby y la pandilla detener a Death Justice antes de que sea demasiado tarde?</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e25">
+  
+<div class="close" id="close-t1e25"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e25" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>25. La Verdadera Identidad</h4>
+		<p>Una criatura de alta tecnología llamada Obliteratrix ataca a la pandilla y los obliga a investigar el caso del tesoro embrujado con la ayuda de H.P. Hatecraft.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e26">
+  
+<div class="close" id="close-t1e26"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e26" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>26. El Fenómeno de Cueva Cristal</h4>
+		<p>El Freak vuelve a la ciudad, su maldición sigue viva y no parará hasta encontrar las piezas del tesoro. Nuestros amigos se enfrentan a un gran reto.</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season2-->
+<div class="card" id="modal_t2e1">
+  
+<div class="close" id="close-t2e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. La Noche en que el Payaso Lloró</h4>
+		<p>Mystery Inc. se ha disuelto. Crystal Cove es atacada por un Hombre-Bebé llamado Crybaby Clown. La alcaldesa Nettles es abordada por una misteriosa figura que le da los archivos de Mystery Inc. mientras afirma que tiene que volver a reunir a Mystery Inc.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e2">
+  
+<div class="close" id="close-t2e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. La Casa de la Bruja Pesadilla</h4>
+		<p>Tras el reencuentro, el equipo de Misterios S.A tiene un nuevo caso para resolver: una extraña casa habitada por una malvada bruja desembarca en el puerto de Crystal Cove.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e3">
+  
+<div class="close" id="close-t2e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. La Noche en que el Payaso Lloró: Segunda parte</h4>
+		<p>Fred intenta recuperar a Daphne. Crybaby Clown regresa para robar Crystal Cove y también secuestra a Daphne. Daphne es rescatada y acepta regresar con la pandilla. El Sr. E intenta volver a reclutar a Angel Dynamite.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e4">
+  
+<div class="close" id="close-t2e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. La Telaraña del Tejedor de Sueños</h4>
+		<p>El equipo se dispone a resolver el misterio del 'Tejedor de Sueños', que está causando estragos entre los ciudadanos de Crytal Cove. Fred recibirá una especial visita: sus verdaderos padres.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e5">
+  
+<div class="close" id="close-t2e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. El Hodag de Terror</h4>
+		<p>Una criatura llamada The Hodag of Horror ataca Crystal Cove; mientras tanto, Brad Chiles y Judy Reeves (los verdaderos padres de Fred) han aparecido repentinamente junto con un perro al que Scooby le ha gustado.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e6">
+  
+<div class="close" id="close-t2e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Arte Oscuro</h4>
+		<p>El mundo del arte llega a Crystal Cove. El misterio está servido cuando una de las obras de arte trata de destruir a su creador. Mientras tanto, se descubrirá la verdadera razón de la aparición de los padres de Fred.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e7">
+  
+<div class="close" id="close-t2e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. El Fenómeno de la Gruta de Cristal</h4>
+		<p>Después de que el equipo es atacado por el Cementerio Ghoul, los chicos prefieren ser precavidos para no cometer un error, aun teniendo delante de sus ojos al perfecto sospechoso.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e8">
+  
+<div class="close" id="close-t2e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. La Noche en la Montaña Embrujada</h4>
+		<p>Unos amigos de Fred han sido atacados por un monstruo en la Montaña Diabla y el equipo de Misterios S.A. va a investigar lo ocurrido.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e9">
+  
+<div class="close" id="close-t2e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. El Juicio de Grim</h4>
+		<p>Hebediah Grim, un monstruo peregrino está apuntando, atacando y juzgando a ciertas mujeres de Crystal Cove en el punto caliente del amante, Lover's Lane.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e10">
+  
+<div class="close" id="close-t2e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Terrores Nocturnos</h4>
+		<p>La antigua biblioteca de Crystal Cove es un espeluznante castillo lleno de fantasmas que aterrorizan a todo aquel que se atreve a pasar por allí. El equipo de Misterios S.A. intenta descubrir la verdad de lo que ocurre en el lugar.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e11">
+  
+<div class="close" id="close-t2e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Dimensión Desconocida</h4>
+		<p>Cassidy es quien más sabe sobre los misterios de Crystal Cove y está dispuesta a contar al equipo de Misterios S.A. todo lo que sabe, pero sus jefes no dejarán que lo haga tan fácilmente.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e12">
+  
+<div class="close" id="close-t2e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. El Oso Monstruoso</h4>
+		<p>El alcalde de Crystal Cove tiene su viaje de campamento por lo que el grupo es llamado para investigar qué hay de cierto sobre los testimonios que dicen que un oso aterroriza el lugar.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e13">
+  
+<div class="close" id="close-t2e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. La Ira de Krampus</h4>
+		<p>Mientras resuelven el misterio del monstruo que amenaza a los niños de Crystal Cove, los chicos de Misterios S.A. consiguen reunir todos los trozos del disco planisférico. Sin embargo, ahora no saben qué hacer con él y desconocen las consecuencias.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e14">
+  
+<div class="close" id="close-t2e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. Corazón de Maldad</h4>
+		<p>El equipo de Misterios S.A. sigue buscando los trozos del disco planisférico para poder localizar el tesoro maldito. Encontrarlos es muy difícil y, para llegar a ellos, tienen que ir resolviendo continuos y terroríficos misterios, como este.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e15">
+  
+<div class="close" id="close-t2e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. El Teatro de la Perdición</h4>
+		<p>El grupo de teatro de Crystal Cove representa anualmente un acontecimiento terrorífico de la historia de su ciudad. Este año, la momia de un fraile condenará a cualquiera que se atreva a contar la historia del terremoto de Crystal Cove.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e16">
+  
+<div class="close" id="close-t2e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. Alienígenas entre Nosotros</h4>
+		<p>La pandilla investiga las afirmaciones de abducción alienígena del sheriff Stone, mientras que los alienígenas reales están robando objetos de valor de Crystal Cove.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e17">
+  
+<div class="close" id="close-t2e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. La Manada del Horror</h4>
+		<p>El profesor Pericles crea una manada de ganado mutante para destruir Crystal Cove en un intento de localizar el Disco Planisférico.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e18">
+  
+<div class="close" id="close-t2e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. Danza de los No Muertos</h4>
+		<p>Una banda de ska fallecida regresa de la tumba e hipnotiza a los asistentes a la fiesta en el club nocturno local para bailar con su música. La pandilla es llamada a resolver el misterio antes de que bailen hasta la muerte.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e19">
+  
+<div class="close" id="close-t2e19"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e19" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>19. El Devorador</h4>
+		<p>Un monstruo aparece en medio del programa de cocina de Francilee Jackson; Dr Rick Spartan ayuda al grupo a descubrir qué está sucediendo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e20">
+  
+<div class="close" id="close-t2e20"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e20" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>20. El Dinero o la Vida</h4>
+		<p>Un educado inglés con una máscara que se hace llamar Dandy Highwayman secuestra a varias mujeres de los alrededores de Crystal Cove, incluidas la alcaldesa Nettles, Daphne y la sra. Blake.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e21">
+  
+<div class="close" id="close-t2e21"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e21" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>21. El Hombre del Espejo</h4>
+		<p>Desgarradores e inhumanos alaridos se escuchan en un casa abandonada de Crystal Cove. Misterios S.A. acude a investigar y Fred es atrapado por un espejo que lo lleva a otra dimensión.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e22">
+  
+<div class="close" id="close-t2e22"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e22" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>22. Pesadilla en Rojo</h4>
+		<p>En las pesadillas de Scooby aparece un señor muy pequeñito bailando en una sala de cortinas rojas. Ese hombrecillo existe y Misterios S.A. va en su busca.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e23">
+  
+<div class="close" id="close-t2e23"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e23" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>23. Noche Oscura de los Cazadores</h4>
+		<p>Los chicos de Misterios S.A. viajan hasta Yucatán. Allí, en el templo del Altar Oscuro puede que se esconda el Corazón del Jaguar, la lanza con la que pueden destruir al terrible demonio que se encuentra enterrado bajo Crystal Cove.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e24">
+  
+<div class="close" id="close-t2e24"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e24" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>24. Puertas de la Oscuridad</h4>
+		<p>El profesor Pericles y lo que queda de la pandilla de Misterios S.A. buscan la entrada a las cavernas donde están enterrados el tesoro maldito y la Entidad del Mal.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e25">
+  
+<div class="close" id="close-t2e25"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e25" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>25. A Través de la Cortina</h4>
+		<p>Seguidos de cerca por Pericles y sus secuaces, los chicos de Misterios S.A. llegan hasta el gran demonio escondido bajo Crystal Cove. El demonio intenta convencerlos de que tienen que liberarlo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e26">
+  
+<div class="close" id="close-t2e26"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e26" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>26. Liberados</h4>
+		<p>Pericles ha liberado al gran demonio devorador de mundos y tan solo un ser muy especial podrá impedir que el demonio acabe con toda la galaxia. Ese ser excepcional es el valiente Scooby Doo que, llegado el momento, sabrá exactamente qué hacer.</p>
+	</div>
+	</div>
+</div>
+
+
+	<script>
+	  
+//select
+const select = document.querySelector('#select');
+const opciones = document.querySelector('#opciones');
+const contenidoSelect = document.querySelector('#select .contenido-select');
+const hiddenInput = document.querySelector('#inputSelect');
+
+document.querySelectorAll('#opciones > .opcion').forEach((opcion) => {
+	opcion.addEventListener('click', (e) => {
+		e.preventDefault();
+		contenidoSelect.innerHTML = e.currentTarget.innerHTML;
+		select.classList.toggle('active');
+		opciones.classList.toggle('active');
+		hiddenInput.value = e.currentTarget.querySelector('.titulo').innerText;
+	});
+});
+
+select.addEventListener('click', () => {
+	select.classList.toggle('active');
+	opciones.classList.toggle('active');
+});
+
+
+
+
+
+
+/*open modal*/
+/*Season1*/
+function mostrar_modal_t1e1() {
+  modal_t1e1.style.display = "flex";
+  iframe_t1e1.src = "https://uqload.com/embed-b1uqrkf6y2tg.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e2() {
+  modal_t1e2.style.display = "flex";
+  iframe_t1e2.src = "https://uqload.com/embed-va6tw41ykvzl.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e3() {
+  modal_t1e3.style.display = "flex";
+  iframe_t1e3.src = "https://uqload.com/embed-m8adg6jzjwaw.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e4() {
+  modal_t1e4.style.display = "flex";
+  iframe_t1e4.src = "https://uqload.com/embed-h58ko2tg5b0s.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e5() {
+  modal_t1e5.style.display = "flex";
+  iframe_t1e5.src = "https://uqload.com/embed-9l34c1paksv2.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e6() {
+  modal_t1e6.style.display = "flex";
+  iframe_t1e6.src = "https://uqload.com/embed-k5n33cau9ya5.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e7() {
+  modal_t1e7.style.display = "flex";
+  iframe_t1e7.src = "https://uqload.com/embed-a25f9itzrzr3.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e8() {
+  modal_t1e8.style.display = "flex";
+  iframe_t1e8.src = "https://uqload.com/embed-8x1l6qqq13rm.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e9() {
+  modal_t1e9.style.display = "flex";
+  iframe_t1e9.src = "https://uqload.com/embed-vdhbuotcp4au.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e10() {
+  modal_t1e10.style.display = "flex";
+  iframe_t1e10.src = "https://uqload.com/embed-tyjo11jvoyjf.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e11() {
+  modal_t1e11.style.display = "flex";
+  iframe_t1e11.src = "https://uqload.com/embed-702fww4rumzz.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e12() {
+  modal_t1e12.style.display = "flex";
+  iframe_t1e12.src = "https://uqload.com/embed-drld1x3imu55.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e13() {
+  modal_t1e13.style.display = "flex";
+  iframe_t1e13.src = "https://uqload.com/embed-qfk47mo29m5s.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e14() {
+  modal_t1e14.style.display = "flex";
+  iframe_t1e14.src = "https://uqload.com/embed-gqd3x26oxnu5.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e15() {
+  modal_t1e15.style.display = "flex";
+  iframe_t1e15.src = "https://uqload.com/embed-hum7jphgp2il.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e16() {
+  modal_t1e16.style.display = "flex";
+  iframe_t1e16.src = "https://uqload.com/embed-l358xfs7er71.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e17() {
+  modal_t1e17.style.display = "flex";
+  iframe_t1e17.src = "https://uqload.com/embed-7or2kj6v9166.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e18() {
+  modal_t1e18.style.display = "flex";
+  iframe_t1e18.src = "https://uqload.com/embed-dvhmv1o7eklr.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e19() {
+  modal_t1e19.style.display = "flex";
+  iframe_t1e19.src = "https://uqload.com/embed-tfm1n6dlglv6.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e20() {
+  modal_t1e20.style.display = "flex";
+  iframe_t1e20.src = "https://uqload.com/embed-8vkbhi9b6l4p.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e21() {
+  modal_t1e21.style.display = "flex";
+  iframe_t1e21.src = "https://uqload.com/embed-s3kxhwmmkgn6.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e22() {
+  modal_t1e22.style.display = "flex";
+  iframe_t1e22.src = "https://uqload.com/embed-hypl9yyeri8z.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e23() {
+  modal_t1e23.style.display = "flex";
+  iframe_t1e23.src = "https://uqload.com/embed-iequ179ddj3k.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e24() {
+  modal_t1e24.style.display = "flex";
+  iframe_t1e24.src = "https://uqload.com/embed-fffbi4unfez5.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e25() {
+  modal_t1e25.style.display = "flex";
+  iframe_t1e25.src = "https://uqload.com/embed-mugvyst9lki9.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e26() {
+  modal_t1e26.style.display = "flex";
+  iframe_t1e26.src = "https://uqload.com/embed-q2rfzsiz9erp.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season2*/
+function mostrar_modal_t2e1() {
+  modal_t2e1.style.display = "flex";
+  iframe_t2e1.src = "https://uqload.com/embed-3vd0aty0dht8.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e2() {
+  modal_t2e2.style.display = "flex";
+  iframe_t2e2.src = "https://uqload.com/embed-ponandxgvbyv.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e3() {
+  modal_t2e3.style.display = "flex";
+  iframe_t2e3.src = "https://uqload.com/embed-oamzr4if5nd9.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e4() {
+  modal_t2e4.style.display = "flex";
+  iframe_t2e4.src = "https://uqload.com/embed-c42swemc244o.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e5() {
+  modal_t2e5.style.display = "flex";
+  iframe_t2e5.src = "https://uqload.com/embed-z6njf1lj4zcs.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e6() {
+  modal_t2e6.style.display = "flex";
+  iframe_t2e6.src = "https://uqload.com/embed-clpwgvx4qixc.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e7() {
+  modal_t2e7.style.display = "flex";
+  iframe_t2e7.src = "https://uqload.com/embed-g87e1lp3sytj.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e8() {
+  modal_t2e8.style.display = "flex";
+  iframe_t2e8.src = "https://uqload.com/embed-a55rvpg5soby.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e9() {
+  modal_t2e9.style.display = "flex";
+  iframe_t2e9.src = "https://uqload.com/embed-kla0zklviaq6.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e10() {
+  modal_t2e10.style.display = "flex";
+  iframe_t2e10.src = "https://uqload.com/embed-twy80e5lhe7k.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e11() {
+  modal_t2e11.style.display = "flex";
+  iframe_t2e11.src = "https://uqload.com/embed-x5t8w25gndaw.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e12() {
+  modal_t2e12.style.display = "flex";
+  iframe_t2e12.src = "https://uqload.com/embed-rmznmygqvj32.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e13() {
+  modal_t2e13.style.display = "flex";
+  iframe_t2e13.src = "https://uqload.com/embed-6ecv4iblri1q.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e14() {
+  modal_t2e14.style.display = "flex";
+  iframe_t2e14.src = "https://uqload.com/embed-6gyk1zy2ryks.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e15() {
+  modal_t2e15.style.display = "flex";
+  iframe_t2e15.src = "https://uqload.com/embed-kwucncgspzrc.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e16() {
+  modal_t2e16.style.display = "flex";
+  iframe_t2e16.src = "https://uqload.com/embed-9t6qwi402bup.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e17() {
+  modal_t2e17.style.display = "flex";
+  iframe_t2e17.src = "https://uqload.com/embed-aiox6rmtqqi9.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e18() {
+  modal_t2e18.style.display = "flex";
+  iframe_t2e18.src = "https://uqload.com/embed-4wo4l768gu34.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e19() {
+  modal_t2e19.style.display = "flex";
+  iframe_t2e19.src = "https://uqload.com/embed-ngcd696cshlk.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e20() {
+  modal_t2e20.style.display = "flex";
+  iframe_t2e20.src = "https://uqload.com/embed-hfirc2ersjxr.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e21() {
+  modal_t2e21.style.display = "flex";
+  iframe_t2e21.src = "https://uqload.com/embed-cb8skcmcteag.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e22() {
+  modal_t2e22.style.display = "flex";
+  iframe_t2e22.src = "https://uqload.com/embed-7qzp6b2dwrxl.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e23() {
+  modal_t2e23.style.display = "flex";
+  iframe_t2e23.src = "https://uqload.com/embed-vz0xr55zj0sw.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e24() {
+  modal_t2e24.style.display = "flex";
+  iframe_t2e24.src = "https://uqload.com/embed-h6nn11s3mzni.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e25() {
+  modal_t2e25.style.display = "flex";
+  iframe_t2e25.src = "https://uqload.com/embed-v7hqegtylmts.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e26() {
+  modal_t2e26.style.display = "flex";
+  iframe_t2e26.src = "https://uqload.com/embed-l16q6hr83re9.html";
+  body.style.overflow = "hidden";
+}
+
+
+
+/*close modal*/
+/*Season1*/
+function close_t1e1() {
+  modal_t1e1.style.display = "none";
+  iframe_t1e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e2() {
+  modal_t1e2.style.display = "none";
+  iframe_t1e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e3() {
+  modal_t1e3.style.display = "none";
+  iframe_t1e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e4() {
+  modal_t1e4.style.display = "none";
+  iframe_t1e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e5() {
+  modal_t1e5.style.display = "none";
+  iframe_t1e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e6() {
+  modal_t1e6.style.display = "none";
+  iframe_t1e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e7() {
+  modal_t1e7.style.display = "none";
+  iframe_t1e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e8() {
+  modal_t1e8.style.display = "none";
+  iframe_t1e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e9() {
+  modal_t1e9.style.display = "none";
+  iframe_t1e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e10() {
+  modal_t1e10.style.display = "none";
+  iframe_t1e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e11() {
+  modal_t1e11.style.display = "none";
+  iframe_t1e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e12() {
+  modal_t1e12.style.display = "none";
+  iframe_t1e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e13() {
+  modal_t1e13.style.display = "none";
+  iframe_t1e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e14() {
+  modal_t1e14.style.display = "none";
+  iframe_t1e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e15() {
+  modal_t1e15.style.display = "none";
+  iframe_t1e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e16() {
+  modal_t1e16.style.display = "none";
+  iframe_t1e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e17() {
+  modal_t1e17.style.display = "none";
+  iframe_t1e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e18() {
+  modal_t1e18.style.display = "none";
+  iframe_t1e18.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e19() {
+  modal_t1e19.style.display = "none";
+  iframe_t1e19.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e20() {
+  modal_t1e20.style.display = "none";
+  iframe_t1e20.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e21() {
+  modal_t1e21.style.display = "none";
+  iframe_t1e21.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e22() {
+  modal_t1e22.style.display = "none";
+  iframe_t1e22.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e23() {
+  modal_t1e23.style.display = "none";
+  iframe_t1e23.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e24() {
+  modal_t1e24.style.display = "none";
+  iframe_t1e24.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e25() {
+  modal_t1e25.style.display = "none";
+  iframe_t1e25.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e26() {
+  modal_t1e26.style.display = "none";
+  iframe_t1e26 .src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season2*/
+function close_t2e1() {
+  modal_t2e1.style.display = "none";
+  iframe_t2e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e2() {
+  modal_t2e2.style.display = "none";
+  iframe_t2e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e3() {
+  modal_t2e3.style.display = "none";
+  iframe_t2e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e4() {
+  modal_t2e4.style.display = "none";
+  iframe_t2e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e5() {
+  modal_t2e5.style.display = "none";
+  iframe_t2e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e6() {
+  modal_t2e6.style.display = "none";
+  iframe_t2e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e7() {
+  modal_t2e7.style.display = "none";
+  iframe_t2e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e8() {
+  modal_t2e8.style.display = "none";
+  iframe_t2e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e9() {
+  modal_t2e9.style.display = "none";
+  iframe_t2e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e10() {
+  modal_t2e10.style.display = "none";
+  iframe_t2e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e11() {
+  modal_t2e11.style.display = "none";
+  iframe_t2e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e12() {
+  modal_t2e12.style.display = "none";
+  iframe_t2e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e13() {
+  modal_t2e13.style.display = "none";
+  iframe_t2e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e14() {
+  modal_t2e14.style.display = "none";
+  iframe_t2e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e15() {
+  modal_t2e15.style.display = "none";
+  iframe_t2e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e16() {
+  modal_t2e16.style.display = "none";
+  iframe_t2e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e17() {
+  modal_t2e17.style.display = "none";
+  iframe_t2e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e18() {
+  modal_t2e18.style.display = "none";
+  iframe_t2e18.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e19() {
+  modal_t2e19.style.display = "none";
+  iframe_t2e19.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e20() {
+  modal_t2e20.style.display = "none";
+  iframe_t2e20.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e21() {
+  modal_t2e21.style.display = "none";
+  iframe_t2e21.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e22() {
+  modal_t2e22.style.display = "none";
+  iframe_t2e22.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e23() {
+  modal_t2e23.style.display = "none";
+  iframe_t2e23.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e24() {
+  modal_t2e24.style.display = "none";
+  iframe_t2e24.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e25() {
+  modal_t2e25.style.display = "none";
+  iframe_t2e25.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e26() {
+  modal_t2e26.style.display = "none";
+  iframe_t2e26 .src = "";
+  body.style.overflow = "auto";
+}
+
+
+/*Season1*/
+document.getElementById("btn-t1e1").addEventListener("click", mostrar_modal_t1e1);
+document.getElementById("btn-t1e2").addEventListener("click", mostrar_modal_t1e2);
+document.getElementById("btn-t1e3").addEventListener("click", mostrar_modal_t1e3);
+document.getElementById("btn-t1e4").addEventListener("click", mostrar_modal_t1e4);
+document.getElementById("btn-t1e5").addEventListener("click", mostrar_modal_t1e5);
+document.getElementById("btn-t1e6").addEventListener("click", mostrar_modal_t1e6);
+document.getElementById("btn-t1e7").addEventListener("click", mostrar_modal_t1e7);
+document.getElementById("btn-t1e8").addEventListener("click", mostrar_modal_t1e8);
+document.getElementById("btn-t1e9").addEventListener("click", mostrar_modal_t1e9);
+document.getElementById("btn-t1e10").addEventListener("click", mostrar_modal_t1e10);
+document.getElementById("btn-t1e11").addEventListener("click", mostrar_modal_t1e11);
+document.getElementById("btn-t1e12").addEventListener("click", mostrar_modal_t1e12);
+document.getElementById("btn-t1e13").addEventListener("click", mostrar_modal_t1e13);
+document.getElementById("btn-t1e14").addEventListener("click", mostrar_modal_t1e14);
+document.getElementById("btn-t1e15").addEventListener("click", mostrar_modal_t1e15);
+document.getElementById("btn-t1e16").addEventListener("click", mostrar_modal_t1e16);
+document.getElementById("btn-t1e17").addEventListener("click", mostrar_modal_t1e17);
+document.getElementById("btn-t1e18").addEventListener("click", mostrar_modal_t1e18);
+document.getElementById("btn-t1e19").addEventListener("click", mostrar_modal_t1e19);
+document.getElementById("btn-t1e20").addEventListener("click", mostrar_modal_t1e20);
+document.getElementById("btn-t1e21").addEventListener("click", mostrar_modal_t1e21);
+document.getElementById("btn-t1e22").addEventListener("click", mostrar_modal_t1e22);
+document.getElementById("btn-t1e23").addEventListener("click", mostrar_modal_t1e23);
+document.getElementById("btn-t1e24").addEventListener("click", mostrar_modal_t1e24);
+document.getElementById("btn-t1e25").addEventListener("click", mostrar_modal_t1e25);
+document.getElementById("btn-t1e26").addEventListener("click", mostrar_modal_t1e26);
+
+
+/*Season2*/
+document.getElementById("btn-t2e1").addEventListener("click", mostrar_modal_t2e1);
+document.getElementById("btn-t2e2").addEventListener("click", mostrar_modal_t2e2);
+document.getElementById("btn-t2e3").addEventListener("click", mostrar_modal_t2e3);
+document.getElementById("btn-t2e4").addEventListener("click", mostrar_modal_t2e4);
+document.getElementById("btn-t2e5").addEventListener("click", mostrar_modal_t2e5);
+document.getElementById("btn-t2e6").addEventListener("click", mostrar_modal_t2e6);
+document.getElementById("btn-t2e7").addEventListener("click", mostrar_modal_t2e7);
+document.getElementById("btn-t2e8").addEventListener("click", mostrar_modal_t2e8);
+document.getElementById("btn-t2e9").addEventListener("click", mostrar_modal_t2e9);
+document.getElementById("btn-t2e10").addEventListener("click", mostrar_modal_t2e10);
+document.getElementById("btn-t2e11").addEventListener("click", mostrar_modal_t2e11);
+document.getElementById("btn-t2e12").addEventListener("click", mostrar_modal_t2e12);
+document.getElementById("btn-t2e13").addEventListener("click", mostrar_modal_t2e13);
+document.getElementById("btn-t2e14").addEventListener("click", mostrar_modal_t2e14);
+document.getElementById("btn-t2e15").addEventListener("click", mostrar_modal_t2e15);
+document.getElementById("btn-t2e16").addEventListener("click", mostrar_modal_t2e16);
+document.getElementById("btn-t2e17").addEventListener("click", mostrar_modal_t2e17);
+document.getElementById("btn-t2e18").addEventListener("click", mostrar_modal_t2e18);
+document.getElementById("btn-t2e19").addEventListener("click", mostrar_modal_t2e19);
+document.getElementById("btn-t2e20").addEventListener("click", mostrar_modal_t2e20);
+document.getElementById("btn-t2e21").addEventListener("click", mostrar_modal_t2e21);
+document.getElementById("btn-t2e22").addEventListener("click", mostrar_modal_t2e22);
+document.getElementById("btn-t2e23").addEventListener("click", mostrar_modal_t2e23);
+document.getElementById("btn-t2e24").addEventListener("click", mostrar_modal_t2e24);
+document.getElementById("btn-t2e25").addEventListener("click", mostrar_modal_t2e25);
+document.getElementById("btn-t2e26").addEventListener("click", mostrar_modal_t2e26);
+
+
+/*Season1*/
+document.getElementById("close-t1e1").addEventListener("click", close_t1e1);
+document.getElementById("close-t1e2").addEventListener("click", close_t1e2);
+document.getElementById("close-t1e3").addEventListener("click", close_t1e3);
+document.getElementById("close-t1e4").addEventListener("click", close_t1e4);
+document.getElementById("close-t1e5").addEventListener("click", close_t1e5);
+document.getElementById("close-t1e6").addEventListener("click", close_t1e6);
+document.getElementById("close-t1e7").addEventListener("click", close_t1e7);
+document.getElementById("close-t1e8").addEventListener("click", close_t1e8);
+document.getElementById("close-t1e9").addEventListener("click", close_t1e9);
+document.getElementById("close-t1e10").addEventListener("click", close_t1e10);
+document.getElementById("close-t1e11").addEventListener("click", close_t1e11);
+document.getElementById("close-t1e12").addEventListener("click", close_t1e12);
+document.getElementById("close-t1e13").addEventListener("click", close_t1e13);
+document.getElementById("close-t1e14").addEventListener("click", close_t1e14);
+document.getElementById("close-t1e15").addEventListener("click", close_t1e15);
+document.getElementById("close-t1e16").addEventListener("click", close_t1e16);
+document.getElementById("close-t1e17").addEventListener("click", close_t1e17);
+document.getElementById("close-t1e18").addEventListener("click", close_t1e18);
+document.getElementById("close-t1e19").addEventListener("click", close_t1e19);
+document.getElementById("close-t1e20").addEventListener("click", close_t1e20);
+document.getElementById("close-t1e21").addEventListener("click", close_t1e21);
+document.getElementById("close-t1e22").addEventListener("click", close_t1e22);
+document.getElementById("close-t1e23").addEventListener("click", close_t1e23);
+document.getElementById("close-t1e24").addEventListener("click", close_t1e24);
+document.getElementById("close-t1e25").addEventListener("click", close_t1e25);
+document.getElementById("close-t1e26").addEventListener("click", close_t1e26);
+
+/*Season2*/
+document.getElementById("close-t2e1").addEventListener("click", close_t2e1);
+document.getElementById("close-t2e2").addEventListener("click", close_t2e2);
+document.getElementById("close-t2e3").addEventListener("click", close_t2e3);
+document.getElementById("close-t2e4").addEventListener("click", close_t2e4);
+document.getElementById("close-t2e5").addEventListener("click", close_t2e5);
+document.getElementById("close-t2e6").addEventListener("click", close_t2e6);
+document.getElementById("close-t2e7").addEventListener("click", close_t2e7);
+document.getElementById("close-t2e8").addEventListener("click", close_t2e8);
+document.getElementById("close-t2e9").addEventListener("click", close_t2e9);
+document.getElementById("close-t2e10").addEventListener("click", close_t2e10);
+document.getElementById("close-t2e11").addEventListener("click", close_t2e11);
+document.getElementById("close-t2e12").addEventListener("click", close_t2e12);
+document.getElementById("close-t2e13").addEventListener("click", close_t2e13);
+document.getElementById("close-t2e14").addEventListener("click", close_t2e14);
+document.getElementById("close-t2e15").addEventListener("click", close_t2e15);
+document.getElementById("close-t2e16").addEventListener("click", close_t2e16);
+document.getElementById("close-t2e17").addEventListener("click", close_t2e17);
+document.getElementById("close-t2e18").addEventListener("click", close_t2e18);
+document.getElementById("close-t2e19").addEventListener("click", close_t2e19);
+document.getElementById("close-t2e20").addEventListener("click", close_t2e20);
+document.getElementById("close-t2e21").addEventListener("click", close_t2e21);
+document.getElementById("close-t2e22").addEventListener("click", close_t2e22);
+document.getElementById("close-t2e23").addEventListener("click", close_t2e23);
+document.getElementById("close-t2e24").addEventListener("click", close_t2e24);
+document.getElementById("close-t2e25").addEventListener("click", close_t2e25);
+document.getElementById("close-t2e26").addEventListener("click", close_t2e26);
+
+
+/*Seasons*/
+document.getElementById('btn_season1').addEventListener('click', showSeason1);
+document.getElementById('btn_season2').addEventListener('click', showSeason2);
+
+function showSeason1() {
+  season1.style.display = "block";
+  season2.style.display = "none";
+}
+
+function showSeason2() {
+  season1.style.display = "none";
+  season2.style.display = "block";
+}
+
+	  
+	</script>
+</body>
+</html>
