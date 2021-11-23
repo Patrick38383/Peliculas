@@ -1,0 +1,2287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Series</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	
+	<style type="text/css">
+	  
+	  @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: #090909;
+	font-family: 'Open Sans', sans-serif;
+}
+
+a {
+	text-decoration: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.contenedor {
+	width: 90%;
+	max-width: 1000px;
+	margin: auto;
+	padding: 10px 0;
+}
+
+.selectbox {
+	width: 50%;
+	margin: auto;
+	position: relative;
+}
+
+.select {
+	background: #222;
+	width: 100%;
+	border-radius: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 5px;
+	padding: 10px 0 10px 10px;
+	position: relative;
+}
+
+.select i {
+	font-size: 23px;
+	margin-right: 13px;
+	color: #ddd;
+}
+
+.titulo {
+	margin-bottom: 10px;
+	color: #ddd;
+	font-weight: 600;
+	font-size: 16px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.descripcion {
+	font-size: 14px;
+	color: #ddd;
+}
+
+.opciones {
+	background: #191919;
+	border-radius: 10px;
+	max-height: 400px;
+	overflow: auto;
+	width: 100%;
+	display: none;
+}
+
+.opciones.active {
+	display: block;
+	animation: fadeIn .3s forwards;
+}
+
+@keyframes fadeIn {
+	from {
+		transform: translateY(-100px) scale(.5);
+	}
+	to {
+		transform: translateY(0) scale(1);
+	}
+}
+
+.textos {
+  width: 100%;
+}
+
+.contenido-opcion {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	transition: .2s ease all;
+}
+
+.opciones .contenido-opcion {
+	padding: 9px;
+}
+
+.opciones .contenido-opcion:hover {
+  background: #101010;
+}
+
+.sinopsis {
+  padding: 0 15px;
+  color: #eee;
+  font-size: 13px;
+  text-align: justify;
+  margin-bottom: 10px;
+}
+
+/*Chapters*/
+
+.episodes {
+	overflow: auto;
+	z-index: 100;
+	width: 100%;
+	display: block;
+}
+
+.episodes .contenido-opcion {
+	background: #090909;
+	padding: 0 10px 14px 10px;
+}
+
+.episodes .contenido-opcion:hover {
+  background: #000;
+}
+
+.contenido-opcion img {
+	width: auto;
+	height: 50px;
+	margin-right: 20px;
+	border-radius: 2px;
+}
+
+/*Responsive*/
+
+@media screen and (max-width: 800px){
+	.selectbox {
+		width: 100%;
+	}
+}
+
+
+
+
+
+
+/*Cards*/
+.card {
+	width: 100%;
+	height: 100vh;
+	max-width: 1100px;
+	position: fixed;
+  font-family: 'Montserrat', sans-serif;
+  top: 50%;
+  transform: translateY(-50%);
+	background: rgba(2, 2, 2, .7);
+	display: none;
+}
+
+.contenedor-card {
+  width: 95%;
+  position: fixed;
+  background: #111;
+  border-radius: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+
+.card .contenido-card h4 {
+  text-align: center;
+	margin-bottom: 10px;
+	color: #ddd;
+}
+
+.card .contenido-card p {
+  padding: 0 10px 10px ;
+	line-height: 1.5;
+	color: #ddd;
+	font-size: 14px;
+	margin-bottom: 5px;
+	text-align: justify;
+}
+
+iframe {
+  border-radius: 7px 7px 0 0;
+}
+
+.close {
+  font-size: 50px;
+  color: #fff;
+  position: absolute;
+  display: flex;
+  top: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.season2 {
+  display: none;
+}
+	  
+	</style>
+</head>
+<body id="body">
+	
+	<div class="contenedor">
+		<form action="">
+			<div class="selectbox">
+				<div class="select" id="select">
+					<div class="contenido-select">
+						<h1 class="titulo">Temporada 1</h1>
+					</div>
+					<i class="bi bi-chevron-down"></i>
+				</div>
+
+				<div class="opciones" id="opciones">
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season1">Temporada 1</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season2">Temporada 2</h1>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<input type="hidden" id="inputSelect" value="">
+		</form>
+
+	</div>
+	
+	<!--Sinopsis-->
+	
+	<div class="sinopsis">
+	  <p>La banda de Scooby-Doo vuelve con más acción que nunca. Las clases en la escuela secundaria han terminado y los chicos tienen todo el verano para viajar y disfrutar, pero los monstruos acechan y los están esperando.</p>
+	</div>
+	
+	
+<!--Season1-->
+	
+	<div class="episodes" id="season1">
+					<a class="opcion" id="btn-t1e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/hc5xZUlmmp7JnxaU16YwmLhHyMi.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Misterio 101</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/yvPTVqiG8oS3U5llDeXD65uXzI5.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. El Juego de la Gallina</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/b1RIj25EzPoYeQZJzNEAlhP0nz7.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Terror en las Profundidades</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/oOhTA568Wp6C8SzNZtFMicoAof2.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Justicia Poodle</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/ao4WWSI1RH7dT4VFPk7tfkmvj0h.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. La Gran Estafa</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/kzUUxlPDTHg2zq07UZWw7SBo0i4.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Cambiando Posiciones</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/oCRF2GYxFmWOzybwrPBFJHnCFLw.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Guarda Silencio, Scooby Doo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/d56sV0elMfhM4LFTv6ZH0BzPpMd.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Actúa Como Si Fuera 1899</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/guqnO2YqNw7IN5UvrYqf5dV7iID.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. Gritona Donna</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/o2zmzzyt9ALWP0Lm7qd0vcJrx9S.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Pesadilla en la Cocina</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/7XmAKlO6E8kHq1agWA4OJXNWJBp.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. La Inteligencia Artificial y Yo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/iyJhPSPnY2NqNQeGsnjmcQJjTu3.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Junto al Área 51</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/aiEdZW0z0vbEaIL888kZnTSOEi6.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Donde Hay un Testamento, Hay un Fantasma</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e14">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/yqpVabRUq9XRvsvUiXOjoGkUyXW.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. Navidad Aterradora</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e15">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/o9cBXMhh9Ke02IVNtxu0APafKpK.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. Si no Puedes Scooby-Doo el tiempo, no Scooby-Doo el Crimen</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e16">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/pRCKBN7qu8UXk5U01YOSXWyIzTz.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. Duende en el Avión</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e17">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/bK6X6I4TEeQey3XXtsn6Yy5ftZ1.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. El Susto de las Galletas Brujo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e18">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/bDVA3wwZnVZ640AXNQm2GMyUKWk.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. La Saga de la Bestia del Pantano</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e19">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/r0fRdlLkHxSB8UnY8dw3mEEE02G.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">19. ¡Ponte Frío, Scooby-doo!</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e20">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/8kZ8UaeEMQRU6EuxTwIbgJzSTPe.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">20. Problemas Gigantes</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e21">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/44NLU1BqOlgiWaKA9oD52gMYVrJ.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">21. Espantacuervos</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e22">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/buCe0EoFxIJYOorsTgGPENK8yPl.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">22. Aceptooby Dooby Doo</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e23">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/wSKBLG1Ge4NdVrC6KkquLI034BR.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">23. El Bandito</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e24">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/8XQXkleU9866VheAeLsnQSP4Bfq.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">24. En la Boca del Loco</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e25">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/2yMeflfq1sbGJTU3gom3rFz6cYs.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">25. En el Peor de los Casos</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e26">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/m1pKTyfltBPEp1CBJ3dKfrwhbGw.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">26. El Pueblo Contra Fred Jones</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season2-->
+			
+	<div class="episodes season2" id="season2">
+					<a class="opcion" id="btn-t2e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/n50yNMoMbYbtUcs9IResFCTi99y.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Fred Necesita un Descanso</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/7CcuKctIEdwYEppcdWzDYAO0ZJg.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Hay un Lobo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/bKNBsIEDqrXikmMv2zvM2bxAGYs.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Miedo Medieval</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/yXMSeaa6U4sx9UdCFmDCJb2ICUD.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Cómo Entrenar a tu Cobarde</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/pXlBH8JpTcIfTg5Bd9KzO78QrXY.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. El Peor Show</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/t8GnNTPsjm76rzUKCC0CJRDGI0Q.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Misterios en el Espresso Desorientado</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/3mNJRjqvNbR6Gea9GP5Qht2iQ7K.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Halloween</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/s5aFR7wdvmbiy1EJW2cGCVdfN0p.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. La Maldición de Kaniauku</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/eivPx9fHX6OhWXISQfmc2hUiirv.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. Vote por Velma</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/md1oH7ZFQ8mwPiVeUorVA7jTvP1.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Scroogey Doo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/h3DtnqrxXjFEPRcVBJxhWXv63ZT.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. En el Espacio</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/6KzS7Yw6MbkSvpfe9F2w62eR4Oi.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. No Molestar</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/q41EWrk1KsqVGboUmt55fv4X78N.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. El Séptimo Susto</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e14">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/A7WWMoZHzwLC9058QydZdlOuFEk.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. Un Truco Bajo la Manga</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e15">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/tPCkg8AjBVfpgDobzJl1wV1nf6M.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. Grecia es la Palabra</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e16">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/3gUBsPgEBYeWQEaS3w9jHea8vl2.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. Gótico Americano</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e17">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/9TOzXdkDpJ3ye5ZdanuoVfZOczW.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. Los Omeletts son Para Siempre</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e18">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/fkVCsL9ox8mGHJhYwD4UnV9hKa6.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. Fantasma en la Máquina del Misterio</h1>
+								<p class="descripcion">20min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e19">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/shFn4fXrw8L0QxgZjd1f94mt9mz.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">19. Helado Bueno</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e20">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/8G2kRbU7RNdvTrIKEOqD2KQbwjV.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">20. La Noche de los Shorts Horribles</h1>
+								<p class="descripcion">20min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e21">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/6iX0gbHXf78OElvU99O1Jyp7oMV.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">21. Perros de Basurero</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e22">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/zcJFCyXmtwUDsg06U58avCIkTXh.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">22. Titanes de las Proteínas 2</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e23">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/qdrV1Ydk2I8iw0ALuyYroF2ZAmo.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">23. El Mundo de la Brujería</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e24">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/3GDs6Uf9jJXbgiUcd8kmpyCSh7C.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">24. Profesor Huh - Parte 1</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e25">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/feIxjfNZt6ehh84cDDwTQrI4sT2.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">25. Profesor Huh - Parte 2</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e26">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/4kKdawrl1pAFhOESejkmGdnnUWL.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">26. La Maldición del Botin de Media Barba</h1>
+								<p class="descripcion">20min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div> 
+	
+
+
+
+
+
+
+	<!--Season1-->
+<div class="card" id="modal_t1e1">
+  
+<div class="close" id="close-t1e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Misterio 101</h4>
+		<p>El fantasma de Elias Kingston se pasea por la Universidad de Kingston, y, cuando Velma tiene una entrevista para ser admitida en esta prestigiosa institución, el decano les pide a los muchachos que le ayuden a desvelar este misterio.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e2">
+  
+<div class="close" id="close-t1e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. El Juego de la Gallina</h4>
+		<p>Fred recibe una llamada de ayuda de Chuck, su mejor amigo temerario, llevando a la banda en una misión de rescate en lo profundo de las cavernas de una antigua civilización.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e3">
+  
+<div class="close" id="close-t1e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Terror en las Profundidades</h4>
+		<p>La pandilla se embarca en un crucero a pesar de que Velma tiene miedo al agua. La pandilla investiga los ataques de un monstruo marino.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e4">
+  
+<div class="close" id="close-t1e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Justicia Poodle</h4>
+		<p>La pandilla visita el set de rodaje del programa favorito de Scooby donde conoce a la célebre perrita que interpreta el papel protagonista, pero las cosas salen mal cuando una gárgola ataca a la producción.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e5">
+  
+<div class="close" id="close-t1e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. La Gran Estafa</h4>
+		<p>Un fantasma atemoriza a jugadores y aficionados en el estadio de béisbol donde Shaggy veía al equipo de su infancia. Ahora Shaggy debe dejar a un lado su forma temerosa de investigar y enfrentarse valientemente al fantasma.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e6">
+  
+<div class="close" id="close-t1e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Cambiando Posiciones</h4>
+		<p>Fred acepta el reto del guía del museo de saber liderar mejor a la pandilla para descubrir el misterio del fantasma de un antiguo dios egipcio que ha atacado a los guardias de seguridad del museo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e7">
+  
+<div class="close" id="close-t1e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Guarda Silencio, Scooby Doo</h4>
+		<p>Para resolver el misterio de una espeluznante Crystal Crawler, una cueva monstruo de murciélago, el grupo debe dirigirse en el Crystal Canopy, ¡un laberinto de cristales intrincados!</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e8">
+  
+<div class="close" id="close-t1e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Actúa Como Si Fuera 1899</h4>
+		<p>El grupo trata de resolver un misterio falso en una fiesta de temática victoriana, pero las cosas se complican cuando aparece un verdadero fantasma.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e9">
+  
+<div class="close" id="close-t1e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. Gritona Donna</h4>
+		<p>Para resolver el misterio de un artista fantasmal en su antigua sede, el grupo tiene que fingir que es una banda de rock.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e10">
+  
+<div class="close" id="close-t1e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Pesadilla en la Cocina</h4>
+		<p>El chef favorito de Shaggy y Scooby por fin abrirá su propio restaurante, pero un Yeti monstruoso los amenaza durante la noche de inauguración. La pandilla debe resolver el misterio antes de que sirvan el postre.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e11">
+  
+<div class="close" id="close-t1e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. La Inteligencia Artificial y Yo</h4>
+		<p>Una inteligencia artificial toma el control de una compañía que se dedica a la producción tecnológica y el grupo debe resolver el caso.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e12">
+  
+<div class="close" id="close-t1e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Junto al Área 51</h4>
+		<p>Daphne siempre había soñado con conocer vida extraterrestre, pero ese sueño se convierte en una pesadilla cuando la pandilla se ve atrapada en el misterio de un monstruo alienígena aterrador y llevada al Área 53, ¡una instalación gubernamental tan secreta que es dos números más alto que el Área 51!</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e13">
+  
+<div class="close" id="close-t1e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Donde Hay un Testamento, Hay un Fantasma</h4>
+		<p>Un millonario al que una vez Scooby le salvó la vida, lo incluye en su testamento. Ahora, para cobrar la herencia, Scooby y la pandilla han de pasar una noche en la mansión aterrador, junto con los parientes excéntricos del millonario.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e14">
+  
+<div class="close" id="close-t1e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. Navidad Aterradora</h4>
+		<p>Es Nochebuena y Fred está dispuesto a resolver un misterio de Navidad. Por desgracia, la ciudad donde la pandilla se encuentra, está siendo atacada por un pterodáctilo y no parece tener mucho que ver con la Navidad.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e15">
+  
+<div class="close" id="close-t1e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. Si no Puedes Scooby-Doo el tiempo, no Scooby-Doo el Crimen</h4>
+		<p>La pandilla visita una cárcel de máxima seguridad antes de su clausura, invitados por el alcaide Bowman. Al tiempo investigan el caso del fantasma de un preso fugitivo que causa estragos en la cárcel.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e16">
+  
+<div class="close" id="close-t1e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. Duende en el Avión</h4>
+		<p>Un Gremlin se empeña en sabotear el primer vuelo tripulado del avión más grande del mundo de la compañia aérea Gigantica. La pandilla intenta resolver el misterio desde el aire mientras Daphne pilota el avión.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e17">
+  
+<div class="close" id="close-t1e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. El Susto de las Galletas Brujo</h4>
+		<p>La pandilla visita una fábrica de snacks donde un hechicero asusta a todo el mundo. Mientras, Fred descubre que puede hacer que Shaggy y Scooby hagan todo lo que él quiera con una caja de snacks del hechicero.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e18">
+  
+<div class="close" id="close-t1e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. La Saga de la Bestia del Pantano</h4>
+		<p>La excursión de la pandilla a un pantano se ve arruinada por una bestia que arrastra los pies y espanta a cualquiera que se atreva a entrar en sus dominios embarrados.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e19">
+  
+<div class="close" id="close-t1e19"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e19" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>19. ¡Ponte Frío, Scooby-doo!</h4>
+		<p>El grupo viaja a un centro para esquiar en donde Shaggy tiene su primera experiencia con la nieve. Sin embargo, también hay un monstruo de nieve espantando a los turistas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e20">
+  
+<div class="close" id="close-t1e20"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e20" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>20. Problemas Gigantes</h4>
+		<p>La pandilla visita un antiguo castillo perteneciente a la familia de Daphne en Irlanda. El historiador local les anuncia que un gigante ataca a todos aquellos que no son del lugar. La pandilla decide investigar el misterio.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e21">
+  
+<div class="close" id="close-t1e21"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e21" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>21. Espantacuervos</h4>
+		<p>La pandilla va a una granja, donde Fred se enamora de Beth, la hija de un granjero. Cuando aparece un espantapájaros viviente, Fred trata de impresionar a Beth con sus habilidades para resolver misterios, mientras que Velma tiene alergias graves al heno y Daphne comienza a acumular animales como "mascotas" después de ponerse celosa de la relación de Shaggy y Scooby.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e22">
+  
+<div class="close" id="close-t1e22"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e22" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>22. Aceptooby Dooby Doo</h4>
+		<p>Tomando parte en una boda de dos amigos íntimos, el padrino Shaggy y la dama de honor Daphne intentan salvar el día perfecto de ser arruinados por una novia fantasma.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e23">
+  
+<div class="close" id="close-t1e23"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e23" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>23. El Bandito</h4>
+		<p>La pandilla se dirige a la fiesta del Día de los Muertos. Allí, se enteran de que el espíritu de El Bandito, un legendario y famoso forajido, ha regresado para aterrorizar a los habitantes. Fred se obsesiona con resolver el misterio.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e24">
+  
+<div class="close" id="close-t1e24"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e24" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>24. En la Boca del Loco</h4>
+		<p>Daphne acepta cuidar a Wayne, el hijo de su amiga, y convence a Fred de tomarse una noche libre de misterios para ir al parque de atracciones del paseo marítimo. Aunque Daphne lo desconoce, el parque está embrujado por Madcap, un payaso malvado.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e25">
+  
+<div class="close" id="close-t1e25"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e25" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>25. En el Peor de los Casos</h4>
+		<p>El equipo decide hacer un viaje de campamento. El deseo de Fred de que todos entren en contacto con sus instintos naturales y perfeccionen sus habilidades se convierte en un entrenamiento de verdad cuando los fantasmas vikingos atacan.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e26">
+  
+<div class="close" id="close-t1e26"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e26" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>26. El Pueblo Contra Fred Jones</h4>
+		<p>Juzgan a Fred por haber fingido ser un mutante furioso. Daphne y Fred tratan de resolver el caso de la catástrofe tóxica ocurrida en una factoría química en 1955.</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season2-->
+<div class="card" id="modal_t2e1">
+  
+<div class="close" id="close-t2e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Fred Necesita un Descanso</h4>
+		<p>La pandilla obliga a Fred a relajarse y tomarse un descanso en la casa de playa de la familia de Daphne. Por desgracia, cuando un tiburón que camina ataca a la comunidad, la pandilla debe resolver el misterio sin que Fred se entere.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e2">
+  
+<div class="close" id="close-t2e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Hay un Lobo</h4>
+		<p>Cuando Scooby se enferma repentinamente, la pandilla lo lleva a un hospital veterinario. Las cosas se ponen cada vez peor cuando descubren que el hospital viejo y gótico también es el hogar de un hombre lobo enfurecido.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e3">
+  
+<div class="close" id="close-t2e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Miedo Medieval</h4>
+		<p>La pandilla se dirige a la Feria Renacentista auténtica amada por Velma, donde deben encontrar el modo de infiltrarse en el festín real para impedir que un bufón malvado acabe con el reinado del rey en forma permanente y cierre la feria.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e4">
+  
+<div class="close" id="close-t2e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Cómo Entrenar a tu Cobarde</h4>
+		<p>Hartos de los monstruos y el caos, Shaggy y Scooby deciden abandonar la pandilla y entrenar a sus reemplazos en una sesión de entrenamiento práctico, en la que se devela el misterio de un vampiro que aterroriza a una aldea pequeña.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e5">
+  
+<div class="close" id="close-t2e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. El Peor Show</h4>
+		<p>Luego de que un sabueso bestial y gigante ataca un espectáculo de perros de elite, la pandilla se infiltra para inscribir a Scooby en el espectáculo y resolver el misterio.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e6">
+  
+<div class="close" id="close-t2e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Misterios en el Espresso Desorientado</h4>
+		<p>Ocho monstruos diferentes aparecen cuando la pandilla hace un viaje de tres días en tren.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e7">
+  
+<div class="close" id="close-t2e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Halloween</h4>
+		<p>En Halloween, Fred se niega a salir de la casa porque cree que no se resolverán los misterios y que nada saldrá según lo planeado.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e8">
+  
+<div class="close" id="close-t2e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. La Maldición de Kaniauku</h4>
+		<p>La pandilla se enfrenta cara a cara con Kaniaku, el antiguo monstruo cangrejo, e intenta resolver un misterio de 700 años de antigüedad. Mientras tanto, Daphne se convierte en una sensación viral en los medios de comunicación de Japón.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e9">
+  
+<div class="close" id="close-t2e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. Vote por Velma</h4>
+		<p>Cuando el fantasma del fundador de un pueblo pequeño regresa para ahuyentar a los candidatos a la alcaldía, la pandilla decide postular a Velma como alcaldesa para tenderle una trampa al fantasma. Descubren que Velma no tiene habilidades necesarias.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e10">
+  
+<div class="close" id="close-t2e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Scroogey Doo</h4>
+		<p>La pandilla de Scooby ingresa en Canción de Navidad para desentrañar la presencia de un fantasma que atormenta a Scrooge en la Inglaterra de 1843.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e11">
+  
+<div class="close" id="close-t2e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. En el Espacio</h4>
+		<p>Un virus alienígena está transformando a los trabajadores de una explotación minera de asteroides en seres perversos. El grupo tendrá que averiguar qué está sucediendo y cómo detenerlo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e12">
+  
+<div class="close" id="close-t2e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. No Molestar</h4>
+		<p>Para huir de una tormenta de nieve, la pandilla se aloja en un hotel gigantesco y espeluznante, atendido por un hombre muy severo. Pronto, reciben el regaño atemorizante del mismísimo fantasma de la madre del dueño.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e13">
+  
+<div class="close" id="close-t2e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. El Séptimo Susto</h4>
+		<p>La pandilla está de paseo en un viejo estudio de filmación de Hollywood, pero pronto develan un misterio que involucra al fantasma del comediante de una película muda que ha regresado para asegurarse de que su última película nunca salga a la luz.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e14">
+  
+<div class="close" id="close-t2e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. Un Truco Bajo la Manga</h4>
+		<p>Fred hace realidad su sueño de la infancia de hacer un espectáculo de magia cuando él y la pandilla se infiltran en un club de magia privado, que es aterrorizado por un conejo gigante y monstruoso.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e15">
+  
+<div class="close" id="close-t2e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. Grecia es la Palabra</h4>
+		<p>La pandilla viaja al pasado, a la Antigua Grecia, donde interpreta papeles únicos en un misterio griego que involucra a Aracne, la mujer araña mitológica, y sus intentos por irrumpir en la boda real que unirá a dos grandes ciudades.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e16">
+  
+<div class="close" id="close-t2e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. Gótico Americano</h4>
+		<p>Shaggy se sorprende al ver que su primer amor de la infancia adoptó el estilo gótico. Shaggy asiste a una fiesta gótica con la pandilla para iniciarse en la cultura gótica, cosa que preocupa a Scooby. La pandilla descubre una feroz planta monstruosa.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e17">
+  
+<div class="close" id="close-t2e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. Los Omeletts son Para Siempre</h4>
+		<p>La pandilla queda atrapada en una historia de espionaje e intriga internacionales cuando se cruzan con Jenny Vex, la agente secreta británica, y deben ayudarla a completar una peligrosa misión.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e18">
+  
+<div class="close" id="close-t2e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. Fantasma en la Máquina del Misterio</h4>
+		<p>La peor pesadilla de Fred se hace realidad: un espíritu malvado toma posesión de la Máquina del Misterio y convierte su adorada camioneta en un monstruo implacable decidido a destruirlo a él y a la pandilla antes de que logren resolver el misterio.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e19">
+  
+<div class="close" id="close-t2e19"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e19" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>19. Helado Bueno</h4>
+		<p>Daphne lleva a la pandilla a un elegante hotel de hielo, propiedad a medias de su familia, donde una nueva exhibición de artefactos de la Era del Hielo está por inaugurarse.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e20">
+  
+<div class="close" id="close-t2e20"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e20" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>20. La Noche de los Shorts Horribles</h4>
+		<p>La pandilla se dirige a la casa de retiro de Florida de la querida abuela de Shaggy, donde descubren que un hombre simio enloquecido ha estado asustando a los residentes mayores.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e21">
+  
+<div class="close" id="close-t2e21"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e21" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>21. Perros de Basurero</h4>
+		<p>Scooby Doo se encuentra con Alex, un antiguo amigo perruno, que ahora es un perro policía muy entrenado de última generación. Scooby y Shaggy deciden ser quienes resuelvan el misterio del monstruo de la basura que ha estado atacando a las personas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e22">
+  
+<div class="close" id="close-t2e22"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e22" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>22. Titanes de las Proteínas 2</h4>
+		<p>Cuando una empresa exitosa de videojuegos intenta convencer a Velma de trabajar para ellos en San Francisco, la pandilla se ve envuelta en el misterio de un villano de videojuego.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e23">
+  
+<div class="close" id="close-t2e23"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e23" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>23. El Mundo de la Brujería</h4>
+		<p>La pandilla va a Salem, Massachusetts, por un festival histórico, solo para descubrir que un demonio anda suelto por la ciudad.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e24">
+  
+<div class="close" id="close-t2e24"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e24" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>24. Profesor Huh - Parte 1</h4>
+		<p>Fred y la pandilla trabajan en un caso de misterio que involucra a una persona del pasado de Fred; un viejo amigo de la infancia de Fred llegó con la pandilla.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e25">
+  
+<div class="close" id="close-t2e25"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e25" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>25. Profesor Huh - Parte 2</h4>
+		<p>Fred y sus amigos acuden a solucionar un misterio relacionado con el profesor Hug. Sin embargo, Fred descubre que Rose, una vieja amiga con la que aprendió a resolver enigmas, también ha llegado para investigar, acompañada de su propio grupo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e26">
+  
+<div class="close" id="close-t2e26"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e26" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>26. La Maldición del Botin de Media Barba</h4>
+		<p>Shaggy arrastra a la pandilla a una sala de juegos donde la mascota animatrónica aparentemente ha cobrado vida.</p>
+	</div>
+	</div>
+</div>
+
+
+	<script>
+	  
+//select
+const select = document.querySelector('#select');
+const opciones = document.querySelector('#opciones');
+const contenidoSelect = document.querySelector('#select .contenido-select');
+const hiddenInput = document.querySelector('#inputSelect');
+
+document.querySelectorAll('#opciones > .opcion').forEach((opcion) => {
+	opcion.addEventListener('click', (e) => {
+		e.preventDefault();
+		contenidoSelect.innerHTML = e.currentTarget.innerHTML;
+		select.classList.toggle('active');
+		opciones.classList.toggle('active');
+		hiddenInput.value = e.currentTarget.querySelector('.titulo').innerText;
+	});
+});
+
+select.addEventListener('click', () => {
+	select.classList.toggle('active');
+	opciones.classList.toggle('active');
+});
+
+
+
+
+
+
+/*open modal*/
+/*Season1*/
+function mostrar_modal_t1e1() {
+  modal_t1e1.style.display = "flex";
+  iframe_t1e1.src = "https://uqload.com/embed-xw1jjkll7uxf.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e2() {
+  modal_t1e2.style.display = "flex";
+  iframe_t1e2.src = "https://uqload.com/embed-xnsibazd0j4y.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e3() {
+  modal_t1e3.style.display = "flex";
+  iframe_t1e3.src = "https://uqload.com/embed-srus751tosyr.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e4() {
+  modal_t1e4.style.display = "flex";
+  iframe_t1e4.src = "https://uqload.com/embed-whedzcukb436.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e5() {
+  modal_t1e5.style.display = "flex";
+  iframe_t1e5.src = "https://uqload.com/embed-5yymn19a2lt4.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e6() {
+  modal_t1e6.style.display = "flex";
+  iframe_t1e6.src = "https://uqload.com/embed-xfo55gjsxa9r.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e7() {
+  modal_t1e7.style.display = "flex";
+  iframe_t1e7.src = "https://uqload.com/embed-hhry5513v2zy.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e8() {
+  modal_t1e8.style.display = "flex";
+  iframe_t1e8.src = "https://uqload.com/embed-2bcd0nzxf0q1.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e9() {
+  modal_t1e9.style.display = "flex";
+  iframe_t1e9.src = "https://uqload.com/embed-g5bjr5fiieoh.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e10() {
+  modal_t1e10.style.display = "flex";
+  iframe_t1e10.src = "https://uqload.com/embed-hblk088ygrtu.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e11() {
+  modal_t1e11.style.display = "flex";
+  iframe_t1e11.src = "https://uqload.com/embed-aill5uybp2rj.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e12() {
+  modal_t1e12.style.display = "flex";
+  iframe_t1e12.src = "https://uqload.com/embed-18bmk8taufyg.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e13() {
+  modal_t1e13.style.display = "flex";
+  iframe_t1e13.src = "https://uqload.com/embed-tvrmfmump3r3.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e14() {
+  modal_t1e14.style.display = "flex";
+  iframe_t1e14.src = "https://uqload.com/embed-chao9l9tot0x.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e15() {
+  modal_t1e15.style.display = "flex";
+  iframe_t1e15.src = "https://uqload.com/embed-x1g1aflg099x.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e16() {
+  modal_t1e16.style.display = "flex";
+  iframe_t1e16.src = "https://uqload.com/embed-rpdabb2169xe.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e17() {
+  modal_t1e17.style.display = "flex";
+  iframe_t1e17.src = "https://uqload.com/embed-z523wkfpop9o.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e18() {
+  modal_t1e18.style.display = "flex";
+  iframe_t1e18.src = "https://uqload.com/embed-rm5fcp4hq5uy.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e19() {
+  modal_t1e19.style.display = "flex";
+  iframe_t1e19.src = "https://uqload.com/embed-8kbl2aj21q14.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e20() {
+  modal_t1e20.style.display = "flex";
+  iframe_t1e20.src = "https://uqload.com/embed-wwr7x71zpifv.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e21() {
+  modal_t1e21.style.display = "flex";
+  iframe_t1e21.src = "https://uqload.com/embed-dtiteqjhbhq6.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e22() {
+  modal_t1e22.style.display = "flex";
+  iframe_t1e22.src = "https://uqload.com/embed-my11gy5ofyvc.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e23() {
+  modal_t1e23.style.display = "flex";
+  iframe_t1e23.src = "https://uqload.com/embed-hhi3mkqobus6.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e24() {
+  modal_t1e24.style.display = "flex";
+  iframe_t1e24.src = "https://uqload.com/embed-q8mgoka7o4j2.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e25() {
+  modal_t1e25.style.display = "flex";
+  iframe_t1e25.src = "https://uqload.com/embed-t7mjh5syq2oi.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e26() {
+  modal_t1e26.style.display = "flex";
+  iframe_t1e26.src = "https://uqload.com/embed-o6rx6ynorrt6.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season2*/
+function mostrar_modal_t2e1() {
+  modal_t2e1.style.display = "flex";
+  iframe_t2e1.src = "https://uqload.com/embed-8rrdy7y3ocws.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e2() {
+  modal_t2e2.style.display = "flex";
+  iframe_t2e2.src = "https://uqload.com/embed-s78qfs6afh8g.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e3() {
+  modal_t2e3.style.display = "flex";
+  iframe_t2e3.src = "https://uqload.com/embed-agwfx9h6ouvg.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e4() {
+  modal_t2e4.style.display = "flex";
+  iframe_t2e4.src = "https://uqload.com/embed-z9qwi984xys5.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e5() {
+  modal_t2e5.style.display = "flex";
+  iframe_t2e5.src = "https://uqload.com/embed-8ubhyjdyyfvy.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e6() {
+  modal_t2e6.style.display = "flex";
+  iframe_t2e6.src = "https://uqload.com/embed-p3eqzyzgevi8.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e7() {
+  modal_t2e7.style.display = "flex";
+  iframe_t2e7.src = "https://uqload.com/embed-8rlqdzm8b627.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e8() {
+  modal_t2e8.style.display = "flex";
+  iframe_t2e8.src = "https://uqload.com/embed-9yu2gqui5fog.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e9() {
+  modal_t2e9.style.display = "flex";
+  iframe_t2e9.src = "https://uqload.com/embed-34ootdzsw13l.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e10() {
+  modal_t2e10.style.display = "flex";
+  iframe_t2e10.src = "https://uqload.com/embed-2mfr3q2byl47.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e11() {
+  modal_t2e11.style.display = "flex";
+  iframe_t2e11.src = "https://uqload.com/embed-e0fa6eel55rx.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e12() {
+  modal_t2e12.style.display = "flex";
+  iframe_t2e12.src = "https://uqload.com/embed-g741evpkpdul.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e13() {
+  modal_t2e13.style.display = "flex";
+  iframe_t2e13.src = "https://uqload.com/embed-sw9h94p4ldqa.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e14() {
+  modal_t2e14.style.display = "flex";
+  iframe_t2e14.src = "https://uqload.com/embed-koqe7bv1po1x.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e15() {
+  modal_t2e15.style.display = "flex";
+  iframe_t2e15.src = "https://uqload.com/embed-snhc8rkkj5eq.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e16() {
+  modal_t2e16.style.display = "flex";
+  iframe_t2e16.src = "https://uqload.com/embed-o7wby8nanrf5.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e17() {
+  modal_t2e17.style.display = "flex";
+  iframe_t2e17.src = "https://uqload.com/embed-3l1nfriho5nn.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e18() {
+  modal_t2e18.style.display = "flex";
+  iframe_t2e18.src = "https://uqload.com/embed-00nldk7f06q0.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e19() {
+  modal_t2e19.style.display = "flex";
+  iframe_t2e19.src = "https://uqload.com/embed-c2t8nxcryb73.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e20() {
+  modal_t2e20.style.display = "flex";
+  iframe_t2e20.src = "https://uqload.com/embed-hiv8q52mbv90.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e21() {
+  modal_t2e21.style.display = "flex";
+  iframe_t2e21.src = "https://uqload.com/embed-xmqy0y1jvbtv.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e22() {
+  modal_t2e22.style.display = "flex";
+  iframe_t2e22.src = "https://uqload.com/embed-5odjnujn7cra.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e23() {
+  modal_t2e23.style.display = "flex";
+  iframe_t2e23.src = "https://uqload.com/embed-d2qt23det6d4.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e24() {
+  modal_t2e24.style.display = "flex";
+  iframe_t2e24.src = "https://uqload.com/embed-zv5g31njdob8.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e25() {
+  modal_t2e25.style.display = "flex";
+  iframe_t2e25.src = "https://uqload.com/embed-xm6lrrmxj8ha.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e26() {
+  modal_t2e26.style.display = "flex";
+  iframe_t2e26.src = "https://uqload.com/embed-bb3vcbjpyujc.html";
+  body.style.overflow = "hidden";
+}
+
+
+
+/*close modal*/
+/*Season1*/
+function close_t1e1() {
+  modal_t1e1.style.display = "none";
+  iframe_t1e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e2() {
+  modal_t1e2.style.display = "none";
+  iframe_t1e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e3() {
+  modal_t1e3.style.display = "none";
+  iframe_t1e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e4() {
+  modal_t1e4.style.display = "none";
+  iframe_t1e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e5() {
+  modal_t1e5.style.display = "none";
+  iframe_t1e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e6() {
+  modal_t1e6.style.display = "none";
+  iframe_t1e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e7() {
+  modal_t1e7.style.display = "none";
+  iframe_t1e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e8() {
+  modal_t1e8.style.display = "none";
+  iframe_t1e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e9() {
+  modal_t1e9.style.display = "none";
+  iframe_t1e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e10() {
+  modal_t1e10.style.display = "none";
+  iframe_t1e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e11() {
+  modal_t1e11.style.display = "none";
+  iframe_t1e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e12() {
+  modal_t1e12.style.display = "none";
+  iframe_t1e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e13() {
+  modal_t1e13.style.display = "none";
+  iframe_t1e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e14() {
+  modal_t1e14.style.display = "none";
+  iframe_t1e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e15() {
+  modal_t1e15.style.display = "none";
+  iframe_t1e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e16() {
+  modal_t1e16.style.display = "none";
+  iframe_t1e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e17() {
+  modal_t1e17.style.display = "none";
+  iframe_t1e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e18() {
+  modal_t1e18.style.display = "none";
+  iframe_t1e18.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e19() {
+  modal_t1e19.style.display = "none";
+  iframe_t1e19.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e20() {
+  modal_t1e20.style.display = "none";
+  iframe_t1e20.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e21() {
+  modal_t1e21.style.display = "none";
+  iframe_t1e21.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e22() {
+  modal_t1e22.style.display = "none";
+  iframe_t1e22.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e23() {
+  modal_t1e23.style.display = "none";
+  iframe_t1e23.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e24() {
+  modal_t1e24.style.display = "none";
+  iframe_t1e24.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e25() {
+  modal_t1e25.style.display = "none";
+  iframe_t1e25.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e26() {
+  modal_t1e26.style.display = "none";
+  iframe_t1e26 .src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season2*/
+function close_t2e1() {
+  modal_t2e1.style.display = "none";
+  iframe_t2e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e2() {
+  modal_t2e2.style.display = "none";
+  iframe_t2e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e3() {
+  modal_t2e3.style.display = "none";
+  iframe_t2e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e4() {
+  modal_t2e4.style.display = "none";
+  iframe_t2e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e5() {
+  modal_t2e5.style.display = "none";
+  iframe_t2e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e6() {
+  modal_t2e6.style.display = "none";
+  iframe_t2e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e7() {
+  modal_t2e7.style.display = "none";
+  iframe_t2e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e8() {
+  modal_t2e8.style.display = "none";
+  iframe_t2e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e9() {
+  modal_t2e9.style.display = "none";
+  iframe_t2e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e10() {
+  modal_t2e10.style.display = "none";
+  iframe_t2e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e11() {
+  modal_t2e11.style.display = "none";
+  iframe_t2e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e12() {
+  modal_t2e12.style.display = "none";
+  iframe_t2e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e13() {
+  modal_t2e13.style.display = "none";
+  iframe_t2e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e14() {
+  modal_t2e14.style.display = "none";
+  iframe_t2e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e15() {
+  modal_t2e15.style.display = "none";
+  iframe_t2e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e16() {
+  modal_t2e16.style.display = "none";
+  iframe_t2e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e17() {
+  modal_t2e17.style.display = "none";
+  iframe_t2e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e18() {
+  modal_t2e18.style.display = "none";
+  iframe_t2e18.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e19() {
+  modal_t2e19.style.display = "none";
+  iframe_t2e19.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e20() {
+  modal_t2e20.style.display = "none";
+  iframe_t2e20.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e21() {
+  modal_t2e21.style.display = "none";
+  iframe_t2e21.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e22() {
+  modal_t2e22.style.display = "none";
+  iframe_t2e22.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e23() {
+  modal_t2e23.style.display = "none";
+  iframe_t2e23.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e24() {
+  modal_t2e24.style.display = "none";
+  iframe_t2e24.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e25() {
+  modal_t2e25.style.display = "none";
+  iframe_t2e25.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e26() {
+  modal_t2e26.style.display = "none";
+  iframe_t2e26 .src = "";
+  body.style.overflow = "auto";
+}
+
+
+/*Season1*/
+document.getElementById("btn-t1e1").addEventListener("click", mostrar_modal_t1e1);
+document.getElementById("btn-t1e2").addEventListener("click", mostrar_modal_t1e2);
+document.getElementById("btn-t1e3").addEventListener("click", mostrar_modal_t1e3);
+document.getElementById("btn-t1e4").addEventListener("click", mostrar_modal_t1e4);
+document.getElementById("btn-t1e5").addEventListener("click", mostrar_modal_t1e5);
+document.getElementById("btn-t1e6").addEventListener("click", mostrar_modal_t1e6);
+document.getElementById("btn-t1e7").addEventListener("click", mostrar_modal_t1e7);
+document.getElementById("btn-t1e8").addEventListener("click", mostrar_modal_t1e8);
+document.getElementById("btn-t1e9").addEventListener("click", mostrar_modal_t1e9);
+document.getElementById("btn-t1e10").addEventListener("click", mostrar_modal_t1e10);
+document.getElementById("btn-t1e11").addEventListener("click", mostrar_modal_t1e11);
+document.getElementById("btn-t1e12").addEventListener("click", mostrar_modal_t1e12);
+document.getElementById("btn-t1e13").addEventListener("click", mostrar_modal_t1e13);
+document.getElementById("btn-t1e14").addEventListener("click", mostrar_modal_t1e14);
+document.getElementById("btn-t1e15").addEventListener("click", mostrar_modal_t1e15);
+document.getElementById("btn-t1e16").addEventListener("click", mostrar_modal_t1e16);
+document.getElementById("btn-t1e17").addEventListener("click", mostrar_modal_t1e17);
+document.getElementById("btn-t1e18").addEventListener("click", mostrar_modal_t1e18);
+document.getElementById("btn-t1e19").addEventListener("click", mostrar_modal_t1e19);
+document.getElementById("btn-t1e20").addEventListener("click", mostrar_modal_t1e20);
+document.getElementById("btn-t1e21").addEventListener("click", mostrar_modal_t1e21);
+document.getElementById("btn-t1e22").addEventListener("click", mostrar_modal_t1e22);
+document.getElementById("btn-t1e23").addEventListener("click", mostrar_modal_t1e23);
+document.getElementById("btn-t1e24").addEventListener("click", mostrar_modal_t1e24);
+document.getElementById("btn-t1e25").addEventListener("click", mostrar_modal_t1e25);
+document.getElementById("btn-t1e26").addEventListener("click", mostrar_modal_t1e26);
+
+
+/*Season2*/
+document.getElementById("btn-t2e1").addEventListener("click", mostrar_modal_t2e1);
+document.getElementById("btn-t2e2").addEventListener("click", mostrar_modal_t2e2);
+document.getElementById("btn-t2e3").addEventListener("click", mostrar_modal_t2e3);
+document.getElementById("btn-t2e4").addEventListener("click", mostrar_modal_t2e4);
+document.getElementById("btn-t2e5").addEventListener("click", mostrar_modal_t2e5);
+document.getElementById("btn-t2e6").addEventListener("click", mostrar_modal_t2e6);
+document.getElementById("btn-t2e7").addEventListener("click", mostrar_modal_t2e7);
+document.getElementById("btn-t2e8").addEventListener("click", mostrar_modal_t2e8);
+document.getElementById("btn-t2e9").addEventListener("click", mostrar_modal_t2e9);
+document.getElementById("btn-t2e10").addEventListener("click", mostrar_modal_t2e10);
+document.getElementById("btn-t2e11").addEventListener("click", mostrar_modal_t2e11);
+document.getElementById("btn-t2e12").addEventListener("click", mostrar_modal_t2e12);
+document.getElementById("btn-t2e13").addEventListener("click", mostrar_modal_t2e13);
+document.getElementById("btn-t2e14").addEventListener("click", mostrar_modal_t2e14);
+document.getElementById("btn-t2e15").addEventListener("click", mostrar_modal_t2e15);
+document.getElementById("btn-t2e16").addEventListener("click", mostrar_modal_t2e16);
+document.getElementById("btn-t2e17").addEventListener("click", mostrar_modal_t2e17);
+document.getElementById("btn-t2e18").addEventListener("click", mostrar_modal_t2e18);
+document.getElementById("btn-t2e19").addEventListener("click", mostrar_modal_t2e19);
+document.getElementById("btn-t2e20").addEventListener("click", mostrar_modal_t2e20);
+document.getElementById("btn-t2e21").addEventListener("click", mostrar_modal_t2e21);
+document.getElementById("btn-t2e22").addEventListener("click", mostrar_modal_t2e22);
+document.getElementById("btn-t2e23").addEventListener("click", mostrar_modal_t2e23);
+document.getElementById("btn-t2e24").addEventListener("click", mostrar_modal_t2e24);
+document.getElementById("btn-t2e25").addEventListener("click", mostrar_modal_t2e25);
+document.getElementById("btn-t2e26").addEventListener("click", mostrar_modal_t2e26);
+
+
+/*Season1*/
+document.getElementById("close-t1e1").addEventListener("click", close_t1e1);
+document.getElementById("close-t1e2").addEventListener("click", close_t1e2);
+document.getElementById("close-t1e3").addEventListener("click", close_t1e3);
+document.getElementById("close-t1e4").addEventListener("click", close_t1e4);
+document.getElementById("close-t1e5").addEventListener("click", close_t1e5);
+document.getElementById("close-t1e6").addEventListener("click", close_t1e6);
+document.getElementById("close-t1e7").addEventListener("click", close_t1e7);
+document.getElementById("close-t1e8").addEventListener("click", close_t1e8);
+document.getElementById("close-t1e9").addEventListener("click", close_t1e9);
+document.getElementById("close-t1e10").addEventListener("click", close_t1e10);
+document.getElementById("close-t1e11").addEventListener("click", close_t1e11);
+document.getElementById("close-t1e12").addEventListener("click", close_t1e12);
+document.getElementById("close-t1e13").addEventListener("click", close_t1e13);
+document.getElementById("close-t1e14").addEventListener("click", close_t1e14);
+document.getElementById("close-t1e15").addEventListener("click", close_t1e15);
+document.getElementById("close-t1e16").addEventListener("click", close_t1e16);
+document.getElementById("close-t1e17").addEventListener("click", close_t1e17);
+document.getElementById("close-t1e18").addEventListener("click", close_t1e18);
+document.getElementById("close-t1e19").addEventListener("click", close_t1e19);
+document.getElementById("close-t1e20").addEventListener("click", close_t1e20);
+document.getElementById("close-t1e21").addEventListener("click", close_t1e21);
+document.getElementById("close-t1e22").addEventListener("click", close_t1e22);
+document.getElementById("close-t1e23").addEventListener("click", close_t1e23);
+document.getElementById("close-t1e24").addEventListener("click", close_t1e24);
+document.getElementById("close-t1e25").addEventListener("click", close_t1e25);
+document.getElementById("close-t1e26").addEventListener("click", close_t1e26);
+
+/*Season2*/
+document.getElementById("close-t2e1").addEventListener("click", close_t2e1);
+document.getElementById("close-t2e2").addEventListener("click", close_t2e2);
+document.getElementById("close-t2e3").addEventListener("click", close_t2e3);
+document.getElementById("close-t2e4").addEventListener("click", close_t2e4);
+document.getElementById("close-t2e5").addEventListener("click", close_t2e5);
+document.getElementById("close-t2e6").addEventListener("click", close_t2e6);
+document.getElementById("close-t2e7").addEventListener("click", close_t2e7);
+document.getElementById("close-t2e8").addEventListener("click", close_t2e8);
+document.getElementById("close-t2e9").addEventListener("click", close_t2e9);
+document.getElementById("close-t2e10").addEventListener("click", close_t2e10);
+document.getElementById("close-t2e11").addEventListener("click", close_t2e11);
+document.getElementById("close-t2e12").addEventListener("click", close_t2e12);
+document.getElementById("close-t2e13").addEventListener("click", close_t2e13);
+document.getElementById("close-t2e14").addEventListener("click", close_t2e14);
+document.getElementById("close-t2e15").addEventListener("click", close_t2e15);
+document.getElementById("close-t2e16").addEventListener("click", close_t2e16);
+document.getElementById("close-t2e17").addEventListener("click", close_t2e17);
+document.getElementById("close-t2e18").addEventListener("click", close_t2e18);
+document.getElementById("close-t2e19").addEventListener("click", close_t2e19);
+document.getElementById("close-t2e20").addEventListener("click", close_t2e20);
+document.getElementById("close-t2e21").addEventListener("click", close_t2e21);
+document.getElementById("close-t2e22").addEventListener("click", close_t2e22);
+document.getElementById("close-t2e23").addEventListener("click", close_t2e23);
+document.getElementById("close-t2e24").addEventListener("click", close_t2e24);
+document.getElementById("close-t2e25").addEventListener("click", close_t2e25);
+document.getElementById("close-t2e26").addEventListener("click", close_t2e26);
+
+
+/*Seasons*/
+document.getElementById('btn_season1').addEventListener('click', showSeason1);
+document.getElementById('btn_season2').addEventListener('click', showSeason2);
+
+function showSeason1() {
+  season1.style.display = "block";
+  season2.style.display = "none";
+}
+
+function showSeason2() {
+  season1.style.display = "none";
+  season2.style.display = "block";
+}
+
+	  
+	</script>
+</body>
+</html>
