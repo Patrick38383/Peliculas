@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Series</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	
+	<style type="text/css">
+	  
+	  @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: #090909;
+	font-family: 'Open Sans', sans-serif;
+}
+
+a {
+	text-decoration: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.contenedor {
+	width: 90%;
+	max-width: 1000px;
+	margin: auto;
+	padding: 10px 0;
+}
+
+.selectbox {
+	width: 50%;
+	margin: auto;
+	position: relative;
+}
+
+.select {
+	background: #222;
+	width: 100%;
+	border-radius: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 5px;
+	padding: 10px 0 10px 10px;
+	position: relative;
+}
+
+.select i {
+	font-size: 23px;
+	margin-right: 13px;
+	color: #ddd;
+}
+
+.titulo {
+	margin-bottom: 10px;
+	color: #ddd;
+	font-weight: 600;
+	font-size: 16px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.descripcion {
+	font-size: 14px;
+	color: #ddd;
+}
+
+.opciones {
+	background: #191919;
+	border-radius: 10px;
+	max-height: 400px;
+	overflow: auto;
+	width: 100%;
+	display: none;
+}
+
+.opciones.active {
+	display: block;
+	animation: fadeIn .3s forwards;
+}
+
+@keyframes fadeIn {
+	from {
+		transform: translateY(-100px) scale(.5);
+	}
+	to {
+		transform: translateY(0) scale(1);
+	}
+}
+
+.textos {
+  width: 100%;
+}
+
+.contenido-opcion {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	transition: .2s ease all;
+}
+
+.opciones .contenido-opcion {
+	padding: 9px;
+}
+
+.opciones .contenido-opcion:hover {
+  background: #101010;
+}
+
+.sinopsis {
+  padding: 0 15px;
+  color: #eee;
+  font-size: 13px;
+  text-align: justify;
+  margin-bottom: 10px;
+}
+
+/*Chapters*/
+
+.episodes {
+	overflow: auto;
+	z-index: 100;
+	width: 100%;
+	display: block;
+}
+
+.episodes .contenido-opcion {
+	background: #090909;
+	padding: 0 10px 14px 10px;
+}
+
+.episodes .contenido-opcion:hover {
+  background: #000;
+}
+
+.contenido-opcion img {
+	width: auto;
+	height: 50px;
+	margin-right: 20px;
+	border-radius: 2px;
+}
+
+/*Responsive*/
+
+@media screen and (max-width: 800px){
+	.selectbox {
+		width: 100%;
+	}
+}
+
+
+
+
+
+
+/*Cards*/
+.card {
+	width: 100%;
+	height: 100vh;
+	max-width: 1100px;
+	position: fixed;
+  font-family: 'Montserrat', sans-serif;
+  top: 50%;
+  transform: translateY(-50%);
+	background: rgba(2, 2, 2, .7);
+	display: none;
+}
+
+.contenedor-card {
+  width: 95%;
+  position: fixed;
+  background: #111;
+  border-radius: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+
+.card .contenido-card h4 {
+  text-align: center;
+	margin-bottom: 10px;
+	color: #ddd;
+}
+
+.card .contenido-card p {
+  padding: 0 10px 10px ;
+	line-height: 1.5;
+	color: #ddd;
+	font-size: 14px;
+	margin-bottom: 5px;
+	text-align: justify;
+}
+
+iframe {
+  border-radius: 7px 7px 0 0;
+}
+
+.close {
+  font-size: 50px;
+  color: #fff;
+  position: absolute;
+  display: flex;
+  top: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.season2 {
+  display: none;
+}
+	  
+	</style>
+</head>
+<body id="body">
+	
+	<div class="contenedor">
+		<form action="">
+			<div class="selectbox">
+				<div class="select" id="select">
+					<div class="contenido-select">
+						<h1 class="titulo">Temporada 1</h1>
+					</div>
+					<i class="bi bi-chevron-down"></i>
+				</div>
+
+				<div class="opciones" id="opciones">
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season1">Temporada 1</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season2">Temporada 2</h1>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<input type="hidden" id="inputSelect" value="">
+		</form>
+
+	</div>
+	
+	<!--Sinopsis-->
+	
+	<div class="sinopsis">
+	  <p>La reportera Daphne contrata a Scooby, Scrappy y Shaggy como sus asistentes para resolver misterios sobrenaturales mientras trabajaban para una revista de adolescentes.</p>
+	</div>
+	
+	
+<!--Season1-->
+	
+	<div class="episodes" id="season1">
+					<a class="opcion" id="btn-t1e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/kYrTSfhtrGd3SjeJxvE98XL4rzM.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Mi Tío Scooby y Los Bárbaros / Zona de Tiburones</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/ultSukL8TZypj2d9SIPFI4HoG.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. El Can de los Scoobyvilles / La Decepción Dinosaurica</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/1RbjlkJQWitEw0jwzASKVvw9bRm.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Scooby de la Selva / Los Cíclope</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/cqsUOXqPAa6ikHEsN89AEzSxgMm.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. El Canguro / La Medalla de Oro</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/11cyEgzL7ke4agLSJkzvRwRrzOl.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Hechiceros y Guerreros / Scoobsie</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/ckLrzRRCA9MmlupUCMqa8gqW23R.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. La Marca de Scooby / El Loco Parque de Diversiones</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/3ImXrAR3PVdYTBJ14hbC3mij7NI.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. El Minotauro / El Bateador Emergente</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/aYCo5rh4iq4ujUURtuCGcnT2RZ5.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. El Extra / El Salón del Automóvil</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/rvOu9XriDc0Pi3wIK4aNhET5mgm.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. ¿Quién Está Cuidando al Monstruo? / Scooby a la Moda</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/5qFo9mCrKTIBAd0lhPR50HirHZ6.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. ¿Dónde Está Scooby-Doo?</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/eJorgpurJrqqvs43mVJ0AbWXxZS.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Campanas Nupciales</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season2-->
+			
+	<div class="episodes season2" id="season2">
+					<a class="opcion" id="btn-t2e1">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BYWU3OTcyOGQtNTBlZi00YjVlLTllNjMtNGM1Nzg5ZjFmZjkwXkEyXkFqcGdeQXVyMTEwODg2MDY@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Feliz Cumpleaños Scooby Doo Parte 1</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e2">
+						<div class="contenido-opcion">
+							<img src="https://imgs1.e-droid.net/srv/imgs/cards/o1777478_7628438.png" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Feliz Cumpleaños Scooby Doo Parte 2</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e3">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BYWU3OTcyOGQtNTBlZi00YjVlLTllNjMtNGM1Nzg5ZjFmZjkwXkEyXkFqcGdeQXVyMTEwODg2MDY@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Entrevista Macabra</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e4">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BZTMxM2Y4ODAtZDE4Yy00YTI0LTgxYjktZmJkZWYzZTE2ZDRjXkEyXkFqcGdeQXVyMTA3MTUyNTcx._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Las Manos del Horror</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e5">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BZWQwZDE2NWItZDQ4Ni00YzY4LTk3ODAtZDIyZTk4ZTEyNmE2XkEyXkFqcGdeQXVyMTA3MTUyNTcx._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Ser Scooby o no Ser Scooby</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e6">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BNjNkZTIxOGEtMDFmZC00NzA2LTg5MmYtZTVhN2M4NWRjM2ZmXkEyXkFqcGdeQXVyMTA3MTUyNTcx._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. La Máscara de Medusa</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e7">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BN2VmNThjMjctOTgzZi00YzBjLTk4NDEtNzY5YzM3ZWJhMGQxXkEyXkFqcGdeQXVyMTA3MTUyNTcx._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Misión Imposible</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e8">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BODIxNTViYmEtY2VmNi00ZTk0LWIzNmYtN2U1ZTcxNGUyYjhkXkEyXkFqcGdeQXVyMTA3MTUyNTcx._V1_FMjpg_UX511_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. El Equipo Abeja</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e9">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BZGM5Y2EzM2EtZDE2NC00MDc2LThlMGUtM2NkYzk4OWQ0ZTA0XkEyXkFqcGdeQXVyMTA3MTUyNTcx._V1_FMjpg_UX350_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. Servicio Doom</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e10">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BYjAzOGUyYjQtMTUxNy00YzZhLWFkYWUtYjI1MDIxZWNlM2E3XkEyXkFqcGdeQXVyMTA3MTUyNTcx._V1_FMjpg_UX350_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Un Código en la Nariz</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e11">
+						<div class="contenido-opcion">
+							<img src="https://imgs1.e-droid.net/srv/imgs/cards/o1777478_7628387.png" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Los Fantasmas de los Antiguos Astronautas Parte 1</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e12">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BYWU3OTcyOGQtNTBlZi00YjVlLTllNjMtNGM1Nzg5ZjFmZjkwXkEyXkFqcGdeQXVyMTEwODg2MDY@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Los Fantasmas de los Antiguos Astronautas Parte 2</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e13">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMmYwYjYyMWItOTEyZi00ZGQ0LWI5MzQtMjk1OTUwYmJhYjZhXkEyXkFqcGdeQXVyMTA3MTUyNTcx._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. La Noche de los Juguetes Vivientes</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e14">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BZTZkMDcyY2ItNzMwNS00N2NjLTgxYmEtYzE4Y2NlMzhmZjM0XkEyXkFqcGdeQXVyMTA3MTUyNTcx._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. Misión en el Polo Sur</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e15">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BNTU2MWZiNDgtNTE4MS00ZDBmLTgwNDUtNWI5ZWI5MTVjMzgyXkEyXkFqcGdeQXVyMTA3MTUyNTcx._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. Una Noche con Drácula Parte 1</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e16">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BYWU3OTcyOGQtNTBlZi00YjVlLTllNjMtNGM1Nzg5ZjFmZjkwXkEyXkFqcGdeQXVyMTEwODg2MDY@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. Una Noche con Drácula Parte 2</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e17">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMDg0MGRiN2EtOWFiZS00MWY4LTg3ZDgtMTVlZWNiNDUzNDZmXkEyXkFqcGdeQXVyMTA3MTUyNTcx._V1_FMjpg_UX340_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. El Fantasma de la Casa Blanca Parte 1</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e18">
+						<div class="contenido-opcion">
+							<img src="https://imgs1.e-droid.net/srv/imgs/cards/o1777478_7628466.png?v=1" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. El Fantasma de la Casa Blanca Parte 2</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e19">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BYjZiOTNlODUtNGRkYy00ZWJmLTllZGUtZTRmMDQ5ZWExNjM4XkEyXkFqcGdeQXVyMTA3MTUyNTcx._V1_FMjpg_UX435_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">19. El Barco Embrujado</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e20">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMWZkNDAzOGEtMmE3OC00NGFhLWIyZmEtNWNiOWRjNWU3NGExXkEyXkFqcGdeQXVyMTA3MTUyNTcx._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">20. El Collar de Dooby Dooby Doo</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e21">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BM2NmMDcyZDktYjU1OS00ZDkzLTk0YjUtZDc1MDdkNDNkNzZjXkEyXkFqcGdeQXVyNTA4NzExMDg@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">21. Sherlock Doo Parte 1</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e22">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BYWU3OTcyOGQtNTBlZi00YjVlLTllNjMtNGM1Nzg5ZjFmZjkwXkEyXkFqcGdeQXVyMTEwODg2MDY@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">22. Sherlock Doo Parte 2</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e23">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BZjNjODgzNDEtODVhZC00YzZiLTgyOWMtOTAzYmJkZWRiYzU3XkEyXkFqcGdeQXVyNTA4NzExMDg@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">23. El Héroe Ghoul</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e24">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMTU5MTllMjgtMDRjYS00YzdhLWE2MzctYjQyMzY0OTUyMTVmXkEyXkFqcGdeQXVyMTA3MTUyNTcx._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">24. Una Granja Muy Particular</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e25">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BYWU3OTcyOGQtNTBlZi00YjVlLTllNjMtNGM1Nzg5ZjFmZjkwXkEyXkFqcGdeQXVyMTEwODg2MDY@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">25. El Cascanueces de Scooby Parte 1</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e26">
+						<div class="contenido-opcion">
+							<img src="https://imgs1.e-droid.net/srv/imgs/cards/o1777478_7628555.png" alt="">
+							<div class="textos">
+								<h1 class="titulo">26. El Cascanueces de Scooby Parte 2</h1>
+								<p class="descripcion">12min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div> 
+	
+
+
+
+
+
+
+	<!--Season1-->
+<div class="card" id="modal_t1e1">
+  
+<div class="close" id="close-t1e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Mi Tío Scooby y Los Bárbaros / Zona de Tiburones</h4>
+		<p>Los chicos están en Noruega para averiguar qué pasó con el profesor Buzby, el arqueólogo, que estaba estudiando las antiguas ruinas vikingas. Parece que algunos vikingos han regresado y lo han secuestrado, pero en poco tiempo, Daphne y Scrappy también son secuestrados y Shaggy y Scooby tienen que salvarlos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e3">
+  
+<div class="close" id="close-t1e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. El Can de los Scoobyvilles / La Decepción Dinosaurica</h4>
+		<p>Los chicos se dirigen a Barkerville Hall, en Escocia, para averiguar qué está sucediendo con las ovejas Barkervilles. ¿Se ha hecho realidad la maldición, ha venido el Sabueso de los Barkerville, y es Scooby, como cree toda la gente del pueblo?</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e5">
+  
+<div class="close" id="close-t1e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Scooby de la Selva / Los Cíclope</h4>
+		<p>Los chicos se dirigen a la reserva de juegos en la jungla africana, para entrevistar al Sr. Rasheed y descubrir qué hay detrás de las desapariciones de los animales de la selva. Con la ayuda del libro de frases de animales de Scooby, los chicos aprenden que algunos de los animales están siendo puestos en trance después de escuchar un extraño silbido.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e6">
+  
+<div class="close" id="close-t1e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. El Canguro / La Medalla de Oro</h4>
+		<p>La pandilla se dirige al desierto, a Devils Rock, para tomar algunas fotos. Pero los chicos pronto oyen hablar del neandertal que está asustando a todos lejos de la zona, y las fotos de Daphne alrededor de la roca no están resultando.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e7">
+  
+<div class="close" id="close-t1e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Hechiceros y Guerreros / Scoobsie</h4>
+		<p>Mientras asisten a la Convención de Magos y Brujos, los chicos descubren que todos han sido atrapados por el Mago de la Torre. Luego le depende a Scrappy ganar este juego de tamaño real de "Wizards and Warlocks" y liberar a todos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e8">
+  
+<div class="close" id="close-t1e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. La Marca de Scooby / El Loco Parque de Diversiones</h4>
+		<p>La pandilla va al Old California Festival, donde ven una obra de teatro que involucra al héroe favorito de Scooby, El Sabueso, que ayuda a los pobres. Más tarde esa noche, mientras acampa, Scooby sueña que él es El Scoobo y Scrappy es Scrappito, y deben salvar a Senorita Daphne y al Señor Shaggy del comandante.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e9">
+  
+<div class="close" id="close-t1e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. El Minotauro / El Bateador Emergente</h4>
+		<p>La pandilla está en Grecia, y cuando se registran en su hotel, se enteran de un Minotauro que está tratando de ahuyentar al Club Internacional de Cazadores de Tesoros, que está buscando el Vellocino de Oro. Sin embargo, el Sr. Smith, el presidente del Club de Cazadores de Tesoros, no está asustado, y después de encontrar el mapa del Labrynth de Knossis, continúa su búsqueda.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e10">
+  
+<div class="close" id="close-t1e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. El Extra / El Salón del Automóvil</h4>
+		<p>Los chicos se dirigen a Hollywood para entrevistar a Bobby Moguel sobre su nueva película "The Amazing Wonder Car", pero pronto se dan cuenta de que no le gustan los reporteros. Antes de llegar allí, el doble abandona la película porque un Gremlin está tratando de arruinarla, por lo que la pandilla decide tomar el trabajo para ponerse detrás de escena.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e11">
+  
+<div class="close" id="close-t1e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. ¿Quién Está Cuidando al Monstruo? / Scooby a la Moda</h4>
+		<p>Mientras están en Transilvania, los chicos leen sobre el monstruo de Frankenstein que regresa y asusta a la ciudad.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e12">
+  
+<div class="close" id="close-t1e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. ¿Dónde Está Scooby-Doo?</h4>
+		<p>A los chicos s  e les envían misteriosamente boletos de tren para abordar el Orient Express, para un viaje.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e13">
+  
+<div class="close" id="close-t1e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Campanas Nupciales</h4>
+		<p>Los chicos van a casa a Plymouth, Massachussetts para la boda de la hermana de Shaggy, Maggie, con Wilfred, pero cuando el fantasma de su realativa McBaggy Rogers aparece y quiere recuperar su viejo anillo que esconde un mapa del tesoro familiar, ¿se casará Maggie sin él?</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season2-->
+<div class="card" id="modal_t2e1">
+  
+<div class="close" id="close-t2e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Feliz Cumpleaños Scooby Doo Parte 1</h4>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e2">
+  
+<div class="close" id="close-t2e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Feliz Cumpleaños Scooby Doo Parte 2</h4>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e3">
+  
+<div class="close" id="close-t2e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Entrevista Macabra</h4>
+		<p>Scooby y la pandilla son contratados para entrevistar a una estrella de cine solitaria.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e4">
+  
+<div class="close" id="close-t2e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Las Manos del Horror</h4>
+		<p>Mientras están en una carrera de pizza, los chicos se encuentran con von Gizmo Estate, donde se encuentran con Ratfield, el ex asistente de los gemelos Von Gizmo, quien afirma que robaron su invento secreto.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e5">
+  
+<div class="close" id="close-t2e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Ser Scooby o no Ser Scooby</h4>
+		<p>Próxima parada en los Cheapo European Tours: Dinamarca, donde parece que hay algo podrido en Dinamarca mientras los chicos se encuentran con el fantasma de Hamlet en el Hotel Hamlet en el que se alojan. Sin embargo, el fantasma quiere que los chicos sepan algo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e6">
+  
+<div class="close" id="close-t2e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. La Máscara de Medusa</h4>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e7">
+  
+<div class="close" id="close-t2e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Misión Imposible</h4>
+		<p>Scooby y la pandilla intentan impedir que un espía enemigo construya un transpondedor secreto en la Estatua de la Libertad y se apodere del mundo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e8">
+  
+<div class="close" id="close-t2e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. El Equipo Abeja</h4>
+		<p>Scooby y la pandilla son contratados por una granja de miel para investigar el misterioso robo de su preciosa miel por parte de enormes abejas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e9">
+  
+<div class="close" id="close-t2e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. Servicio Doom</h4>
+		<p>Los chicos son convocados al Overview Hotel por Jack Marsten, el propietario, para librarlo del propietario anterior, que murió 100 años antes.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e10">
+  
+<div class="close" id="close-t2e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Un Código en la Nariz</h4>
+		<p>En el complejo del ejército de alto secreto, Codefinger, el espía maestro, roba el decodificador del gobierno de alto secreto. Mientras está en la escapada, lo esconde en los grandes almacenes pingree's.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e11">
+  
+<div class="close" id="close-t2e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Los Fantasmas de los Antiguos Astronautas Parte 1</h4>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e12">
+  
+<div class="close" id="close-t2e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Los Fantasmas de los Antiguos Astronautas Parte 2</h4>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e13">
+  
+<div class="close" id="close-t2e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. La Noche de los Juguetes Vivientes</h4>
+		<p>La Agencia de Detectives Scooby-Doo es contratada por Herr Dreisbach de la Tienda de Juguetes de la Selva Negra, para descubrir quién está robando sus ganancias de su caja fuerte.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e14">
+  
+<div class="close" id="close-t2e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. Misión en el Polo Sur</h4>
+		<p>El Dr. Carlin, director de investigación del Campamento de Investigación Científica de la Antártida, contrata a los detectives para averiguar quién está saboteando su trabajo de investigación sobre leones marinos y pingüinos. Todos los investigadores quieren irse a casa, pero el profesor no los dejará irse hasta que se encuentre la información de la investigación.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e15">
+  
+<div class="close" id="close-t2e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. Una Noche con Drácula Parte 1</h4>
+		<p>Los chicos están invitados a una fiesta de Halloween, pero poco saben que los invitados a la fiesta son realmente monstruos que necesitan su ayuda. ¿Los chicos se quedarán y los ayudarán, o correrán y se esconderán?</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e16">
+  
+<div class="close" id="close-t2e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. Una Noche con Drácula Parte 2</h4>
+		<p>Los chicos están invitados a una fiesta de Halloween, pero poco saben que los invitados a la fiesta son realmente monstruos que necesitan su ayuda. ¿Los chicos se quedarán y los ayudarán, o correrán y se esconderán?</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e17">
+  
+<div class="close" id="close-t2e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. El Fantasma de la Casa Blanca Parte 1</h4>
+		<p>Velma, una asistente de investigación de la NASA, lleva a Daphne, Shaggy y los perros a cenar a la Casa Blanca, donde están discutiendo la nueva estación espacial en la que Velma ayudó.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e18">
+  
+<div class="close" id="close-t2e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. El Fantasma de la Casa Blanca Parte 2</h4>
+		<p>Velma, una asistente de investigación de la NASA, lleva a Daphne, Shaggy y los perros a cenar a la Casa Blanca, donde están discutiendo la nueva estación espacial en la que Velma ayudó.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e19">
+  
+<div class="close" id="close-t2e19"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e19" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>19. El Barco Embrujado</h4>
+		<p>Todos los clientes están asustados por el fantasma del coronel Beauregard, que está buscando a Magnolia. Ella creía que él le robó su invaluable collar de esmeraldas, por lo que se negó a casarse con él hace tantos años.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e20">
+  
+<div class="close" id="close-t2e20"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e20" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>20. El Collar de Dooby Dooby Doo</h4>
+		<p>La pandilla se dirige al Circus A Go-Go de Las Vegas para ver a su primo Dooby Dooby Doo en concierto.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e21">
+  
+<div class="close" id="close-t2e21"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e21" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>21. Sherlock Doo Parte 1</h4>
+		<p>La pandilla asiste al Concurso de Solucionadores de Misterio en Londres en el famoso 221B Baker Street. Junto con otros detectives, deben resolver el "Misterio del Carbúnculo Azul. El caso sin resolver de Sherlock.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e22">
+  
+<div class="close" id="close-t2e22"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e22" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>22. Sherlock Doo Parte 2</h4>
+		<p>La pandilla asiste al Concurso de Solucionadores de Misterio en Londres en el famoso 221B Baker Street. Junto con otros detectives, deben resolver el "Misterio del Carbúnculo Azul. El caso sin resolver de Sherlock.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e23">
+  
+<div class="close" id="close-t2e23"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e23" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>23. El Héroe Ghoul</h4>
+		<p>La pandilla realiza una gira por Hollywood por Bananatoons Studios, donde se crea la caricatura favorita de Scrappy, Hero Hound.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e24">
+  
+<div class="close" id="close-t2e24"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e24" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>24. Una Granja Muy Particular</h4>
+		<p>Los chicos se dirigen al Instituto Experimental para la Mejora Evolutiva de los Organismos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e25">
+  
+<div class="close" id="close-t2e25"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e25" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>25. El Cascanueces de Scooby Parte 1</h4>
+		<p>El cruel y escalofriante Winslow Nickleby está listo para amortiguar otra Navidad para los niños en la casa de los niños. La pandilla tiene la tarea de calentar su corazón.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e26">
+  
+<div class="close" id="close-t2e26"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e26" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>26. El Cascanueces de Scooby Parte 2</h4>
+		<p>El cruel y escalofriante Winslow Nickleby está listo para amortiguar otra Navidad para los niños en la casa de los niños. La pandilla tiene la tarea de calentar su corazón.</p>
+	</div>
+	</div>
+</div>
+
+
+	<script>
+	  
+//select
+const select = document.querySelector('#select');
+const opciones = document.querySelector('#opciones');
+const contenidoSelect = document.querySelector('#select .contenido-select');
+const hiddenInput = document.querySelector('#inputSelect');
+
+document.querySelectorAll('#opciones > .opcion').forEach((opcion) => {
+	opcion.addEventListener('click', (e) => {
+		e.preventDefault();
+		contenidoSelect.innerHTML = e.currentTarget.innerHTML;
+		select.classList.toggle('active');
+		opciones.classList.toggle('active');
+		hiddenInput.value = e.currentTarget.querySelector('.titulo').innerText;
+	});
+});
+
+select.addEventListener('click', () => {
+	select.classList.toggle('active');
+	opciones.classList.toggle('active');
+});
+
+
+
+
+
+
+/*open modal*/
+/*Season1*/
+function mostrar_modal_t1e1() {
+  modal_t1e1.style.display = "flex";
+  iframe_t1e1.src = "https://uqload.com/embed-ml3w8xp2hpzz.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e3() {
+  modal_t1e3.style.display = "flex";
+  iframe_t1e3.src = "https://uqload.com/embed-pj6a5ed3ak71.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e5() {
+  modal_t1e5.style.display = "flex";
+  iframe_t1e5.src = "https://uqload.com/embed-khqqws9vh2qa.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e6() {
+  modal_t1e6.style.display = "flex";
+  iframe_t1e6.src = "https://uqload.com/embed-85m09610zrlx.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e7() {
+  modal_t1e7.style.display = "flex";
+  iframe_t1e7.src = "https://uqload.com/embed-m9ot1l39imgx.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e8() {
+  modal_t1e8.style.display = "flex";
+  iframe_t1e8.src = "https://uqload.com/embed-a8yrakpxa6ym.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e9() {
+  modal_t1e9.style.display = "flex";
+  iframe_t1e9.src = "https://uqload.com/embed-xaynek6x3eql.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e10() {
+  modal_t1e10.style.display = "flex";
+  iframe_t1e10.src = "https://uqload.com/embed-m9g4b2btz082.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e11() {
+  modal_t1e11.style.display = "flex";
+  iframe_t1e11.src = "https://uqload.com/embed-4n3badydcdav.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e12() {
+  modal_t1e12.style.display = "flex";
+  iframe_t1e12.src = "https://uqload.com/embed-78ljyvcp6jis.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e13() {
+  modal_t1e13.style.display = "flex";
+  iframe_t1e13.src = "https://uqload.com/embed-ni0l0oe6f2yw.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season2*/
+function mostrar_modal_t2e1() {
+  modal_t2e1.style.display = "flex";
+  iframe_t2e1.src = "https://uqload.com/embed-b0gxc4v5h5tv.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e2() {
+  modal_t2e2.style.display = "flex";
+  iframe_t2e2.src = "https://uqload.com/embed-eo7w1bmfjyzw.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e3() {
+  modal_t2e3.style.display = "flex";
+  iframe_t2e3.src = "https://uqload.com/embed-n1k1lnd4l96f.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e4() {
+  modal_t2e4.style.display = "flex";
+  iframe_t2e4.src = "https://uqload.com/embed-4r5i47xaehjm.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e5() {
+  modal_t2e5.style.display = "flex";
+  iframe_t2e5.src = "https://uqload.com/embed-hymza26yx5dp.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e6() {
+  modal_t2e6.style.display = "flex";
+  iframe_t2e6.src = "https://uqload.com/embed-g9m12zkhlnlo.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e7() {
+  modal_t2e7.style.display = "flex";
+  iframe_t2e7.src = "https://uqload.com/embed-dlk1oxwopypj.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e8() {
+  modal_t2e8.style.display = "flex";
+  iframe_t2e8.src = "https://uqload.com/embed-92swrfmnag5s.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e9() {
+  modal_t2e9.style.display = "flex";
+  iframe_t2e9.src = "https://uqload.com/embed-axnxqna9966a.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e10() {
+  modal_t2e10.style.display = "flex";
+  iframe_t2e10.src = "https://uqload.com/embed-ypt6nemjfaql.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e11() {
+  modal_t2e11.style.display = "flex";
+  iframe_t2e11.src = "https://uqload.com/embed-eez2eqzyt78t.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e12() {
+  modal_t2e12.style.display = "flex";
+  iframe_t2e12.src = "https://uqload.com/embed-8ebpz4is85gg.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e13() {
+  modal_t2e13.style.display = "flex";
+  iframe_t2e13.src = "https://uqload.com/embed-lke9i9j4zc5e.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e14() {
+  modal_t2e14.style.display = "flex";
+  iframe_t2e14.src = "https://uqload.com/embed-earwnyy0nysf.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e15() {
+  modal_t2e15.style.display = "flex";
+  iframe_t2e15.src = "https://uqload.com/embed-9nirdvjf4qro.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e16() {
+  modal_t2e16.style.display = "flex";
+  iframe_t2e16.src = "https://uqload.com/embed-eyvwtf7lipuo.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e17() {
+  modal_t2e17.style.display = "flex";
+  iframe_t2e17.src = "https://uqload.com/embed-pbxjaajugok8.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e18() {
+  modal_t2e18.style.display = "flex";
+  iframe_t2e18.src = "https://uqload.com/embed-5njt3g1nrkzy.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e19() {
+  modal_t2e19.style.display = "flex";
+  iframe_t2e19.src = "https://uqload.com/embed-j2tik70xjmja.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e20() {
+  modal_t2e20.style.display = "flex";
+  iframe_t2e20.src = "https://uqload.com/embed-0m65vomg28p8.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e21() {
+  modal_t2e21.style.display = "flex";
+  iframe_t2e21.src = "https://uqload.com/embed-1rzyxuo5hpc4.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e22() {
+  modal_t2e22.style.display = "flex";
+  iframe_t2e22.src = "https://uqload.com/embed-bkyvqknbf90c.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e23() {
+  modal_t2e23.style.display = "flex";
+  iframe_t2e23.src = "https://uqload.com/embed-amnb49qdayzd.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e24() {
+  modal_t2e24.style.display = "flex";
+  iframe_t2e24.src = "https://uqload.com/embed-numuot5p80ns.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e25() {
+  modal_t2e25.style.display = "flex";
+  iframe_t2e25.src = "https://uqload.com/embed-0ot8ic1s1u7v.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e26() {
+  modal_t2e26.style.display = "flex";
+  iframe_t2e26.src = "https://uqload.com/embed-h2q0s56v55dg.html";
+  body.style.overflow = "hidden";
+}
+
+
+
+/*close modal*/
+/*Season1*/
+function close_t1e1() {
+  modal_t1e1.style.display = "none";
+  iframe_t1e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e3() {
+  modal_t1e3.style.display = "none";
+  iframe_t1e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e5() {
+  modal_t1e5.style.display = "none";
+  iframe_t1e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e6() {
+  modal_t1e6.style.display = "none";
+  iframe_t1e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e7() {
+  modal_t1e7.style.display = "none";
+  iframe_t1e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e8() {
+  modal_t1e8.style.display = "none";
+  iframe_t1e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e9() {
+  modal_t1e9.style.display = "none";
+  iframe_t1e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e10() {
+  modal_t1e10.style.display = "none";
+  iframe_t1e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e11() {
+  modal_t1e11.style.display = "none";
+  iframe_t1e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e12() {
+  modal_t1e12.style.display = "none";
+  iframe_t1e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e13() {
+  modal_t1e13.style.display = "none";
+  iframe_t1e13.src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season2*/
+function close_t2e1() {
+  modal_t2e1.style.display = "none";
+  iframe_t2e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e2() {
+  modal_t2e2.style.display = "none";
+  iframe_t2e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e3() {
+  modal_t2e3.style.display = "none";
+  iframe_t2e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e4() {
+  modal_t2e4.style.display = "none";
+  iframe_t2e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e5() {
+  modal_t2e5.style.display = "none";
+  iframe_t2e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e6() {
+  modal_t2e6.style.display = "none";
+  iframe_t2e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e7() {
+  modal_t2e7.style.display = "none";
+  iframe_t2e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e8() {
+  modal_t2e8.style.display = "none";
+  iframe_t2e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e9() {
+  modal_t2e9.style.display = "none";
+  iframe_t2e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e10() {
+  modal_t2e10.style.display = "none";
+  iframe_t2e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e11() {
+  modal_t2e11.style.display = "none";
+  iframe_t2e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e12() {
+  modal_t2e12.style.display = "none";
+  iframe_t2e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e13() {
+  modal_t2e13.style.display = "none";
+  iframe_t2e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e14() {
+  modal_t2e14.style.display = "none";
+  iframe_t2e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e15() {
+  modal_t2e15.style.display = "none";
+  iframe_t2e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e16() {
+  modal_t2e16.style.display = "none";
+  iframe_t2e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e17() {
+  modal_t2e17.style.display = "none";
+  iframe_t2e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e18() {
+  modal_t2e18.style.display = "none";
+  iframe_t2e18.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e19() {
+  modal_t2e19.style.display = "none";
+  iframe_t2e19.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e20() {
+  modal_t2e20.style.display = "none";
+  iframe_t2e20.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e21() {
+  modal_t2e21.style.display = "none";
+  iframe_t2e21.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e22() {
+  modal_t2e22.style.display = "none";
+  iframe_t2e22.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e23() {
+  modal_t2e23.style.display = "none";
+  iframe_t2e23.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e24() {
+  modal_t2e24.style.display = "none";
+  iframe_t2e24.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e25() {
+  modal_t2e25.style.display = "none";
+  iframe_t2e25.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e26() {
+  modal_t2e26.style.display = "none";
+  iframe_t2e26.src = "";
+  body.style.overflow = "auto";
+}
+
+
+/*Season1*/
+document.getElementById("btn-t1e1").addEventListener("click", mostrar_modal_t1e1);
+document.getElementById("btn-t1e3").addEventListener("click", mostrar_modal_t1e3);
+document.getElementById("btn-t1e5").addEventListener("click", mostrar_modal_t1e5);
+document.getElementById("btn-t1e6").addEventListener("click", mostrar_modal_t1e6);
+document.getElementById("btn-t1e7").addEventListener("click", mostrar_modal_t1e7);
+document.getElementById("btn-t1e8").addEventListener("click", mostrar_modal_t1e8);
+document.getElementById("btn-t1e9").addEventListener("click", mostrar_modal_t1e9);
+document.getElementById("btn-t1e10").addEventListener("click", mostrar_modal_t1e10);
+document.getElementById("btn-t1e11").addEventListener("click", mostrar_modal_t1e11);
+document.getElementById("btn-t1e12").addEventListener("click", mostrar_modal_t1e12);
+document.getElementById("btn-t1e13").addEventListener("click", mostrar_modal_t1e13);
+
+
+/*Season2*/
+document.getElementById("btn-t2e1").addEventListener("click", mostrar_modal_t2e1);
+document.getElementById("btn-t2e2").addEventListener("click", mostrar_modal_t2e2);
+document.getElementById("btn-t2e3").addEventListener("click", mostrar_modal_t2e3);
+document.getElementById("btn-t2e4").addEventListener("click", mostrar_modal_t2e4);
+document.getElementById("btn-t2e5").addEventListener("click", mostrar_modal_t2e5);
+document.getElementById("btn-t2e6").addEventListener("click", mostrar_modal_t2e6);
+document.getElementById("btn-t2e7").addEventListener("click", mostrar_modal_t2e7);
+document.getElementById("btn-t2e8").addEventListener("click", mostrar_modal_t2e8);
+document.getElementById("btn-t2e9").addEventListener("click", mostrar_modal_t2e9);
+document.getElementById("btn-t2e10").addEventListener("click", mostrar_modal_t2e10);
+document.getElementById("btn-t2e11").addEventListener("click", mostrar_modal_t2e11);
+document.getElementById("btn-t2e12").addEventListener("click", mostrar_modal_t2e12);
+document.getElementById("btn-t2e13").addEventListener("click", mostrar_modal_t2e13);
+document.getElementById("btn-t2e14").addEventListener("click", mostrar_modal_t2e14);
+document.getElementById("btn-t2e15").addEventListener("click", mostrar_modal_t2e15);
+document.getElementById("btn-t2e16").addEventListener("click", mostrar_modal_t2e16);
+document.getElementById("btn-t2e17").addEventListener("click", mostrar_modal_t2e17);
+document.getElementById("btn-t2e18").addEventListener("click", mostrar_modal_t2e18);
+document.getElementById("btn-t2e19").addEventListener("click", mostrar_modal_t2e19);
+document.getElementById("btn-t2e20").addEventListener("click", mostrar_modal_t2e20);
+document.getElementById("btn-t2e21").addEventListener("click", mostrar_modal_t2e21);
+document.getElementById("btn-t2e22").addEventListener("click", mostrar_modal_t2e22);
+document.getElementById("btn-t2e23").addEventListener("click", mostrar_modal_t2e23);
+document.getElementById("btn-t2e24").addEventListener("click", mostrar_modal_t2e24);
+document.getElementById("btn-t2e25").addEventListener("click", mostrar_modal_t2e25);
+document.getElementById("btn-t2e26").addEventListener("click", mostrar_modal_t2e26);
+
+
+/*Season1*/
+document.getElementById("close-t1e1").addEventListener("click", close_t1e1);
+document.getElementById("close-t1e3").addEventListener("click", close_t1e3);
+document.getElementById("close-t1e5").addEventListener("click", close_t1e5);
+document.getElementById("close-t1e6").addEventListener("click", close_t1e6);
+document.getElementById("close-t1e7").addEventListener("click", close_t1e7);
+document.getElementById("close-t1e8").addEventListener("click", close_t1e8);
+document.getElementById("close-t1e9").addEventListener("click", close_t1e9);
+document.getElementById("close-t1e10").addEventListener("click", close_t1e10);
+document.getElementById("close-t1e11").addEventListener("click", close_t1e11);
+document.getElementById("close-t1e12").addEventListener("click", close_t1e12);
+document.getElementById("close-t1e13").addEventListener("click", close_t1e13);
+
+/*Season2*/
+document.getElementById("close-t2e1").addEventListener("click", close_t2e1);
+document.getElementById("close-t2e2").addEventListener("click", close_t2e2);
+document.getElementById("close-t2e3").addEventListener("click", close_t2e3);
+document.getElementById("close-t2e4").addEventListener("click", close_t2e4);
+document.getElementById("close-t2e5").addEventListener("click", close_t2e5);
+document.getElementById("close-t2e6").addEventListener("click", close_t2e6);
+document.getElementById("close-t2e7").addEventListener("click", close_t2e7);
+document.getElementById("close-t2e8").addEventListener("click", close_t2e8);
+document.getElementById("close-t2e9").addEventListener("click", close_t2e9);
+document.getElementById("close-t2e10").addEventListener("click", close_t2e10);
+document.getElementById("close-t2e11").addEventListener("click", close_t2e11);
+document.getElementById("close-t2e12").addEventListener("click", close_t2e12);
+document.getElementById("close-t2e13").addEventListener("click", close_t2e13);
+document.getElementById("close-t2e14").addEventListener("click", close_t2e14);
+document.getElementById("close-t2e15").addEventListener("click", close_t2e15);
+document.getElementById("close-t2e16").addEventListener("click", close_t2e16);
+document.getElementById("close-t2e17").addEventListener("click", close_t2e17);
+document.getElementById("close-t2e18").addEventListener("click", close_t2e18);
+document.getElementById("close-t2e19").addEventListener("click", close_t2e19);
+document.getElementById("close-t2e20").addEventListener("click", close_t2e20);
+document.getElementById("close-t2e21").addEventListener("click", close_t2e21);
+document.getElementById("close-t2e22").addEventListener("click", close_t2e22);
+document.getElementById("close-t2e23").addEventListener("click", close_t2e23);
+document.getElementById("close-t2e24").addEventListener("click", close_t2e24);
+document.getElementById("close-t2e25").addEventListener("click", close_t2e25);
+document.getElementById("close-t2e26").addEventListener("click", close_t2e26);
+
+
+/*Seasons*/
+document.getElementById('btn_season1').addEventListener('click', showSeason1);
+document.getElementById('btn_season2').addEventListener('click', showSeason2);
+
+function showSeason1() {
+  season1.style.display = "block";
+  season2.style.display = "none";
+}
+
+function showSeason2() {
+  season1.style.display = "none";
+  season2.style.display = "block";
+}
+
+	  
+	</script>
+</body>
+</html>
