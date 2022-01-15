@@ -1,0 +1,4557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Series</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	
+	<style type="text/css">
+	  
+	  @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: #090909;
+	font-family: 'Open Sans', sans-serif;
+}
+
+a {
+	text-decoration: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.contenedor {
+	width: 90%;
+	max-width: 1000px;
+	margin: auto;
+	padding: 10px 0;
+}
+
+.selectbox {
+	width: 50%;
+	margin: auto;
+	position: relative;
+}
+
+.select {
+	background: #222;
+	width: 100%;
+	border-radius: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 5px;
+	padding: 10px 0 10px 10px;
+	position: relative;
+}
+
+.select i {
+	font-size: 23px;
+	margin-right: 13px;
+	color: #ddd;
+}
+
+.titulo {
+	margin-bottom: 10px;
+	color: #ddd;
+	font-weight: 600;
+	font-size: 16px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.descripcion {
+	font-size: 14px;
+	color: #ddd;
+}
+
+.opciones {
+	background: #191919;
+	border-radius: 10px;
+	overflow: auto;
+	width: 100%;
+	display: none;
+}
+
+.opciones.active {
+	display: block;
+	animation: fadeIn .3s forwards;
+}
+
+@keyframes fadeIn {
+	from {
+		transform: translateY(-100px) scale(.5);
+	}
+	to {
+		transform: translateY(0) scale(1);
+	}
+}
+
+.textos {
+  width: 100%;
+}
+
+.contenido-opcion {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	transition: .2s ease all;
+}
+
+.opciones .contenido-opcion {
+	padding: 9px;
+}
+
+.opciones .contenido-opcion:hover {
+  background: #101010;
+}
+
+.sinopsis {
+  padding: 0 15px;
+  color: #eee;
+  font-size: 13px;
+  text-align: justify;
+  margin-bottom: 10px;
+}
+
+/*Chapters*/
+
+.episodes {
+	overflow: auto;
+	z-index: 100;
+	width: 100%;
+	display: block;
+}
+
+.episodes .contenido-opcion {
+	background: #090909;
+	padding: 0 10px 14px 10px;
+}
+
+.episodes .contenido-opcion:hover {
+  background: #000;
+}
+
+.contenido-opcion img {
+	width: auto;
+	height: 50px;
+	margin-right: 20px;
+	border-radius: 2px;
+}
+
+/*Responsive*/
+
+@media screen and (max-width: 800px){
+	.selectbox {
+		width: 100%;
+	}
+}
+
+
+
+
+
+
+/*Cards*/
+.card {
+	width: 100%;
+	height: 100vh;
+	max-width: 1100px;
+	position: fixed;
+  font-family: 'Montserrat', sans-serif;
+  top: 50%;
+  transform: translateY(-50%);
+	background: rgba(2, 2, 2, .7);
+	display: none;
+}
+
+.contenedor-card {
+  width: 95%;
+  position: fixed;
+  background: #111;
+  border-radius: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+
+.card .contenido-card h4 {
+  text-align: center;
+	margin-bottom: 10px;
+	color: #ddd;
+}
+
+.card .contenido-card p {
+  padding: 0 10px 10px ;
+	line-height: 1.5;
+	color: #ddd;
+	font-size: 14px;
+	margin-bottom: 5px;
+	text-align: justify;
+}
+
+iframe {
+  border-radius: 7px 7px 0 0;
+}
+
+.close {
+  font-size: 50px;
+  color: #fff;
+  position: absolute;
+  display: flex;
+  top: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.season2, .season3, .season4, .season5 {
+  display: none;
+}
+	  
+	</style>
+</head>
+<body id="body">
+	
+	<div class="contenedor">
+		<form action="">
+			<div class="selectbox">
+				<div class="select" id="select">
+					<div class="contenido-select">
+						<h1 class="titulo">Temporada 1</h1>
+					</div>
+					<i class="bi bi-chevron-down"></i>
+				</div>
+
+				<div class="opciones" id="opciones">
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season1">Temporada 1</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season2">Temporada 2</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season3">Temporada 3</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season4">Temporada 4</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season5">Temporada 5</h1>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<input type="hidden" id="inputSelect" value="">
+		</form>
+
+	</div>
+	
+	<!--Sinopsis-->
+	
+	<div class="sinopsis">
+	  <p>Un vampiro trata de reiniciar su vida en Los Ángeles encontrándose con otra raza de demonios, y une fuerzas con otros héroes de ideas afines que buscan proteger a otras almas de la amenaza demoníaca.</p>
+	</div>
+	
+	
+<!--Season1-->
+	
+	<div class="episodes" id="season1">
+					<a class="opcion" id="btn-t1e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/ftyWrISuty7pqHnAbq5uDm647aY.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Ciudad de los Ángeles</h1>
+								<p class="descripcion">44min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/iX5VZDyI6vG6zsH4NhNBJyL9grk.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Corazón Solitario</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/5lhwbtF4qrpShvlgQdxmVtx94th.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. En la Oscuridad</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/n9ZIIOxCSRw4OKE4IJjDInI26VL.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Hecho Pedazos</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/A7g71gOTU1cBrGthEU7vqwXv9Sf.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Habitación con vistas</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/fmi7idVYAKFODz7C86UGMsSp9E3.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Sentido y Sensibilidad</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/7Dnn5hcCJqqXS6QRjoJrgukEfnw.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Despedida de Soltero</h1>
+								<p class="descripcion">44min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/j2vA2nQwp3b6yFVWqN9sn7CqPFm.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. No te olvidaré</h1>
+								<p class="descripcion">44min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/djyuK3T5IvL6JKHrfmeJB88L0F9.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. Héroe</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/psfqCIi3QYtbwrmcGPuIx7OK9tj.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Regalos de despedida</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/8bGnwhecgFmwyNJspLJbiOu6c9l.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Sonámbulo</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/iLhMo0gZjDtZ88rHsSn14VDy0sq.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Encinta</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/a54egFsfHfEjMm9kf8XbiT5yI0d.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Ella</h1>
+								<p class="descripcion">44min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e14">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/9JheY5jq5b0HBQonUVXvsM4RBt5.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. Bajo mi piel</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e15">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/a3RHcehEFmxo4dL9vr59pDgO2Bl.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. El Hijo Pródigo</h1>
+								<p class="descripcion">39min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e16">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/nU9pUdcfUhI9Rrs7CC3Qv0bAnuj.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. Combate a muerte</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e17">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/wNFw0ayI9hKfxY1hFPupIQ5bJO5.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. Eternidad</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e18">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/9QbKF1bqOtsSDvinTSseMNTTaVe.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. La Asesina</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e19">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/wOXR69N2Cc2aOIVk7wvO64szq9k.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">19. Santuario</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e20">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/lCH8xVMzabweLF90jWPsqyZ65WA.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">20. Zona de Guerra</h1>
+								<p class="descripcion">40min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e21">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/66anqK48AxATU7VNK7dFdWfWcTD.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">21. Cita a Ciegas</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e22">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/23JZMZ9vUWcLOfwUWRptTaZwEsy.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">22. Shanshu en Los Ángeles</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season2-->
+			
+	<div class="episodes season2" id="season2">
+					<a class="opcion" id="btn-t2e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/odLr8ckyZLccgclUSArxfE7IEPV.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. El Juicio</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/hFf4EgujzjdeKjjxxS9tYzQIHeA.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Sombras del pasado</h1>
+								<p class="descripcion">44min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/1Bw2TF82dpDA9wxQGGAcU2W61Lj.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Primeras impresiones</h1>
+								<p class="descripcion">40min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/fdjF2gMJ5HIFt7gD6b2dfyTJ0t1.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Intacto</h1>
+								<p class="descripcion">44min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/1cpzFenzbGNj6XkeK8CJ6xA6Rqy.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Querido niño</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/bpnuqUtXoMWW4OT5IHkv1EHAMEb.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Tú no eres Angel</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/kpT7dOe0se4zb0cClOKLOtg0YcY.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Darla</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/bSNEf8HHF3G3RqPDoH1tJ6scYiu.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. El sudario de Rahmon</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/6L6Z2GuUxYjFhHD8BoZz1MfU4ke.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. La prueba</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/oKWoe8VJDX7zTNqxJl6mSbM5Wbo.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Reunión</h1>
+								<p class="descripcion">40min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/oHVzfSUv1ZojUXAl1veagRqkPgO.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Redefinición</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/phuZJwbTlBvFaYi9KAUH2qC4e6G.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Dinero manchado de sangre</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/kMOIrEqbCXHTxrQMIqtw2hyURsI.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Feliz Aniversario</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e14">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/nNO7uYSpSp2T8afdc87bu1PmOzi.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. La Delgada Linea Muerta</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e15">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/qE5Tio3hSSQb71XRMS1Yn7EbFqs.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. Repetición</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e16">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/2e7wnnziP5GwNFg0oC526zqUGTu.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. La revelación</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e17">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/7TkGiPLGi3qzAdnJlHXYemlDb5V.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. Discordia</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e18">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/tXspUS4YZ5vFFoiOsu6K7JeOltF.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. Punto Muerto</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e19">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/Aenyr3GV5pOVkv5Hvty4whVx8Hb.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">19. El Portal</h1>
+								<p class="descripcion">40min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e20">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/wi5d0Z58NF9b9nLqLXmmf0ZxwwM.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">20. Más allá del arco iris</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e21">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/s7QijF1JXKUUhJWEY9sSR9sKDwM.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">21. A Través Del Espejo</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e22">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/4NweaqZefwO0TIe5znHVpcgHhoF.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">22. Al Otro Lado Del Portal</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season3-->
+			
+	<div class="episodes season3" id="season3">
+					<a class="opcion" id="btn-t3e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/247p28c6b6KyTG4sHPAX6EjiVfs.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. El Amor</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/ziv71LrzGk8cDquNBwWkLFm9uGd.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Las visiones</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/bMbRxjUXKFv3eHDzKGhAVeugXNX.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Mi antigua Banda</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/f6Sl7v1G0Ilj13SLRXUcvuFfK7g.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Carpe Noctem</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/oVtnHSR1p9dxVFrO1NseIrJg87h.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Sin Fred</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/4TIr0giJK44ZJ7TGtnkg7Augjyr.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Billy</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/z6Q07NUsAn5dTkLrFDjA0qfxXtb.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. El Vástago</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/fLmIMyRWiW6ayJMH9TijzkuBHBN.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Acelerando</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/3N3cVnAzvmxuIXWqMQq1V2VI1Nn.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. Una nana</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/wVm3wYeOXAoJDPZobo1ylx8HsWN.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Papá</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/dQCbMdWOaHQMsEkLLZk6h6rDq1I.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Cumpleaños</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/svhYw6lxsUPF5xn1CazUliSOiZN.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. El dinero no lo es todo</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/8FyWgzMiIPhQPulNg4dYnWMM65w.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Al Margen</h1>
+								<p class="descripcion">44min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e14">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/ju5nfs51o3M2tq7yRluMmUrslZB.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. Pareado</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e15">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/orDGT5e9ra9h3RoKKCrJni672GU.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. Lealtad</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e16">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/5FNvvg7Cf3KARdZePfbyaBFuAOA.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. Que duermas Bien</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e17">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/o2HjAiEHwxbU2WWAlFJ9bAoHyVM.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. Perdón</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e18">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/zHCrJkmWavw7uiKwPJbdwePNpgc.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. Doble o Nada</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e19">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/dHM1UbdEwMrm1lQCHIXRd4371Zv.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">19. El precio</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e20">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/1KNLC7d8GrrfyjK3g6x9fMgFZAI.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">20. Un nuevo Mundo</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e21">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/xXNhfNioEk9z6zXzXqC05gh8UkZ.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">21. Bendición</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e22">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/vLcSHtQoGjncNrbDYfKY5n2sdJc.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">22. Mañana</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season4-->
+			
+	<div class="episodes season4" id="season4">
+					<a class="opcion" id="btn-t4e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/lWfC8WlaIUc6gOdhypAG0lty5YH.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. En las profundidades</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/eqYoBPqZAMpWtERrDBKsU8rxt0Q.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Estado terrenal</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/b8f7nypxPFostkCINowi1hHBwus.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Siempre gana la casa</h1>
+								<p class="descripcion">40min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/93ZXOyNmCtOgq6ZcM75YJbjeDtI.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Sin Recuerdos</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/pVCrMG9NuL60afx8f9OKQ9iSogq.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Supersimetría</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/hGT0yXo9NtzR7MsGhpRT7Bb0Mzc.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. El Hechizo de la Botella</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/uJoZY8M9rTYcZRfTNEhIJFhPaC9.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Apocalipsis</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/qMp65SN8z6UDcgysKITDqNE9JQ3.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Muertos vivientes</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/o4OzXKngUo8v2meIEjD0ha8yDUL.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. El Largo Viaje</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/5OO9EeE1LtgoKsSIrAveal0yCdx.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. El despertar</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/zm9YpCAsnKY2sf8i1cYlot7Ewqp.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Sin Alma</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/qummsiqiCuFt3mzFRx8zgid6k5j.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Calvario</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/AczH5WtdC2YRdCcGrQO5PLEmvcP.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Salvamento</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e14">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/7uTMve9FlZPTqCOpmQ4WixyO44F.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. Liberación</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e15">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/p6HMEs0inQyZL38pSrsm1H1ZZZy.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. Orfeo</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e16">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/b8Uz8rgfV3mh0WpmQhMgTsPccG3.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. Jugadores</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e17">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/cAxxLQacfLXldVYY2sRrou59Pyw.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. De Dentro a Fuera</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e18">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/iEvOBGXdmD84xnfAbtOzxScHZbN.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. El Nacimiento</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e19">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/uJYMwU238Vkhx9afdDSiip5Y6uO.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">19. La bala mágica</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e20">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/uLyhQPxuhrcuNBHtaJkg11nO79f.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">20. Sacrificio</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e21">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/b6kKvJve4zUayGabzWBOHcfhVhq.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">21. Adiós a la Paz</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e22">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/rSvpuWypNpaeJt8hyVd95gIjUPD.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">22. Hogar</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season5-->
+			
+	<div class="episodes season5" id="season5">
+					<a class="opcion" id="btn-t5e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/vgyvuSJApYA6LNg8VK9BgLgULj.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Convicción</h1>
+								<p class="descripcion">44min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/64K3G1KPbjmC8fseJekhfx5JYA4.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Justa Recompensa</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/nWGq5uIne6L1jqh3D1qq01LeEyz.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Liberada</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/haDk48omnUQWeuy2VUH5uoi8pIs.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Camino del infierno</h1>
+								<p class="descripcion">44min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/wBJNlXxFbO3d9ZpHFid3POpMyNO.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. El alma de la fiesta</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/kZaDI13qktmCO1KCxo2vB4XkwTy.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. El cuento preventivo del Número Cinco</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/i3eDIhoyxsDd7IINtOHctxT4kZ1.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Estirpe</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/iwdshTARGgQghY8WcFqnE15iKTp.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Destino</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/xzZZvSeUrES8UkDjmuQjRVXAaps.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. Una rubia peligrosa</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/6XeCUSxO3DwjPaCqWaCekWQrgo2.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Propósito de enmienda</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/eqiC5XkCtkYXX7yntAOV48Ic8Qb.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Tocado</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/i7qaWCVXWXK2KF6nwMbVHiI3diY.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. De nada</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/3ol1QphFBppcByLkG8QePKKidZF.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Por qué luchamos</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e14">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/zH1IRrb5Exm8ofOt0EHTkPOudGI.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. La sonrisa</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e15">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/6rY0cHePE0Zsg808WeV9KcnoYns.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. Un agujero en el mundo</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e16">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/fVvoX2QQ8gzb73zy6cTaKzQucR3.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. La Portadora</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e17">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/jqaqS9jUBF0tOPwqKeVz5R5ZLZI.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. Bajo la superficie</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e18">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/chVQxMKsVCH1Lef1S5NcwBbNMmV.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. Origen</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e19">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/jwpiNXTc4TsLJATPwFPp9jvxzkX.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">19. La bomba</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e20">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/uKK3QFKe07HBiyrDzIxfNwR2dKZ.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">20. La chica en cuestión</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e21">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/qLqOBw7eVdWWA1fXC6ecgaEzI29.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">21. La Jugada Maestra</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e22">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2/4j7Ly1iOdN5HaI5BOHTgzWvd0wR.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">22. Dejando huella</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+	
+
+
+
+
+
+
+	<!--Season1-->
+<div class="card" id="modal_t1e1">
+  
+<div class="close" id="close-t1e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Ciudad de los Ángeles</h4>
+		<p>Después de dejar Sunnydale por no poder amar a Buffy Angel se marcha a Los Ángeles. Allí descubrirá que LA es más que dinero y estrellas. Entonces conocerá a Doyle, un ser mitad demonio mitad humano, y junto a él y Cordelia (que intenta trabajar como actriz) forman Angel Investigations: un servicio de ayuda a gente con problemas. Crossover: Angel telefonea a Buffy pero no habla. Buffy coge esta misteriosa llamada durante el capítulo "Alumnos de nuevo ingreso", emitido justo antes.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e2">
+  
+<div class="close" id="close-t1e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Corazón Solitario</h4>
+		<p>Doyle tiene una nueva visión que llevará al equipo a un club en que los solteros se reúnen habitualmente en busca de amor y/o sexo. Pronto descubrirán que estan buscando a un demonio asesino en serie que va de cuerpo en cuerpo buscando uno en el que por fin se encuentre a gusto. Angel colaborará con Kate, una policia con la que además conecta.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e3">
+  
+<div class="close" id="close-t1e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. En la Oscuridad</h4>
+		<p>Oz visita LA y da un regalo a a Angel de parte de Buffy: la gema de Amarra, que da la inmortalidad a los vampiros. Desgraciadamente, Spike está ansioso por conseguir el anillo y va a Los Angeles en busca de él. Doyle y Cordelia tendrán que salvar a Angel, que está en apuros. Crossover: Este episodio continua la historia del episodio de Buffy "La Áspera luz del día", emitido justo antes.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e4">
+  
+<div class="close" id="close-t1e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Hecho Pedazos</h4>
+		<p>Mientras Cordelia y Angel siguen discutiendo sobre si deben cobrar o no a los clientes, Doyle recibe otra visión de una mujer en peligro. Angel visita a la mujer y descubre que ésta es acosada por un neurocirujano con el que salió una vez. Sorprendentemente este es capaz de ver todo lo que ella hace.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e5">
+  
+<div class="close" id="close-t1e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Habitación con vistas</h4>
+		<p>Cuando Cordelia decide que es incapaz de seguir soportando vivir con cucarachas, Doyle se apresura a encontrarla un lugar para vivir. Éste encuentra un apartamento perfecto a un buen precio. Demasiado perfecto.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e6">
+  
+<div class="close" id="close-t1e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Sentido y Sensibilidad</h4>
+		<p>Kate y el resto de compañeros de la policía son obligados a participar en una sesión de terapia para ser más sensibles. Posteriormente, en la fiesta de despedida de su padre se viene abajo y monta una escena. Los miembros del cuerpo de policía son incapaces de contener sus emociones, lo que puede traer graves problemas. Doyle es perseguido por un demonio.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e7">
+  
+<div class="close" id="close-t1e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Despedida de Soltero</h4>
+		<p>Justo cuando empieza a producirse un acercamiento entre Cordelia y Doyle aparece la esposa de éste. Ésta pretende que Doyle firme el divorcio para que pueda casarse con su novio. Doyle aceptará pero en la despedida de soltero descubrirá que la familia del novio tiene unas inusuales costumbres en lo que al exmaridos se refiere. Crossover: Al final del episodio Doyle tiene una visión de Buffy en peligro, por lo que Angel decide ir a Sunnydale, apareciendo en el capítulo "Remordimientos".</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e8">
+  
+<div class="close" id="close-t1e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. No te olvidaré</h4>
+		<p>Buffy confronta a Angel sobre su visita secreta a Sunnydale en Día de Acción de Gracias; Angel lucha con un demonio. Crossover: Este capítulo continua los acontecimientos ocurridos durante el capítulo "Remordimientos".</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e9">
+  
+<div class="close" id="close-t1e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. Héroe</h4>
+		<p>Una organización de demonios llega a L.A. para destruir a los mitad demonios, mitad humanos. Van detrás de un grupo de demonios Lister, el cual tendrán que salvar Ángel, Cordelia y Doyle. Para eso Doyle tendrá que superar sus miedos he integrarse con los suyos para que ninguno salga herido. La organización Scourge no tendrá piedad en destruir a todos los mestizos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e10">
+  
+<div class="close" id="close-t1e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Regalos de despedida</h4>
+		<p>Después del beso entre Doyle y Cordelia, ahora ella posee la habilidad de tener visiones, lo que estropeara (si se puede) aún mas su carrera como actriz. Llega a la ciudad un cazademonios que va tras un demonio al que Ángel aparentemente tiene que defender, se trata de un demonio empatico, y al parecer el cazademonios va tras el para arrebatarle su don.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e11">
+  
+<div class="close" id="close-t1e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Sonámbulo</h4>
+		<p>Ángel empieza a tener sueños, o mejor dicho, pesadillas, sobre las muertes que llevo a cabo en el pasado. El problema llega cuando empiezan a aparecer en L.A. personas muertas con el mismo método con el que las hacia el. Empieza a creer que el es el causante de dichas muertes, ¿tal vez Ángelus vuelve cuando el esta dormido?.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e12">
+  
+<div class="close" id="close-t1e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Encinta</h4>
+		<p>Vida nocturna en L.A., algo que la mayoría de la gente hace pero, algunas veces tiene mas peligro de lo que esperas. Cordelia sale de fiesta con unas amigas y después de una noche de lo más marchosa, se despierta embarazada de seis meses. Ángel y Wesley empiezan a investigar cuando de repente descubren que Cordelia esta embarazada de un demonio y no es la única en la ciudad con los mismo síntomas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e13">
+  
+<div class="close" id="close-t1e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Ella</h4>
+		<p>Empiezan a aparecer unos cadáveres en Los Ángeles misteriosamente quemados, los responsables, no pertenecen a nuestra dimensión. Un grupo de chicas, ayudadas por la princesa Jheira, una gran luchadora, intentan escapar de su dimensión donde las mujeres son ni más ni menos que simples objetos. Por supuesto los hombres de esta dimensión intentaran capturarlas, para ello Ángel intenta ayudarlas, aunque ellas crean no necesitar su ayuda.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e14">
+  
+<div class="close" id="close-t1e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. Bajo mi piel</h4>
+		<p>Una familia normal de Los Ángeles por el día, pero a la noche, ponen candado a una habitación. Cordelia tiene una visión de esa familia y Ángel va ha investigar. Al llega al hogar de la familia Ángel salva al niño de ser atropellado. Desde ese momento, y con la investigación de Wesley, demuestran que alguien de la familia esta poseído por un demonio, ahora tendrán que averiguar quien es y solucionarlo, antes de que demonio se deshaga del anfitrión humano.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e15">
+  
+<div class="close" id="close-t1e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. El Hijo Pródigo</h4>
+		<p>La detective Kate y su padre Trevor, no están pasando por uno de sus mejores momentos, aunque en anteriores capítulos descubrimos que nunca habían tenido muy buena relación. Algo está ocultando el padre de Kate, y Ángel lo descubre. Por la situación de padre e hija, Ángel empieza a recordar su relación con sus padres y la manera en la que los mató.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e16">
+  
+<div class="close" id="close-t1e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. Combate a muerte</h4>
+		<p>Un hombre pide ayuda a Investigaciones Ángel, para encontrar a su hermano que según el ha sido secuestrado por unos demonios. Ángel acepta el caso para ayudarle, pero en el transcurso de la noche, Ángel es secuestrado para luchar en un juego de demonios, El ring. Los hermanos le han engañado y ahora si quiere volver a ser libre tendrá que ganar y matar a los demonios contrincantes.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e17">
+  
+<div class="close" id="close-t1e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. Eternidad</h4>
+		<p>Herido, Angel revela su verdadera identidad a una joven actriz, quien toma medidas desesperadas para obtener la eterna juventud y belleza.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e18">
+  
+<div class="close" id="close-t1e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. La Asesina</h4>
+		<p>Faith (Eliza Dushku) es contratada para poner a Angel permanentemente fuera del negocio; Wesley todavía se siente responsable por Faith. Crossover: Faith fue vista por última vez huyendo de Sunnydale en el capítulo "¿Quién eres tú?"</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e19">
+  
+<div class="close" id="close-t1e19"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e19" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>19. Santuario</h4>
+		<p>Buffy viene a Los Ángeles buscando venganza de Faith pero se sorprende al descubrir que Angel está de lado de su némesis; Wesley considera usar a Faith para restablecer el consejo. Crossover: Después de este capítulo, Angel visita Sunnydale durante "El Factor Yoko"</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e20">
+  
+<div class="close" id="close-t1e20"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e20" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>20. Zona de Guerra</h4>
+		<p>Ángel ayuda a un millonario, por la insistencia de Cordelia de ganar dinero, de un chantajista. Debido a esto Ángel se ve en medio de una guerra entre vampiros y cazadores. Después de conocer a Charles Gunn el jefe de los cazadores, ambos piensan mutuamente que puede ser beneficiosa una unificación de fuerzas contra las fuerzas del mal.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e21">
+  
+<div class="close" id="close-t1e21"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e21" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>21. Cita a Ciegas</h4>
+		<p>Angel ayuda Lindsey (Christian Kane) a descifrar los archivos secretos de Wolfram & Hart para salvar a niños de un asesino demoníaco. Crossover: Cordelia llama a Willow para pedirle ayuda en la decodificación del disco, poco después de los acontecimientos del robo. "Primigenio".</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e22">
+  
+<div class="close" id="close-t1e22"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e22" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>22. Shanshu en Los Ángeles</h4>
+		<p>La firma de abogados Wolfram & Hart emplea a un poderoso demonio para aniquilar a Angel y aquellos que lo rodean, incluyendo Cordelia y Wesley.</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season2-->
+<div class="card" id="modal_t2e1">
+  
+<div class="close" id="close-t2e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. El Juicio</h4>
+		<p>Tras matar por error a su protector, Angel se convierte en el campeón de una mujer embarazada, que es acechada y perseguida por los demonios.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e2">
+  
+<div class="close" id="close-t2e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Sombras del pasado</h4>
+		<p>En la década de los 50, Angel intentó ayudar a una mujer que se alojaba en el Hotel Hyperion, un lugar con una larga historia de asesinatos y caos. En el presente el vampiro vuelve al Hyperion, e intenta matar al demonio con el que se negó a acabar cincuenta años antes.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e3">
+  
+<div class="close" id="close-t2e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Primeras impresiones</h4>
+		<p>Angel mantiene ardientes encuentros amorosos con Darla mientras duerme. Por su parte, Cordy tiene una visión de Gunn en peligro y promete protegerle, aunque el joven no quiera.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e4">
+  
+<div class="close" id="close-t2e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Intacto</h4>
+		<p>Angel intenta ayudar a una joven con poderes telquinésicos, antes de que acabe en las diabólicas manos de Wolfram&Hart.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e5">
+  
+<div class="close" id="close-t2e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Querido niño</h4>
+		<p>Darla continua jugando con la mente de Angel, intentando hacerle regresar al lado oscuro, mientras que Wesley y Cordelia están preocupados por la posibilidad de que el vampiro esté perdiendo la cordura.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e6">
+  
+<div class="close" id="close-t2e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Tú no eres Angel</h4>
+		<p>Angel se reúne con un Swami en su intento de acabar con su obsesión por Darla. Mientras tanto Wesley asume la identidad de Angel y es contratado como guardaespaldas de la hija de un importante hombre de negocios.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e7">
+  
+<div class="close" id="close-t2e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Darla</h4>
+		<p>Angel se desespera intentando rescatar a Darla de las garras de Wolfram & Hart. Mientras tanto, la ex-vampira recuerda su pasado. Crossover: Este espisodio consiste en gran parte en flashbacks. Algunos de los eventos son contados desde otro punto de vista durante el capítulo "Ansias de amor".</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e8">
+  
+<div class="close" id="close-t2e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. El sudario de Rahmon</h4>
+		<p>Angel se infiltra con Gunn en una banda de ladrones, para impedir el robo de un sudario demoniaco, sin saber que posee el poder de controlar las mentes. Cordelia y Wesley acuden para ayudar a sus amigos, sin embargo, el sudario también ejerce su poder sobre ellos, y Wesley termina siendo acusado de asesinato.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e9">
+  
+<div class="close" id="close-t2e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. La prueba</h4>
+		<p>Después de saber que Darla se está muriendo, Angel se niega a aceptar la súplica de su sire para volver a convertirla en vampiro. En lugar de ello, decide pasar por una serie de pruebas místicas, en las que en última instancia, deberá decidir si debe sacrificar su propia vida para salvar la de Darla.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e10">
+  
+<div class="close" id="close-t2e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Reunión</h4>
+		<p>La recién revampirizada Darla y su nueva sire, Drusilla, acechan en las calles de Los Angeles. Ángel, desesperado, intenta detenerlas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e11">
+  
+<div class="close" id="close-t2e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Redefinición</h4>
+		<p>Después de despedir a todos sus compañeros y negarse a aceptar cualquier ayuda de ellos, Ángel decide encargarse de Darla y Drusilla por su cuenta. Crossover: Después de este episodio, Drusilla visita Sunnydale durante "Spike Enamorado".</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e12">
+  
+<div class="close" id="close-t2e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Dinero manchado de sangre</h4>
+		<p>Ángel amenaza a W&H con revelar su corrupción al público, después de descubrir que están robando el dinero de las donaciones a centros para chicos sin hogar. Mientras tanto, Cordelia, Wesley y Gunn deciden formar su propia agencia de detectives demoníacos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e13">
+  
+<div class="close" id="close-t2e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Feliz Aniversario</h4>
+		<p>Ángel y The Host buscan a un físico que intenta crear una máquina para detener el tiempo, lo que sin saberlo podría desencadenar el Apocalipsis. Mientras tanto Cordy, Wes y Gunn abren finalmente su propia agencia.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e14">
+  
+<div class="close" id="close-t2e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. La Delgada Linea Muerta</h4>
+		<p>Gunn, Wesley y Cordelia investigan a un grupo de policías zombies que están atacando a jóvenes sin hogar. Por su parte, Angel une fuerzas con Kate para investigar el origen de estos policías.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e15">
+  
+<div class="close" id="close-t2e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. Repetición</h4>
+		<p>Ángel se entera, que durante la inminente revisión que W&H hace cada 75 años, la firma es visitada por uno de los Socios Superiores. El Socio tiene un anillo, con el poder de transportarle a la casa madre de las oficinas de Wolfram&Hart.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e16">
+  
+<div class="close" id="close-t2e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. La revelación</h4>
+		<p>Después de una noche de pasión desenfrenada con Darla, Ángel despierta con su alma intacta y una epifanía. Crossover: Después de este episodio, Angel visita momentaneamente Sunnydale durante "Para siempre" por el funeral de Joyce Summers</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e17">
+  
+<div class="close" id="close-t2e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. Discordia</h4>
+		<p>Mientras la pandilla intenta encontrar una secta de vampiros, Cordelia recibe una visita sorpresa de una de sus compañeras de instituto, Harmony. Crossover: Harmony dejó Sunnydale después de "Spike Enamorado". Durante este capítulo, Cordelia llama a Willow para obtener información sobre Harmony.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e18">
+  
+<div class="close" id="close-t2e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. Punto Muerto</h4>
+		<p>Las visiones de Cordy empeoran y los chicos temen por su salud. Mientras tanto, Lindsey consigue una nueva mano, que parece tomar sus propias decisiones.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e19">
+  
+<div class="close" id="close-t2e19"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e19" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>19. El Portal</h4>
+		<p>Un portal dimensional se abre en Caritas, dejando a un poderoso demonio sediento de sangre. Cuando una visión de Cordelia, lleva al grupo a investigar una biblioteca donde una chica desapareció hace cinco años, un nuevo portal se abre trayendo consigo a un demonio de la misma dimensión que The Host.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e20">
+  
+<div class="close" id="close-t2e20"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e20" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>20. Más allá del arco iris</h4>
+		<p>Cordelia es absorbida por un portal mágico y transportada a una dimensión demoníaca, donde acaba siendo esclava. En L.A. Ángel, Wesley y The Host intentan encontrar una forma de rescatar a Cordy, mientras que Gunn descubre que su antigua pandilla callejera está teniendo muchos problemas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e21">
+  
+<div class="close" id="close-t2e21"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e21" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>21. A Través Del Espejo</h4>
+		<p>Después de ser sentenciado a muerte en una dimensión demoníaca, Angel y los chicos son llevados ante Su Alteza Real Cordelia.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e22">
+  
+<div class="close" id="close-t2e22"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e22" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>22. Al Otro Lado Del Portal</h4>
+		<p>Angel combate a la bestia interior que la dimensión demoníaca le produce; Cordelia descubre que su papel como princesa implica aparearse con un demonio.</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season3-->
+<div class="card" id="modal_t3e1">
+  
+<div class="close" id="close-t3e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. El Amor</h4>
+		<p>Tras pasar varios meses en un monasterio recuperándose de la muerte de Buffy, Ángel vuelve a Los Ángeles dónde deberá enfrentarse con James, un vampiro ex-compañero de Angelus, que busca venganza por la muerte de su amada.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e2">
+  
+<div class="close" id="close-t3e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Las visiones</h4>
+		<p>Las visiones de Cordelia se están volviendo cada vez más dolorosas y comienzan a afectarla físicamente. Está casi al brode de la muerte, cuando Ángel descubre que Lilah está enviando esas dolorosas visiones, para forzar al vampiro a liberar a un hombre apresado en una dimensión alterna por Los Poderes.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e3">
+  
+<div class="close" id="close-t3e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Mi antigua Banda</h4>
+		<p>Gunn tendrá que decidir a quienes mostrar lealtad, tras descubrir que su antigua banda está comenzando a matar demonios indiscriminadamente, y que tras su unión al equipo de Angel, ya no confían en él.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e4">
+  
+<div class="close" id="close-t3e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Carpe Noctem</h4>
+		<p>Durante la investigación de la extraña muerte de varios hombres, Ángel se mete en problemas cuando un anciano intercambia su cuerpo con él a través de un encantamiento. Crossover: Al final del episodio Willow telefonea para comunicar a los chicos que Buffy ha resucitado.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e5">
+  
+<div class="close" id="close-t3e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Sin Fred</h4>
+		<p>Cuando los padres de Fred aparecen para llevársela a casa, la chica huye del Hyperion, para después decidir que debe volver con sus padres a casa, ya que no pertenece al grupo de Investigaciones Ángel.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e6">
+  
+<div class="close" id="close-t3e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Billy</h4>
+		<p>Todos los varones de Investigaciones Ángel son afectados por un hombre llamado Billy, quién posee el poder de hacer que los hombres se vuelvan agresivos contra las mujeres. Obligando a Fred a lidiar con un par de psicóticos Wesley y Gunn.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e7">
+  
+<div class="close" id="close-t3e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. El Vástago</h4>
+		<p>Mientras el grupo investiga una profecía que alerta de la llegada de un ser muy poderoso y determinante para el curso del mundo, Darla reaparece en el hotel, embarazada.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e8">
+  
+<div class="close" id="close-t3e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Acelerando</h4>
+		<p>Mientras Ángel y el grupo intentan averiguar la naturaleza del bebé que Darla está a punto de tener, Holtz, un cazador de demonios, antiguo enemigo de Angelus y Darla, comienza la búsqueda de ambos vampiros.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e9">
+  
+<div class="close" id="close-t3e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. Una nana</h4>
+		<p>El resucitado Holtz persigue a Angel, mientras el grupo busca refugio en Caritas y Darla se pone de parto.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e10">
+  
+<div class="close" id="close-t3e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Papá</h4>
+		<p>Ángel intenta mantener a salvo a su hijo de los numerosos demonios, vampiros y humanos que intenta secuestrarle o matarle.</p>
+	</div>
+	</div>
+</div>
+
+
+<div class="card" id="modal_t3e11">
+  
+<div class="close" id="close-t3e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Cumpleaños</h4>
+		<p>Durante su cumpleaños, Cordelia tiene una visión tan dolorosa que cae en coma. Estando inconsciente, Cordy conoce a un demonio guía que le acompaña de vuelta atrás en el tiempo, permitiéndole elegir un camino diferente y así evitar el traspaso de las visiones que la están matando.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e12">
+  
+<div class="close" id="close-t3e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. El dinero no lo es todo</h4>
+		<p>Pensando en el futuro de su hijo, Ángel comienza a buscar más clientes de los que el grupo puede hacerse cargo. Un grupo de demonios, solicitan la inteligencia de Fred para resolver un puzle a cambio de 50.000$, Fred acepta encantada, sin saber que los demonios quieren decapitarla para hacerse literalmente, con su cerebro.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e13">
+  
+<div class="close" id="close-t3e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Al Margen</h4>
+		<p>Angel y Cordelia van juntos a ver un espectáculo de ballet. Una vez allí, los espíritus de unos desdichados amantes poseen a Angel y Cordelia y los colman de una pasión irrefrenable. Crossover: Angel menciona a Cordelia que antes ya estuvo poseído por espíritus de antiguos amantes, esto ocurrió en el Buffy capítulo 2x19 I only have eyes for you cuando era Angelus y estaba atormentando a Buffy, los poseyó una pareja de antiguos amantes trágicos</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e14">
+  
+<div class="close" id="close-t3e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. Pareado</h4>
+		<p>Angel lucha contra los celos que le producen el recién llegado, Groosalugg.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e15">
+  
+<div class="close" id="close-t3e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. Lealtad</h4>
+		<p>Wesley teme que se cumpla una antigua profecía, en la que se dice que Ángel matará a Connor.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e16">
+  
+<div class="close" id="close-t3e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. Que duermas Bien</h4>
+		<p>Para salvar la vida de Connor, Wesley tiene que tomar la difícil decisión de apartarle de Ángel.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e17">
+  
+<div class="close" id="close-t3e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. Perdón</h4>
+		<p>Mientras Fred y Gun buscan a Wesley, Ángel intenta encontrar a Sahjhan, para averiguar más sobre la profecía en la que se dice que él matará a Connor.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e18">
+  
+<div class="close" id="close-t3e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. Doble o Nada</h4>
+		<p>Cuando el demonio al que Gunn vendió su alma años atrás, pasa a recoger su deuda, Fred, Cordy y Ángel deberán trabajar juntos para impedirlo y salvar a Gunn.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e19">
+  
+<div class="close" id="close-t3e19"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e19" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>19. El precio</h4>
+		<p>Angel usa magia negra para recuperar a su hijo, pero sin pretenderlo llena el hotel de unas criaturas demoníacas similares a babosas. El grupo descubre que el Destructor, una fuerza que pretende aniquilar a Angel, está cada vez más cerca de ellos. Crossover:Angel menciona que nunca nieva en baja california, Cordelia le dice que "lo hizo una vez" en referencia a la vez que nevó y se salvó la vida de Angel en el capítulo Enmiendas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e20">
+  
+<div class="close" id="close-t3e20"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e20" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>20. Un nuevo Mundo</h4>
+		<p>Connor regresa de la dimensión demoniaca de Quor-Toth, donde ha sido criado por Holtz como un guerrero, cuya mayor aspiración es matar a Ángel.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e21">
+  
+<div class="close" id="close-t3e21"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e21" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>21. Bendición</h4>
+		<p>Angel intenta acercarse a Connor, sin saber que Holtz está elaborando un plan para hacer creer a Connor, que el vampiro asesinará a Holtz. Mientras tanto Cordelia averigua nuevos poderes y Lilah sigue empeñada en intentar que Wesley trabaje para Wolfram&Hart.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e22">
+  
+<div class="close" id="close-t3e22"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e22" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>22. Mañana</h4>
+		<p>Connor, lleno de ira, se enfrenta a Angel. Mientras tanto, Cordelia y Angel admiten lo que sienten el uno por el otro.</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season4-->
+<div class="card" id="modal_t4e1">
+  
+<div class="close" id="close-t4e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. En las profundidades</h4>
+		<p>Fred y Gunn buscan pistas que les lleven al paradero de Ángel o Cordy, mientras cuidan de Connor, quien finge no saber nada. Por su parte Wesley ha secuestrado a Justine para obligarla a confesar donde está Ángel.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e2">
+  
+<div class="close" id="close-t4e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Estado terrenal</h4>
+		<p>Wesley informará a Ángel que existe un talismán que le ayudará a localizar a Cordelia. Mientras tanto, Gwen Raiden, una joven ladrona con el poder de la electroquinesis, está en busca del mismo talismán.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e3">
+  
+<div class="close" id="close-t4e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Siempre gana la casa</h4>
+		<p>Ángel se lleva a Fred y Gunn de viaje a Las Vegas, para visitar a Lorne. Quién está siendo chantajeado y obligado a robar el destino de las personas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e4">
+  
+<div class="close" id="close-t4e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Sin Recuerdos</h4>
+		<p>Cordelia aparece de vuelta, pero no recuerda al grupo, ni quién es ella misma.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e5">
+  
+<div class="close" id="close-t4e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Supersimetría</h4>
+		<p>Fred descubre un oscuro secreto sobre su antiguo profesor de física. Entretanto, Cordelia no logra congeniar del todo con Connor y empieza a indagar sobre su historia con Angel.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e6">
+  
+<div class="close" id="close-t4e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. El Hechizo de la Botella</h4>
+		<p>Lorne intenta realizar un hechizo para que Cordelia recupere su memoria, pero en lugar de ello, el grupo entero pierde su memoria y creen ser adolescentes.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e7">
+  
+<div class="close" id="close-t4e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Apocalipsis</h4>
+		<p>Investigaciones Ángel lidia con una repentina oleada de actividad paranormal en Los Angeles, que se ve incrementada por la aparición de una Bestia con la que Cordelia tiene visiones apocalípticas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e8">
+  
+<div class="close" id="close-t4e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Muertos vivientes</h4>
+		<p>Ángel está deprimido y furioso ante la relación entre Connor y Cordelia, mientras tanto la indestructible Bestia aparece en Wolfram&Hart, dejando un rastro de destrucción y zombies.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e9">
+  
+<div class="close" id="close-t4e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. El Largo Viaje</h4>
+		<p>El grupo descubre que la respuesta para detener a la Bestia 'está entre ellos' y comienzan a sospechar de Connor. Mientras, Gwen regresa para ayudar a Ángel a recuperar 5 totems místicos que la Bestia busca para bloquear el sol, y que así los vampiros y demonios vaguen libremente.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e10">
+  
+<div class="close" id="close-t4e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. El despertar</h4>
+		<p>En un intento por acabar con la Bestia y recuperar el Sol, Wesley lleva a un místico para extraer el alma de Ángel y liberar a Ángelus, quién al parecer conoció a la bestia hace siglos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e11">
+  
+<div class="close" id="close-t4e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Sin Alma</h4>
+		<p>El alma de Ángel es encerrada en un frasco y guardada en la caja fuerte del hyperion, mientras Wesley comienza a interrogar al peligroso Ángelus acerca de la Bestia. Ángelus no tiene intención de colaborar y comienza a destapar todos los oscuros secretos que cada miembro del grupo guarda.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e12">
+  
+<div class="close" id="close-t4e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Calvario</h4>
+		<p>El grupo se desespera intentado localizar el alma de Ángel, mientras Ángelus les revela que la Bestia es sólo un vasallo controlado por un ser superior mucho más poderoso, un ser que se encuentra mucho más cerca de lo que cualquiera de ellos puede imaginar.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e13">
+  
+<div class="close" id="close-t4e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Salvamento</h4>
+		<p>Después de descubrir el cadáver de Lilah, Wesley decide ir a visitar a Faith a la prisión, para que la Cazavampiros les ayude a localizar a Ángelus. Mientras tanto en el Hotel, Lorne realiza un hechizo para protegerles de la violencia demoníaca y Cordelia se revela como el gran mal que controla a la Bestia.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e14">
+  
+<div class="close" id="close-t4e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. Liberación</h4>
+		<p>Ángelus continúa intentando descubrir la identidad del Maestro de la Bestia, mientras Faith y Wesley buscan una manera de contener a Ángelus.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e15">
+  
+<div class="close" id="close-t4e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. Orfeo</h4>
+		<p>Tras haberse envenenado deliberadamente para capturar a Ángelus, Faith y el vampiro caen en un coma psicodélico en el que ambos revivirán las buenas acciones que Ángel hizo tras recuperar su alma. Mientras en el Hyperion, Willow aparece para restaurar el alma de Ángel.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e16">
+  
+<div class="close" id="close-t4e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. Jugadores</h4>
+		<p>Gwen regresa para pedir la ayuda de Gunn y rescatar a una niña secuestrada por un poderoso y rico maganate. Mientras tanto, Angel y el resto del equipo, investigan el repentino embarazo de Cordelia, entorpecidos por un sobreprotector Connor.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e17">
+  
+<div class="close" id="close-t4e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. De Dentro a Fuera</h4>
+		<p>El grupo descubre el plan de un poder superior para darse a luz a sí misma a través del cuerpo de Cordelia. Connor recibe la visita del espíritu fallecido de su madre, Darla, en un intento de evitar que ayude a Cordelia a dar a luz.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e18">
+  
+<div class="close" id="close-t4e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. El Nacimiento</h4>
+		<p>Mientras Cordelia cae en coma tras su parto demoníaco, el grupo está más que encantado con su inesperada descendencia - una mujer completamente desarrollada, quien dice ser un ser superior, que quiere limpiar el mundo de maldad y a la que Ángel pone el nombre de Jasmine.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e19">
+  
+<div class="close" id="close-t4e19"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e19" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>19. La bala mágica</h4>
+		<p>Tras descubrir el secreto para romper el hechizo que Jasmine tiene sobre todo el mundo, Fred deberá encontrar una manera para salvar al resto del grupo, antes de que la capturen.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e20">
+  
+<div class="close" id="close-t4e20"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e20" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>20. Sacrificio</h4>
+		<p>Libres del hechizo de Jasmine, Ángel y el resto del grupo buscan refugio en las alcantarillas, donde Wesley descubre a un demonio, que parece tener la clave para derrotar a Jasmine.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e21">
+  
+<div class="close" id="close-t4e21"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e21" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>21. Adiós a la Paz</h4>
+		<p>Después de ser capturados por Connor, Fred, Gunn, Wesley y Lorne, son encerrados en el sótano, dónde descubrirán el verdadero alcance del poder de Jasmine. Mientras, Ángel en una dimensión infernal, intenta averiguar el verdadero nombre de Jasmine. Y Connor por su parte, busca a la desaparecida Cordelia.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e22">
+  
+<div class="close" id="close-t4e22"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e22" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>22. Hogar</h4>
+		<p>Con Jasmine derrotada, Ángel y el resto del grupo reciben una oferta por parte de Wolfram&Hart, que les costará rechazar. Mientras tanto, Connor al borde de la locura, planea hacerse volar por los aires junto a Cordelia.</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season5-->
+<div class="card" id="modal_t5e1">
+  
+<div class="close" id="close-t5e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Convicción</h4>
+		<p>El primer caso legal de Angel y el grupo consiste en representar un cliente malvado que amenaza con destruir a Los Angeles, y el grupo conoce a la misteriosa Eve y a la vampira burbujeante Harmony.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e2">
+  
+<div class="close" id="close-t5e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Justa Recompensa</h4>
+		<p>Spike se materializa como un fantasma en la oficina de Angel a través de la magia de un amuleto, y Angel intenta detener a uno de sus clientes malvados de usar cuerpos humanos como recipientes para espíritus demoníacos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e3">
+  
+<div class="close" id="close-t5e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Liberada</h4>
+		<p>Nina es mordida por un hombre-lobo, debe ser encontrada por el equipo de Angel antes de que haga daño a nadie y luego ser rescatada de un extraño restaurante.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e4">
+  
+<div class="close" id="close-t5e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Camino del infierno</h4>
+		<p>Spike se encuentra con Pavayne, quien ha engañado al infierno durante siglos enviando almas en lugar de la suya.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e5">
+  
+<div class="close" id="close-t5e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. El alma de la fiesta</h4>
+		<p>Lorne organiza una fiesta de Halloween, pero los invitados empieza a comportarse de manera extraña. Angel y el grupo investigan qué está pasando.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e6">
+  
+<div class="close" id="close-t5e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. El cuento preventivo del Número Cinco</h4>
+		<p>Un antigüo demonio que revive cada 50 años y un ex-luchador avergonzado de sí mismo que debe ser convencido por Angel para acabar con el demonio.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e7">
+  
+<div class="close" id="close-t5e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Estirpe</h4>
+		<p>Wesley recibe una visita de su padre y con él de todos sus antiguos temores y resentimientos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e8">
+  
+<div class="close" id="close-t5e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Destino</h4>
+		<p>Spike es corpóreo de nuevo y compite con Angel por descubrir quién es el verdadero protagonista de la profecía Shanshu.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e9">
+  
+<div class="close" id="close-t5e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. Una rubia peligrosa</h4>
+		<p>Harmony ya no es popular como en la secundaria. Es una vampiresa sosa que nadie toma en cuenta, hasta que se encuentra en medio de un complot para inculparla de beber sangre humana y así ser ajusticiada por Angel. Ella sola debe descubrirlo todo y demostrar su inocencia, aún antes de ser acusada. En su venganza, termina por salvar un día muy complicado del equipo de Angel.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e10">
+  
+<div class="close" id="close-t5e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Propósito de enmienda</h4>
+		<p>Spike encuentra a un nuevo Doyle, quien con sus visiones le orienta para ser el nuevo campeón de Los Angeles. Mientras tanto Angel es anestesiado por un demonio que alguien de su equipo ha traído.</p>
+	</div>
+	</div>
+</div>
+
+
+<div class="card" id="modal_t5e11">
+  
+<div class="close" id="close-t5e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Tocado</h4>
+		<p>Angel descubre que una chica con un pasado torturado es una cazadora de vampiros; Andrew tiene información sorprendente sobre Buffy; Spike cree poder demostrar que es su destino ser el campeón de los vampiros.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e12">
+  
+<div class="close" id="close-t5e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. De nada</h4>
+		<p>Lindsey regresa e intenta acabar con Angel con la ayuda de una organización secreta. Cordelia despierta del coma e intenta salvar a Angel de Lindsey.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e13">
+  
+<div class="close" id="close-t5e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Por qué luchamos</h4>
+		<p>Angel ha engendrado a un solo vampiro después de tener alma. Desorientado, éste busca a su engendrador para encontrar una misión para su vida de vampiro.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e14">
+  
+<div class="close" id="close-t5e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. La sonrisa</h4>
+		<p>Angel es transformado en un muñeco al intentar evitar que un espectáculo infantil continúe robando las almas de los espectadores; Nina confiesa sus sentimientos por Angel.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e15">
+  
+<div class="close" id="close-t5e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. Un agujero en el mundo</h4>
+		<p>Fred es inffectada por un demonio antiguo, Illyria, quien llega para quedarse.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e16">
+  
+<div class="close" id="close-t5e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. La Portadora</h4>
+		<p>Se revelan los detalles de la llegada de Illyria. Gunn recibe un cuchillo en el estómago a cambio de su firma en un formulario de aduana.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e17">
+  
+<div class="close" id="close-t5e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. Bajo la superficie</h4>
+		<p>Angel intenta rescatar a Lindsey del infierno donde fue llevado por los socios. Gunn encuentra una manera dolorosa de castigarse a sí mismo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e18">
+  
+<div class="close" id="close-t5e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. Origen</h4>
+		<p>Angel se sorprende al escuchar a Connor detrás de él, diciendo "¡papá!" Es el momento de cumplir una antigua profecía, abrir la urna que contiene al demonio Sahjhan y Wesley debe enfrentarse con unos recuerdos que no son fáciles de soportar.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e19">
+  
+<div class="close" id="close-t5e19"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e19" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>19. La bomba</h4>
+		<p>Illyria puede manipular el tiempo pero el cuerpo de Fred no está listo para contenerla. En un intento de la extracción de sus poderes, todos mueren, sólo un retroceso en el tiempo puede salvarlos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e20">
+  
+<div class="close" id="close-t5e20"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e20" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>20. La chica en cuestión</h4>
+		<p>Angel y Spike viajan a Roma para rescatar a Buffy de su antiguo enemigo: el Inmortal. Mientras tanto, los padres de Fred llegan a Wolfram & Hart en busca de su hija.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e21">
+  
+<div class="close" id="close-t5e21"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e21" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>21. La Jugada Maestra</h4>
+		<p>Angel ha encontrado a los dueños de los verdaderos rostros del mal en esta dimensión y empieza a arruinar todo a su paso para unirse a ellos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e22">
+  
+<div class="close" id="close-t5e22"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e22" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>22. Dejando huella</h4>
+		<p>Angel y su equipo, se juegan el todo por el todo para hacerle pasar un mal rato a los socios.</p>
+	</div>
+	</div>
+</div>
+
+
+	<script>
+	  
+//select
+const select = document.querySelector('#select');
+const opciones = document.querySelector('#opciones');
+const contenidoSelect = document.querySelector('#select .contenido-select');
+const hiddenInput = document.querySelector('#inputSelect');
+
+document.querySelectorAll('#opciones > .opcion').forEach((opcion) => {
+	opcion.addEventListener('click', (e) => {
+		e.preventDefault();
+		contenidoSelect.innerHTML = e.currentTarget.innerHTML;
+		select.classList.toggle('active');
+		opciones.classList.toggle('active');
+		hiddenInput.value = e.currentTarget.querySelector('.titulo').innerText;
+	});
+});
+
+select.addEventListener('click', () => {
+	select.classList.toggle('active');
+	opciones.classList.toggle('active');
+});
+
+
+
+
+
+
+/*open modal*/
+/*Season1*/
+function mostrar_modal_t1e1() {
+  modal_t1e1.style.display = "flex";
+  iframe_t1e1.src = "https://uqload.com/embed-gh3f8n4t2wfo.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e2() {
+  modal_t1e2.style.display = "flex";
+  iframe_t1e2.src = "https://uqload.com/embed-7l8gui8fb93c.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e3() {
+  modal_t1e3.style.display = "flex";
+  iframe_t1e3.src = "https://uqload.com/embed-exymihiwqzbr.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e4() {
+  modal_t1e4.style.display = "flex";
+  iframe_t1e4.src = "https://uqload.com/embed-lexl6yb4nrxs.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e5() {
+  modal_t1e5.style.display = "flex";
+  iframe_t1e5.src = "https://uqload.com/embed-4uogrv67hrzv.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e6() {
+  modal_t1e6.style.display = "flex";
+  iframe_t1e6.src = "https://uqload.com/embed-32h24uzvcyyo.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e7() {
+  modal_t1e7.style.display = "flex";
+  iframe_t1e7.src = "https://uqload.com/embed-w4tktvbjgbqr.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e8() {
+  modal_t1e8.style.display = "flex";
+  iframe_t1e8.src = "https://uqload.com/embed-dlfmuw3svdy0.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e9() {
+  modal_t1e9.style.display = "flex";
+  iframe_t1e9.src = "https://uqload.com/embed-oh5ybvu4ismt.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e10() {
+  modal_t1e10.style.display = "flex";
+  iframe_t1e10.src = "https://uqload.com/embed-m3vlgkplt44v.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e11() {
+  modal_t1e11.style.display = "flex";
+  iframe_t1e11.src = "https://uqload.com/embed-b6nq3axxvuxw.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e12() {
+  modal_t1e12.style.display = "flex";
+  iframe_t1e12.src = "https://uqload.com/embed-imgiv446z2su.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e13() {
+  modal_t1e13.style.display = "flex";
+  iframe_t1e13.src = "https://uqload.com/embed-28d1hz6sivci.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e14() {
+  modal_t1e14.style.display = "flex";
+  iframe_t1e14.src = "https://uqload.com/embed-emphnjg3m1pw.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e15() {
+  modal_t1e15.style.display = "flex";
+  iframe_t1e15.src = "https://uqload.com/embed-ltyie1n019ol.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e16() {
+  modal_t1e16.style.display = "flex";
+  iframe_t1e16.src = "https://uqload.com/embed-plbxi3xik2kj.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e17() {
+  modal_t1e17.style.display = "flex";
+  iframe_t1e17.src = "https://uqload.com/embed-452h3wz02i2t.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e18() {
+  modal_t1e18.style.display = "flex";
+  iframe_t1e18.src = "https://uqload.com/embed-s95cviviua9i.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e19() {
+  modal_t1e19.style.display = "flex";
+  iframe_t1e19.src = "https://uqload.com/embed-j0oatkuc9zjk.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e20() {
+  modal_t1e20.style.display = "flex";
+  iframe_t1e20.src = "https://uqload.com/embed-9ii8liozgmib.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e21() {
+  modal_t1e21.style.display = "flex";
+  iframe_t1e21.src = "https://uqload.com/embed-hyvjapif2dvd.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e22() {
+  modal_t1e22.style.display = "flex";
+  iframe_t1e22.src = "https://uqload.com/embed-gyac07o6ajyd.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season2*/
+function mostrar_modal_t2e1() {
+  modal_t2e1.style.display = "flex";
+  iframe_t2e1.src = "https://uqload.com/embed-u63quavukdm6.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e2() {
+  modal_t2e2.style.display = "flex";
+  iframe_t2e2.src = "https://uqload.com/embed-alzzr5xtzvka.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e3() {
+  modal_t2e3.style.display = "flex";
+  iframe_t2e3.src = "https://uqload.com/embed-c3dgdglful8v.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e4() {
+  modal_t2e4.style.display = "flex";
+  iframe_t2e4.src = "https://uqload.com/embed-iyxjrc3g7llz.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e5() {
+  modal_t2e5.style.display = "flex";
+  iframe_t2e5.src = "https://uqload.com/embed-6d785q8cwk57.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e6() {
+  modal_t2e6.style.display = "flex";
+  iframe_t2e6.src = "https://uqload.com/embed-yvwuu1acsukj.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e7() {
+  modal_t2e7.style.display = "flex";
+  iframe_t2e7.src = "https://uqload.com/embed-bm2gqorpgsxi.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e8() {
+  modal_t2e8.style.display = "flex";
+  iframe_t2e8.src = "https://uqload.com/embed-97438b5evaca.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e9() {
+  modal_t2e9.style.display = "flex";
+  iframe_t2e9.src = "https://uqload.com/embed-amqnoz9la87u.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e10() {
+  modal_t2e10.style.display = "flex";
+  iframe_t2e10.src = "https://uqload.com/embed-04zp42fvxpoi.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e11() {
+  modal_t2e11.style.display = "flex";
+  iframe_t2e11.src = "https://uqload.com/embed-ad3m7xcet3cf.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e12() {
+  modal_t2e12.style.display = "flex";
+  iframe_t2e12.src = "https://uqload.com/embed-glp6jqlffsio.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e13() {
+  modal_t2e13.style.display = "flex";
+  iframe_t2e13.src = "https://uqload.com/embed-hryhqgokg1j3.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e14() {
+  modal_t2e14.style.display = "flex";
+  iframe_t2e14.src = "https://uqload.com/embed-iyq2iiptgufi.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e15() {
+  modal_t2e15.style.display = "flex";
+  iframe_t2e15.src = "https://uqload.com/embed-ejrkvyzdguv5.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e16() {
+  modal_t2e16.style.display = "flex";
+  iframe_t2e16.src = "https://uqload.com/embed-n0ddgv9930mg.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e17() {
+  modal_t2e17.style.display = "flex";
+  iframe_t2e17.src = "https://uqload.com/embed-nluwjx8d359a.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e18() {
+  modal_t2e18.style.display = "flex";
+  iframe_t2e18.src = "https://uqload.com/embed-yd83fsixd8w9.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e19() {
+  modal_t2e19.style.display = "flex";
+  iframe_t2e19.src = "https://uqload.com/embed-sofuumwuvmx5.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e20() {
+  modal_t2e20.style.display = "flex";
+  iframe_t2e20.src = "https://uqload.com/embed-3xmwgzq8itih.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e21() {
+  modal_t2e21.style.display = "flex";
+  iframe_t2e21.src = "https://uqload.com/embed-vw8p82h1wp0o.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e22() {
+  modal_t2e22.style.display = "flex";
+  iframe_t2e22.src = "https://uqload.com/embed-i1iudh8z59p4.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season3*/
+function mostrar_modal_t3e1() {
+  modal_t3e1.style.display = "flex";
+  iframe_t3e1.src = "https://uqload.com/embed-d7nrx88nx9yr.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e2() {
+  modal_t3e2.style.display = "flex";
+  iframe_t3e2.src = "https://uqload.com/embed-1nouk8mp3b7u.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e3() {
+  modal_t3e3.style.display = "flex";
+  iframe_t3e3.src = "https://uqload.com/embed-vtvahpqkh8sy.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e4() {
+  modal_t3e4.style.display = "flex";
+  iframe_t3e4.src = "https://uqload.com/embed-sk6hh08pw9fc.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e5() {
+  modal_t3e5.style.display = "flex";
+  iframe_t3e5.src = "https://uqload.com/embed-nrd57bklp97s.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e6() {
+  modal_t3e6.style.display = "flex";
+  iframe_t3e6.src = "https://uqload.com/embed-fd58biyz1x04.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e7() {
+  modal_t3e7.style.display = "flex";
+  iframe_t3e7.src = "https://uqload.com/embed-gl8837ni18md.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e8() {
+  modal_t3e8.style.display = "flex";
+  iframe_t3e8.src = "https://uqload.com/embed-0ubzi42149l1.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e9() {
+  modal_t3e9.style.display = "flex";
+  iframe_t3e9.src = "https://uqload.com/embed-4aes5xvartv6.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e10() {
+  modal_t3e10.style.display = "flex";
+  iframe_t3e10.src = "https://uqload.com/embed-vsma1kips1jl.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e11() {
+  modal_t3e11.style.display = "flex";
+  iframe_t3e11.src = "https://uqload.com/embed-el238nuj4ei4.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e12() {
+  modal_t3e12.style.display = "flex";
+  iframe_t3e12.src = "https://uqload.com/embed-fz66sl6resvn.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e13() {
+  modal_t3e13.style.display = "flex";
+  iframe_t3e13.src = "https://uqload.com/embed-dabycb38sn4p.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e14() {
+  modal_t3e14.style.display = "flex";
+  iframe_t3e14.src = "https://uqload.com/embed-tf0x8j89r0eg.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e15() {
+  modal_t3e15.style.display = "flex";
+  iframe_t3e15.src = "https://uqload.com/embed-86ia58xakymo.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e16() {
+  modal_t3e16.style.display = "flex";
+  iframe_t3e16.src = "https://uqload.com/embed-8jhb5gstpfqv.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e17() {
+  modal_t3e17.style.display = "flex";
+  iframe_t3e17.src = "https://uqload.com/embed-gqs2usk47hfu.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e18() {
+  modal_t3e18.style.display = "flex";
+  iframe_t3e18.src = "https://uqload.com/embed-a45qfb3g02gi.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e19() {
+  modal_t3e19.style.display = "flex";
+  iframe_t3e19.src = "https://uqload.com/embed-xdy6trtkka0h.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e20() {
+  modal_t3e20.style.display = "flex";
+  iframe_t3e20.src = "https://uqload.com/embed-gj9ohpozqhvc.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e21() {
+  modal_t3e21.style.display = "flex";
+  iframe_t3e21.src = "https://uqload.com/embed-a7cg4w99f4p9.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e22() {
+  modal_t3e22.style.display = "flex";
+  iframe_t3e22.src = "https://uqload.com/embed-ef7wu6kijn5x.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season4*/
+function mostrar_modal_t4e1() {
+  modal_t4e1.style.display = "flex";
+  iframe_t4e1.src = "https://uqload.com/embed-z0ov0ipq86rh.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e2() {
+  modal_t4e2.style.display = "flex";
+  iframe_t4e2.src = "https://uqload.com/embed-mlegcd2jhd80.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e3() {
+  modal_t4e3.style.display = "flex";
+  iframe_t4e3.src = "https://uqload.com/embed-f1bxpn65j02m.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e4() {
+  modal_t4e4.style.display = "flex";
+  iframe_t4e4.src = "https://uqload.com/embed-ov390jth32p7.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e5() {
+  modal_t4e5.style.display = "flex";
+  iframe_t4e5.src = "https://uqload.com/embed-452yndpeul1l.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e6() {
+  modal_t4e6.style.display = "flex";
+  iframe_t4e6.src = "https://uqload.com/embed-w0q9x8aa3kb9.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e7() {
+  modal_t4e7.style.display = "flex";
+  iframe_t4e7.src = "https://uqload.com/embed-r92tcx1uvxa7.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e8() {
+  modal_t4e8.style.display = "flex";
+  iframe_t4e8.src = "https://uqload.com/embed-pcjgyjchev3t.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e9() {
+  modal_t4e9.style.display = "flex";
+  iframe_t4e9.src = "https://uqload.com/embed-uk2sfjy9cgdj.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e10() {
+  modal_t4e10.style.display = "flex";
+  iframe_t4e10.src = "https://uqload.com/embed-4jidomliyzp7.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e11() {
+  modal_t4e11.style.display = "flex";
+  iframe_t4e11.src = "https://uqload.com/embed-gamgyozxb41t.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e12() {
+  modal_t4e12.style.display = "flex";
+  iframe_t4e12.src = "https://uqload.com/embed-mzeduyvuanwr.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e13() {
+  modal_t4e13.style.display = "flex";
+  iframe_t4e13.src = "https://uqload.com/embed-568pvxyvhioq.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e14() {
+  modal_t4e14.style.display = "flex";
+  iframe_t4e14.src = "https://uqload.com/embed-kol3mtr44as7.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e15() {
+  modal_t4e15.style.display = "flex";
+  iframe_t4e15.src = "https://uqload.com/embed-q5nlhxbsetmq.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e16() {
+  modal_t4e16.style.display = "flex";
+  iframe_t4e16.src = "https://uqload.com/embed-bt5z24gg8buh.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e17() {
+  modal_t4e17.style.display = "flex";
+  iframe_t4e17.src = "https://uqload.com/embed-vhxqbmbvfpi9.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e18() {
+  modal_t4e18.style.display = "flex";
+  iframe_t4e18.src = "https://uqload.com/embed-3wq26oalvk1u.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e19() {
+  modal_t4e19.style.display = "flex";
+  iframe_t4e19.src = "https://uqload.com/embed-ffp0uomoip4j.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e20() {
+  modal_t4e20.style.display = "flex";
+  iframe_t4e20.src = "https://uqload.com/embed-mfkb9y3us8lo.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e21() {
+  modal_t4e21.style.display = "flex";
+  iframe_t4e21.src = "https://uqload.com/embed-ky2vdryfm9yk.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e22() {
+  modal_t4e22.style.display = "flex";
+  iframe_t4e22.src = "https://uqload.com/embed-q1op60zjgjy9.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season5*/
+function mostrar_modal_t5e1() {
+  modal_t5e1.style.display = "flex";
+  iframe_t5e1.src = "https://uqload.com/embed-vadc2fth167p.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e2() {
+  modal_t5e2.style.display = "flex";
+  iframe_t5e2.src = "https://uqload.com/embed-wx8jh5e4exc3.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e3() {
+  modal_t5e3.style.display = "flex";
+  iframe_t5e3.src = "https://uqload.com/embed-0m6oo39j80oi.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e4() {
+  modal_t5e4.style.display = "flex";
+  iframe_t5e4.src = "https://uqload.com/embed-7su5qb1dbuzh.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e5() {
+  modal_t5e5.style.display = "flex";
+  iframe_t5e5.src = "https://uqload.com/embed-r9frseznhqbc.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e6() {
+  modal_t5e6.style.display = "flex";
+  iframe_t5e6.src = "https://uqload.com/embed-9tx394hqisrh.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e7() {
+  modal_t5e7.style.display = "flex";
+  iframe_t5e7.src = "https://uqload.com/embed-e1i2ocevcyp7.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e8() {
+  modal_t5e8.style.display = "flex";
+  iframe_t5e8.src = "https://uqload.com/embed-6yd2k0eijdwe.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e9() {
+  modal_t5e9.style.display = "flex";
+  iframe_t5e9.src = "https://uqload.com/embed-93zl0wv017wa.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e10() {
+  modal_t5e10.style.display = "flex";
+  iframe_t5e10.src = "https://uqload.com/embed-yhqsn00h5mj0.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e11() {
+  modal_t5e11.style.display = "flex";
+  iframe_t5e11.src = "https://uqload.com/embed-rqnxmempxut2.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e12() {
+  modal_t5e12.style.display = "flex";
+  iframe_t5e12.src = "https://uqload.com/embed-u2m4w4r7a998.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e13() {
+  modal_t5e13.style.display = "flex";
+  iframe_t5e13.src = "https://uqload.com/embed-owatbddpnsh7.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e14() {
+  modal_t5e14.style.display = "flex";
+  iframe_t5e14.src = "https://uqload.com/embed-8qjz12im4izz.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e15() {
+  modal_t5e15.style.display = "flex";
+  iframe_t5e15.src = "https://uqload.com/embed-q6f807ihx0xu.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e16() {
+  modal_t5e16.style.display = "flex";
+  iframe_t5e16.src = "https://uqload.com/embed-mr1u494pol6d.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e17() {
+  modal_t5e17.style.display = "flex";
+  iframe_t5e17.src = "https://uqload.com/embed-qj5eoy76to78.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e18() {
+  modal_t5e18.style.display = "flex";
+  iframe_t5e18.src = "https://uqload.com/embed-ob2p0wxlycwy.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e19() {
+  modal_t5e19.style.display = "flex";
+  iframe_t5e19.src = "https://uqload.com/embed-xosdk93wffjw.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e20() {
+  modal_t5e20.style.display = "flex";
+  iframe_t5e20.src = "https://uqload.com/embed-qtn91cpjee6v.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e21() {
+  modal_t5e21.style.display = "flex";
+  iframe_t5e21.src = "https://uqload.com/embed-4rvgumb4dibh.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e22() {
+  modal_t5e22.style.display = "flex";
+  iframe_t5e22.src = "https://uqload.com/embed-iyrw1fhkw2sw.html";
+  body.style.overflow = "hidden";
+}
+
+
+
+/*close modal*/
+/*Season1*/
+function close_t1e1() {
+  modal_t1e1.style.display = "none";
+  iframe_t1e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e2() {
+  modal_t1e2.style.display = "none";
+  iframe_t1e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e3() {
+  modal_t1e3.style.display = "none";
+  iframe_t1e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e4() {
+  modal_t1e4.style.display = "none";
+  iframe_t1e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e5() {
+  modal_t1e5.style.display = "none";
+  iframe_t1e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e6() {
+  modal_t1e6.style.display = "none";
+  iframe_t1e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e7() {
+  modal_t1e7.style.display = "none";
+  iframe_t1e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e8() {
+  modal_t1e8.style.display = "none";
+  iframe_t1e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e9() {
+  modal_t1e9.style.display = "none";
+  iframe_t1e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e10() {
+  modal_t1e10.style.display = "none";
+  iframe_t1e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e11() {
+  modal_t1e11.style.display = "none";
+  iframe_t1e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e12() {
+  modal_t1e12.style.display = "none";
+  iframe_t1e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e13() {
+  modal_t1e13.style.display = "none";
+  iframe_t1e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e14() {
+  modal_t1e14.style.display = "none";
+  iframe_t1e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e15() {
+  modal_t1e15.style.display = "none";
+  iframe_t1e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e16() {
+  modal_t1e16.style.display = "none";
+  iframe_t1e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e17() {
+  modal_t1e17.style.display = "none";
+  iframe_t1e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e18() {
+  modal_t1e18.style.display = "none";
+  iframe_t1e18.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e19() {
+  modal_t1e19.style.display = "none";
+  iframe_t1e19.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e20() {
+  modal_t1e20.style.display = "none";
+  iframe_t1e20.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e21() {
+  modal_t1e21.style.display = "none";
+  iframe_t1e21.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e22() {
+  modal_t1e22.style.display = "none";
+  iframe_t1e22.src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season2*/
+function close_t2e1() {
+  modal_t2e1.style.display = "none";
+  iframe_t2e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e2() {
+  modal_t2e2.style.display = "none";
+  iframe_t2e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e3() {
+  modal_t2e3.style.display = "none";
+  iframe_t2e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e4() {
+  modal_t2e4.style.display = "none";
+  iframe_t2e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e5() {
+  modal_t2e5.style.display = "none";
+  iframe_t2e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e6() {
+  modal_t2e6.style.display = "none";
+  iframe_t2e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e7() {
+  modal_t2e7.style.display = "none";
+  iframe_t2e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e8() {
+  modal_t2e8.style.display = "none";
+  iframe_t2e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e9() {
+  modal_t2e9.style.display = "none";
+  iframe_t2e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e10() {
+  modal_t2e10.style.display = "none";
+  iframe_t2e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e11() {
+  modal_t2e11.style.display = "none";
+  iframe_t2e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e12() {
+  modal_t2e12.style.display = "none";
+  iframe_t2e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e13() {
+  modal_t2e13.style.display = "none";
+  iframe_t2e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e14() {
+  modal_t2e14.style.display = "none";
+  iframe_t2e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e15() {
+  modal_t2e15.style.display = "none";
+  iframe_t2e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e16() {
+  modal_t2e16.style.display = "none";
+  iframe_t2e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e17() {
+  modal_t2e17.style.display = "none";
+  iframe_t2e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e18() {
+  modal_t2e18.style.display = "none";
+  iframe_t2e18.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e19() {
+  modal_t2e19.style.display = "none";
+  iframe_t2e19.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e20() {
+  modal_t2e20.style.display = "none";
+  iframe_t2e20.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e21() {
+  modal_t2e21.style.display = "none";
+  iframe_t2e21.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e22() {
+  modal_t2e22.style.display = "none";
+  iframe_t2e22.src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season3*/
+function close_t3e1() {
+  modal_t3e1.style.display = "none";
+  iframe_t3e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e2() {
+  modal_t3e2.style.display = "none";
+  iframe_t3e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e3() {
+  modal_t3e3.style.display = "none";
+  iframe_t3e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e4() {
+  modal_t3e4.style.display = "none";
+  iframe_t3e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e5() {
+  modal_t3e5.style.display = "none";
+  iframe_t3e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e6() {
+  modal_t3e6.style.display = "none";
+  iframe_t3e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e7() {
+  modal_t3e7.style.display = "none";
+  iframe_t3e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e8() {
+  modal_t3e8.style.display = "none";
+  iframe_t3e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e9() {
+  modal_t3e9.style.display = "none";
+  iframe_t3e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e10() {
+  modal_t3e10.style.display = "none";
+  iframe_t3e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e11() {
+  modal_t3e11.style.display = "none";
+  iframe_t3e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e12() {
+  modal_t3e12.style.display = "none";
+  iframe_t3e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e13() {
+  modal_t3e13.style.display = "none";
+  iframe_t3e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e14() {
+  modal_t3e14.style.display = "none";
+  iframe_t3e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e15() {
+  modal_t3e15.style.display = "none";
+  iframe_t3e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e16() {
+  modal_t3e16.style.display = "none";
+  iframe_t3e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e17() {
+  modal_t3e17.style.display = "none";
+  iframe_t3e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e18() {
+  modal_t3e18.style.display = "none";
+  iframe_t3e18.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e19() {
+  modal_t3e19.style.display = "none";
+  iframe_t3e19.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e20() {
+  modal_t3e20.style.display = "none";
+  iframe_t3e20.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e21() {
+  modal_t3e21.style.display = "none";
+  iframe_t3e21.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e22() {
+  modal_t3e22.style.display = "none";
+  iframe_t3e22.src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season4*/
+function close_t4e1() {
+  modal_t4e1.style.display = "none";
+  iframe_t4e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e2() {
+  modal_t4e2.style.display = "none";
+  iframe_t4e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e3() {
+  modal_t4e3.style.display = "none";
+  iframe_t4e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e4() {
+  modal_t4e4.style.display = "none";
+  iframe_t4e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e5() {
+  modal_t4e5.style.display = "none";
+  iframe_t4e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e6() {
+  modal_t4e6.style.display = "none";
+  iframe_t4e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e7() {
+  modal_t4e7.style.display = "none";
+  iframe_t4e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e8() {
+  modal_t4e8.style.display = "none";
+  iframe_t4e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e9() {
+  modal_t4e9.style.display = "none";
+  iframe_t4e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e10() {
+  modal_t4e10.style.display = "none";
+  iframe_t4e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e11() {
+  modal_t4e11.style.display = "none";
+  iframe_t4e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e12() {
+  modal_t4e12.style.display = "none";
+  iframe_t4e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e13() {
+  modal_t4e13.style.display = "none";
+  iframe_t4e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e14() {
+  modal_t4e14.style.display = "none";
+  iframe_t4e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e15() {
+  modal_t4e15.style.display = "none";
+  iframe_t4e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e16() {
+  modal_t4e16.style.display = "none";
+  iframe_t4e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e17() {
+  modal_t4e17.style.display = "none";
+  iframe_t4e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e18() {
+  modal_t4e18.style.display = "none";
+  iframe_t4e18.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e19() {
+  modal_t4e19.style.display = "none";
+  iframe_t4e19.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e20() {
+  modal_t4e20.style.display = "none";
+  iframe_t4e20.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e21() {
+  modal_t4e21.style.display = "none";
+  iframe_t4e21.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e22() {
+  modal_t4e22.style.display = "none";
+  iframe_t4e22.src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season5*/
+function close_t5e1() {
+  modal_t5e1.style.display = "none";
+  iframe_t5e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e2() {
+  modal_t5e2.style.display = "none";
+  iframe_t5e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e3() {
+  modal_t5e3.style.display = "none";
+  iframe_t5e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e4() {
+  modal_t5e4.style.display = "none";
+  iframe_t5e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e5() {
+  modal_t5e5.style.display = "none";
+  iframe_t5e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e6() {
+  modal_t5e6.style.display = "none";
+  iframe_t5e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e7() {
+  modal_t5e7.style.display = "none";
+  iframe_t5e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e8() {
+  modal_t5e8.style.display = "none";
+  iframe_t5e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e9() {
+  modal_t5e9.style.display = "none";
+  iframe_t5e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e10() {
+  modal_t5e10.style.display = "none";
+  iframe_t5e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e11() {
+  modal_t5e11.style.display = "none";
+  iframe_t5e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e12() {
+  modal_t5e12.style.display = "none";
+  iframe_t5e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e13() {
+  modal_t5e13.style.display = "none";
+  iframe_t5e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e14() {
+  modal_t5e14.style.display = "none";
+  iframe_t5e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e15() {
+  modal_t5e15.style.display = "none";
+  iframe_t5e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e16() {
+  modal_t5e16.style.display = "none";
+  iframe_t5e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e17() {
+  modal_t5e17.style.display = "none";
+  iframe_t5e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e18() {
+  modal_t5e18.style.display = "none";
+  iframe_t5e18.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e19() {
+  modal_t5e19.style.display = "none";
+  iframe_t5e19.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e20() {
+  modal_t5e20.style.display = "none";
+  iframe_t5e20.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e21() {
+  modal_t5e21.style.display = "none";
+  iframe_t5e21.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e22() {
+  modal_t5e22.style.display = "none";
+  iframe_t5e22.src = "";
+  body.style.overflow = "auto";
+}
+
+
+/*Season1*/
+document.getElementById("btn-t1e1").addEventListener("click", mostrar_modal_t1e1);
+document.getElementById("btn-t1e2").addEventListener("click", mostrar_modal_t1e2);
+document.getElementById("btn-t1e3").addEventListener("click", mostrar_modal_t1e3);
+document.getElementById("btn-t1e4").addEventListener("click", mostrar_modal_t1e4);
+document.getElementById("btn-t1e5").addEventListener("click", mostrar_modal_t1e5);
+document.getElementById("btn-t1e6").addEventListener("click", mostrar_modal_t1e6);
+document.getElementById("btn-t1e7").addEventListener("click", mostrar_modal_t1e7);
+document.getElementById("btn-t1e8").addEventListener("click", mostrar_modal_t1e8);
+document.getElementById("btn-t1e9").addEventListener("click", mostrar_modal_t1e9);
+document.getElementById("btn-t1e10").addEventListener("click", mostrar_modal_t1e10);
+document.getElementById("btn-t1e11").addEventListener("click", mostrar_modal_t1e11);
+document.getElementById("btn-t1e12").addEventListener("click", mostrar_modal_t1e12);
+document.getElementById("btn-t1e13").addEventListener("click", mostrar_modal_t1e13);
+document.getElementById("btn-t1e14").addEventListener("click", mostrar_modal_t1e14);
+document.getElementById("btn-t1e15").addEventListener("click", mostrar_modal_t1e15);
+document.getElementById("btn-t1e16").addEventListener("click", mostrar_modal_t1e16);
+document.getElementById("btn-t1e17").addEventListener("click", mostrar_modal_t1e17);
+document.getElementById("btn-t1e18").addEventListener("click", mostrar_modal_t1e18);
+document.getElementById("btn-t1e19").addEventListener("click", mostrar_modal_t1e19);
+document.getElementById("btn-t1e20").addEventListener("click", mostrar_modal_t1e20);
+document.getElementById("btn-t1e21").addEventListener("click", mostrar_modal_t1e21);
+document.getElementById("btn-t1e22").addEventListener("click", mostrar_modal_t1e22);
+
+
+/*Season2*/
+document.getElementById("btn-t2e1").addEventListener("click", mostrar_modal_t2e1);
+document.getElementById("btn-t2e2").addEventListener("click", mostrar_modal_t2e2);
+document.getElementById("btn-t2e3").addEventListener("click", mostrar_modal_t2e3);
+document.getElementById("btn-t2e4").addEventListener("click", mostrar_modal_t2e4);
+document.getElementById("btn-t2e5").addEventListener("click", mostrar_modal_t2e5);
+document.getElementById("btn-t2e6").addEventListener("click", mostrar_modal_t2e6);
+document.getElementById("btn-t2e7").addEventListener("click", mostrar_modal_t2e7);
+document.getElementById("btn-t2e8").addEventListener("click", mostrar_modal_t2e8);
+document.getElementById("btn-t2e9").addEventListener("click", mostrar_modal_t2e9);
+document.getElementById("btn-t2e10").addEventListener("click", mostrar_modal_t2e10);
+document.getElementById("btn-t2e11").addEventListener("click", mostrar_modal_t2e11);
+document.getElementById("btn-t2e12").addEventListener("click", mostrar_modal_t2e12);
+document.getElementById("btn-t2e13").addEventListener("click", mostrar_modal_t2e13);
+document.getElementById("btn-t2e14").addEventListener("click", mostrar_modal_t2e14);
+document.getElementById("btn-t2e15").addEventListener("click", mostrar_modal_t2e15);
+document.getElementById("btn-t2e16").addEventListener("click", mostrar_modal_t2e16);
+document.getElementById("btn-t2e17").addEventListener("click", mostrar_modal_t2e17);
+document.getElementById("btn-t2e18").addEventListener("click", mostrar_modal_t2e18);
+document.getElementById("btn-t2e19").addEventListener("click", mostrar_modal_t2e19);
+document.getElementById("btn-t2e20").addEventListener("click", mostrar_modal_t2e20);
+document.getElementById("btn-t2e21").addEventListener("click", mostrar_modal_t2e21);
+document.getElementById("btn-t2e22").addEventListener("click", mostrar_modal_t2e22);
+
+
+/*Season3*/
+document.getElementById("btn-t3e1").addEventListener("click", mostrar_modal_t3e1);
+document.getElementById("btn-t3e2").addEventListener("click", mostrar_modal_t3e2);
+document.getElementById("btn-t3e3").addEventListener("click", mostrar_modal_t3e3);
+document.getElementById("btn-t3e4").addEventListener("click", mostrar_modal_t3e4);
+document.getElementById("btn-t3e5").addEventListener("click", mostrar_modal_t3e5);
+document.getElementById("btn-t3e6").addEventListener("click", mostrar_modal_t3e6);
+document.getElementById("btn-t3e7").addEventListener("click", mostrar_modal_t3e7);
+document.getElementById("btn-t3e8").addEventListener("click", mostrar_modal_t3e8);
+document.getElementById("btn-t3e9").addEventListener("click", mostrar_modal_t3e9);
+document.getElementById("btn-t3e10").addEventListener("click", mostrar_modal_t3e10);
+document.getElementById("btn-t3e11").addEventListener("click", mostrar_modal_t3e11);
+document.getElementById("btn-t3e12").addEventListener("click", mostrar_modal_t3e12);
+document.getElementById("btn-t3e13").addEventListener("click", mostrar_modal_t3e13);
+document.getElementById("btn-t3e14").addEventListener("click", mostrar_modal_t3e14);
+document.getElementById("btn-t3e15").addEventListener("click", mostrar_modal_t3e15);
+document.getElementById("btn-t3e16").addEventListener("click", mostrar_modal_t3e16);
+document.getElementById("btn-t3e17").addEventListener("click", mostrar_modal_t3e17);
+document.getElementById("btn-t3e18").addEventListener("click", mostrar_modal_t3e18);
+document.getElementById("btn-t3e19").addEventListener("click", mostrar_modal_t3e19);
+document.getElementById("btn-t3e20").addEventListener("click", mostrar_modal_t3e20);
+document.getElementById("btn-t3e21").addEventListener("click", mostrar_modal_t3e21);
+document.getElementById("btn-t3e22").addEventListener("click", mostrar_modal_t3e22);
+
+
+/*Season4*/
+document.getElementById("btn-t4e1").addEventListener("click", mostrar_modal_t4e1);
+document.getElementById("btn-t4e2").addEventListener("click", mostrar_modal_t4e2);
+document.getElementById("btn-t4e3").addEventListener("click", mostrar_modal_t4e3);
+document.getElementById("btn-t4e4").addEventListener("click", mostrar_modal_t4e4);
+document.getElementById("btn-t4e5").addEventListener("click", mostrar_modal_t4e5);
+document.getElementById("btn-t4e6").addEventListener("click", mostrar_modal_t4e6);
+document.getElementById("btn-t4e7").addEventListener("click", mostrar_modal_t4e7);
+document.getElementById("btn-t4e8").addEventListener("click", mostrar_modal_t4e8);
+document.getElementById("btn-t4e9").addEventListener("click", mostrar_modal_t4e9);
+document.getElementById("btn-t4e10").addEventListener("click", mostrar_modal_t4e10);
+document.getElementById("btn-t4e11").addEventListener("click", mostrar_modal_t4e11);
+document.getElementById("btn-t4e12").addEventListener("click", mostrar_modal_t4e12);
+document.getElementById("btn-t4e13").addEventListener("click", mostrar_modal_t4e13);
+document.getElementById("btn-t4e14").addEventListener("click", mostrar_modal_t4e14);
+document.getElementById("btn-t4e15").addEventListener("click", mostrar_modal_t4e15);
+document.getElementById("btn-t4e16").addEventListener("click", mostrar_modal_t4e16);
+document.getElementById("btn-t4e17").addEventListener("click", mostrar_modal_t4e17);
+document.getElementById("btn-t4e18").addEventListener("click", mostrar_modal_t4e18);
+document.getElementById("btn-t4e19").addEventListener("click", mostrar_modal_t4e19);
+document.getElementById("btn-t4e20").addEventListener("click", mostrar_modal_t4e20);
+document.getElementById("btn-t4e21").addEventListener("click", mostrar_modal_t4e21);
+document.getElementById("btn-t4e22").addEventListener("click", mostrar_modal_t4e22);
+
+
+/*Season5*/
+document.getElementById("btn-t5e1").addEventListener("click", mostrar_modal_t5e1);
+document.getElementById("btn-t5e2").addEventListener("click", mostrar_modal_t5e2);
+document.getElementById("btn-t5e3").addEventListener("click", mostrar_modal_t5e3);
+document.getElementById("btn-t5e4").addEventListener("click", mostrar_modal_t5e4);
+document.getElementById("btn-t5e5").addEventListener("click", mostrar_modal_t5e5);
+document.getElementById("btn-t5e6").addEventListener("click", mostrar_modal_t5e6);
+document.getElementById("btn-t5e7").addEventListener("click", mostrar_modal_t5e7);
+document.getElementById("btn-t5e8").addEventListener("click", mostrar_modal_t5e8);
+document.getElementById("btn-t5e9").addEventListener("click", mostrar_modal_t5e9);
+document.getElementById("btn-t5e10").addEventListener("click", mostrar_modal_t5e10);
+document.getElementById("btn-t5e11").addEventListener("click", mostrar_modal_t5e11);
+document.getElementById("btn-t5e12").addEventListener("click", mostrar_modal_t5e12);
+document.getElementById("btn-t5e13").addEventListener("click", mostrar_modal_t5e13);
+document.getElementById("btn-t5e14").addEventListener("click", mostrar_modal_t5e14);
+document.getElementById("btn-t5e15").addEventListener("click", mostrar_modal_t5e15);
+document.getElementById("btn-t5e16").addEventListener("click", mostrar_modal_t5e16);
+document.getElementById("btn-t5e17").addEventListener("click", mostrar_modal_t5e17);
+document.getElementById("btn-t5e18").addEventListener("click", mostrar_modal_t5e18);
+document.getElementById("btn-t5e19").addEventListener("click", mostrar_modal_t5e19);
+document.getElementById("btn-t5e20").addEventListener("click", mostrar_modal_t5e20);
+document.getElementById("btn-t5e21").addEventListener("click", mostrar_modal_t5e21);
+document.getElementById("btn-t5e22").addEventListener("click", mostrar_modal_t5e22);
+
+
+/*Season1*/
+document.getElementById("close-t1e1").addEventListener("click", close_t1e1);
+document.getElementById("close-t1e2").addEventListener("click", close_t1e2);
+document.getElementById("close-t1e3").addEventListener("click", close_t1e3);
+document.getElementById("close-t1e4").addEventListener("click", close_t1e4);
+document.getElementById("close-t1e5").addEventListener("click", close_t1e5);
+document.getElementById("close-t1e6").addEventListener("click", close_t1e6);
+document.getElementById("close-t1e7").addEventListener("click", close_t1e7);
+document.getElementById("close-t1e8").addEventListener("click", close_t1e8);
+document.getElementById("close-t1e9").addEventListener("click", close_t1e9);
+document.getElementById("close-t1e10").addEventListener("click", close_t1e10);
+document.getElementById("close-t1e11").addEventListener("click", close_t1e11);
+document.getElementById("close-t1e12").addEventListener("click", close_t1e12);
+document.getElementById("close-t1e13").addEventListener("click", close_t1e13);
+document.getElementById("close-t1e14").addEventListener("click", close_t1e14);
+document.getElementById("close-t1e15").addEventListener("click", close_t1e15);
+document.getElementById("close-t1e16").addEventListener("click", close_t1e16);
+document.getElementById("close-t1e17").addEventListener("click", close_t1e17);
+document.getElementById("close-t1e18").addEventListener("click", close_t1e18);
+document.getElementById("close-t1e19").addEventListener("click", close_t1e19);
+document.getElementById("close-t1e20").addEventListener("click", close_t1e20);
+document.getElementById("close-t1e21").addEventListener("click", close_t1e21);
+document.getElementById("close-t1e22").addEventListener("click", close_t1e22);
+
+/*Season2*/
+document.getElementById("close-t2e1").addEventListener("click", close_t2e1);
+document.getElementById("close-t2e2").addEventListener("click", close_t2e2);
+document.getElementById("close-t2e3").addEventListener("click", close_t2e3);
+document.getElementById("close-t2e4").addEventListener("click", close_t2e4);
+document.getElementById("close-t2e5").addEventListener("click", close_t2e5);
+document.getElementById("close-t2e6").addEventListener("click", close_t2e6);
+document.getElementById("close-t2e7").addEventListener("click", close_t2e7);
+document.getElementById("close-t2e8").addEventListener("click", close_t2e8);
+document.getElementById("close-t2e9").addEventListener("click", close_t2e9);
+document.getElementById("close-t2e10").addEventListener("click", close_t2e10);
+document.getElementById("close-t2e11").addEventListener("click", close_t2e11);
+document.getElementById("close-t2e12").addEventListener("click", close_t2e12);
+document.getElementById("close-t2e13").addEventListener("click", close_t2e13);
+document.getElementById("close-t2e14").addEventListener("click", close_t2e14);
+document.getElementById("close-t2e15").addEventListener("click", close_t2e15);
+document.getElementById("close-t2e16").addEventListener("click", close_t2e16);
+document.getElementById("close-t2e17").addEventListener("click", close_t2e17);
+document.getElementById("close-t2e18").addEventListener("click", close_t2e18);
+document.getElementById("close-t2e19").addEventListener("click", close_t2e19);
+document.getElementById("close-t2e20").addEventListener("click", close_t2e20);
+document.getElementById("close-t2e21").addEventListener("click", close_t2e21);
+document.getElementById("close-t2e22").addEventListener("click", close_t2e22);
+
+/*Season3*/
+document.getElementById("close-t3e1").addEventListener("click", close_t3e1);
+document.getElementById("close-t3e2").addEventListener("click", close_t3e2);
+document.getElementById("close-t3e3").addEventListener("click", close_t3e3);
+document.getElementById("close-t3e4").addEventListener("click", close_t3e4);
+document.getElementById("close-t3e5").addEventListener("click", close_t3e5);
+document.getElementById("close-t3e6").addEventListener("click", close_t3e6);
+document.getElementById("close-t3e7").addEventListener("click", close_t3e7);
+document.getElementById("close-t3e8").addEventListener("click", close_t3e8);
+document.getElementById("close-t3e9").addEventListener("click", close_t3e9);
+document.getElementById("close-t3e10").addEventListener("click", close_t3e10);
+document.getElementById("close-t3e11").addEventListener("click", close_t3e11);
+document.getElementById("close-t3e12").addEventListener("click", close_t3e12);
+document.getElementById("close-t3e13").addEventListener("click", close_t3e13);
+document.getElementById("close-t3e14").addEventListener("click", close_t3e14);
+document.getElementById("close-t3e15").addEventListener("click", close_t3e15);
+document.getElementById("close-t3e16").addEventListener("click", close_t3e16);
+document.getElementById("close-t3e17").addEventListener("click", close_t3e17);
+document.getElementById("close-t3e18").addEventListener("click", close_t3e18);
+document.getElementById("close-t3e19").addEventListener("click", close_t3e19);
+document.getElementById("close-t3e20").addEventListener("click", close_t3e20);
+document.getElementById("close-t3e21").addEventListener("click", close_t3e21);
+document.getElementById("close-t3e22").addEventListener("click", close_t3e22);
+
+/*Season4*/
+document.getElementById("close-t4e1").addEventListener("click", close_t4e1);
+document.getElementById("close-t4e2").addEventListener("click", close_t4e2);
+document.getElementById("close-t4e3").addEventListener("click", close_t4e3);
+document.getElementById("close-t4e4").addEventListener("click", close_t4e4);
+document.getElementById("close-t4e5").addEventListener("click", close_t4e5);
+document.getElementById("close-t4e6").addEventListener("click", close_t4e6);
+document.getElementById("close-t4e7").addEventListener("click", close_t4e7);
+document.getElementById("close-t4e8").addEventListener("click", close_t4e8);
+document.getElementById("close-t4e9").addEventListener("click", close_t4e9);
+document.getElementById("close-t4e10").addEventListener("click", close_t4e10);
+document.getElementById("close-t4e11").addEventListener("click", close_t4e11);
+document.getElementById("close-t4e12").addEventListener("click", close_t4e12);
+document.getElementById("close-t4e13").addEventListener("click", close_t4e13);
+document.getElementById("close-t4e14").addEventListener("click", close_t4e14);
+document.getElementById("close-t4e15").addEventListener("click", close_t4e15);
+document.getElementById("close-t4e16").addEventListener("click", close_t4e16);
+document.getElementById("close-t4e17").addEventListener("click", close_t4e17);
+document.getElementById("close-t4e18").addEventListener("click", close_t4e18);
+document.getElementById("close-t4e19").addEventListener("click", close_t4e19);
+document.getElementById("close-t4e20").addEventListener("click", close_t4e20);
+document.getElementById("close-t4e21").addEventListener("click", close_t4e21);
+document.getElementById("close-t4e22").addEventListener("click", close_t4e22);
+
+/*Season5*/
+document.getElementById("close-t5e1").addEventListener("click", close_t5e1);
+document.getElementById("close-t5e2").addEventListener("click", close_t5e2);
+document.getElementById("close-t5e3").addEventListener("click", close_t5e3);
+document.getElementById("close-t5e4").addEventListener("click", close_t5e4);
+document.getElementById("close-t5e5").addEventListener("click", close_t5e5);
+document.getElementById("close-t5e6").addEventListener("click", close_t5e6);
+document.getElementById("close-t5e7").addEventListener("click", close_t5e7);
+document.getElementById("close-t5e8").addEventListener("click", close_t5e8);
+document.getElementById("close-t5e9").addEventListener("click", close_t5e9);
+document.getElementById("close-t5e10").addEventListener("click", close_t5e10);
+document.getElementById("close-t5e11").addEventListener("click", close_t5e11);
+document.getElementById("close-t5e12").addEventListener("click", close_t5e12);
+document.getElementById("close-t5e13").addEventListener("click", close_t5e13);
+document.getElementById("close-t5e14").addEventListener("click", close_t5e14);
+document.getElementById("close-t5e15").addEventListener("click", close_t5e15);
+document.getElementById("close-t5e16").addEventListener("click", close_t5e16);
+document.getElementById("close-t5e17").addEventListener("click", close_t5e17);
+document.getElementById("close-t5e18").addEventListener("click", close_t5e18);
+document.getElementById("close-t5e19").addEventListener("click", close_t5e19);
+document.getElementById("close-t5e20").addEventListener("click", close_t5e20);
+document.getElementById("close-t5e21").addEventListener("click", close_t5e21);
+document.getElementById("close-t5e22").addEventListener("click", close_t5e22);
+
+
+/*Seasons*/
+document.getElementById('btn_season1').addEventListener('click', showSeason1);
+document.getElementById('btn_season2').addEventListener('click', showSeason2);
+document.getElementById('btn_season3').addEventListener('click', showSeason3);
+document.getElementById('btn_season4').addEventListener('click', showSeason4);
+document.getElementById('btn_season5').addEventListener('click', showSeason5);
+
+function showSeason1() {
+  season1.style.display = "block";
+  season2.style.display = "none";
+  season3.style.display = "none";
+  season4.style.display = "none";
+  season5.style.display = "none";
+}
+
+function showSeason2() {
+  season1.style.display = "none";
+  season2.style.display = "block";
+  season3.style.display = "none";
+  season4.style.display = "none";
+  season5.style.display = "none";
+}
+
+function showSeason3() {
+  season1.style.display = "none";
+  season2.style.display = "none";
+  season3.style.display = "block";
+  season4.style.display = "none";
+  season5.style.display = "none";
+}
+
+function showSeason4() {
+  season1.style.display = "none";
+  season2.style.display = "none";
+  season3.style.display = "none";
+  season4.style.display = "block";
+  season5.style.display = "none";
+}
+
+function showSeason5() {
+  season1.style.display = "none";
+  season2.style.display = "none";
+  season3.style.display = "none";
+  season4.style.display = "none";
+  season5.style.display = "block";
+}
+
+	  
+	</script>
+</body>
+</html>
