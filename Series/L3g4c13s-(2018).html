@@ -1,0 +1,2700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Series</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	
+	<style type="text/css">
+	  
+	  @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: #090909;
+	font-family: 'Open Sans', sans-serif;
+}
+
+a {
+	text-decoration: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.contenedor {
+	width: 90%;
+	max-width: 1000px;
+	margin: auto;
+	padding: 10px 0;
+}
+
+.selectbox {
+	width: 50%;
+	margin: auto;
+	position: relative;
+}
+
+.select {
+	background: #222;
+	width: 100%;
+	border-radius: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 5px;
+	padding: 10px 0 10px 10px;
+	position: relative;
+}
+
+.select i {
+	font-size: 23px;
+	margin-right: 13px;
+	color: #ddd;
+}
+
+.titulo {
+	margin-bottom: 10px;
+	color: #ddd;
+	font-weight: 600;
+	font-size: 16px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.descripcion {
+	font-size: 14px;
+	color: #ddd;
+}
+
+.opciones {
+	background: #191919;
+	border-radius: 10px;
+	overflow: auto;
+	width: 100%;
+	display: none;
+}
+
+.opciones.active {
+	display: block;
+	animation: fadeIn .3s forwards;
+}
+
+@keyframes fadeIn {
+	from {
+		transform: translateY(-100px) scale(.5);
+	}
+	to {
+		transform: translateY(0) scale(1);
+	}
+}
+
+.textos {
+  width: 100%;
+}
+
+.contenido-opcion {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	transition: .2s ease all;
+}
+
+.opciones .contenido-opcion {
+	padding: 9px;
+}
+
+.opciones .contenido-opcion:hover {
+  background: #101010;
+}
+
+.sinopsis {
+  padding: 0 15px;
+  color: #eee;
+  font-size: 13px;
+  text-align: justify;
+  margin-bottom: 10px;
+}
+
+/*Chapters*/
+
+.episodes {
+	overflow: auto;
+	z-index: 100;
+	width: 100%;
+	display: block;
+}
+
+.episodes .contenido-opcion {
+	background: #090909;
+	padding: 0 10px 14px 10px;
+}
+
+.episodes .contenido-opcion:hover {
+  background: #000;
+}
+
+.contenido-opcion img {
+	width: auto;
+	height: 50px;
+	margin-right: 20px;
+	border-radius: 2px;
+}
+
+/*Responsive*/
+
+@media screen and (max-width: 800px){
+	.selectbox {
+		width: 100%;
+	}
+}
+
+
+
+
+
+
+/*Cards*/
+.card {
+	width: 100%;
+	height: 100vh;
+	max-width: 1100px;
+	position: fixed;
+  font-family: 'Montserrat', sans-serif;
+  top: 50%;
+  transform: translateY(-50%);
+	background: rgba(2, 2, 2, .7);
+	display: none;
+}
+
+.contenedor-card {
+  width: 95%;
+  position: fixed;
+  background: #111;
+  border-radius: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+
+.card .contenido-card h4 {
+  text-align: center;
+	margin-bottom: 10px;
+	color: #ddd;
+}
+
+.card .contenido-card p {
+  padding: 0 10px 10px ;
+	line-height: 1.5;
+	color: #ddd;
+	font-size: 14px;
+	margin-bottom: 5px;
+	text-align: justify;
+}
+
+iframe {
+  border-radius: 7px 7px 0 0;
+}
+
+.close {
+  font-size: 50px;
+  color: #fff;
+  position: absolute;
+  display: flex;
+  top: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.season2, .season3, .season4 {
+  display: none;
+}
+	  
+	</style>
+</head>
+<body id="body">
+	
+	<div class="contenedor">
+		<form action="">
+			<div class="selectbox">
+				<div class="select" id="select">
+					<div class="contenido-select">
+						<h1 class="titulo">Temporada 1</h1>
+					</div>
+					<i class="bi bi-chevron-down"></i>
+				</div>
+
+				<div class="opciones" id="opciones">
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season1">Temporada 1</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season2">Temporada 2</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season3">Temporada 3</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season4">Temporada 4</h1>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<input type="hidden" id="inputSelect" value="">
+		</form>
+
+	</div>
+	
+	<!--Sinopsis-->
+	
+	<div class="sinopsis">
+	  <p>Varios jóvenes que descienden de linajes de vampiros, hombres lobo y brujas asisten a una escuela en la que les enseñan a controlar y canalizar sus poderes. Sin embargo, estén listos o no, tendrán que enfrentar amenazas terribles mientras aprenden</p>
+	</div>
+	
+	
+<!--Season1-->
+	
+	<div class="episodes" id="season1">
+					<a class="opcion" id="btn-t1e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/6ILxWI4zb1HyfjgoLASTFjXYveU.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Esta Es La Parte Donde Huyes</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/4pWdUKx1O5ueBFHyDFGJeSsdlOG.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Algunas Personas Quieren Ver Arder Al Mundo</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/zL477tEKOWoSV0CmTri93yGMsXr.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. ¿Es Broma Pedro?</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/44M8mlBDwAc6XQ9gmPhmduMtSlG.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Hope No Es La Meta</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/kHN67MjmPVTYbF3t5fKvGvodmsr.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Malivore</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/4VKEOB137SW7X8aS9QykMzFsAIx.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. ZomMami Querida</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/xW0ycbK6PH1WcTXeH61N0eZLhfP.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. La Muerte Sigue Llamando A Mi Puerta</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/aEIHvBaitudyY1h5JboW2CkOfGg.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Comenzaré Por El Final</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/7bRyePvsRVEyeTiphH2DoCA53pZ.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. ¿Qué Hacía Hope En Tu Sueño?</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/m9QDzk5JKSH9umYhoTPsYdEXhUM.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Hay Un Mundo Donde Tus Sueños Se Cumplen</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/kL2VCZmWCUopAN8vgDGJq1Tzxzd.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Necesitaremos Un Reflector</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/fMHU9Qxn6ys4JgO4k1Oa28TpJqI.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Hay Una Momia En La Avenida</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/yWKrg3jkZ2SfQqkG46bph9B8iAd.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. El Chico Que Aún Quiere Hacer Lo Correcto</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e14">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/AaANdcsuUl3jbSdVUAObLeDsWEG.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. Terminemos El Baile</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e15">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/dfvNaLh3ceSswnSS0HoyGCdMApY.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. Te Contaré Una Historia</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e16">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/j1VGtnCc3b1glxMoXiTQ72GOdZr.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. Siempre Hay Un Tecnicismo</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season2-->
+			
+	<div class="episodes season2" id="season2">
+					<a class="opcion" id="btn-t2e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/m8fOnhFLpnA2mz85JPeZtz5Bcf7.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Nunca perderé la esperanza</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/8eI68cJnuMVCg6mPzsmDtfFF8PA.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Este año será diferente</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/oWfJJHy5Es4RuIjvhhNjqXxG2EL.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Me recuerdas a alguien que conocí</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/mrD6RXHMX8zjG77ytgF61qg9Xgy.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. ¿Desde cuando hablas japonés?</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/akPdnuUajqyb2bViJ13sE26U5c7.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Que le den al juego</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/bDrs4JeOYdwg1bODnxkCAPQ6L1n.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. No es algo que tenga que recordar</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/cmb6Zjyz8dBKddb1J7U7auuJ3xU.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Pronto todo quedará terriblemente claro</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/8BSK2OgSPhN80JdOI0KTA4yxRQE.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Esta Navidad ha sido sorprendentemente violenta</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/t2VqfrdOOQ5Ifky3fGL20bqvejO.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. No podría haberlo hecho sin ti</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/980Qpsd2qxt1j0hnSAkxfpNdgJk.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Por eso no hay que confiar planes a pequeños teleñecos</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/3ZLbzrMIfZuldZiWgXzosQFYPFS.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. ¿Qué problema de Cupido?</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/sV3NxxYSbc33h5S0ZSlxVpFS6qz.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Kai Parker nos la ha jugado</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/7uTUBxE1e01mKoh4tsN5I8v4DIb.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. No puedes salvarlos a todos</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e14">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/lNW80AOqXft2c9s9fWUuvGDvOFz.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. Hay un lugar donde va lo que se perdió</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e15">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/d6jlDNTyTF9Wa3nTP3CAP7NFhKj.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. La vida era mucho más fácil cuando solo me preocupaba por mí misma</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e16">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/p4MuvbaA7UoG7PG5NRd8niKCl4A.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. Enfrentarme a la oscuridad es mi especialidad</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season3-->
+			
+	<div class="episodes season3" id="season3">
+					<a class="opcion" id="btn-t3e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/2wpKdX9VVRbhBAcprnQl7LVC5G7.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. No somos dignos</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/rCoUQcloWIwhPW9XV5BOw1Hd57U.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Las despedidas dan asco</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/nngBNn2D84dW7oNi9c6dK9kf5mG.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Salvatore: ¡El musical!</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/nsGOAa3EGgyL9AkMOrXkfBAbcl3.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Agárrate fuerte</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/inJMhQSYjl3kTK0ohLpJVvxtmW.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Cueste lo que cueste</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/9Pwmu5ssTWUWCmzGGsv6GXUTtvO.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. A quien corresponda</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/vsbZrvd2rXAfkMVxE6FTHTWY0PL.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Sí, es un leprechaun de verdad</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/rP0XGK3ilhDB7zt9FVRfCPp2DsA.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Cuánto tiempo</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/fCsHDD0OQpqQPpsnHI1ZA3JACrZ.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. ¿Todos los Monstruos de Malivore aportan esta capacidad de introspección emocional?</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/gEjZxWY15Is5aD5zRp34rjGGEeI.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. A buen fin, no hay mal principio</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/amrUYwMBQxScJroMNSb2eIYSS9m.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. No puedes huir de quien eres</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/oLi5uGIhYgJUZvOLfE9OlPnufqc.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Fui creado para amarte</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/klZ0VYTnOdbqENtmXDyoYziQyy0.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Un día lo entenderás</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e14">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/rsBfWoRTxODpUIEsNY7DOfP97Lp.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. Siente un poco de culto</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e15">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/23jS9txMZjDKukw2Vo9gL1sZhQE.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. Una nueva Hope</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e16">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/dwFOBnBVXoKjTcVqjjsMY2TboUM.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. El destino es una mierda</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season4-->
+			
+	<div class="episodes season4" id="season4">
+					<a class="opcion" id="btn-t4e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/3PvbDYSIU2V9HeK7xSGdj3JeAL6.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Tienes que elegir uno esta vez</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/x5sjdQHXRCXIYsemCPQ0cSfuTUm.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. No hay yo en el equipo, o lo que sea</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/p0oZImtRDBxcqgHTffKI48FVwIu.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Todos sabíamos que llegaría este día</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/wTISJUCgQqpH4pLWJXL1lXkN9BU.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Soy la hija de mi padre</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/s5lMwRSUs7NFp0sFbFtaePl5Msh.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Pensé que estarías más feliz de verme</h1>
+								<p class="descripcion">41min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/2djrvLZzJ5dDLCRg0PHSwVQ4DAT.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Estás muy lejos de casa</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/pCqtByQVbO9HZJxGPvRpKEa6zo8.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Un lugar lejos de toda esta violencia</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/vGAWWIZDDNEB3TkVFotYOVAhNQq.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Te acordarás de mi</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/osPJqobJHsq857Ju0tzM0WwEVnE.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. No puedo ser el que te detenga</h1>
+								<p class="descripcion">42min</p>
+							</div>
+						</div>
+					</a><!--
+					<a class="opcion" id="btn-t4e10">
+						<div class="contenido-opcion">
+							<img src="http" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. http</h1>
+								<p class="descripcion">http</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e11">
+						<div class="contenido-opcion">
+							<img src="http" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. http</h1>
+								<p class="descripcion">http</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e12">
+						<div class="contenido-opcion">
+							<img src="http" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. http</h1>
+								<p class="descripcion">http</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e13">
+						<div class="contenido-opcion">
+							<img src="http" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. http</h1>
+								<p class="descripcion">http</p>
+							</div>
+						</div>
+					</a>-->
+				</div>
+			</div>
+	
+
+
+
+
+
+
+	<!--Season1-->
+<div class="card" id="modal_t1e1">
+  
+<div class="close" id="close-t1e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Esta Es La Parte Donde Huyes</h4>
+		<p>Guiada por la mente maestra de Alaric Saltzman, la nueva generación de seres sobrenaturales llega a la mayoría de edad de una forma poco convencional.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e2">
+  
+<div class="close" id="close-t1e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Algunas Personas Quieren Ver Arder Al Mundo</h4>
+		<p>Alaric, Hope y Rafael salen en busca de Landon, cuya repentina desaparición ha levantado sospechas. El plan de Lizzie y Josie para pasar desapercibidos se tuerce durante el partido anual de fútbol bandera contra Mystic Falls.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e3">
+  
+<div class="close" id="close-t1e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. ¿Es Broma Pedro?</h4>
+		<p>Como castigo por romper las reglas, Hope, Lizzie, Josie y MG deben hacer servicio comunitario. El intento de Landon y Rafael de llevar una vida sin preocupaciones en la carretera da un giro inesperado cuando se transforman en un blanco fácil.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e4">
+  
+<div class="close" id="close-t1e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Hope No Es La Meta</h4>
+		<p>Tras la desaparición de dos estudiantes, Alaric envía a Hope, Lizzie, MG y Landon a investigar. Josie ayuda a Rafael a adaptarse a su nueva vida en la escuela.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e5">
+  
+<div class="close" id="close-t1e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Malivore</h4>
+		<p>Alaric crea un consejo de honor para que los estudiantes puedan ser oídos, pero esto provoca que la tensión se dispare. Hope realiza varias pruebas mágicas a Landon.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e6">
+  
+<div class="close" id="close-t1e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. ZomMami Querida</h4>
+		<p>Lizzie y Josie preparan la fiesta por su decimosexto cumpleaños, que tanto tiempo llevan esperando. El último plan de Penelope le proporciona a MG una oportunidad de impresionar a Lizzie. Alaric está preocupado.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e7">
+  
+<div class="close" id="close-t1e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. La Muerte Sigue Llamando A Mi Puerta</h4>
+		<p>Hope debe afrontar uno de sus miedos más profundos. Alaric intenta ayudar a Rafael a hacerle frente a sus demonios del pasado.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e8">
+  
+<div class="close" id="close-t1e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Comenzaré Por El Final</h4>
+		<p>Después de descubrir que Landon está en problemas, Hope y Alaric partieron en su búsqueda. En el camino, descubren información sorprendente sobre el pasado de Landon.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e9">
+  
+<div class="close" id="close-t1e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. ¿Qué Hacía Hope En Tu Sueño?</h4>
+		<p>Durante una semana estresante de exámenes, los intentos de Hope, Rafael, Landon y MG de estudiar se ven frustrados por la llegada de un nuevo monstruo que se alimenta de sus peores miedos. Mientras tanto, Hope lucha con un secreto que le ha estado ocultando a Landon.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e10">
+  
+<div class="close" id="close-t1e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Hay Un Mundo Donde Tus Sueños Se Cumplen</h4>
+		<p>Después de una estadía en Europa con su madre, Lizzie regresa a Mystic Falls y se encuentra cara a cara con alguien que podría hacer realidad todos sus deseos, incluso hacer desaparecer a Hope Mikaelson.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e11">
+  
+<div class="close" id="close-t1e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Necesitaremos Un Reflector</h4>
+		<p>Alaric decide posponer el concurso de talentos de la escuela, pero Lizzie y Josie no se darán por vencidas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e12">
+  
+<div class="close" id="close-t1e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Hay Una Momia En La Avenida</h4>
+		<p>Alaric, Hope, Josie, Lizzie, Kaleb, Dorian y Emman deben encontrar la urna perdida antes de que aparezca la próxima criatura de Malivore.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e13">
+  
+<div class="close" id="close-t1e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. El Chico Que Aún Quiere Hacer Lo Correcto</h4>
+		<p>Cuando un espontáneo viaje por carretera para visitar a los padres de MG lo dejan a él y a Landon desaparecidos, y a un Rafael angustiado sin recuerdos de lo sucedido, Hope, Alaric y Kaleb parten a buscarlos antes de que sea demasiado tarde.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e14">
+  
+<div class="close" id="close-t1e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. Terminemos El Baile</h4>
+		<p>La escuela Salvatore se prepara para el concurso Miss Mystic Falls. Hope debe lidiar en secreto con un trauma reciente que pone en peligro sus poderes mágicos. Además, la inesperada llegada de un joven del pasado de Hope pone en alerta a Landon.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e15">
+  
+<div class="close" id="close-t1e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. Te Contaré Una Historia</h4>
+		<p>Cuando las consecuencias de las acciones de Hope la dejan a ella y a Landon fuera de lugar, recurre a Lizzie para que la ayude a hacer las cosas bien. Mientras tanto, Landon descubre secretos sobre su pasado, mientras Josie investiga un secreto que Alaric ha estado guardando.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e16">
+  
+<div class="close" id="close-t1e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. Siempre Hay Un Tecnicismo</h4>
+		<p>Cuando un grupo de visitantes no deseados llega a la Escuela Salvatore, Hope lidera la carga para mantener a salvo a sus amigos. Mientras tanto, MG descubre un secreto sobre su madre y Josie se encuentra en una situación desesperada.</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season2-->
+<div class="card" id="modal_t2e1">
+  
+<div class="close" id="close-t2e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Nunca perderé la esperanza</h4>
+		<p>Hope descubre que puede haber un modo de salir de Malivore y está más decidida que nunca a volver a Mystic Falls.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e2">
+  
+<div class="close" id="close-t2e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Este año será diferente</h4>
+		<p>Hope sigue adelante con su nueva vida en solitario, pero su última aventura hace que el pasado que intenta dejar atrás la atrape.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e3">
+  
+<div class="close" id="close-t2e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Me recuerdas a alguien que conocí</h4>
+		<p>Mientras la escuela Salvatore se prepara para el partido de fútbol anual contra Mystic Falls, el último monstruo en llegar pone en su punto de mira a uno de sus estudiantes.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e4">
+  
+<div class="close" id="close-t2e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. ¿Desde cuando hablas japonés?</h4>
+		<p>Cuando un samurái llega a Mystic Falls en busca de un demonio que posee a sus víctimas, Josie se encarga de defender a sus amigos del demonio.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e5">
+  
+<div class="close" id="close-t2e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Que le den al juego</h4>
+		<p>La Escuela Salvatore se prepara para el baile con temática de los años 80. Hope y Lizzie se quedan atrapadas en un laberinto interminable mientras un monstruo las persigue.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e6">
+  
+<div class="close" id="close-t2e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. No es algo que tenga que recordar</h4>
+		<p>Cuando un monstruo que busca la verdad llega a Mystic Falls el día de la Commonwealth, Hope y Lizzie temen que los secretos que guardan las conviertan en objetivos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e7">
+  
+<div class="close" id="close-t2e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Pronto todo quedará terriblemente claro</h4>
+		<p>Hope decide que lo mejor es irse de la ciudad, pero vuelve cuando Josie traza un peligroso plan para cerrar el portal de Malivore.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e8">
+  
+<div class="close" id="close-t2e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Esta Navidad ha sido sorprendentemente violenta</h4>
+		<p>Hope encuentra un aliado inesperado para acabar con un monstruo que utiliza el espíritu navideño para infiltrarse en el colegio Salvatore.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e9">
+  
+<div class="close" id="close-t2e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. No podría haberlo hecho sin ti</h4>
+		<p>El Nigromante vuelve preparado para sembrar el caos y vengarse de Malivore, pero todo cambia cuando se da cuenta de que es un humano sin poderes. Hope intenta arreglar las cosas con Josie y le ofrece ayuda para saber más sobre el "mora miserium".</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e10">
+  
+<div class="close" id="close-t2e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Por eso no hay que confiar planes a pequeños teleñecos</h4>
+		<p>Las brujas del colegio Salvatore se reúnen para celebrar su día, mientras el último monstruo que se infiltra en la escuela pone en su punto de mira a Alyssa Chang y a los demás estudiantes creando problemas y sembrando el caos entre los aquelarres.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e11">
+  
+<div class="close" id="close-t2e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. ¿Qué problema de Cupido?</h4>
+		<p>Hope se entera de que Josie, Lizzie y Alaric están en peligro e intenta salvarlos. Landon aprovecha la oportunidad de vigilar al último monstruo de la ciudad para demostrar su valía.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e12">
+  
+<div class="close" id="close-t2e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Kai Parker nos la ha jugado</h4>
+		<p>Una serie de acontecimientos hace que Josie, Lizzie y Alaric se adentren en el mundo de las cárceles y los enfrenta al diabólico tío Kai.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e13">
+  
+<div class="close" id="close-t2e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. No puedes salvarlos a todos</h4>
+		<p>El tiempo juega en contra de Hope, la amenaza de la profecía se acerca y la presión para salvar a los Saltzman crece. El intento de Alaric de mantener a su familia a salvo hace que tenga que tomar una decisión difícil.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e14">
+  
+<div class="close" id="close-t2e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. Hay un lugar donde va lo que se perdió</h4>
+		<p>Emma sugiere que los estudiantes participen en una simulación grupal que los transporta a una película de cine negro para superar el trauma.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e15">
+  
+<div class="close" id="close-t2e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. La vida era mucho más fácil cuando solo me preocupaba por mí misma</h4>
+		<p>Lizzie debe tomar una decisión difícil cuando las cosas dan un giro inesperado en el 17 cumpleaños de las gemelas. Hope toma medidas drásticas cuando ella y Alaric difieren sobre cómo actuar ante un problema que afecta a Josie.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e16">
+  
+<div class="close" id="close-t2e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. Enfrentarme a la oscuridad es mi especialidad</h4>
+		<p>Hope intenta salvar a Josie y se infiltra en su subconsciente donde se ve a ella misma en un cuento de hadas lleno de magia negra. En el colegio Salvatore, Alaric, Lizzie y el equipo trazan un arriesgado plan para llegar a Josie.</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season3-->
+<div class="card" id="modal_t3e1">
+  
+<div class="close" id="close-t3e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. No somos dignos</h4>
+		<p>Para poder manejar algunas urgencias en la escuela, Alaric envía a los estudiantes fuera del campus para su primer día de campo. Pero cuando llega un monstruo medieval con un desafío, los estudiantes se quedan luchando para adivinar cuál de ellos puede ser un oponente digno.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e2">
+  
+<div class="close" id="close-t3e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Las despedidas dan asco</h4>
+		<p>Los chicos se enteran de una terrible noticia que afecta a uno de los suyos y hacen todo lo posible por ser de ayuda. Alaric le pide ayuda al Sheriff Mac para resolver unos asuntos a tiempo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e3">
+  
+<div class="close" id="close-t3e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Salvatore: ¡El musical!</h4>
+		<p>Los estudiantes se preparan para montar un musical sobre la fundación de la Escuela Salvatore a instancias de su misterioso nuevo consejero. Mientras tanto, mientras Landon se lanza a escribir el musical y Lizzie, Josie, Kaleb y Jed se sumergen en sus roles, Hope se distancia del musical.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e4">
+  
+<div class="close" id="close-t3e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Agárrate fuerte</h4>
+		<p>El Súper Escuadrón se une después de que el próximo movimiento del Nigromante desata más de lo que nadie esperaba. Un encuentro con Ethan le recuerda a Josie por qué no confía en sí misma con la magia.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e5">
+  
+<div class="close" id="close-t3e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Cueste lo que cueste</h4>
+		<p>Después de que uno de los suyos desaparece, Alaric sugiere a Hope que vaya a la caja de terapia. Además, el intento de Lizzie de pasar tiempo con MG no sale según lo planeado.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e6">
+  
+<div class="close" id="close-t3e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. A quien corresponda</h4>
+		<p>Tras un repentino éxodo masivo del alumnado de la escuela, Alaric y el equipo intentan desesperadamente reclutar nuevos estudiantes para mantener la escuela a flote. Hope acepta ayudar a Lizzie con la orientación de los nuevos estudiantes.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e7">
+  
+<div class="close" id="close-t3e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Sí, es un leprechaun de verdad</h4>
+		<p>Lizzie sugiere realizar una recaudación de fondos para la escuela. Cleo ayuda a Hope a lidiar con sus emociones. MG busca la ayuda de Alyssa. Cuando un duende aparece en la escuela, podría ser lo que necesitan para cambiar su suerte.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e8">
+  
+<div class="close" id="close-t3e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Cuánto tiempo</h4>
+		<p>MG tiene un encontronazo con el superequipo cuando una decisión controvertida sale a la luz. Hope pone en marcha un plan muy arriesgado a pesar de las posibles consecuencias.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e9">
+  
+<div class="close" id="close-t3e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. ¿Todos los Monstruos de Malivore aportan esta capacidad de introspección emocional?</h4>
+		<p>Mientras crecen las tensiones entre Hope y Lizzie, la llegada del último monsturo las obligará a dejar a un lado sus diferencias para poder derrotarlo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e10">
+  
+<div class="close" id="close-t3e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. A buen fin, no hay mal principio</h4>
+		<p>Después de capturar un nuevo monstruo en la escuela, Hope y el superequipo se enteran de una noticia aterradora sobre uno de los suyos. Una visita sorpresa de Lizzie le da a Josie el valor que tanto necesita. MG y Ethan se unen para ayudar a otros.</p>
+	</div>
+	</div>
+</div>
+
+
+<div class="card" id="modal_t3e11">
+  
+<div class="close" id="close-t3e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. No puedes huir de quien eres</h4>
+		<p>Después de recibir algo de inspiración de Cleo, Hope y Landon se embarcaron en una nueva misión. Sin embargo, cuando ese plan da un giro inesperado, Josie y Wade intervienen para echar una mano. En otra parte, Lizzie solicita la ayuda de MG para aprender más sobre Finch.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e12">
+  
+<div class="close" id="close-t3e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Fui creado para amarte</h4>
+		<p>Hope empieza a sospechar cuando Wade le da una noticia sorprendente. Alaric debe colaborar con un enemigo de su pasado para descubrir los secretos de un misterioso artefacto.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e13">
+  
+<div class="close" id="close-t3e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Un día lo entenderás</h4>
+		<p>Alaric debe tomar una decisión difícil sobre uno de sus estudiantes y pide ayuda a Kaleb y Josie para saber qué piensan. Mientras tanto, Cleo habla sobre su pasado.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e14">
+  
+<div class="close" id="close-t3e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. Siente un poco de culto</h4>
+		<p>En un intento por controlar los sentimientos negativos de Hope, Josie sugiere que se vayan con Lizzie a un retiro para brujas. Alaric y Dorian se unen cuando se enteran de que MG tiene problemas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e15">
+  
+<div class="close" id="close-t3e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. Una nueva Hope</h4>
+		<p>Atrapadas en una alucinación, Hope, Josie y Lizzie se ven obligadas a encontrar el modo de salir de una pesadilla de ciencia ficción. Alaric organiza una misión para que MG, Kaleb y Jed trabajen en equipo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e16">
+  
+<div class="close" id="close-t3e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. El destino es una mierda</h4>
+		<p>Hope se ve obligada a trabajar con alguien de su pasado. Kaleb y MG tienen su primera misión oficial como superhéroes. El plan de Lizzie para buscarle a Hope una nueva relación da un giro inesperado.</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season4-->
+<div class="card" id="modal_t4e1">
+  
+<div class="close" id="close-t4e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Tienes que elegir uno esta vez</h4>
+		<p>Tras enterarse de que Malivore se ha apoderado del cuerpo de Landon, Hope y el Superescuadrón idean un arriesgado plan para rescatar a Landon, así como a Cleo, a la que ha absorbido la oscuridad de Malivore.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e2">
+  
+<div class="close" id="close-t4e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. No hay yo en el equipo, o lo que sea</h4>
+		<p>Hope tiene que renunciar a monopolizar el control y permitir que Josie y sus amigos lleven a cabo un plan muy peligroso para salvar a Landon. Cleo y Landon se conocen mejor el uno al otro en la oscuridad de Malivore.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e3">
+  
+<div class="close" id="close-t4e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Todos sabíamos que llegaría este día</h4>
+		<p>Hope se da cuenta de que tiene que tomar una decisión difícil que Alaric desaprueba. Kaleb y MG idean su propio plan para ayudar a Hope. Alaric se da cuenta de que necesita renunciar al control.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e4">
+  
+<div class="close" id="close-t4e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Soy la hija de mi padre</h4>
+		<p>Hope lucha con su realidad. Cleo confía en Landon. Alaric confía en el equipo. MG le divulga información importante a Lizzie.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e5">
+  
+<div class="close" id="close-t4e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Pensé que estarías más feliz de verme</h4>
+		<p>Rebekah Mikaelson, la única persona que puede ayudar, encuentra a Hope. Josie y Lizzie no pierden la esperanza en una situación extrema.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e6">
+  
+<div class="close" id="close-t4e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Estás muy lejos de casa</h4>
+		<p>La búsqueda de respuestas de Josie y Lizzie lleva a esta última a descubrir un plan peligroso. Cleo trata de localizar a Hope, pero ella no quiere ser encontrada. Hope visita a un viejo conocido.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e7">
+  
+<div class="close" id="close-t4e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Un lugar lejos de toda esta violencia</h4>
+		<p>El equipo continúa trabajando para ayudar a Hope. MG hace un último esfuerzo para ayudar, pero las cosas no salen como él había planeado.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e8">
+  
+<div class="close" id="close-t4e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Te acordarás de mi</h4>
+		<p>Hope se encuentra en una empresa peligrosa. Josie busca respuestas profundas. Lizzie le pide inspiración a Cleo y se sorprende de dónde la encuentra. Landon continúa su misión por la paz.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e9">
+  
+<div class="close" id="close-t4e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. No puedo ser el que te detenga</h4>
+		<p>Hope se ve envuelta en un juego de persecución, mientras Lizzie se propone hacer las cosas bien. Josie tiene una conversación sincera con Finch. Alaric, Landon y Ted obtienen un resultado sorprendente de su búsqueda.</p>
+	</div>
+	</div>
+</div><!--
+
+<div class="card" id="modal_t4e10">
+  
+<div class="close" id="close-t4e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. http</h4>
+		<p>http</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e11">
+  
+<div class="close" id="close-t4e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. http</h4>
+		<p>http</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e12">
+  
+<div class="close" id="close-t4e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. http</h4>
+		<p>http</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e13">
+  
+<div class="close" id="close-t4e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. http</h4>
+		<p>http</p>
+	</div>
+	</div>
+</div>-->
+
+
+	<script>
+	  
+//select
+const select = document.querySelector('#select');
+const opciones = document.querySelector('#opciones');
+const contenidoSelect = document.querySelector('#select .contenido-select');
+const hiddenInput = document.querySelector('#inputSelect');
+
+document.querySelectorAll('#opciones > .opcion').forEach((opcion) => {
+	opcion.addEventListener('click', (e) => {
+		e.preventDefault();
+		contenidoSelect.innerHTML = e.currentTarget.innerHTML;
+		select.classList.toggle('active');
+		opciones.classList.toggle('active');
+		hiddenInput.value = e.currentTarget.querySelector('.titulo').innerText;
+	});
+});
+
+select.addEventListener('click', () => {
+	select.classList.toggle('active');
+	opciones.classList.toggle('active');
+});
+
+
+
+
+
+
+/*open modal*/
+/*Season1*/
+function mostrar_modal_t1e1() {
+  modal_t1e1.style.display = "flex";
+  iframe_t1e1.src = "https://uqload.com/embed-yogis7sj3mgq.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e2() {
+  modal_t1e2.style.display = "flex";
+  iframe_t1e2.src = "https://uqload.com/embed-vj3su530qxgc.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e3() {
+  modal_t1e3.style.display = "flex";
+  iframe_t1e3.src = "https://uqload.com/embed-wxon3ibb1uhz.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e4() {
+  modal_t1e4.style.display = "flex";
+  iframe_t1e4.src = "https://uqload.com/embed-c6fd9jvat0vy.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e5() {
+  modal_t1e5.style.display = "flex";
+  iframe_t1e5.src = "https://uqload.com/embed-jvohgbl3yh7f.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e6() {
+  modal_t1e6.style.display = "flex";
+  iframe_t1e6.src = "https://uqload.com/embed-se8klrxju1a4.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e7() {
+  modal_t1e7.style.display = "flex";
+  iframe_t1e7.src = "https://uqload.com/embed-20qbu589tgb9.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e8() {
+  modal_t1e8.style.display = "flex";
+  iframe_t1e8.src = "https://uqload.com/embed-jvtsjky3lerl.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e9() {
+  modal_t1e9.style.display = "flex";
+  iframe_t1e9.src = "https://uqload.com/embed-w6e8utza3pc8.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e10() {
+  modal_t1e10.style.display = "flex";
+  iframe_t1e10.src = "https://uqload.com/embed-vt33mysq4yih.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e11() {
+  modal_t1e11.style.display = "flex";
+  iframe_t1e11.src = "https://uqload.com/embed-rbp8dl93ls6f.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e12() {
+  modal_t1e12.style.display = "flex";
+  iframe_t1e12.src = "https://uqload.com/embed-q49glpqg88qg.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e13() {
+  modal_t1e13.style.display = "flex";
+  iframe_t1e13.src = "https://uqload.com/embed-1pjdjx6hi6ck.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e14() {
+  modal_t1e14.style.display = "flex";
+  iframe_t1e14.src = "https://uqload.com/embed-66fj7heigy9p.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e15() {
+  modal_t1e15.style.display = "flex";
+  iframe_t1e15.src = "https://uqload.com/embed-dnqi79edodpl.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e16() {
+  modal_t1e16.style.display = "flex";
+  iframe_t1e16.src = "https://uqload.com/embed-jx2b0soinht9.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season2*/
+function mostrar_modal_t2e1() {
+  modal_t2e1.style.display = "flex";
+  iframe_t2e1.src = "https://uqload.com/embed-ktp3za0ihb24.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e2() {
+  modal_t2e2.style.display = "flex";
+  iframe_t2e2.src = "https://uqload.com/embed-7o9jxf88nei9.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e3() {
+  modal_t2e3.style.display = "flex";
+  iframe_t2e3.src = "https://uqload.com/embed-mpwryns5b7wp.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e4() {
+  modal_t2e4.style.display = "flex";
+  iframe_t2e4.src = "https://uqload.com/embed-if4tzb70ec7k.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e5() {
+  modal_t2e5.style.display = "flex";
+  iframe_t2e5.src = "https://uqload.com/embed-smcsqgdmts8d.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e6() {
+  modal_t2e6.style.display = "flex";
+  iframe_t2e6.src = "https://uqload.com/embed-87huguxkpahf.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e7() {
+  modal_t2e7.style.display = "flex";
+  iframe_t2e7.src = "https://uqload.com/embed-w1c8uddjobdv.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e8() {
+  modal_t2e8.style.display = "flex";
+  iframe_t2e8.src = "https://uqload.com/embed-m8yd7cpcrhl8.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e9() {
+  modal_t2e9.style.display = "flex";
+  iframe_t2e9.src = "https://uqload.com/embed-1q84l2yzxnrq.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e10() {
+  modal_t2e10.style.display = "flex";
+  iframe_t2e10.src = "https://uqload.com/embed-rr49xy94j3ee.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e11() {
+  modal_t2e11.style.display = "flex";
+  iframe_t2e11.src = "https://uqload.com/embed-eanb5lxqz8wc.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e12() {
+  modal_t2e12.style.display = "flex";
+  iframe_t2e12.src = "https://uqload.com/embed-ufzlwr9hoyv5.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e13() {
+  modal_t2e13.style.display = "flex";
+  iframe_t2e13.src = "https://uqload.com/embed-58x5a5m7xe15.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e14() {
+  modal_t2e14.style.display = "flex";
+  iframe_t2e14.src = "https://uqload.com/embed-hhaihoa5w9ph.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e15() {
+  modal_t2e15.style.display = "flex";
+  iframe_t2e15.src = "https://uqload.com/embed-0za6jxwb21dn.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e16() {
+  modal_t2e16.style.display = "flex";
+  iframe_t2e16.src = "https://uqload.com/embed-nplu39r5nuxd.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season3*/
+function mostrar_modal_t3e1() {
+  modal_t3e1.style.display = "flex";
+  iframe_t3e1.src = "https://uqload.com/embed-fdsmf89b61rd.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e2() {
+  modal_t3e2.style.display = "flex";
+  iframe_t3e2.src = "https://uqload.com/embed-pqiqzyclyoza.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e3() {
+  modal_t3e3.style.display = "flex";
+  iframe_t3e3.src = "https://uqload.com/embed-6ylhkjya41c7.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e4() {
+  modal_t3e4.style.display = "flex";
+  iframe_t3e4.src = "https://uqload.com/embed-oczarhed6ydj.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e5() {
+  modal_t3e5.style.display = "flex";
+  iframe_t3e5.src = "https://uqload.com/embed-51watgxjmbg3.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e6() {
+  modal_t3e6.style.display = "flex";
+  iframe_t3e6.src = "https://uqload.com/embed-xbl34povsqj4.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e7() {
+  modal_t3e7.style.display = "flex";
+  iframe_t3e7.src = "https://uqload.com/embed-prhyza5xj020.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e8() {
+  modal_t3e8.style.display = "flex";
+  iframe_t3e8.src = "https://uqload.com/embed-liuzc0rnuslv.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e9() {
+  modal_t3e9.style.display = "flex";
+  iframe_t3e9.src = "https://uqload.com/embed-311lht5dg604.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e10() {
+  modal_t3e10.style.display = "flex";
+  iframe_t3e10.src = "https://uqload.com/embed-nbt0uz5afta7.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e11() {
+  modal_t3e11.style.display = "flex";
+  iframe_t3e11.src = "https://uqload.com/embed-gq1ur1r5j7pt.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e12() {
+  modal_t3e12.style.display = "flex";
+  iframe_t3e12.src = "https://uqload.com/embed-t3ab3m5i52vw.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e13() {
+  modal_t3e13.style.display = "flex";
+  iframe_t3e13.src = "https://uqload.com/embed-0orh4xqyzqix.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e14() {
+  modal_t3e14.style.display = "flex";
+  iframe_t3e14.src = "https://uqload.com/embed-3808sefuoxk3.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e15() {
+  modal_t3e15.style.display = "flex";
+  iframe_t3e15.src = "https://uqload.com/embed-3tv4jd9oata0.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e16() {
+  modal_t3e16.style.display = "flex";
+  iframe_t3e16.src = "https://uqload.com/embed-y4w6wwza37zu.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season4*/
+function mostrar_modal_t4e1() {
+  modal_t4e1.style.display = "flex";
+  iframe_t4e1.src = "https://uqload.com/embed-48s9hq5vcrrb.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e2() {
+  modal_t4e2.style.display = "flex";
+  iframe_t4e2.src = "https://uqload.com/embed-4fz735o19xd9.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e3() {
+  modal_t4e3.style.display = "flex";
+  iframe_t4e3.src = "https://uqload.com/embed-rk8o384af69d.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e4() {
+  modal_t4e4.style.display = "flex";
+  iframe_t4e4.src = "https://uqload.com/embed-18hkoq1eas7u.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e5() {
+  modal_t4e5.style.display = "flex";
+  iframe_t4e5.src = "https://uqload.com/embed-3not1h1ritdm.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e6() {
+  modal_t4e6.style.display = "flex";
+  iframe_t4e6.src = "https://uqload.com/embed-95uf61tec7ri.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e7() {
+  modal_t4e7.style.display = "flex";
+  iframe_t4e7.src = "https://uqload.com/embed-jc5ixsvlrwo4.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e8() {
+  modal_t4e8.style.display = "flex";
+  iframe_t4e8.src = "https://uqload.com/embed-dpzyxjwjs8mn.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e9() {
+  modal_t4e9.style.display = "flex";
+  iframe_t4e9.src = "https://uqload.com/embed-ly3n6u9zz3wo.html";
+  body.style.overflow = "hidden";
+}/*
+function mostrar_modal_t4e10() {
+  modal_t4e10.style.display = "flex";
+  iframe_t4e10.src = "http";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e11() {
+  modal_t4e11.style.display = "flex";
+  iframe_t4e11.src = "http";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e12() {
+  modal_t4e12.style.display = "flex";
+  iframe_t4e12.src = "http";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e13() {
+  modal_t4e13.style.display = "flex";
+  iframe_t4e13.src = "http";
+  body.style.overflow = "hidden";
+}*/
+
+
+
+/*close modal*/
+/*Season1*/
+function close_t1e1() {
+  modal_t1e1.style.display = "none";
+  iframe_t1e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e2() {
+  modal_t1e2.style.display = "none";
+  iframe_t1e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e3() {
+  modal_t1e3.style.display = "none";
+  iframe_t1e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e4() {
+  modal_t1e4.style.display = "none";
+  iframe_t1e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e5() {
+  modal_t1e5.style.display = "none";
+  iframe_t1e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e6() {
+  modal_t1e6.style.display = "none";
+  iframe_t1e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e7() {
+  modal_t1e7.style.display = "none";
+  iframe_t1e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e8() {
+  modal_t1e8.style.display = "none";
+  iframe_t1e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e9() {
+  modal_t1e9.style.display = "none";
+  iframe_t1e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e10() {
+  modal_t1e10.style.display = "none";
+  iframe_t1e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e11() {
+  modal_t1e11.style.display = "none";
+  iframe_t1e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e12() {
+  modal_t1e12.style.display = "none";
+  iframe_t1e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e13() {
+  modal_t1e13.style.display = "none";
+  iframe_t1e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e14() {
+  modal_t1e14.style.display = "none";
+  iframe_t1e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e15() {
+  modal_t1e15.style.display = "none";
+  iframe_t1e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e16() {
+  modal_t1e16.style.display = "none";
+  iframe_t1e16.src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season2*/
+function close_t2e1() {
+  modal_t2e1.style.display = "none";
+  iframe_t2e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e2() {
+  modal_t2e2.style.display = "none";
+  iframe_t2e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e3() {
+  modal_t2e3.style.display = "none";
+  iframe_t2e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e4() {
+  modal_t2e4.style.display = "none";
+  iframe_t2e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e5() {
+  modal_t2e5.style.display = "none";
+  iframe_t2e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e6() {
+  modal_t2e6.style.display = "none";
+  iframe_t2e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e7() {
+  modal_t2e7.style.display = "none";
+  iframe_t2e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e8() {
+  modal_t2e8.style.display = "none";
+  iframe_t2e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e9() {
+  modal_t2e9.style.display = "none";
+  iframe_t2e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e10() {
+  modal_t2e10.style.display = "none";
+  iframe_t2e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e11() {
+  modal_t2e11.style.display = "none";
+  iframe_t2e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e12() {
+  modal_t2e12.style.display = "none";
+  iframe_t2e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e13() {
+  modal_t2e13.style.display = "none";
+  iframe_t2e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e14() {
+  modal_t2e14.style.display = "none";
+  iframe_t2e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e15() {
+  modal_t2e15.style.display = "none";
+  iframe_t2e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e16() {
+  modal_t2e16.style.display = "none";
+  iframe_t2e16.src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season3*/
+function close_t3e1() {
+  modal_t3e1.style.display = "none";
+  iframe_t3e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e2() {
+  modal_t3e2.style.display = "none";
+  iframe_t3e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e3() {
+  modal_t3e3.style.display = "none";
+  iframe_t3e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e4() {
+  modal_t3e4.style.display = "none";
+  iframe_t3e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e5() {
+  modal_t3e5.style.display = "none";
+  iframe_t3e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e6() {
+  modal_t3e6.style.display = "none";
+  iframe_t3e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e7() {
+  modal_t3e7.style.display = "none";
+  iframe_t3e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e8() {
+  modal_t3e8.style.display = "none";
+  iframe_t3e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e9() {
+  modal_t3e9.style.display = "none";
+  iframe_t3e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e10() {
+  modal_t3e10.style.display = "none";
+  iframe_t3e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e11() {
+  modal_t3e11.style.display = "none";
+  iframe_t3e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e12() {
+  modal_t3e12.style.display = "none";
+  iframe_t3e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e13() {
+  modal_t3e13.style.display = "none";
+  iframe_t3e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e14() {
+  modal_t3e14.style.display = "none";
+  iframe_t3e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e15() {
+  modal_t3e15.style.display = "none";
+  iframe_t3e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e16() {
+  modal_t3e16.style.display = "none";
+  iframe_t3e16.src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season4*/
+function close_t4e1() {
+  modal_t4e1.style.display = "none";
+  iframe_t4e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e2() {
+  modal_t4e2.style.display = "none";
+  iframe_t4e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e3() {
+  modal_t4e3.style.display = "none";
+  iframe_t4e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e4() {
+  modal_t4e4.style.display = "none";
+  iframe_t4e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e5() {
+  modal_t4e5.style.display = "none";
+  iframe_t4e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e6() {
+  modal_t4e6.style.display = "none";
+  iframe_t4e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e7() {
+  modal_t4e7.style.display = "none";
+  iframe_t4e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e8() {
+  modal_t4e8.style.display = "none";
+  iframe_t4e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e9() {
+  modal_t4e9.style.display = "none";
+  iframe_t4e9.src = "";
+  body.style.overflow = "auto";
+}/*
+function close_t4e10() {
+  modal_t4e10.style.display = "none";
+  iframe_t4e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e11() {
+  modal_t4e11.style.display = "none";
+  iframe_t4e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e12() {
+  modal_t4e12.style.display = "none";
+  iframe_t4e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e13() {
+  modal_t4e13.style.display = "none";
+  iframe_t4e13.src = "";
+  body.style.overflow = "auto";
+}*/
+
+
+/*Season1*/
+document.getElementById("btn-t1e1").addEventListener("click", mostrar_modal_t1e1);
+document.getElementById("btn-t1e2").addEventListener("click", mostrar_modal_t1e2);
+document.getElementById("btn-t1e3").addEventListener("click", mostrar_modal_t1e3);
+document.getElementById("btn-t1e4").addEventListener("click", mostrar_modal_t1e4);
+document.getElementById("btn-t1e5").addEventListener("click", mostrar_modal_t1e5);
+document.getElementById("btn-t1e6").addEventListener("click", mostrar_modal_t1e6);
+document.getElementById("btn-t1e7").addEventListener("click", mostrar_modal_t1e7);
+document.getElementById("btn-t1e8").addEventListener("click", mostrar_modal_t1e8);
+document.getElementById("btn-t1e9").addEventListener("click", mostrar_modal_t1e9);
+document.getElementById("btn-t1e10").addEventListener("click", mostrar_modal_t1e10);
+document.getElementById("btn-t1e11").addEventListener("click", mostrar_modal_t1e11);
+document.getElementById("btn-t1e12").addEventListener("click", mostrar_modal_t1e12);
+document.getElementById("btn-t1e13").addEventListener("click", mostrar_modal_t1e13);
+document.getElementById("btn-t1e14").addEventListener("click", mostrar_modal_t1e14);
+document.getElementById("btn-t1e15").addEventListener("click", mostrar_modal_t1e15);
+document.getElementById("btn-t1e16").addEventListener("click", mostrar_modal_t1e16);
+
+
+/*Season2*/
+document.getElementById("btn-t2e1").addEventListener("click", mostrar_modal_t2e1);
+document.getElementById("btn-t2e2").addEventListener("click", mostrar_modal_t2e2);
+document.getElementById("btn-t2e3").addEventListener("click", mostrar_modal_t2e3);
+document.getElementById("btn-t2e4").addEventListener("click", mostrar_modal_t2e4);
+document.getElementById("btn-t2e5").addEventListener("click", mostrar_modal_t2e5);
+document.getElementById("btn-t2e6").addEventListener("click", mostrar_modal_t2e6);
+document.getElementById("btn-t2e7").addEventListener("click", mostrar_modal_t2e7);
+document.getElementById("btn-t2e8").addEventListener("click", mostrar_modal_t2e8);
+document.getElementById("btn-t2e9").addEventListener("click", mostrar_modal_t2e9);
+document.getElementById("btn-t2e10").addEventListener("click", mostrar_modal_t2e10);
+document.getElementById("btn-t2e11").addEventListener("click", mostrar_modal_t2e11);
+document.getElementById("btn-t2e12").addEventListener("click", mostrar_modal_t2e12);
+document.getElementById("btn-t2e13").addEventListener("click", mostrar_modal_t2e13);
+document.getElementById("btn-t2e14").addEventListener("click", mostrar_modal_t2e14);
+document.getElementById("btn-t2e15").addEventListener("click", mostrar_modal_t2e15);
+document.getElementById("btn-t2e16").addEventListener("click", mostrar_modal_t2e16);
+
+
+/*Season3*/
+document.getElementById("btn-t3e1").addEventListener("click", mostrar_modal_t3e1);
+document.getElementById("btn-t3e2").addEventListener("click", mostrar_modal_t3e2);
+document.getElementById("btn-t3e3").addEventListener("click", mostrar_modal_t3e3);
+document.getElementById("btn-t3e4").addEventListener("click", mostrar_modal_t3e4);
+document.getElementById("btn-t3e5").addEventListener("click", mostrar_modal_t3e5);
+document.getElementById("btn-t3e6").addEventListener("click", mostrar_modal_t3e6);
+document.getElementById("btn-t3e7").addEventListener("click", mostrar_modal_t3e7);
+document.getElementById("btn-t3e8").addEventListener("click", mostrar_modal_t3e8);
+document.getElementById("btn-t3e9").addEventListener("click", mostrar_modal_t3e9);
+document.getElementById("btn-t3e10").addEventListener("click", mostrar_modal_t3e10);
+document.getElementById("btn-t3e11").addEventListener("click", mostrar_modal_t3e11);
+document.getElementById("btn-t3e12").addEventListener("click", mostrar_modal_t3e12);
+document.getElementById("btn-t3e13").addEventListener("click", mostrar_modal_t3e13);
+document.getElementById("btn-t3e14").addEventListener("click", mostrar_modal_t3e14);
+document.getElementById("btn-t3e15").addEventListener("click", mostrar_modal_t3e15);
+document.getElementById("btn-t3e16").addEventListener("click", mostrar_modal_t3e16);
+
+
+/*Season4*/
+document.getElementById("btn-t4e1").addEventListener("click", mostrar_modal_t4e1);
+document.getElementById("btn-t4e2").addEventListener("click", mostrar_modal_t4e2);
+document.getElementById("btn-t4e3").addEventListener("click", mostrar_modal_t4e3);
+document.getElementById("btn-t4e4").addEventListener("click", mostrar_modal_t4e4);
+document.getElementById("btn-t4e5").addEventListener("click", mostrar_modal_t4e5);
+document.getElementById("btn-t4e6").addEventListener("click", mostrar_modal_t4e6);
+document.getElementById("btn-t4e7").addEventListener("click", mostrar_modal_t4e7);
+document.getElementById("btn-t4e8").addEventListener("click", mostrar_modal_t4e8);
+document.getElementById("btn-t4e9").addEventListener("click", mostrar_modal_t4e9);/*
+document.getElementById("btn-t4e10").addEventListener("click", mostrar_modal_t4e10);
+document.getElementById("btn-t4e11").addEventListener("click", mostrar_modal_t4e11);
+document.getElementById("btn-t4e12").addEventListener("click", mostrar_modal_t4e12);
+document.getElementById("btn-t4e13").addEventListener("click", mostrar_modal_t4e13);*/
+
+
+/*Season1*/
+document.getElementById("close-t1e1").addEventListener("click", close_t1e1);
+document.getElementById("close-t1e2").addEventListener("click", close_t1e2);
+document.getElementById("close-t1e3").addEventListener("click", close_t1e3);
+document.getElementById("close-t1e4").addEventListener("click", close_t1e4);
+document.getElementById("close-t1e5").addEventListener("click", close_t1e5);
+document.getElementById("close-t1e6").addEventListener("click", close_t1e6);
+document.getElementById("close-t1e7").addEventListener("click", close_t1e7);
+document.getElementById("close-t1e8").addEventListener("click", close_t1e8);
+document.getElementById("close-t1e9").addEventListener("click", close_t1e9);
+document.getElementById("close-t1e10").addEventListener("click", close_t1e10);
+document.getElementById("close-t1e11").addEventListener("click", close_t1e11);
+document.getElementById("close-t1e12").addEventListener("click", close_t1e12);
+document.getElementById("close-t1e13").addEventListener("click", close_t1e13);
+document.getElementById("close-t1e14").addEventListener("click", close_t1e14);
+document.getElementById("close-t1e15").addEventListener("click", close_t1e15);
+document.getElementById("close-t1e16").addEventListener("click", close_t1e16);
+
+/*Season2*/
+document.getElementById("close-t2e1").addEventListener("click", close_t2e1);
+document.getElementById("close-t2e2").addEventListener("click", close_t2e2);
+document.getElementById("close-t2e3").addEventListener("click", close_t2e3);
+document.getElementById("close-t2e4").addEventListener("click", close_t2e4);
+document.getElementById("close-t2e5").addEventListener("click", close_t2e5);
+document.getElementById("close-t2e6").addEventListener("click", close_t2e6);
+document.getElementById("close-t2e7").addEventListener("click", close_t2e7);
+document.getElementById("close-t2e8").addEventListener("click", close_t2e8);
+document.getElementById("close-t2e9").addEventListener("click", close_t2e9);
+document.getElementById("close-t2e10").addEventListener("click", close_t2e10);
+document.getElementById("close-t2e11").addEventListener("click", close_t2e11);
+document.getElementById("close-t2e12").addEventListener("click", close_t2e12);
+document.getElementById("close-t2e13").addEventListener("click", close_t2e13);
+document.getElementById("close-t2e14").addEventListener("click", close_t2e14);
+document.getElementById("close-t2e15").addEventListener("click", close_t2e15);
+document.getElementById("close-t2e16").addEventListener("click", close_t2e16);
+
+/*Season3*/
+document.getElementById("close-t3e1").addEventListener("click", close_t3e1);
+document.getElementById("close-t3e2").addEventListener("click", close_t3e2);
+document.getElementById("close-t3e3").addEventListener("click", close_t3e3);
+document.getElementById("close-t3e4").addEventListener("click", close_t3e4);
+document.getElementById("close-t3e5").addEventListener("click", close_t3e5);
+document.getElementById("close-t3e6").addEventListener("click", close_t3e6);
+document.getElementById("close-t3e7").addEventListener("click", close_t3e7);
+document.getElementById("close-t3e8").addEventListener("click", close_t3e8);
+document.getElementById("close-t3e9").addEventListener("click", close_t3e9);
+document.getElementById("close-t3e10").addEventListener("click", close_t3e10);
+document.getElementById("close-t3e11").addEventListener("click", close_t3e11);
+document.getElementById("close-t3e12").addEventListener("click", close_t3e12);
+document.getElementById("close-t3e13").addEventListener("click", close_t3e13);
+document.getElementById("close-t3e14").addEventListener("click", close_t3e14);
+document.getElementById("close-t3e15").addEventListener("click", close_t3e15);
+document.getElementById("close-t3e16").addEventListener("click", close_t3e16);
+
+/*Season4*/
+document.getElementById("close-t4e1").addEventListener("click", close_t4e1);
+document.getElementById("close-t4e2").addEventListener("click", close_t4e2);
+document.getElementById("close-t4e3").addEventListener("click", close_t4e3);
+document.getElementById("close-t4e4").addEventListener("click", close_t4e4);
+document.getElementById("close-t4e5").addEventListener("click", close_t4e5);
+document.getElementById("close-t4e6").addEventListener("click", close_t4e6);
+document.getElementById("close-t4e7").addEventListener("click", close_t4e7);
+document.getElementById("close-t4e8").addEventListener("click", close_t4e8);
+document.getElementById("close-t4e9").addEventListener("click", close_t4e9);/*
+document.getElementById("close-t4e10").addEventListener("click", close_t4e10);
+document.getElementById("close-t4e11").addEventListener("click", close_t4e11);
+document.getElementById("close-t4e12").addEventListener("click", close_t4e12);
+document.getElementById("close-t4e13").addEventListener("click", close_t4e13);
+*/
+
+/*Seasons*/
+document.getElementById('btn_season1').addEventListener('click', showSeason1);
+document.getElementById('btn_season2').addEventListener('click', showSeason2);
+document.getElementById('btn_season3').addEventListener('click', showSeason3);
+document.getElementById('btn_season4').addEventListener('click', showSeason4);
+
+function showSeason1() {
+  season1.style.display = "block";
+  season2.style.display = "none";
+  season3.style.display = "none";
+  season4.style.display = "none";
+}
+
+function showSeason2() {
+  season1.style.display = "none";
+  season2.style.display = "block";
+  season3.style.display = "none";
+  season4.style.display = "none";
+}
+
+function showSeason3() {
+  season1.style.display = "none";
+  season2.style.display = "none";
+  season3.style.display = "block";
+  season4.style.display = "none";
+}
+
+function showSeason4() {
+  season1.style.display = "none";
+  season2.style.display = "none";
+  season3.style.display = "none";
+  season4.style.display = "block";
+}
+
+	  
+	</script>
+</body>
+</html>
