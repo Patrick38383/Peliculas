@@ -1,0 +1,4964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Series</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	
+	<style type="text/css">
+	  
+	  @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: #090909;
+	font-family: 'Open Sans', sans-serif;
+}
+
+a {
+	text-decoration: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.contenedor {
+	width: 90%;
+	max-width: 1000px;
+	margin: auto;
+	padding: 10px 0;
+}
+
+.selectbox {
+	width: 50%;
+	margin: auto;
+	position: relative;
+}
+
+.select {
+	background: #222;
+	width: 100%;
+	border-radius: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 5px;
+	padding: 10px 0 10px 10px;
+	position: relative;
+}
+
+.select i {
+	font-size: 23px;
+	margin-right: 13px;
+	color: #ddd;
+}
+
+.titulo {
+	margin-bottom: 10px;
+	color: #ddd;
+	font-weight: 600;
+	font-size: 16px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.descripcion {
+	font-size: 14px;
+	color: #ddd;
+}
+
+.opciones {
+	background: #191919;
+	border-radius: 10px;
+	overflow: auto;
+	width: 100%;
+	display: none;
+}
+
+.opciones.active {
+	display: block;
+	animation: fadeIn .3s forwards;
+}
+
+@keyframes fadeIn {
+	from {
+		transform: translateY(-100px) scale(.5);
+	}
+	to {
+		transform: translateY(0) scale(1);
+	}
+}
+
+.textos {
+  width: 100%;
+}
+
+.contenido-opcion {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	transition: .2s ease all;
+}
+
+.opciones .contenido-opcion {
+	padding: 9px;
+}
+
+.opciones .contenido-opcion:hover {
+  background: #101010;
+}
+
+.sinopsis {
+  padding: 0 15px;
+  color: #eee;
+  font-size: 13px;
+  text-align: justify;
+  margin-bottom: 10px;
+}
+
+/*Chapters*/
+
+.episodes {
+	overflow: auto;
+	z-index: 100;
+	width: 100%;
+	display: block;
+}
+
+.episodes .contenido-opcion {
+	background: #090909;
+	padding: 0 10px 14px 10px;
+}
+
+.episodes .contenido-opcion:hover {
+  background: #000;
+}
+
+.contenido-opcion img {
+	width: auto;
+	height: 50px;
+	margin-right: 20px;
+	border-radius: 2px;
+}
+
+/*Responsive*/
+
+@media screen and (max-width: 800px){
+	.selectbox {
+		width: 100%;
+	}
+}
+
+
+
+
+
+
+/*Cards*/
+.card {
+	width: 100%;
+	height: 100vh;
+	max-width: 1100px;
+	position: fixed;
+  font-family: 'Montserrat', sans-serif;
+  top: 50%;
+  transform: translateY(-50%);
+	background: rgba(2, 2, 2, .7);
+	display: none;
+}
+
+.contenedor-card {
+  width: 95%;
+  position: fixed;
+  background: #111;
+  border-radius: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+
+.card .contenido-card h4 {
+  text-align: center;
+	margin-bottom: 10px;
+	color: #ddd;
+}
+
+.card .contenido-card p {
+  padding: 0 10px 10px ;
+	line-height: 1.5;
+	color: #ddd;
+	font-size: 14px;
+	margin-bottom: 5px;
+	text-align: justify;
+}
+
+iframe {
+  border-radius: 7px 7px 0 0;
+}
+
+.close {
+  font-size: 50px;
+  color: #fff;
+  position: absolute;
+  display: flex;
+  top: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.season2, .season3, .season4, .season5 {
+  display: none;
+}
+	  
+	</style>
+</head>
+<body id="body">
+	
+	<div class="contenedor">
+		<form action="">
+			<div class="selectbox">
+				<div class="select" id="select">
+					<div class="contenido-select">
+						<h1 class="titulo">Temporada 1</h1>
+					</div>
+					<i class="bi bi-chevron-down"></i>
+				</div>
+
+				<div class="opciones" id="opciones">
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season1">Temporada 1</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season2">Temporada 2</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season3">Temporada 3</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season4">Temporada 4</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season5">Temporada 5</h1>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<input type="hidden" id="inputSelect" value="">
+		</form>
+
+	</div>
+	
+	<!--Sinopsis-->
+	
+	<div class="sinopsis">
+	  <p>Un chico de 13 años, Henry Hart, consigue un trabajo a tiempo parcial como un ayudante de combate del Capitán Man.</p>
+	</div>
+	
+	
+<!--Season1-->
+	
+	<div class="episodes" id="season1">
+					<a class="opcion" id="btn-t1e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/8CIaWbC1NQnPCtozHCvhnjNENeK.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. El peligro comienza (Parte 1 y 2)</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/7p71pyKtvY6GPv6SGulMZyDHbua.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Más peligro, más problemas</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/rmcLKW3Hs2lY63EamRYNbGEqm4Z.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Se descubre el secreto</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/bDp8VyD5ASIpoN8H9LIVUvy5iWo.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Lágrimas de escarabajo alegre</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/stS07HzjerUwtdlrtcrpgAhgwsA.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Profesor sustituto</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/aVsmKj3y2g6tcJAvqqXYBK24tY3.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Jasper Danger</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/4LXUlfqDeXkdI0fjI6PgYkjNxUZ.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. La roca espacial</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/zNdrKEYJdPX93IjTEV2sF3x5PNh.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Cumpleañera caída</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/jhPio6tYm7Xxuf4P3zL6VCyzM0A.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. Mucho en juego</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/clEEd1uVJ0AsVZXHTiQcpLMSf2t.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Henry, el hombre bestia</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/vRLxahbSvkz0aYz8qxQU6iK2drz.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Brad invisible</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/828s76cjA0r26KoUjLGAgEDCbOh.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Alerta de información</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/zUC4yxPapwQUriTMtkecgUKKUBd.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Hagamos un robo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e14">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/1BYgv1T8AXnFu8zXczkU77dQ9ch.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. El súper volcán</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e15">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/oy3FJlt5iXSej5CT7t61DNOJcVk.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. Mi falso San Valentín</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e16">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/lxyS5kAMB2ukZwWSGobgVmtyvcT.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. Atrapados</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e17">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/4JnSR9fmuIbF2pCyy4ALhvMpeXy.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. El elevador del beso</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e18">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/jYYalvpS6wjGbT5pKjVmiVqEIwe.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. El hombre de la casa</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e19">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/o8jjoSgBwHtXCCsShoSF9Ic8fJ9.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">19. Caza sueños</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e20">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/9qrZptaLdDoMiEz5z1LXgZc2iMp.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">20. Castigado</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e21">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/nIpsDmZ6CkxRmWNxJA3sKGWbTox.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">21. Capitán patán</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e22">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/jj9diSbkWvYuzsgrEyzZdkMtEGN.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">22. La trampa del balde</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e23">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/jh7yH4gVBN5r63sD4DNSygP6F01.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">23. Henry y la chica mala (Parte 1)</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e24">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/lSdb03o3uzj3WOZi2lpErlIEnj1.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">24. Henry y la chica mala (Parte 2)</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e25">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/cuncCDAS3p7hX2cWhXkdTRivkfN.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">25. La Novia Real de Jasper</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season2-->
+			
+	<div class="episodes season2" id="season2">
+					<a class="opcion" id="btn-t2e1">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMzIxNzk0MDAwN15BMl5BanBnXkFtZTgwNzU3MjY4NjE@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. El ritmo continúa</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e2">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMTliNzQ3ZjQtNzYzNS00ZGEyLWE3Y2MtNzgxOTc1MzliYTMzXkEyXkFqcGdeQXVyNjU5NjQ0MTE@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Un Henry y tres chicas (Parte 1)</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e3">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BNWI0Yzc5MjQtYTFjNy00NDliLTg0MjEtMWVjMTIxYmQwY2E1XkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Un Henry y tres chicas (Parte 2)</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e4">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BNDA2ZmI2ZjctYzEyOC00MThmLTk4ZTMtNjBhZDIyYmZhNTNhXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Henry y los carpinteros</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e5">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMTQ1NzM4ODkxMF5BMl5BanBnXkFtZTgwODExNzIwNzE@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Capitán Man de vacaciones</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e6">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMjMyNzMyMDAwNF5BMl5BanBnXkFtZTgwMzUxMzY4NjE@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. El agitador del tiempo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e7">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMjg2NTZjMDQtMGMyMS00NzkxLWE0NzEtZjVmZGEwYzI2MzNhXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Carne en el asador</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e8">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BYzE1NWY0ZTctYTgxNy00MjkwLTg0YWYtNDhmZWY3Nzg2OWJlXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Los celos de Henry</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e9">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BNzc3NjcxNzktY2MzNi00OGNmLTk3ODAtODFmYWU4NGVlMTc4XkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. Navidad danger</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e10">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BY2U1MTNlZGQtNGE5NC00MDg4LWE4YTQtOWRkOTZiYTA0YTFiXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Henry el indestructible (Parte 1)</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e11">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BNjU0ZTMzM2ItNTlmYy00ODEwLWJmZDQtOTBhOTNiYWJjNjM4XkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Henry el indestructible (Parte 2)</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e12">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BNTkyYTQ5MWMtNWY2ZC00MzNlLWJmZDUtYjY1ZmZiZjQxYjYyXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Mensajes, mentiras y vídeo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e13">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BNDI3MzRkMWMtNjE3NC00MTA3LTlkYWQtMWQ1OTNlNGNhNjQwXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Universo opuesto</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e14">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BYmJkYzJiYTYtMGM2OS00OTJhLTk0MWYtNzI3NGVlZGU1YjkxXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. Danger sepultado</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e15">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BODVlOWFiNGMtYTk4Mi00MjhiLTkyZWMtODMwMmVmNDIwOWI2XkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. La viruela bovina</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e16">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BZjFmNDU0ZjAtZTBhZC00NTg2LTgyMjItNTI3YzIwMTA1ZjEzXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. El clon de Henry</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e17">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMjRkMjZkMjEtZWFkNC00OThmLTk0NWEtODFjYzlmMzdhYzMwXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. Danger y Thunder</h1>
+								<p class="descripcion">44min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e18">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMzExNzY1MDA2MV5BMl5BanBnXkFtZTgwMTQwOTc0OTE@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. Yo sé tu secreto</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season3-->
+			
+	<div class="episodes season3" id="season3">
+					<a class="opcion" id="btn-t3e1">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMjUxNjFlNTktNDg3ZS00ZDhjLTg1ZDYtZmM5MTU0ZWI4ZDZhXkEyXkFqcGdeQXVyNzEzOTE4NTE@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. La pezñata asesina</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e2">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BN2MxMDc0ZWQtZjdmNS00YWJkLThiYjQtNDExZjY1ODcxMjRhXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. El muffin del amor</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e3">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BOTI5NWIzNWYtZjU2Yy00ZWMwLTg2NWYtY2U1M2IwYjQ2ZmUzXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. La máquina de gritos</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e4">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BZjk3NGIzZGUtNDUyNi00NWEzLWEwMGUtMDU5NzhlMTZlYTE4XkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Boca de azúcar</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e5">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMzdjZDA5MzMtYjNmNS00Yzg3LWJhMTUtMjllMjEyOGRhNGQzXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. El problema con las Frittles</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e6">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMDgyZjI2MTctODE0Zi00Yzc0LTg4MjMtOThkNjU5NWFkNjM5XkEyXkFqcGdeQXVyNjU5NjQ0MTE@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. La hora de poder</h1>
+								<p class="descripcion">44min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e7">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BODlkZDVhNjAtYWQwZS00ZDM5LWJkZmYtNGExNjIyYTcwYmFlL2ltYWdlXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Esquivando el peligro</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e8">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BY2M1Njc3NmQtMDA0MS00MDg5LThlZWYtMjRhYzA3OTk4MTFkXkEyXkFqcGdeQXVyNzg1NTI5ODY@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Cita doble peligrosa</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e9">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BNjI0ZWZlNWItOWZhYy00MTU4LWI4NmItN2YxMGQ4YWVlNTJiXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. Invasores del espacio (Parte 1)</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e10">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BNmMwMDFhMTgtZTcxYS00OWZjLWFjOWMtNmZiYzZjZmQ1OWM5XkEyXkFqcGdeQXVyNDQ4NTE5Mg@@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Invasores del espacio (Parte 2)</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e11">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BNDc4YmJjOWItOTM2Yy00MzAxLWI3ZjktZGViYjQ3NDQ2YzY1XkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Gas o error</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e12">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BZDA3MDE4MTUtY2E2ZC00ZGNlLTlkYTItZTk2MjVhNGQ4ODFkXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Control de la ira</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e13">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BYTk0OTgxNjctMmIzZC00ZjJiLTgxYjYtZGJjZDU4M2QxNDFmXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Licencia para volar</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e14">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMWQzZGFmOGUtNGMzNi00MjQ4LTg4ZGUtZTNiNjE2MDk0ZjY5XkEyXkFqcGdeQXVyNzg1NTI5ODY@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. Dedos verdes</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e15">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BNmY0YzU1YmQtZWMwYS00Mjg2LWJiMDgtMmU5NmY5NTJiNjJhXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. Atorado en dos agujeros</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e16">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BNDQ4MDMxODE0NV5BMl5BanBnXkFtZTgwNzAxNTc5MjE@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. En vivo y peligroso (Parte 1)</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e17">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMTQ4MDk2NTc0NF5BMl5BanBnXkFtZTgwMjY3NTIwMzE@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. En vivo y peligroso (Parte 2)</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e18">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMzU5M2Y0NWEtMjk1My00M2VjLWE4NDUtODMxYjI4MWQzZGYwXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. Globos del destino</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e19">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMzJiMjVkMzAtMTUzOC00NDVlLTg0MDItMmM4Y2Q2MzNlOTU5XkEyXkFqcGdeQXVyNjU5NjQ0MTE@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">19. Swellview tiene talento</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season4-->
+			
+	<div class="episodes season4" id="season4">
+					<a class="opcion" id="btn-t4e1">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMTQ4MDk2NTc0NF5BMl5BanBnXkFtZTgwMjY3NTIwMzE@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Enfermo y por cable</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e2">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BZTI4NDYxNmItMWIwNy00YTkzLTg0MmQtZjQzMzY0MDA0Y2RhXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Pelea en el pasillo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e3">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMjI0Mjk0OTY4MV5BMl5BanBnXkFtZTgwNzYxMzg5MjE@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. The Rock Box Dump</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e4">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BNTQzMTEwNzQtNzkzYy00ZjljLWFkOWQtN2Q1YWY4MTUzZDA5XkEyXkFqcGdeQXVyNjU5NjQ0MTE@._V1_FMjpg_UX598_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Juegos de peligro</h1>
+								<p class="descripcion">1h 7min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e5">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BNmVhNGM4MzctMTNhOC00NGE4LWJjNGUtOTQ2ODU4ZTdhNjkzXkEyXkFqcGdeQXVyNjU5NjQ0MTE@._V1_FMjpg_UX480_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Toon en peligro</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e6">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BOTk1OTY0MGQtYzYzZS00ZjQ0LWI2OTAtODlhODZlYmU0NDMzXkEyXkFqcGdeQXVyMDc2NTEzMw@@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Conoce a Cute Crush</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e7">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BOGE4ZTIyOTItNzJmYy00Yjk4LThmOWEtMWE5OTNjYmY3ODJmXkEyXkFqcGdeQXVyMjAwNDgyMTQ@._V1_FMjpg_UX720_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. De vuelta al peligro (Parte 1)</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e8">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BYjA5NmI2MjktMTg4NC00YmI1LTljZTYtMWM5MzljOTNjYzU5XkEyXkFqcGdeQXVyMDc2NTEzMw@@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. De vuelta al peligro (Parte 2)</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e9">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BY2JmNGIyNmEtNWYyYi00YThlLTg0NmUtOThiNDA1NjRlZjAzXkEyXkFqcGdeQXVyMDc2NTEzMw@@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. Recortes presupuestarios</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e10">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMjI0MDkyNTU0OF5BMl5BanBnXkFtZTgwMjk3MzAxMzE@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Los diamantes son para el brezo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e11">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMDZhMTQzMjMtOTQwOC00OWE4LWE4YjEtMGY4MTM0ZDY5Y2E2XkEyXkFqcGdeQXVyNjU5NjQ0MTE@._V1_FMjpg_UX597_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Viaje en coche</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e12">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BY2M4M2M3NTYtMGE5My00NTlmLThmZGEtMzYyMmM2NjQyYTk0XkEyXkFqcGdeQXVyNjU5NjQ0MTE@._V1_FMjpg_UX596_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Invasión de niños pequeños</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e13">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BYWE2OTgyNDYtMDZiZi00NzIwLThhZDUtYTE3M2Q1ZWE5YzhjXkEyXkFqcGdeQXVyNjU5NjQ0MTE@._V1_FMjpg_UX597_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Capitán-Man ahora</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e14">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BNzc3MjIxNGYtMmY1ZC00YmY5LTkwMDUtZTk1NmRjZjA2NjMwXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. Sábado noche mentiras</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e15">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMjA2MTQ2MTMwMF5BMl5BanBnXkFtZTgwNTU2MjU5NDE@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. El problema de Henry Frittle</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e16">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BZjM3YTIxYzEtNTZjNi00MjI2LTg0YjgtZmQ2OTI0YmI4NTcyXkEyXkFqcGdeQXVyNjU5NjQ0MTE@._V1_FMjpg_UX729_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. Spelling Bee Hard</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e17">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BZWMyODk3NWUtNTI2YS00YzBhLWE0NjgtYjRiY2ZmNmY0MDI0XkEyXkFqcGdeQXVyNjU5NjQ0MTE@._V1_FMjpg_UX602_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. ¡Subiendo las escaleras!</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e18">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMmU4MzFjYmMtNGVhOS00MTEyLTg0MTEtZWE4NWY5YjZhOTNhXkEyXkFqcGdeQXVyNjU5NjQ0MTE@._V1_FMjpg_UX614_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. Cosas peligrosas</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e19">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BNjI1NTIwNzIyNF5BMl5BanBnXkFtZTgwMzk1MjE0MzE@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">19. Pato de goma</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e20">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMTk3NDQ3NDkwNF5BMl5BanBnXkFtZTgwNTc0MDA1MzE@._V1_FMjpg_UX500_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">20. Flabber gaseado</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season5-->
+			
+	<div class="episodes season5" id="season5">
+					<a class="opcion" id="btn-t5e1">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BYmIwZTk2NzUtMmI3Mi00OTdiLWFiNGItNTFjOGU5NGI0OTBmXkEyXkFqcGdeQXVyNjU5NjQ0MTE@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Cumpleaños de Henry</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e2">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BZDMwNjMzMWUtOWFhNS00NDNkLThkZGEtNDJlODY2ODA0NTlmXkEyXkFqcGdeQXVyOTY5MjA3MjA@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Whistlin Susie</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e3">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BYjRjYjk4ZWEtNWZhOS00MmYyLTgzNzAtYWJlZDMzYWM1OTUxXkEyXkFqcGdeQXVyOTY5MjA3MjA@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Guerra del pulgar</h1>
+								<p class="descripcion">43min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e4">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BY2E5MWQxMjMtYWMyMC00ZjQ5LTg2OTQtNDhkNWM4ZDJhYmViXkEyXkFqcGdeQXVyNjgyOTk5NDk@._V1_FMjpg_UX623_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. El Gran Cactus Con</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e5">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BY2JlMTJiMjctYzFlMS00YzMwLWJkMWItMjE5OTZhMjI1Y2Q1XkEyXkFqcGdeQXVyNjU5NjQ0MTE@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Parte 1: un nuevo mal</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e6">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMzA3YTBkMjctNGRiNC00NGNkLTgwNjQtYWQ4MDdiYTAwY2FlXkEyXkFqcGdeQXVyNjU5NjQ0MTE@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Parte 2: una nueva oscuridad</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e7">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BYWQzYThjNzAtNWU1ZS00MzMwLWIxMzctMTllMTM0YWNkODc4XkEyXkFqcGdeQXVyOTY5MjA3MjA@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Parte 3: un nuevo héroe</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e8">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMWM3Y2VhODgtYWY2ZS00MDE2LWEwYzAtOWU5MjZlOWI4ZGNkXkEyXkFqcGdeQXVyNjU5NjQ0MTE@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Roto Armado y Peligroso</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e9">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BYWU2ZmY2YmMtODI3Yy00YTQ1LTliMDEtNmJhNDFiY2Q4NWY4XkEyXkFqcGdeQXVyOTY5MjA3MjA@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. Caballero y peligro</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e10">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BNWJlNmY5NGYtOGI4Ni00N2NkLThlYWUtYjE3YzUxYThmZDNmXkEyXkFqcGdeQXVyMjIxNTMyMzI@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Grand Theft Otto</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e11">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BOThiOTc5ZGItNGVkMy00NzhhLWFlM2ItMzkwM2NmZDU1ODEzXkEyXkFqcGdeQXVyODk4Nzg5NjE@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Toda la familia Bilsky</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e12">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMTJlYjM4N2MtNWFmOS00MjkwLWE1M2UtOTY1YzUzOTI0YmRjXkEyXkFqcGdeQXVyODk4Nzg5NjE@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Habitacion secreta</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e13">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMzViNDVlMGItOTAxOS00ODFlLTgwMjgtYzE3NWYyOGYwNTI4XkEyXkFqcGdeQXVyNjU5NjQ0MTE@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Mi cena con bigfoot</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e14">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BZDEzNGNmODItMTNiNS00MzE1LWEzYzUtNzI3NWQ4MDk2NmZlXkEyXkFqcGdeQXVyODk4Nzg5NjE@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. Charlotte se fantasma</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e15">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BNjRjOGY2NTMtMzEyOC00OWFmLTk4YjktYTdkMjY3NjJkNjVhXkEyXkFqcGdeQXVyODk4Nzg5NjE@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. Sueño con peligro</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e16">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BOWIwYzlkNmEtZGFjNy00M2NhLWI5ZGMtMzExNTUwYjE5OTcxXkEyXkFqcGdeQXVyODk4Nzg5NjE@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. Holey Moley</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e17">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMGRjN2U5MDktMzFmOS00ZjgyLWI4YjctYzUwNjc4YWViNjU3XkEyXkFqcGdeQXVyODk4Nzg5NjE@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. Bytes de amor</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e18">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BMjBiMzQxNDgtOTYyNC00MDQzLWFhMDctYmI5ZmJmZDNiNmVkXkEyXkFqcGdeQXVyNjU5NjQ0MTE@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. Peligro doble O</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e19">
+						<div class="contenido-opcion">
+							<img src="https://m.media-amazon.com/images/M/MV5BNWI5NzczODItZjdjMi00ZGE5LTk0OTgtMWQ5N2NiNDU2MzA1XkEyXkFqcGdeQXVyNjU5NjQ0MTE@._V1_FMjpg_UX600_.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">19. Sillón de masage</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e20">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/A6fcUZT0LNy5rzhrUW599zq7sjU.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">20. Henry Danger: The Musical</h1>
+								<p class="descripcion">44min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e21">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/g7uv2UDZzgruOzj9UxqpR4Zkg3B.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">21. Hermana Twister: Parte 1</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e22">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/sFMSBaS7Blaw39hq3D8w5PfxGm.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">22. Hermana Twister: Parte 2</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e23">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/gTpB14olQVQgLcMoOJDQC4VS7dh.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">23. Un cuento de dos gaiteros</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e24">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/puN5G3rs4yqXjQbWM7nTylmI5Yh.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">24. Tanque de historia</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e25">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/iAb9IxTPpM4QNZRxFThUBYVeCZw.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">25. Capitán mamá</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e26">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/qBhCa50tyZ9gVbI5rZL9t8yjIcv.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">26. Brad visible</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e27">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/Aw9OdqCtMnmJzgEFbiFOm7yjQ9c.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">27. EnvyGram Wall</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e28">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/6QL6tNDso6iHygG6BPqdMfe1JuS.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">28. Ponche de vacaciones</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e29">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/2m90gD5vjjnWvSJU2mK3aU05Lo7.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">29. Señor buen tipo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e30">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/hue2ZgHMMXDvECimV0PiyHU80Ah.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">30. Bota Theranos</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e31">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/oJ1Q0hyrNTOR403qISC79nCXOm7.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">31. Rumblr</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e32">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/fK2421loYGjpLoSDiTl6AgLl19p.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">32. Cave the Date</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e33">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/rBZiKEgRZMVcBlLXdajhALk9cD.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">33. Sala de escape</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e34">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/ko2EpRLvW8b1vcIun5cqXRNhjku.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">34. Juego de teléfonos</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e35">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/1OKeWabc0jKwaiH4DlyMLw95xCe.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">35. Recuerda los crímenes</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e36">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/8vlfSUtv0guvRw4SgPDTLACvVnT.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">36. El principio del fin</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e37">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/2I1H5GLQEUD53n8ObHLqigzBJrp.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">37. Capitán Drex</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e38">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/g58MgcQ3dMB8JE3IzEgnuRHQych.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">38. El destino del peligro: Parte 1</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t5e39">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/kbIQJd5c7KdgkM15mzXYj8vpWz8.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">39. El destino del peligro: Parte 2</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+	
+
+
+
+
+
+
+	<!--Season1-->
+<div class="card" id="modal_t1e1">
+  
+<div class="close" id="close-t1e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. El peligro comienza (Parte 1 y 2)</h4>
+		<p>Henry Hart, de 13 años, consigue un trabajo a tiempo parcial como Kid Danger, el compañero de entrenamiento del superhéroe Capitán Man. Después de prometer mantener su nueva identidad en secreto, Henry debe navegar una doble vida.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e2">
+  
+<div class="close" id="close-t1e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Más peligro, más problemas</h4>
+		<p>Mientras Henry intenta adaptarse a su nuevo papel como Kid Danger, lucha por equilibrar su horario entre la lucha contra el crimen, la escuela, la familia y los amigos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e3">
+  
+<div class="close" id="close-t1e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Se descubre el secreto</h4>
+		<p>La vida de Henry como Kid Danger se ve amenazada cuando Charlotte sospecha cada vez más de los secretos que ha estado ocultando.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e4">
+  
+<div class="close" id="close-t1e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Lágrimas de escarabajo alegre</h4>
+		<p>Cuando el Capitán Man pierde sus poderes de invulnerabilidad, tiene demasiado miedo de luchar contra el crimen. Depende de Kid Danger mantener a salvo a Swellview y descubrir cómo restaurar los poderes del Capitán Man.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e5">
+  
+<div class="close" id="close-t1e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Profesor sustituto</h4>
+		<p>Cuando un nuevo estudiante sospechoso aparece en la escuela, Charlotte y Henry piensan que puede estar tramando algo. El Capitán Man se infiltra como maestro sustituto para aprender más.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e6">
+  
+<div class="close" id="close-t1e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Jasper Danger</h4>
+		<p>Cuando Jasper es Kid Danger para Halloween, el Capitán Man lo confunde con Kid Danger en lugar de Henry. Entonces ahora le toca a Jasper salvar Halloween.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e7">
+  
+<div class="close" id="close-t1e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. La roca espacial</h4>
+		<p>Cuando un pedazo de roca del espacio exterior es más de lo que parece, los problemas siguen a Henry a su casa.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e8">
+  
+<div class="close" id="close-t1e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Cumpleañera caída</h4>
+		<p>Una acusación impide que Henry sea invitado a la fiesta de cumpleaños de una niña.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e9">
+  
+<div class="close" id="close-t1e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. Mucho en juego</h4>
+		<p>Henry cree que fue reemplazado en el equipo de baloncesto por un niño mayor.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e10">
+  
+<div class="close" id="close-t1e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Henry, el hombre bestia</h4>
+		<p>Henry está expuesto a un dispositivo extraño en Man Cave que causa problemas en una cita.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e11">
+  
+<div class="close" id="close-t1e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Brad invisible</h4>
+		<p>El amigo de Ray, que accidentalmente se volvió invisible, aparece para una visita, pero rápidamente se queda más que bienvenido. Mientras tanto, Jasper arregla la vieja casa de muñecas de Piper en el patio trasero.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e12">
+  
+<div class="close" id="close-t1e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Alerta de información</h4>
+		<p>Henry y Ray deben lidiar con un nuevo villano molesto llamado Spoiler; Piper intenta unirse al popular club de fans de Captain Man.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e13">
+  
+<div class="close" id="close-t1e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Hagamos un robo</h4>
+		<p>En un intento de investigar una serie de robos, el Capitán Man le da a Henry un lugar en su programa de juegos favorito.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e14">
+  
+<div class="close" id="close-t1e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. El súper volcán</h4>
+		<p>Henry y Ray piensan que el mundo se está acabando cuando se activa un súper volcán inactivo bajo Swellview; Piper está convencida de que tiene intolerancia al gluten.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e15">
+  
+<div class="close" id="close-t1e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. Mi falso San Valentín</h4>
+		<p>Cuando el enamoramiento de Henry va a una cita de San Valentín con otra persona, Schwoz proporciona un androide para ponerla celosa. Ray tiene una cita desagradable con uno de los maestros de Henry.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e16">
+  
+<div class="close" id="close-t1e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. Atrapados</h4>
+		<p>Los planes de Henry, Charlotte y Ray para un día de diversión se descarrilan cuando Jasper activa accidentalmente el modo de bloqueo de emergencia para Junk-N-Stuff y Man Cave, atrapando a todos dentro.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e17">
+  
+<div class="close" id="close-t1e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. El elevador del beso</h4>
+		<p>Después de que Kid Danger salva a Bianca, ambos comparten un beso. Pero luego Henry se enoja por eso.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e18">
+  
+<div class="close" id="close-t1e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. El hombre de la casa</h4>
+		<p>Después de que le roban el bolso a la madre de Henry, el Capitán Man decide que debe mudarse a su casa para proteger a su familia de los delincuentes.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e19">
+  
+<div class="close" id="close-t1e19"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e19" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>19. Caza sueños</h4>
+		<p>El rayo soñado de un villano atrapa a Henry en un estado de sueño del que solo Charlotte puede rescatarlo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e20">
+  
+<div class="close" id="close-t1e20"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e20" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>20. Castigado</h4>
+		<p>Henry es castigado después de que lo atrapan escapándose por la noche; mientras Piper vuelve loco a Henry en casa, Charlotte entra en el papel de compinche.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e21">
+  
+<div class="close" id="close-t1e21"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e21" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>21. Capitán patán</h4>
+		<p>El Capitán Man intenta aumentar su imagen al realizar un concurso donde tres ganadores obtienen un recorrido por su guarida secreta. Cuando los amigos de Henry están entre los ganadores, Henry se preocupa por su identidad secreta.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e22">
+  
+<div class="close" id="close-t1e22"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e22" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>22. La trampa del balde</h4>
+		<p>Henry y Charlotte quieren decirle a Jasper que Henry es realmente Kid Danger. Deciden darle a Jasper un secreto de prueba para demostrar que está listo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e23">
+  
+<div class="close" id="close-t1e23"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e23" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>23. Henry y la chica mala (Parte 1)</h4>
+		<p>Una pandilla de graffiti está pintando con spray por todo Swellview; Mientras intenta localizar a un líder de pandillas, Kid Danger es tentado por una linda chica de la pandilla.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e24">
+  
+<div class="close" id="close-t1e24"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e24" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>24. Henry y la chica mala (Parte 2)</h4>
+		<p>Una pandilla de graffiti está pintando con spray por todo Swellview; Mientras intenta localizar a un líder de pandillas, Kid Danger es tentado por una linda chica de la pandilla.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e25">
+  
+<div class="close" id="close-t1e25"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e25" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>25. La Novia Real de Jasper</h4>
+		<p>Cuando la novia del campamento de verano de Jasper llega a la ciudad, rápidamente se pone celosa pensando que Charlotte está enamorada de Jasper.</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season2-->
+<div class="card" id="modal_t2e1">
+  
+<div class="close" id="close-t2e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. El ritmo continúa</h4>
+		<p>Henry se encuentra en peligro cuando se da cuenta de que el Dr. Minyak ha transformado a Charlotte en un ser súper fuerte listo para capturar Kid Danger y Captain Man. O ser capturado por el Dr. Minyak</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e2">
+  
+<div class="close" id="close-t2e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Un Henry y tres chicas (Parte 1)</h4>
+		<p>Henry todavía siente algo por Veronica, pero se pone celoso cuando ve a Bianca con un nuevo estudiante. Una abuela loca está aterrorizando al Capitán Man en las apariciones públicas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e3">
+  
+<div class="close" id="close-t2e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Un Henry y tres chicas (Parte 2)</h4>
+		<p>Los planes de Henry para el baile escolar se complican cuando también debe aparecer como Kid Danger; Kid Danger se ve obligado a tomar una decisión dramática.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e4">
+  
+<div class="close" id="close-t2e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Henry y los carpinteros</h4>
+		<p>Cuando el entrenador de baloncesto de Piper renuncia, Henry se convierte en el entrenador del equipo de Piper; Henry es desafiado por la Junta de la Liga y sus reglas poco ortodoxas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e5">
+  
+<div class="close" id="close-t2e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Capitán Man de vacaciones</h4>
+		<p>Henry y Charlotte están a cargo de proteger a Swellview mientras Ray está fuera de la ciudad en la boda de su primo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e6">
+  
+<div class="close" id="close-t2e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. El agitador del tiempo</h4>
+		<p>Cuando Kid Danger y Captain Man luchan contra Time Bandit, Kid Danger cae accidentalmente en la máquina del tiempo de Time Bandit y revive el mismo día nuevamente.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e7">
+  
+<div class="close" id="close-t2e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Carne en el asador</h4>
+		<p>Henry decide llevar a su jefe al restaurante más exclusivo de Swellview.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e8">
+  
+<div class="close" id="close-t2e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Los celos de Henry</h4>
+		<p>Después de que Jasper es alabado por ser un héroe local, Henry se pone celoso de que Kid Danger sea el que recibe todas las gracias.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e9">
+  
+<div class="close" id="close-t2e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. Navidad danger</h4>
+		<p>Cuando el Capitán Man es arrestado por cometer un delito menor, se ve obligado a pasar la Navidad en la cárcel.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e10">
+  
+<div class="close" id="close-t2e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Henry el indestructible (Parte 1)</h4>
+		<p>Henry pasa por el Densitizer después de que Kid Danger está casi herido para que pueda ser indestructible.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e11">
+  
+<div class="close" id="close-t2e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Henry el indestructible (Parte 2)</h4>
+		<p>Henry pasa por el Densitizer después de que Kid Danger está casi herido para que pueda ser indestructible.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e12">
+  
+<div class="close" id="close-t2e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Mensajes, mentiras y vídeo</h4>
+		<p>Cuando sale un video de Henry y Ray transformándose en Kid Danger y Captain Man, Henry debe hacer todo lo posible para recuperarlo y proteger su identidad secreta.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e13">
+  
+<div class="close" id="close-t2e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Universo opuesto</h4>
+		<p>Henry y Charlotte viajan a un universo opuesto donde los homólogos malvados de Ray y Schwoz quieren destruir a Piper.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e14">
+  
+<div class="close" id="close-t2e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. Danger sepultado</h4>
+		<p>Cuando Ray comienza a comportarse de manera extraña, Henry y Charlotte investigan y se sorprenden al descubrir la causa de su comportamiento.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e15">
+  
+<div class="close" id="close-t2e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. La viruela bovina</h4>
+		<p>Cuando Piper tiene una enfermedad misteriosa, el Capitán Man debe viajar en el tiempo hasta el siglo XVIII para encontrar la única cura.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e16">
+  
+<div class="close" id="close-t2e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. El clon de Henry</h4>
+		<p>Henry tiene un androide que cambia de forma en una cena familiar para poder ver una pelea de MMA con Charlotte y Ray.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e17">
+  
+<div class="close" id="close-t2e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. Danger y Thunder</h4>
+		<p>En un cruce especial con "The Thundermans", Phoebe Thunderman se acerca a Swellview para ayudar a Kid Danger y al Capitán Man a detener una reunión de villanos en la ciudad.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e18">
+  
+<div class="close" id="close-t2e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. Yo sé tu secreto</h4>
+		<p>Cuando Henry recibe una serie de notas misteriosas de alguien, comienza a preocuparse de que el remitente pueda conocer su identidad secreta.</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season3-->
+<div class="card" id="modal_t3e1">
+  
+<div class="close" id="close-t3e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. La pezñata asesina</h4>
+		<p>Cuando una piñata peligrosa termina en la fiesta de cumpleaños de un niño, Kid Danger y Captain Man deben ponerse a cubierto antes de que sea demasiado tarde.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e2">
+  
+<div class="close" id="close-t3e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. El muffin del amor</h4>
+		<p>Henry y Charlotte descubren que las cosas no son lo que parecen cuando el Capitán Man anuncia repentinamente sus planes para casarse.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e3">
+  
+<div class="close" id="close-t3e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. La máquina de gritos</h4>
+		<p>Cuando el invento de Charlotte para un programa de televisión se destruye accidentalmente y luego se reconstruye, a Charlotte le preocupa que la atención que recibe pueda exponer la identidad secreta de Kid Danger y Captain Man.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e4">
+  
+<div class="close" id="close-t3e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Boca de azúcar</h4>
+		<p>Cuando Jasper es acusado falsamente de un robo y enviado a la cárcel, Henry y Ray deben encontrar una manera de liberarlo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e5">
+  
+<div class="close" id="close-t3e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. El problema con las Frittles</h4>
+		<p>Captain Man and Kid Danger se encuentran en un debate sobre la merienda favorita de Swellview. A medida que aumentan las tensiones, los superhéroes deben encontrar una manera de evitar que sus preferencias personales de refrigerios afecten su trabajo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e6">
+  
+<div class="close" id="close-t3e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. La hora de poder</h4>
+		<p>Cuando Drex, un criminal peligroso que acaba de escapar de la prisión de Swellview, avergüenza a Kid Danger y atrapa al Capitán Man en un casco, Kid Danger debe usar la ayuda de Schwoz para obtener un nuevo superpoder y derrotar a Drex.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e7">
+  
+<div class="close" id="close-t3e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Esquivando el peligro</h4>
+		<p>Cuando Henry usa su nueva superpotencia para competir en un torneo de Dodge-A-Leen, Ray, Schwoz y Charlotte se van a encubrir para darle una lección a Henry.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e8">
+  
+<div class="close" id="close-t3e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Cita doble peligrosa</h4>
+		<p>Cuando la sobrina de la señorita Shapen llega a la ciudad y elige a Jasper sobre Henry, él descubre que ella tiene planes mucho más grandes en las obras.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e9">
+  
+<div class="close" id="close-t3e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. Invasores del espacio (Parte 1)</h4>
+		<p>Capitán Man y Kid Danger se enteran de que un astronauta ha sido tomado como rehén a bordo de la Estación Espacial y se embarca en un rescate espacial.</p>
+	</div>
+	</div>
+</div>
+
+
+<div class="card" id="modal_t3e10">
+  
+<div class="close" id="close-t3e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Invasores del espacio (Parte 2)</h4>
+		<p>En la estación espacial, el Capitán Man y Kid Danger descubren que una niña tomó como rehenes a los astronautas; Después de darse cuenta de que los astronautas realizan experimentos en conejos, el Capitán Man y Kid Danger deciden ayudarla.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e11">
+  
+<div class="close" id="close-t3e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Gas o error</h4>
+		<p>Cuando el Capitán Man se encuentra atrapado bajo tierra, Henry debe idear una manera de escapar de las pruebas estandarizadas de su escuela para salvar a Ray.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e12">
+  
+<div class="close" id="close-t3e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Control de la ira</h4>
+		<p>Cuando Ray escucha que Piper va a Junior Anger Management para trabajar en sus problemas de ira, apuesta a Henry por que puede hacer que pierda los estribos antes de que termine la noche.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e13">
+  
+<div class="close" id="close-t3e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Licencia para volar</h4>
+		<p>Ray acepta dejar que Henry vuele su helicóptero, pero es demasiado para Ray cuando comienza a actuar como un padre nervioso. Charlotte, Jasper y Piper encuentran una máquina de algodón de azúcar en Junk N 'Stuff y comienzan a hacer algodón de azúcar.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e14">
+  
+<div class="close" id="close-t3e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. Dedos verdes</h4>
+		<p>Después de que Schwoz crea una enfermedad que afecta accidentalmente a Charlotte, Henry, su familia e incluso a Ray, los pone en cuarentena en la casa de Henry para encontrar una cura.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e15">
+  
+<div class="close" id="close-t3e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. Atorado en dos agujeros</h4>
+		<p>Charlotte y Jasper deben acudir al rescate cuando el Capitán Man y Kid Danger están atrapados en un agujero.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e16">
+  
+<div class="close" id="close-t3e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. En vivo y peligroso (Parte 1)</h4>
+		<p>Una famosa celebridad de Internet invita al capitán Man and Kid Danger a su fiesta, pero la fiesta no es como esperaban; Charlotte cuida niños Piper.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e17">
+  
+<div class="close" id="close-t3e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. En vivo y peligroso (Parte 2)</h4>
+		<p>Cuando Frankini anuncia su plan para desenmascarar a Kid Danger y Captain Man, Charlotte, Schwoz, Jasper y Piper deben ponerse en acción para detenerlo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e18">
+  
+<div class="close" id="close-t3e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. Globos del destino</h4>
+		<p>Cuando el Dr. Minyak toma como rehenes a los Man Fans, el Capitán Man y Kid Danger tienen que encontrar una manera de rescatarlos sin que el Dr. Minyak los vea moverse.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e19">
+  
+<div class="close" id="close-t3e19"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e19" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>19. Swellview tiene talento</h4>
+		<p>Kid Danger y Capitán Man forman parte del jurado de un concurso de talentos en el que los concursantes se desmayan. Para averiguar la causa envían a Charlotte y Schwoz suplantan a dos participantes de un dúo que baila.</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season4-->
+<div class="card" id="modal_t4e1">
+  
+<div class="close" id="close-t4e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Enfermo y por cable</h4>
+		<p>Pensando que Henry no está diciendo la verdad sobre estar enfermo, Ray coloca cámaras y micrófonos en la casa de Henry para atraparlo en una mentira.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e2">
+  
+<div class="close" id="close-t4e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Pelea en el pasillo</h4>
+		<p>Cuando Charlotte es desafiada a una pelea en la escuela, el Capitán Man y Kid Danger intervienen para tratar de ayudar a Charlotte a defenderse.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e3">
+  
+<div class="close" id="close-t4e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. The Rock Box Dump</h4>
+		<p>Cuando sale un informe de que el súper poder de Kid Danger es en realidad una enfermedad, Kid Danger tiene que convencer a Swellview de que es un gran malentendido.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e4">
+  
+<div class="close" id="close-t4e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Juegos de peligro</h4>
+		<p>Cuando el Dr. Minyak planea arruinar el concierto benéfico mundial de Double G, el Capitán Man y Kid Danger unen fuerzas con los Game Shakers para derrotar al Dr. Minyak y mantener a Double G a salvo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e5">
+  
+<div class="close" id="close-t4e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Toon en peligro</h4>
+		<p>Cuando Henry y Ray obtienen una copia de la nueva caricatura de Kid Danger y Captain Man y ven que hay problemas, deben apurarse para arreglar la caricatura antes de la gran fiesta de estreno.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e6">
+  
+<div class="close" id="close-t4e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Conoce a Cute Crush</h4>
+		<p>El Capitán Man y Henry intentan ayudar a la hermana de Henry, Piper, a organizar una repentina presentación romántica con un chico nuevo en la escuela que le gusta.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e7">
+  
+<div class="close" id="close-t4e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. De vuelta al peligro (Parte 1)</h4>
+		<p>Henry y Ray viajan en el tiempo hasta la Buenavista de 1989 detrás del fugado Drex, fecha en la que Ray, con ocho años, tuvo un accidente en el laboratorio de su padre que le hizo indestructible. Sin embargo, la máquina del tiempo se estropea.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e8">
+  
+<div class="close" id="close-t4e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. De vuelta al peligro (Parte 2)</h4>
+		<p>Henry y Ray regresan a 1989, donde no pueden impedir que Drex adquiera la indestructibilidad al sustituir al pequeño Ray en el momento del accidente, pero sí volver al presente gracias a Schwoz, que ha reparado el Portal de Tiempo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e9">
+  
+<div class="close" id="close-t4e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. Recortes presupuestarios</h4>
+		<p>Cuando el vicealcalde recorta el presupuesto del Capitán Man y Kid Danger para construir un ferrocarril de alta velocidad en Swellview, el dúo debe encontrar formas creativas de ahorrar dinero.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e10">
+  
+<div class="close" id="close-t4e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Los diamantes son para el brezo</h4>
+		<p>Kid Danger y Captain Man son llamados al Museo Swellview de Taburetes y Joyas para evitar el robo del raro Neal Diamond.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e11">
+  
+<div class="close" id="close-t4e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Viaje en coche</h4>
+		<p>El viaje por carretera de cumpleaños de Charlotte para ver a Boo Man Group actuar se desvía por una emergencia de Captain Man y Kid Danger.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e12">
+  
+<div class="close" id="close-t4e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Invasión de niños pequeños</h4>
+		<p>Cuando The Toddler toma el control de Man Cave, Charlotte y Jasper tienen que encontrar una manera de colarse y salvar a Kid Danger y al Capitán Man.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e13">
+  
+<div class="close" id="close-t4e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Capitán-Man ahora</h4>
+		<p>Cuando una nueva celebridad de internet causa estragos en Swellview, el Capitán Man tiene que intercambiar cuerpos con Frankini para infiltrarse en su guarida secreta.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e14">
+  
+<div class="close" id="close-t4e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. Sábado noche mentiras</h4>
+		<p>Cuando Ray se encuentra con una ex novia, trata de impresionarla fingiendo que Henry, Charlotte y Jasper son sus hijos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e15">
+  
+<div class="close" id="close-t4e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. El problema de Henry Frittle</h4>
+		<p>Cuando el padre de Henry recibe una oferta para un nuevo trabajo en Bordertown, Henry y Ray van encubiertos para tratar de evitar que consiga el trabajo y evitar que Henry tenga que mudarse.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e16">
+  
+<div class="close" id="close-t4e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. Spelling Bee Hard</h4>
+		<p>El Dr. Minyak desafía al Capitán Man a un concurso de ortografía.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e17">
+  
+<div class="close" id="close-t4e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. ¡Subiendo las escaleras!</h4>
+		<p>La amistad de Henry y Ray se pone a prueba cuando tienen que hacer la caminata de media milla por las escaleras de Man Cave para hacer una comida sorpresa de un famoso chef en Junk-N-Stuff.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e18">
+  
+<div class="close" id="close-t4e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. Cosas peligrosas</h4>
+		<p>Cuando Piper es tomado por una criatura de otra dimensión, el Capitán Man y Kid Danger deben rescatarla de la malvada corporación científica que abrió el portal.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e19">
+  
+<div class="close" id="close-t4e19"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e19" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>19. Pato de goma</h4>
+		<p>Cuando Ray destruye accidentalmente el preciado auto de control remoto del padre de Henry, organizan una fiesta de manicura / pedicura para recaudar dinero para arreglarlo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e20">
+  
+<div class="close" id="close-t4e20"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e20" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>20. Flabber gaseado</h4>
+		<p>Después de actuar con demasiada confianza antes de una pelea, Kid Danger y Captain Man son rociados con Flabber Gas, lo que los hace impotentes para derrotar a un nuevo villano en Swellview. Schwoz pone a nuestros héroes en trajes exóticos que controlan Charlotte y Jasper.</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season5-->
+<div class="card" id="modal_t5e1">
+  
+<div class="close" id="close-t5e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Cumpleaños de Henry</h4>
+		<p>Mientras trata de celebrar su cumpleaños, Henry sigue siendo interrumpido por crímenes y tiene que salir como su ego alerta, Kid Danger.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e2">
+  
+<div class="close" id="close-t5e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Whistlin Susie</h4>
+		<p>Después de activar accidentalmente una bomba atómica en la Cueva del Hombre, Ray y Henry deciden conducirlo al desierto de Swellview para salvar su ciudad.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e3">
+  
+<div class="close" id="close-t5e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Guerra del pulgar</h4>
+		<p>El Capitán Man y Kid Danger se molestan cuando surge un nuevo equipo de lucha contra el crimen en la ciudad. Sin embargo, descubren que el nuevo dúo es su mayor admirador. Después de un desafortunado incidente, los Thumb Buddies buscan vengarse de nuestros héroes.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e4">
+  
+<div class="close" id="close-t5e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. El Gran Cactus Con</h4>
+		<p>Jasper tiene la oportunidad de enamorarse de Cactus Con, pero cuando un misterioso villano se involucra en la convención, toda la pandilla se ve obligada a actuar.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e5">
+  
+<div class="close" id="close-t5e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Parte 1: un nuevo mal</h4>
+		<p>Henry está atrapado en su casa con su familia mientras el Capitán Man se dirige a salvar al fundador de TwitFlash; Charlotte y Schwoz armaron un misterio que podría cambiar el mundo para siempre.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e6">
+  
+<div class="close" id="close-t5e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Parte 2: una nueva oscuridad</h4>
+		<p>Después de que un criminal roba la superpotencia de Kid Danger y descubre su identidad secreta, los matones son enviados a la casa de Henry para atacar; mientras Henry y Ray luchan para proteger a la familia de Henry, Jasper, Charlotte y Schwoz trabajan para recuperar su poder.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e7">
+  
+<div class="close" id="close-t5e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Parte 3: un nuevo héroe</h4>
+		<p>Schwoz trabaja para crear un antivirus para detener un plan malvado; Kid Danger y Captain Man luchan contra un villano; El heroísmo de Kid Danger se pone a prueba mientras luchan por salvar el mundo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e8">
+  
+<div class="close" id="close-t5e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Roto Armado y Peligroso</h4>
+		<p>Cuando Kid Danger se rompe públicamente el brazo, Henry y la pandilla tienen que encontrar la manera de mantener a salvo su secreto.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e9">
+  
+<div class="close" id="close-t5e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. Caballero y peligro</h4>
+		<p>Cuando el archienemigo del Escuadrón de Caballeros, Ryker, se desata en Swellview, Kid Danger y el Capitán Man lo llevan al Castillo de Burger solo para ser engañados y unir fuerzas con el villano.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e10">
+  
+<div class="close" id="close-t5e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Grand Theft Otto</h4>
+		<p>Cuando el loro de la escuela de Piper, Otto, comienza a repetir que Henry es Kid Danger, Henry y Jasper tienen que detenerse hasta que Ray, Charlotte y Schwoz puedan encontrar la manera de arreglar las cosas.</p>
+	</div>
+	</div>
+</div>
+
+
+<div class="card" id="modal_t5e11">
+  
+<div class="close" id="close-t5e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Toda la familia Bilsky</h4>
+		<p>Los nervios de Henry se ponen a prueba cuando Piper invita a su nuevo novio y su familia a cenar.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e12">
+  
+<div class="close" id="close-t5e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Habitacion secreta</h4>
+		<p>Después de que la reunión familiar de Schwoz provoque el caos en la Cueva del Hombre, el Capitán Man revela una sala de "Sólo Superhéroes" en la Cueva del Hombre para la paz y la tranquilidad. Celosa, Charlotte, Jasper y Schwoz hacen una habitación más fresca para mostrarlos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e13">
+  
+<div class="close" id="close-t5e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Mi cena con bigfoot</h4>
+		<p>Cuando la pandilla se hace amiga de Bigfoot en el bosque, Kid Danger y el Capitán Man intentan ayudar a deshacerse de un cazador molesto que ha estado tratando de capturarlo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e14">
+  
+<div class="close" id="close-t5e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. Charlotte se fantasma</h4>
+		<p>Schwoz inventa una aspiradora para ayudar a Henry a limpiar su casa, pero accidentalmente absorbe a Charlotte; Cuando la familia de Henry escucha a Charlotte y piensa que el vacío está embrujado, Ray debe distraerlos mientras Henry encuentra la manera de sacarla.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e15">
+  
+<div class="close" id="close-t5e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. Sueño con peligro</h4>
+		<p>Cuando Charlotte tiene un sueño en el que casi besa a Kid Danger, trata activamente de evitar a Henry por miedo a que el sueño se haga realidad.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e16">
+  
+<div class="close" id="close-t5e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. Holey Moley</h4>
+		<p>La pandilla cree que ha encontrado los túneles perfectos para acceder a todo Swellview, hasta que se enfrentan a los habitantes originales de los túneles.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e17">
+  
+<div class="close" id="close-t5e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. Bytes de amor</h4>
+		<p>Las cosas se ponen un poco defectuosas cuando Schwoz instala un nuevo sistema operativo en la computadora Man Cave diseñada para detectar y eliminar amenazas en todo Swellview.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e18">
+  
+<div class="close" id="close-t5e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. Peligro doble O</h4>
+		<p>Kid Danger y Captain Man intentan capturar a Mob Boss Rob Moss infiltrándose en la dulce fiesta de cumpleaños de su hija.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e19">
+  
+<div class="close" id="close-t5e19"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e19" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>19. Sillon de masage</h4>
+		<p>Cuando el Capitán Man aparece con una nueva silla de masaje, Henry, Charlotte y Jasper compiten en una serie de desafíos físicos y mentales para ver quién gana la silla.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e20">
+  
+<div class="close" id="close-t5e20"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e20" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>20. Henry Danger: The Musical</h4>
+		<p>Cuando Frankini usa un dispositivo para poner una maldición musical sobre Swellview, Kid Danger y Captain Man se ven obligados a encontrar una manera de detenerlo. Pero cuando el Capitán Man se quiebra bajo la presión, depende de Kid Danger recordarle cómo volver a ser un héroe.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e21">
+  
+<div class="close" id="close-t5e21"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e21" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>21. Hermana Twister: Parte 1</h4>
+		<p>Alguien está robando paquetes a los vecinos de Buenavista. Henry y Ray montan guardia en un intento por coger al ladrón infranganti.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e22">
+  
+<div class="close" id="close-t5e22"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e22" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>22. Hermana Twister: Parte 2</h4>
+		<p>Cuando los recuerdos de Ray se borran accidentalmente, Schwoz diseña un plan para enviar a Henry al interior del cerebro de Ray para recuperarlos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e23">
+  
+<div class="close" id="close-t5e23"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e23" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>23. Un cuento de dos gaiteros</h4>
+		<p>Henry recibe un visitante inesperado que dice ser del futuro. Cuando una máquina de matar niños robot aparece en la escena, The Gang debe encontrar una manera de salvar a todos de un futuro apocalíptico.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e24">
+  
+<div class="close" id="close-t5e24"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e24" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>24. Tanque de historia</h4>
+		<p>Grandes filetes están en juego cuando Henry dice que no puede tener miedo. Schwoz usa una máquina que le permite a Henry experimentar virtualmente las historias espeluznantes que todos en Man Cave le cuentan en un intento de demostrar que Henry está equivocado.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e25">
+  
+<div class="close" id="close-t5e25"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e25" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>25. Capitán mamá</h4>
+		<p>El Capitán Man está siendo un bebé acerca de tener un bebé. Los dolores de parto lo dejan indefenso, por lo que Kid Danger y Piper se unen para enfrentarse a un par de ladrones de grasa.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e26">
+  
+<div class="close" id="close-t5e26"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e26" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>26. Brad visible</h4>
+		<p>El Capitán Man y Kid Danger necesitarán un poco de magia y un poco de ayuda de un viejo amigo si quieren atrapar a un ladrón.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e27">
+  
+<div class="close" id="close-t5e27"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e27" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>27. EnvyGram Wall</h4>
+		<p>El Capitán Man y Kid Danger están protegiendo la nueva atracción de Swellview, el Muro EnvyGram, cuando el Capitán Man destruye el muro mientras trata de eliminar un pequeño pájaro. Kid Danger y Captain Man tienen que encontrar una manera de reemplazarlo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e28">
+  
+<div class="close" id="close-t5e28"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e28" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>28. Ponche de vacaciones</h4>
+		<p>Una nueva especie de polilla está comiendo todos los árboles de Navidad en Swellview, por lo que el Capitán Man y Kid Danger se dirigen a Neighbourville para comprar más. En el camino de regreso son atacados por traficantes de árboles sombríos y tienen que luchar para salvar la Navidad.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e29">
+  
+<div class="close" id="close-t5e29"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e29" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>29. Un vigilante con una máscara de cara sonriente ha estado castigando a Swellviewians por ser grosero en público. La investigación de Kid Danger y Captain Man los lleva al televisor del Sr. Wallabee, una celebridad local de televisión que presenta un programa para niños.</h4>
+		<p>http</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e30">
+  
+<div class="close" id="close-t5e30"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e30" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>30. Bota Theranos</h4>
+		<p>Henry y los otros niños destruyen el preciado accesorio de película de Ray, The Theranos Boot. Para reemplazarlo, Henry y Jasper viajan a un universo alternativo Man Cave usando el transportador interdimensional de Bill Evil y roban su Bota Theranos antes de que Ray se entere.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e31">
+  
+<div class="close" id="close-t5e31"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e31" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>31. Rumblr</h4>
+		<p>El Capitán Man, harto de luchar contra los mismos viejos villanos, está convencido de hacer un perfil en una aplicación de emparejamiento para héroes y villanos. Kid Danger acepta hacer lo mismo y dos de ellos organizaron una doble pelea para enfrentarse a algunos villanos nuevos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e32">
+  
+<div class="close" id="close-t5e32"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e32" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>32. Cave the Date</h4>
+		<p>Henry y la pandilla montaron un restaurante subterráneo secreto en Man Cave para la cena privada de Charlotte con la superestrella de la música Jack Swagger. Cuando se corre la voz de que Jack Swagger está en la ciudad, algunos invitados no deseados organizan la fiesta.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e33">
+  
+<div class="close" id="close-t5e33"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e33" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>33. Sala de escape</h4>
+		<p>Kid Danger y Captain Man son engañados para que entren al cuarto de escape por el dueño de una fábrica con un "chip" en el hombro. Están atrapados dentro con dos niños nuevos, Mika y Miles, que son extrañamente buenos para resolver los acertijos que necesitan para salir.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e34">
+  
+<div class="close" id="close-t5e34"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e34" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>34. Juego de teléfonos</h4>
+		<p>Cuando una niña se encadena fuera de Junk-N-Stuff, Kid Danger y el Capitán Man se ven obligados a ayudar a encontrar su amado teléfono. Durante una vigilancia, inesperadamente se encuentran con algunas caras conocidas con un plan tortuoso para el que no estaban preparados.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e35">
+  
+<div class="close" id="close-t5e35"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e35" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>35. Recuerda los crímenes</h4>
+		<p>Henry le cuenta a Piper todas las aventuras que se perdió mientras él luchaba junto al Capitán Man como Kid Danger. Pero luego Piper, Ray, Jasper, Charlotte y Schwoz se unen y comparten algunos recuerdos propios.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e36">
+  
+<div class="close" id="close-t5e36"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e36" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>36. El principio del fin</h4>
+		<p>Kid Danger le revela al Capitán Man que no quiere quedarse atrapado en Swellview y ser su compañero para siempre. Para empeorar las cosas, Kid Danger es reclutado por otra ciudad para ser su héroe.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e37">
+  
+<div class="close" id="close-t5e37"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e37" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>37. Capitán Drex</h4>
+		<p>El viejo compañero y némesis del Capitán Man, Drex, regresa del pasado con un ejército de hombres de las cavernas para acabar con el Capitán Man de una vez por todas. Kid Danger puede ser el único que pueda salvar al Capitán Man ahora.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e38">
+  
+<div class="close" id="close-t5e38"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e38" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>38. El destino del peligro: Parte 1</h4>
+		<p>Kid Danger y sus amigos intentan descubrir cómo recuperar al Capitán Man del pasado, mientras Drex avanza en su plan para borrar la memoria de Swellview del Capitán Man para siempre.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t5e39">
+  
+<div class="close" id="close-t5e39"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t5e39" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>39. El destino del peligro: Parte 2</h4>
+		<p>Kid Danger y el Capitán Man luchan contra Drex encima de un dirigible para evitar que borre la memoria de Swellview del Capitán Man. Pero cuando el dirigible apunta directamente al Swellview Baby Hospital, un héroe debe quedarse atrás para salvar el día.</p>
+	</div>
+	</div>
+</div>
+
+
+	<script>
+	  
+//select
+const select = document.querySelector('#select');
+const opciones = document.querySelector('#opciones');
+const contenidoSelect = document.querySelector('#select .contenido-select');
+const hiddenInput = document.querySelector('#inputSelect');
+
+document.querySelectorAll('#opciones > .opcion').forEach((opcion) => {
+	opcion.addEventListener('click', (e) => {
+		e.preventDefault();
+		contenidoSelect.innerHTML = e.currentTarget.innerHTML;
+		select.classList.toggle('active');
+		opciones.classList.toggle('active');
+		hiddenInput.value = e.currentTarget.querySelector('.titulo').innerText;
+	});
+});
+
+select.addEventListener('click', () => {
+	select.classList.toggle('active');
+	opciones.classList.toggle('active');
+});
+
+
+
+
+
+
+/*open modal*/
+/*Season1*/
+function mostrar_modal_t1e1() {
+  modal_t1e1.style.display = "flex";
+  iframe_t1e1.src = "https://uqload.com/embed-iqnret30svww.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e2() {
+  modal_t1e2.style.display = "flex";
+  iframe_t1e2.src = "https://uqload.com/embed-3egm9gkmu3vr.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e3() {
+  modal_t1e3.style.display = "flex";
+  iframe_t1e3.src = "https://uqload.com/embed-274mmmtip24l.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e4() {
+  modal_t1e4.style.display = "flex";
+  iframe_t1e4.src = "https://uqload.com/embed-fkguhmgpqc2b.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e5() {
+  modal_t1e5.style.display = "flex";
+  iframe_t1e5.src = "https://uqload.com/embed-dfud0y3yi9u4.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e6() {
+  modal_t1e6.style.display = "flex";
+  iframe_t1e6.src = "https://uqload.com/embed-7tzighfgpum1.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e7() {
+  modal_t1e7.style.display = "flex";
+  iframe_t1e7.src = "https://uqload.com/embed-uptem722r6zn.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e8() {
+  modal_t1e8.style.display = "flex";
+  iframe_t1e8.src = "https://uqload.com/embed-f3fglc4n1v3g.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e9() {
+  modal_t1e9.style.display = "flex";
+  iframe_t1e9.src = "https://uqload.com/embed-vyzsbzc97dz7.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e10() {
+  modal_t1e10.style.display = "flex";
+  iframe_t1e10.src = "https://uqload.com/embed-iv3oryihwagm.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e11() {
+  modal_t1e11.style.display = "flex";
+  iframe_t1e11.src = "https://uqload.com/embed-31n357pc93ka.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e12() {
+  modal_t1e12.style.display = "flex";
+  iframe_t1e12.src = "https://uqload.com/embed-rh3agae9iux3.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e13() {
+  modal_t1e13.style.display = "flex";
+  iframe_t1e13.src = "https://uqload.com/embed-ik820cxnanyp.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e14() {
+  modal_t1e14.style.display = "flex";
+  iframe_t1e14.src = "https://uqload.com/embed-j9qh5t9f22dj.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e15() {
+  modal_t1e15.style.display = "flex";
+  iframe_t1e15.src = "https://uqload.com/embed-8t3irwjtugat.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e16() {
+  modal_t1e16.style.display = "flex";
+  iframe_t1e16.src = "https://uqload.com/embed-s1c0ut1w4h7r.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e17() {
+  modal_t1e17.style.display = "flex";
+  iframe_t1e17.src = "https://uqload.com/embed-18w5tozlgyso.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e18() {
+  modal_t1e18.style.display = "flex";
+  iframe_t1e18.src = "https://uqload.com/embed-y1t203pnami8.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e19() {
+  modal_t1e19.style.display = "flex";
+  iframe_t1e19.src = "https://uqload.com/embed-ykh5k35p536w.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e20() {
+  modal_t1e20.style.display = "flex";
+  iframe_t1e20.src = "https://uqload.com/embed-nxk3wezs44n5.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e21() {
+  modal_t1e21.style.display = "flex";
+  iframe_t1e21.src = "https://uqload.com/embed-hvna49zhhkbe.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e22() {
+  modal_t1e22.style.display = "flex";
+  iframe_t1e22.src = "https://uqload.com/embed-b4ieknb8dheo.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e23() {
+  modal_t1e23.style.display = "flex";
+  iframe_t1e23.src = "https://uqload.com/embed-qlklwbpwuwyo.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e24() {
+  modal_t1e24.style.display = "flex";
+  iframe_t1e24.src = "https://uqload.com/embed-mazj43qbfrjb.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e25() {
+  modal_t1e25.style.display = "flex";
+  iframe_t1e25.src = "https://uqload.com/embed-edr48as2av1t.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season2*/
+function mostrar_modal_t2e1() {
+  modal_t2e1.style.display = "flex";
+  iframe_t2e1.src = "https://uqload.com/embed-bdrlpa19n4q5.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e2() {
+  modal_t2e2.style.display = "flex";
+  iframe_t2e2.src = "https://uqload.com/embed-ivmu1q00udw6.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e3() {
+  modal_t2e3.style.display = "flex";
+  iframe_t2e3.src = "https://uqload.com/embed-zecv8rtfmx5k.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e4() {
+  modal_t2e4.style.display = "flex";
+  iframe_t2e4.src = "https://uqload.com/embed-propiit3jpeh.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e5() {
+  modal_t2e5.style.display = "flex";
+  iframe_t2e5.src = "https://uqload.com/embed-ny2sqyvllo63.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e6() {
+  modal_t2e6.style.display = "flex";
+  iframe_t2e6.src = "https://uqload.com/embed-flidwvfawmz0.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e7() {
+  modal_t2e7.style.display = "flex";
+  iframe_t2e7.src = "https://uqload.com/embed-mdp1w7ta5ice.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e8() {
+  modal_t2e8.style.display = "flex";
+  iframe_t2e8.src = "https://uqload.com/embed-d2bky957u7hc.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e9() {
+  modal_t2e9.style.display = "flex";
+  iframe_t2e9.src = "https://uqload.com/embed-d4zxnzc1w9q3.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e10() {
+  modal_t2e10.style.display = "flex";
+  iframe_t2e10.src = "https://uqload.com/embed-2qxp9hi1u9bm.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e11() {
+  modal_t2e11.style.display = "flex";
+  iframe_t2e11.src = "https://uqload.com/embed-f21cuhun61dj.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e12() {
+  modal_t2e12.style.display = "flex";
+  iframe_t2e12.src = "https://uqload.com/embed-kqifowjxltps.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e13() {
+  modal_t2e13.style.display = "flex";
+  iframe_t2e13.src = "https://uqload.com/embed-vxvar34c76ux.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e14() {
+  modal_t2e14.style.display = "flex";
+  iframe_t2e14.src = "https://uqload.com/embed-i5g556am4bs8.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e15() {
+  modal_t2e15.style.display = "flex";
+  iframe_t2e15.src = "https://uqload.com/embed-kq14cm1z9vh1.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e16() {
+  modal_t2e16.style.display = "flex";
+  iframe_t2e16.src = "https://uqload.com/embed-ss8oylrwlc0c.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e17() {
+  modal_t2e17.style.display = "flex";
+  iframe_t2e17.src = "https://uqload.com/embed-r6pw2ipu30rl.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e18() {
+  modal_t2e18.style.display = "flex";
+  iframe_t2e18.src = "https://uqload.com/embed-j36jtb2r4wrq.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season3*/
+function mostrar_modal_t3e1() {
+  modal_t3e1.style.display = "flex";
+  iframe_t3e1.src = "https://uqload.com/embed-5rqqxbajiffu.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e2() {
+  modal_t3e2.style.display = "flex";
+  iframe_t3e2.src = "https://uqload.com/embed-rlgzv5fi8by3.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e3() {
+  modal_t3e3.style.display = "flex";
+  iframe_t3e3.src = "https://uqload.com/embed-3mxyrjpw2y85.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e4() {
+  modal_t3e4.style.display = "flex";
+  iframe_t3e4.src = "https://uqload.com/embed-8mglcf01ij3c.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e5() {
+  modal_t3e5.style.display = "flex";
+  iframe_t3e5.src = "https://uqload.com/embed-icbjse5g0b1r.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e6() {
+  modal_t3e6.style.display = "flex";
+  iframe_t3e6.src = "https://uqload.com/embed-rxze119d6tbf.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e7() {
+  modal_t3e7.style.display = "flex";
+  iframe_t3e7.src = "https://uqload.com/embed-xdeo80jnbqba.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e8() {
+  modal_t3e8.style.display = "flex";
+  iframe_t3e8.src = "https://uqload.com/embed-m25arvbjgu8m.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e9() {
+  modal_t3e9.style.display = "flex";
+  iframe_t3e9.src = "https://uqload.com/embed-gdn9hhjnk4fz.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e10() {
+  modal_t3e10.style.display = "flex";
+  iframe_t3e10.src = "https://uqload.com/embed-lfa98aqnwzf6.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e11() {
+  modal_t3e11.style.display = "flex";
+  iframe_t3e11.src = "https://uqload.com/embed-2jgkt3ws0gn5.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e12() {
+  modal_t3e12.style.display = "flex";
+  iframe_t3e12.src = "https://uqload.com/embed-1wt1k00ib4wa.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e13() {
+  modal_t3e13.style.display = "flex";
+  iframe_t3e13.src = "https://uqload.com/embed-en191bli979h.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e14() {
+  modal_t3e14.style.display = "flex";
+  iframe_t3e14.src = "https://uqload.com/embed-uvuzcp7u1cn4.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e15() {
+  modal_t3e15.style.display = "flex";
+  iframe_t3e15.src = "https://uqload.com/embed-250gr57h6gdr.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e16() {
+  modal_t3e16.style.display = "flex";
+  iframe_t3e16.src = "https://uqload.com/embed-lx3lk7bew8g1.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e17() {
+  modal_t3e17.style.display = "flex";
+  iframe_t3e17.src = "https://uqload.com/embed-sw275o6nc7jq.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e18() {
+  modal_t3e18.style.display = "flex";
+  iframe_t3e18.src = "https://uqload.com/embed-urbsfa63h50y.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e19() {
+  modal_t3e19.style.display = "flex";
+  iframe_t3e19.src = "https://uqload.com/embed-5rgksjf0zsuw.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season4*/
+function mostrar_modal_t4e1() {
+  modal_t4e1.style.display = "flex";
+  iframe_t4e1.src = "https://uqload.com/embed-9m4fjt7ciryo.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e2() {
+  modal_t4e2.style.display = "flex";
+  iframe_t4e2.src = "https://uqload.com/embed-0atobnp3s300.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e3() {
+  modal_t4e3.style.display = "flex";
+  iframe_t4e3.src = "https://uqload.com/embed-ctngjc46aglv.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e4() {
+  modal_t4e4.style.display = "flex";
+  iframe_t4e4.src = "https://uqload.com/embed-yvs62klybfrp.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e5() {
+  modal_t4e5.style.display = "flex";
+  iframe_t4e5.src = "https://uqload.com/embed-6p8u3vkv52b3.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e6() {
+  modal_t4e6.style.display = "flex";
+  iframe_t4e6.src = "https://uqload.com/embed-et4g464psfir.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e7() {
+  modal_t4e7.style.display = "flex";
+  iframe_t4e7.src = "https://uqload.com/embed-0xenxzfkg9zz.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e8() {
+  modal_t4e8.style.display = "flex";
+  iframe_t4e8.src = "https://uqload.com/embed-724g2d0thb7w.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e9() {
+  modal_t4e9.style.display = "flex";
+  iframe_t4e9.src = "https://uqload.com/embed-7fnfrsgag7c8.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e10() {
+  modal_t4e10.style.display = "flex";
+  iframe_t4e10.src = "https://uqload.com/embed-bdth9apd4x6e.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e11() {
+  modal_t4e11.style.display = "flex";
+  iframe_t4e11.src = "https://uqload.com/embed-6qs7zhf3qt9a.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e12() {
+  modal_t4e12.style.display = "flex";
+  iframe_t4e12.src = "https://uqload.com/embed-7ge5sgbsn52h.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e13() {
+  modal_t4e13.style.display = "flex";
+  iframe_t4e13.src = "https://uqload.com/embed-rq0kgi4etfng.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e14() {
+  modal_t4e14.style.display = "flex";
+  iframe_t4e14.src = "https://uqload.com/embed-bd5cespebcxy.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e15() {
+  modal_t4e15.style.display = "flex";
+  iframe_t4e15.src = "https://uqload.com/embed-rrj5ujkm0zfl.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e16() {
+  modal_t4e16.style.display = "flex";
+  iframe_t4e16.src = "https://uqload.com/embed-ry6l41znq9fo.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e17() {
+  modal_t4e17.style.display = "flex";
+  iframe_t4e17.src = "https://uqload.com/embed-b377df1s0p3m.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e18() {
+  modal_t4e18.style.display = "flex";
+  iframe_t4e18.src = "https://uqload.com/embed-iqmbr2inrdm8.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e19() {
+  modal_t4e19.style.display = "flex";
+  iframe_t4e19.src = "https://uqload.com/embed-urr3n0375qv3.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e20() {
+  modal_t4e20.style.display = "flex";
+  iframe_t4e20.src = "https://uqload.com/embed-fwxetaktwj8z.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season5*/
+function mostrar_modal_t5e1() {
+  modal_t5e1.style.display = "flex";
+  iframe_t5e1.src = "https://uqload.com/embed-uymu87m7eqxb.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e2() {
+  modal_t5e2.style.display = "flex";
+  iframe_t5e2.src = "https://uqload.com/embed-xak2yay9i7s7.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e3() {
+  modal_t5e3.style.display = "flex";
+  iframe_t5e3.src = "https://uqload.com/embed-77dgdjpcw6bj.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e4() {
+  modal_t5e4.style.display = "flex";
+  iframe_t5e4.src = "https://uqload.com/embed-ggweri2z0k7x.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e5() {
+  modal_t5e5.style.display = "flex";
+  iframe_t5e5.src = "https://uqload.com/embed-mayyk7vk3kvm.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e6() {
+  modal_t5e6.style.display = "flex";
+  iframe_t5e6.src = "https://uqload.com/embed-j3jyvx447l0n.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e7() {
+  modal_t5e7.style.display = "flex";
+  iframe_t5e7.src = "https://uqload.com/embed-xbzdywa1sst9.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e8() {
+  modal_t5e8.style.display = "flex";
+  iframe_t5e8.src = "https://uqload.com/embed-qp0ykqxcxp0z.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e9() {
+  modal_t5e9.style.display = "flex";
+  iframe_t5e9.src = "https://uqload.com/embed-rxdrb6y6d73z.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e10() {
+  modal_t5e10.style.display = "flex";
+  iframe_t5e10.src = "https://uqload.com/embed-dnzu3m4h7ktm.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e11() {
+  modal_t5e11.style.display = "flex";
+  iframe_t5e11.src = "https://uqload.com/embed-y93ovognsa1r.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e12() {
+  modal_t5e12.style.display = "flex";
+  iframe_t5e12.src = "https://uqload.com/embed-200e4r69a2bu.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e13() {
+  modal_t5e13.style.display = "flex";
+  iframe_t5e13.src = "https://uqload.com/embed-lmujragm8zad.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e14() {
+  modal_t5e14.style.display = "flex";
+  iframe_t5e14.src = "https://uqload.com/embed-kwtxcbtmfmeg.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e15() {
+  modal_t5e15.style.display = "flex";
+  iframe_t5e15.src = "https://uqload.com/embed-v7a9cb3o0fn8.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e16() {
+  modal_t5e16.style.display = "flex";
+  iframe_t5e16.src = "https://uqload.com/embed-bsxw2aat8fef.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e17() {
+  modal_t5e17.style.display = "flex";
+  iframe_t5e17.src = "https://uqload.com/embed-qemaobzp6hqt.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e18() {
+  modal_t5e18.style.display = "flex";
+  iframe_t5e18.src = "https://uqload.com/embed-vsoazx177216.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e19() {
+  modal_t5e19.style.display = "flex";
+  iframe_t5e19.src = "https://uqload.com/embed-dex2gp79n5a1.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e20() {
+  modal_t5e20.style.display = "flex";
+  iframe_t5e20.src = "https://uqload.com/embed-t6krt6pwemic.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e21() {
+  modal_t5e21.style.display = "flex";
+  iframe_t5e21.src = "https://uqload.com/embed-ynb0m2s4x5zn.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e22() {
+  modal_t5e22.style.display = "flex";
+  iframe_t5e22.src = "https://uqload.com/embed-2b2gca9kpg4g.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e23() {
+  modal_t5e23.style.display = "flex";
+  iframe_t5e23.src = "https://uqload.com/embed-xztsjg4tiytz.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e24() {
+  modal_t5e24.style.display = "flex";
+  iframe_t5e24.src = "https://uqload.com/embed-icdwunrxygfi.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e25() {
+  modal_t5e25.style.display = "flex";
+  iframe_t5e25.src = "https://uqload.com/embed-rkehj02gj1zt.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e26() {
+  modal_t5e26.style.display = "flex";
+  iframe_t5e26.src = "https://uqload.com/embed-bgcgk8fsrfzd.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e27() {
+  modal_t5e27.style.display = "flex";
+  iframe_t5e27.src = "https://uqload.com/embed-rllplst9aguu.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e28() {
+  modal_t5e28.style.display = "flex";
+  iframe_t5e28.src = "https://uqload.com/embed-0usp05nhyauc.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e29() {
+  modal_t5e29.style.display = "flex";
+  iframe_t5e29.src = "https://uqload.com/embed-x7uank6z6qit.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e30() {
+  modal_t5e30.style.display = "flex";
+  iframe_t5e30.src = "https://uqload.com/embed-fxoptib8gcy6.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e31() {
+  modal_t5e31.style.display = "flex";
+  iframe_t5e31.src = "https://uqload.com/embed-u634zspa3u3r.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e32() {
+  modal_t5e32.style.display = "flex";
+  iframe_t5e32.src = "https://uqload.com/embed-qml6vsve8vpv.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e33() {
+  modal_t5e33.style.display = "flex";
+  iframe_t5e33.src = "https://uqload.com/embed-c5muubd9fkhy.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e34() {
+  modal_t5e34.style.display = "flex";
+  iframe_t5e34.src = "https://uqload.com/embed-01n5xar9hyov.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e35() {
+  modal_t5e35.style.display = "flex";
+  iframe_t5e35.src = "https://uqload.com/embed-fqap1cyensix.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e36() {
+  modal_t5e36.style.display = "flex";
+  iframe_t5e36.src = "https://uqload.com/embed-iilz4ebidf1c.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e37() {
+  modal_t5e37.style.display = "flex";
+  iframe_t5e37.src = "https://uqload.com/embed-1dpbvlcjjvtw.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e38() {
+  modal_t5e38.style.display = "flex";
+  iframe_t5e38.src = "https://uqload.com/embed-agbljwld5kni.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t5e39() {
+  modal_t5e39.style.display = "flex";
+  iframe_t5e39.src = "https://uqload.com/embed-e63i0itl5eow.html";
+  body.style.overflow = "hidden";
+}
+
+
+
+/*close modal*/
+/*Season1*/
+function close_t1e1() {
+  modal_t1e1.style.display = "none";
+  iframe_t1e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e2() {
+  modal_t1e2.style.display = "none";
+  iframe_t1e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e3() {
+  modal_t1e3.style.display = "none";
+  iframe_t1e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e4() {
+  modal_t1e4.style.display = "none";
+  iframe_t1e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e5() {
+  modal_t1e5.style.display = "none";
+  iframe_t1e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e6() {
+  modal_t1e6.style.display = "none";
+  iframe_t1e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e7() {
+  modal_t1e7.style.display = "none";
+  iframe_t1e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e8() {
+  modal_t1e8.style.display = "none";
+  iframe_t1e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e9() {
+  modal_t1e9.style.display = "none";
+  iframe_t1e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e10() {
+  modal_t1e10.style.display = "none";
+  iframe_t1e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e11() {
+  modal_t1e11.style.display = "none";
+  iframe_t1e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e12() {
+  modal_t1e12.style.display = "none";
+  iframe_t1e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e13() {
+  modal_t1e13.style.display = "none";
+  iframe_t1e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e14() {
+  modal_t1e14.style.display = "none";
+  iframe_t1e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e15() {
+  modal_t1e15.style.display = "none";
+  iframe_t1e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e16() {
+  modal_t1e16.style.display = "none";
+  iframe_t1e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e17() {
+  modal_t1e17.style.display = "none";
+  iframe_t1e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e18() {
+  modal_t1e18.style.display = "none";
+  iframe_t1e18.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e19() {
+  modal_t1e19.style.display = "none";
+  iframe_t1e19.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e20() {
+  modal_t1e20.style.display = "none";
+  iframe_t1e20.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e21() {
+  modal_t1e21.style.display = "none";
+  iframe_t1e21.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e22() {
+  modal_t1e22.style.display = "none";
+  iframe_t1e22.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e23() {
+  modal_t1e23.style.display = "none";
+  iframe_t1e23.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e24() {
+  modal_t1e24.style.display = "none";
+  iframe_t1e24.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e25() {
+  modal_t1e25.style.display = "none";
+  iframe_t1e25.src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season2*/
+function close_t2e1() {
+  modal_t2e1.style.display = "none";
+  iframe_t2e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e2() {
+  modal_t2e2.style.display = "none";
+  iframe_t2e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e3() {
+  modal_t2e3.style.display = "none";
+  iframe_t2e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e4() {
+  modal_t2e4.style.display = "none";
+  iframe_t2e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e5() {
+  modal_t2e5.style.display = "none";
+  iframe_t2e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e6() {
+  modal_t2e6.style.display = "none";
+  iframe_t2e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e7() {
+  modal_t2e7.style.display = "none";
+  iframe_t2e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e8() {
+  modal_t2e8.style.display = "none";
+  iframe_t2e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e9() {
+  modal_t2e9.style.display = "none";
+  iframe_t2e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e10() {
+  modal_t2e10.style.display = "none";
+  iframe_t2e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e11() {
+  modal_t2e11.style.display = "none";
+  iframe_t2e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e12() {
+  modal_t2e12.style.display = "none";
+  iframe_t2e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e13() {
+  modal_t2e13.style.display = "none";
+  iframe_t2e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e14() {
+  modal_t2e14.style.display = "none";
+  iframe_t2e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e15() {
+  modal_t2e15.style.display = "none";
+  iframe_t2e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e16() {
+  modal_t2e16.style.display = "none";
+  iframe_t2e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e17() {
+  modal_t2e17.style.display = "none";
+  iframe_t2e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e18() {
+  modal_t2e18.style.display = "none";
+  iframe_t2e18.src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season3*/
+function close_t3e1() {
+  modal_t3e1.style.display = "none";
+  iframe_t3e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e2() {
+  modal_t3e2.style.display = "none";
+  iframe_t3e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e3() {
+  modal_t3e3.style.display = "none";
+  iframe_t3e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e4() {
+  modal_t3e4.style.display = "none";
+  iframe_t3e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e5() {
+  modal_t3e5.style.display = "none";
+  iframe_t3e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e6() {
+  modal_t3e6.style.display = "none";
+  iframe_t3e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e7() {
+  modal_t3e7.style.display = "none";
+  iframe_t3e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e8() {
+  modal_t3e8.style.display = "none";
+  iframe_t3e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e9() {
+  modal_t3e9.style.display = "none";
+  iframe_t3e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e10() {
+  modal_t3e10.style.display = "none";
+  iframe_t3e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e11() {
+  modal_t3e11.style.display = "none";
+  iframe_t3e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e12() {
+  modal_t3e12.style.display = "none";
+  iframe_t3e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e13() {
+  modal_t3e13.style.display = "none";
+  iframe_t3e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e14() {
+  modal_t3e14.style.display = "none";
+  iframe_t3e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e15() {
+  modal_t3e15.style.display = "none";
+  iframe_t3e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e16() {
+  modal_t3e16.style.display = "none";
+  iframe_t3e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e17() {
+  modal_t3e17.style.display = "none";
+  iframe_t3e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e18() {
+  modal_t3e18.style.display = "none";
+  iframe_t3e18.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e19() {
+  modal_t3e19.style.display = "none";
+  iframe_t3e19.src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season4*/
+function close_t4e1() {
+  modal_t4e1.style.display = "none";
+  iframe_t4e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e2() {
+  modal_t4e2.style.display = "none";
+  iframe_t4e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e3() {
+  modal_t4e3.style.display = "none";
+  iframe_t4e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e4() {
+  modal_t4e4.style.display = "none";
+  iframe_t4e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e5() {
+  modal_t4e5.style.display = "none";
+  iframe_t4e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e6() {
+  modal_t4e6.style.display = "none";
+  iframe_t4e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e7() {
+  modal_t4e7.style.display = "none";
+  iframe_t4e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e8() {
+  modal_t4e8.style.display = "none";
+  iframe_t4e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e9() {
+  modal_t4e9.style.display = "none";
+  iframe_t4e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e10() {
+  modal_t4e10.style.display = "none";
+  iframe_t4e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e11() {
+  modal_t4e11.style.display = "none";
+  iframe_t4e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e12() {
+  modal_t4e12.style.display = "none";
+  iframe_t4e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e13() {
+  modal_t4e13.style.display = "none";
+  iframe_t4e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e14() {
+  modal_t4e14.style.display = "none";
+  iframe_t4e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e15() {
+  modal_t4e15.style.display = "none";
+  iframe_t4e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e16() {
+  modal_t4e16.style.display = "none";
+  iframe_t4e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e17() {
+  modal_t4e17.style.display = "none";
+  iframe_t4e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e18() {
+  modal_t4e18.style.display = "none";
+  iframe_t4e18.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e19() {
+  modal_t4e19.style.display = "none";
+  iframe_t4e19.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e20() {
+  modal_t4e20.style.display = "none";
+  iframe_t4e20.src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season5*/
+function close_t5e1() {
+  modal_t5e1.style.display = "none";
+  iframe_t5e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e2() {
+  modal_t5e2.style.display = "none";
+  iframe_t5e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e3() {
+  modal_t5e3.style.display = "none";
+  iframe_t5e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e4() {
+  modal_t5e4.style.display = "none";
+  iframe_t5e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e5() {
+  modal_t5e5.style.display = "none";
+  iframe_t5e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e6() {
+  modal_t5e6.style.display = "none";
+  iframe_t5e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e7() {
+  modal_t5e7.style.display = "none";
+  iframe_t5e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e8() {
+  modal_t5e8.style.display = "none";
+  iframe_t5e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e9() {
+  modal_t5e9.style.display = "none";
+  iframe_t5e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e10() {
+  modal_t5e10.style.display = "none";
+  iframe_t5e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e11() {
+  modal_t5e11.style.display = "none";
+  iframe_t5e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e12() {
+  modal_t5e12.style.display = "none";
+  iframe_t5e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e13() {
+  modal_t5e13.style.display = "none";
+  iframe_t5e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e14() {
+  modal_t5e14.style.display = "none";
+  iframe_t5e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e15() {
+  modal_t5e15.style.display = "none";
+  iframe_t5e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e16() {
+  modal_t5e16.style.display = "none";
+  iframe_t5e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e17() {
+  modal_t5e17.style.display = "none";
+  iframe_t5e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e18() {
+  modal_t5e18.style.display = "none";
+  iframe_t5e18.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e19() {
+  modal_t5e19.style.display = "none";
+  iframe_t5e19.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e20() {
+  modal_t5e20.style.display = "none";
+  iframe_t5e20.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e21() {
+  modal_t5e21.style.display = "none";
+  iframe_t5e21.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e22() {
+  modal_t5e22.style.display = "none";
+  iframe_t5e22.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e23() {
+  modal_t5e23.style.display = "none";
+  iframe_t5e23.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e24() {
+  modal_t5e24.style.display = "none";
+  iframe_t5e24.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e25() {
+  modal_t5e25.style.display = "none";
+  iframe_t5e25.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e26() {
+  modal_t5e26.style.display = "none";
+  iframe_t5e26.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e27() {
+  modal_t5e27.style.display = "none";
+  iframe_t5e27.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e28() {
+  modal_t5e28.style.display = "none";
+  iframe_t5e28.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e29() {
+  modal_t5e29.style.display = "none";
+  iframe_t5e29.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e30() {
+  modal_t5e30.style.display = "none";
+  iframe_t5e30.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e31() {
+  modal_t5e31.style.display = "none";
+  iframe_t5e31.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e32() {
+  modal_t5e32.style.display = "none";
+  iframe_t5e32.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e33() {
+  modal_t5e33.style.display = "none";
+  iframe_t5e33.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e34() {
+  modal_t5e34.style.display = "none";
+  iframe_t5e34.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e35() {
+  modal_t5e35.style.display = "none";
+  iframe_t5e35.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e36() {
+  modal_t5e36.style.display = "none";
+  iframe_t5e36.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e37() {
+  modal_t5e37.style.display = "none";
+  iframe_t5e37.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e38() {
+  modal_t5e38.style.display = "none";
+  iframe_t5e38.src = "";
+  body.style.overflow = "auto";
+}
+function close_t5e39() {
+  modal_t5e39.style.display = "none";
+  iframe_t5e39.src = "";
+  body.style.overflow = "auto";
+}
+
+
+/*Season1*/
+document.getElementById("btn-t1e1").addEventListener("click", mostrar_modal_t1e1);
+document.getElementById("btn-t1e2").addEventListener("click", mostrar_modal_t1e2);
+document.getElementById("btn-t1e3").addEventListener("click", mostrar_modal_t1e3);
+document.getElementById("btn-t1e4").addEventListener("click", mostrar_modal_t1e4);
+document.getElementById("btn-t1e5").addEventListener("click", mostrar_modal_t1e5);
+document.getElementById("btn-t1e6").addEventListener("click", mostrar_modal_t1e6);
+document.getElementById("btn-t1e7").addEventListener("click", mostrar_modal_t1e7);
+document.getElementById("btn-t1e8").addEventListener("click", mostrar_modal_t1e8);
+document.getElementById("btn-t1e9").addEventListener("click", mostrar_modal_t1e9);
+document.getElementById("btn-t1e10").addEventListener("click", mostrar_modal_t1e10);
+document.getElementById("btn-t1e11").addEventListener("click", mostrar_modal_t1e11);
+document.getElementById("btn-t1e12").addEventListener("click", mostrar_modal_t1e12);
+document.getElementById("btn-t1e13").addEventListener("click", mostrar_modal_t1e13);
+document.getElementById("btn-t1e14").addEventListener("click", mostrar_modal_t1e14);
+document.getElementById("btn-t1e15").addEventListener("click", mostrar_modal_t1e15);
+document.getElementById("btn-t1e16").addEventListener("click", mostrar_modal_t1e16);
+document.getElementById("btn-t1e17").addEventListener("click", mostrar_modal_t1e17);
+document.getElementById("btn-t1e18").addEventListener("click", mostrar_modal_t1e18);
+document.getElementById("btn-t1e19").addEventListener("click", mostrar_modal_t1e19);
+document.getElementById("btn-t1e20").addEventListener("click", mostrar_modal_t1e20);
+document.getElementById("btn-t1e21").addEventListener("click", mostrar_modal_t1e21);
+document.getElementById("btn-t1e22").addEventListener("click", mostrar_modal_t1e22);
+document.getElementById("btn-t1e23").addEventListener("click", mostrar_modal_t1e23);
+document.getElementById("btn-t1e24").addEventListener("click", mostrar_modal_t1e24);
+document.getElementById("btn-t1e25").addEventListener("click", mostrar_modal_t1e25);
+
+
+/*Season2*/
+document.getElementById("btn-t2e1").addEventListener("click", mostrar_modal_t2e1);
+document.getElementById("btn-t2e2").addEventListener("click", mostrar_modal_t2e2);
+document.getElementById("btn-t2e3").addEventListener("click", mostrar_modal_t2e3);
+document.getElementById("btn-t2e4").addEventListener("click", mostrar_modal_t2e4);
+document.getElementById("btn-t2e5").addEventListener("click", mostrar_modal_t2e5);
+document.getElementById("btn-t2e6").addEventListener("click", mostrar_modal_t2e6);
+document.getElementById("btn-t2e7").addEventListener("click", mostrar_modal_t2e7);
+document.getElementById("btn-t2e8").addEventListener("click", mostrar_modal_t2e8);
+document.getElementById("btn-t2e9").addEventListener("click", mostrar_modal_t2e9);
+document.getElementById("btn-t2e10").addEventListener("click", mostrar_modal_t2e10);
+document.getElementById("btn-t2e11").addEventListener("click", mostrar_modal_t2e11);
+document.getElementById("btn-t2e12").addEventListener("click", mostrar_modal_t2e12);
+document.getElementById("btn-t2e13").addEventListener("click", mostrar_modal_t2e13);
+document.getElementById("btn-t2e14").addEventListener("click", mostrar_modal_t2e14);
+document.getElementById("btn-t2e15").addEventListener("click", mostrar_modal_t2e15);
+document.getElementById("btn-t2e16").addEventListener("click", mostrar_modal_t2e16);
+document.getElementById("btn-t2e17").addEventListener("click", mostrar_modal_t2e17);
+document.getElementById("btn-t2e18").addEventListener("click", mostrar_modal_t2e18);
+
+
+/*Season3*/
+document.getElementById("btn-t3e1").addEventListener("click", mostrar_modal_t3e1);
+document.getElementById("btn-t3e2").addEventListener("click", mostrar_modal_t3e2);
+document.getElementById("btn-t3e3").addEventListener("click", mostrar_modal_t3e3);
+document.getElementById("btn-t3e4").addEventListener("click", mostrar_modal_t3e4);
+document.getElementById("btn-t3e5").addEventListener("click", mostrar_modal_t3e5);
+document.getElementById("btn-t3e6").addEventListener("click", mostrar_modal_t3e6);
+document.getElementById("btn-t3e7").addEventListener("click", mostrar_modal_t3e7);
+document.getElementById("btn-t3e8").addEventListener("click", mostrar_modal_t3e8);
+document.getElementById("btn-t3e9").addEventListener("click", mostrar_modal_t3e9);
+document.getElementById("btn-t3e10").addEventListener("click", mostrar_modal_t3e10);
+document.getElementById("btn-t3e11").addEventListener("click", mostrar_modal_t3e11);
+document.getElementById("btn-t3e12").addEventListener("click", mostrar_modal_t3e12);
+document.getElementById("btn-t3e13").addEventListener("click", mostrar_modal_t3e13);
+document.getElementById("btn-t3e14").addEventListener("click", mostrar_modal_t3e14);
+document.getElementById("btn-t3e15").addEventListener("click", mostrar_modal_t3e15);
+document.getElementById("btn-t3e16").addEventListener("click", mostrar_modal_t3e16);
+document.getElementById("btn-t3e17").addEventListener("click", mostrar_modal_t3e17);
+document.getElementById("btn-t3e18").addEventListener("click", mostrar_modal_t3e18);
+document.getElementById("btn-t3e19").addEventListener("click", mostrar_modal_t3e19);
+
+
+/*Season4*/
+document.getElementById("btn-t4e1").addEventListener("click", mostrar_modal_t4e1);
+document.getElementById("btn-t4e2").addEventListener("click", mostrar_modal_t4e2);
+document.getElementById("btn-t4e3").addEventListener("click", mostrar_modal_t4e3);
+document.getElementById("btn-t4e4").addEventListener("click", mostrar_modal_t4e4);
+document.getElementById("btn-t4e5").addEventListener("click", mostrar_modal_t4e5);
+document.getElementById("btn-t4e6").addEventListener("click", mostrar_modal_t4e6);
+document.getElementById("btn-t4e7").addEventListener("click", mostrar_modal_t4e7);
+document.getElementById("btn-t4e8").addEventListener("click", mostrar_modal_t4e8);
+document.getElementById("btn-t4e9").addEventListener("click", mostrar_modal_t4e9);
+document.getElementById("btn-t4e10").addEventListener("click", mostrar_modal_t4e10);
+document.getElementById("btn-t4e11").addEventListener("click", mostrar_modal_t4e11);
+document.getElementById("btn-t4e12").addEventListener("click", mostrar_modal_t4e12);
+document.getElementById("btn-t4e13").addEventListener("click", mostrar_modal_t4e13);
+document.getElementById("btn-t4e14").addEventListener("click", mostrar_modal_t4e14);
+document.getElementById("btn-t4e15").addEventListener("click", mostrar_modal_t4e15);
+document.getElementById("btn-t4e16").addEventListener("click", mostrar_modal_t4e16);
+document.getElementById("btn-t4e17").addEventListener("click", mostrar_modal_t4e17);
+document.getElementById("btn-t4e18").addEventListener("click", mostrar_modal_t4e18);
+document.getElementById("btn-t4e19").addEventListener("click", mostrar_modal_t4e19);
+document.getElementById("btn-t4e20").addEventListener("click", mostrar_modal_t4e20);
+
+
+/*Season5*/
+document.getElementById("btn-t5e1").addEventListener("click", mostrar_modal_t5e1);
+document.getElementById("btn-t5e2").addEventListener("click", mostrar_modal_t5e2);
+document.getElementById("btn-t5e3").addEventListener("click", mostrar_modal_t5e3);
+document.getElementById("btn-t5e4").addEventListener("click", mostrar_modal_t5e4);
+document.getElementById("btn-t5e5").addEventListener("click", mostrar_modal_t5e5);
+document.getElementById("btn-t5e6").addEventListener("click", mostrar_modal_t5e6);
+document.getElementById("btn-t5e7").addEventListener("click", mostrar_modal_t5e7);
+document.getElementById("btn-t5e8").addEventListener("click", mostrar_modal_t5e8);
+document.getElementById("btn-t5e9").addEventListener("click", mostrar_modal_t5e9);
+document.getElementById("btn-t5e10").addEventListener("click", mostrar_modal_t5e10);
+document.getElementById("btn-t5e11").addEventListener("click", mostrar_modal_t5e11);
+document.getElementById("btn-t5e12").addEventListener("click", mostrar_modal_t5e12);
+document.getElementById("btn-t5e13").addEventListener("click", mostrar_modal_t5e13);
+document.getElementById("btn-t5e14").addEventListener("click", mostrar_modal_t5e14);
+document.getElementById("btn-t5e15").addEventListener("click", mostrar_modal_t5e15);
+document.getElementById("btn-t5e16").addEventListener("click", mostrar_modal_t5e16);
+document.getElementById("btn-t5e17").addEventListener("click", mostrar_modal_t5e17);
+document.getElementById("btn-t5e18").addEventListener("click", mostrar_modal_t5e18);
+document.getElementById("btn-t5e19").addEventListener("click", mostrar_modal_t5e19);
+document.getElementById("btn-t5e20").addEventListener("click", mostrar_modal_t5e20);
+document.getElementById("btn-t5e21").addEventListener("click", mostrar_modal_t5e21);
+document.getElementById("btn-t5e22").addEventListener("click", mostrar_modal_t5e22);
+document.getElementById("btn-t5e23").addEventListener("click", mostrar_modal_t5e23);
+document.getElementById("btn-t5e24").addEventListener("click", mostrar_modal_t5e24);
+document.getElementById("btn-t5e25").addEventListener("click", mostrar_modal_t5e25);
+document.getElementById("btn-t5e26").addEventListener("click", mostrar_modal_t5e26);
+document.getElementById("btn-t5e27").addEventListener("click", mostrar_modal_t5e27);
+document.getElementById("btn-t5e28").addEventListener("click", mostrar_modal_t5e28);
+document.getElementById("btn-t5e29").addEventListener("click", mostrar_modal_t5e29);
+document.getElementById("btn-t5e30").addEventListener("click", mostrar_modal_t5e30);
+document.getElementById("btn-t5e31").addEventListener("click", mostrar_modal_t5e31);
+document.getElementById("btn-t5e32").addEventListener("click", mostrar_modal_t5e32);
+document.getElementById("btn-t5e33").addEventListener("click", mostrar_modal_t5e33);
+document.getElementById("btn-t5e34").addEventListener("click", mostrar_modal_t5e34);
+document.getElementById("btn-t5e35").addEventListener("click", mostrar_modal_t5e35);
+document.getElementById("btn-t5e36").addEventListener("click", mostrar_modal_t5e36);
+document.getElementById("btn-t5e37").addEventListener("click", mostrar_modal_t5e37);
+document.getElementById("btn-t5e38").addEventListener("click", mostrar_modal_t5e38);
+document.getElementById("btn-t5e39").addEventListener("click", mostrar_modal_t5e39);
+
+
+/*Season1*/
+document.getElementById("close-t1e1").addEventListener("click", close_t1e1);
+document.getElementById("close-t1e2").addEventListener("click", close_t1e2);
+document.getElementById("close-t1e3").addEventListener("click", close_t1e3);
+document.getElementById("close-t1e4").addEventListener("click", close_t1e4);
+document.getElementById("close-t1e5").addEventListener("click", close_t1e5);
+document.getElementById("close-t1e6").addEventListener("click", close_t1e6);
+document.getElementById("close-t1e7").addEventListener("click", close_t1e7);
+document.getElementById("close-t1e8").addEventListener("click", close_t1e8);
+document.getElementById("close-t1e9").addEventListener("click", close_t1e9);
+document.getElementById("close-t1e10").addEventListener("click", close_t1e10);
+document.getElementById("close-t1e11").addEventListener("click", close_t1e11);
+document.getElementById("close-t1e12").addEventListener("click", close_t1e12);
+document.getElementById("close-t1e13").addEventListener("click", close_t1e13);
+document.getElementById("close-t1e14").addEventListener("click", close_t1e14);
+document.getElementById("close-t1e15").addEventListener("click", close_t1e15);
+document.getElementById("close-t1e16").addEventListener("click", close_t1e16);
+document.getElementById("close-t1e17").addEventListener("click", close_t1e17);
+document.getElementById("close-t1e18").addEventListener("click", close_t1e18);
+document.getElementById("close-t1e19").addEventListener("click", close_t1e19);
+document.getElementById("close-t1e20").addEventListener("click", close_t1e20);
+document.getElementById("close-t1e21").addEventListener("click", close_t1e21);
+document.getElementById("close-t1e22").addEventListener("click", close_t1e22);
+document.getElementById("close-t1e23").addEventListener("click", close_t1e23);
+document.getElementById("close-t1e24").addEventListener("click", close_t1e24);
+document.getElementById("close-t1e25").addEventListener("click", close_t1e25);
+
+/*Season2*/
+document.getElementById("close-t2e1").addEventListener("click", close_t2e1);
+document.getElementById("close-t2e2").addEventListener("click", close_t2e2);
+document.getElementById("close-t2e3").addEventListener("click", close_t2e3);
+document.getElementById("close-t2e4").addEventListener("click", close_t2e4);
+document.getElementById("close-t2e5").addEventListener("click", close_t2e5);
+document.getElementById("close-t2e6").addEventListener("click", close_t2e6);
+document.getElementById("close-t2e7").addEventListener("click", close_t2e7);
+document.getElementById("close-t2e8").addEventListener("click", close_t2e8);
+document.getElementById("close-t2e9").addEventListener("click", close_t2e9);
+document.getElementById("close-t2e10").addEventListener("click", close_t2e10);
+document.getElementById("close-t2e11").addEventListener("click", close_t2e11);
+document.getElementById("close-t2e12").addEventListener("click", close_t2e12);
+document.getElementById("close-t2e13").addEventListener("click", close_t2e13);
+document.getElementById("close-t2e14").addEventListener("click", close_t2e14);
+document.getElementById("close-t2e15").addEventListener("click", close_t2e15);
+document.getElementById("close-t2e16").addEventListener("click", close_t2e16);
+document.getElementById("close-t2e17").addEventListener("click", close_t2e17);
+document.getElementById("close-t2e18").addEventListener("click", close_t2e18);
+
+/*Season3*/
+document.getElementById("close-t3e1").addEventListener("click", close_t3e1);
+document.getElementById("close-t3e2").addEventListener("click", close_t3e2);
+document.getElementById("close-t3e3").addEventListener("click", close_t3e3);
+document.getElementById("close-t3e4").addEventListener("click", close_t3e4);
+document.getElementById("close-t3e5").addEventListener("click", close_t3e5);
+document.getElementById("close-t3e6").addEventListener("click", close_t3e6);
+document.getElementById("close-t3e7").addEventListener("click", close_t3e7);
+document.getElementById("close-t3e8").addEventListener("click", close_t3e8);
+document.getElementById("close-t3e9").addEventListener("click", close_t3e9);
+document.getElementById("close-t3e10").addEventListener("click", close_t3e10);
+document.getElementById("close-t3e11").addEventListener("click", close_t3e11);
+document.getElementById("close-t3e12").addEventListener("click", close_t3e12);
+document.getElementById("close-t3e13").addEventListener("click", close_t3e13);
+document.getElementById("close-t3e14").addEventListener("click", close_t3e14);
+document.getElementById("close-t3e15").addEventListener("click", close_t3e15);
+document.getElementById("close-t3e16").addEventListener("click", close_t3e16);
+document.getElementById("close-t3e17").addEventListener("click", close_t3e17);
+document.getElementById("close-t3e18").addEventListener("click", close_t3e18);
+document.getElementById("close-t3e19").addEventListener("click", close_t3e19);
+
+/*Season4*/
+document.getElementById("close-t4e1").addEventListener("click", close_t4e1);
+document.getElementById("close-t4e2").addEventListener("click", close_t4e2);
+document.getElementById("close-t4e3").addEventListener("click", close_t4e3);
+document.getElementById("close-t4e4").addEventListener("click", close_t4e4);
+document.getElementById("close-t4e5").addEventListener("click", close_t4e5);
+document.getElementById("close-t4e6").addEventListener("click", close_t4e6);
+document.getElementById("close-t4e7").addEventListener("click", close_t4e7);
+document.getElementById("close-t4e8").addEventListener("click", close_t4e8);
+document.getElementById("close-t4e9").addEventListener("click", close_t4e9);
+document.getElementById("close-t4e10").addEventListener("click", close_t4e10);
+document.getElementById("close-t4e11").addEventListener("click", close_t4e11);
+document.getElementById("close-t4e12").addEventListener("click", close_t4e12);
+document.getElementById("close-t4e13").addEventListener("click", close_t4e13);
+document.getElementById("close-t4e14").addEventListener("click", close_t4e14);
+document.getElementById("close-t4e15").addEventListener("click", close_t4e15);
+document.getElementById("close-t4e16").addEventListener("click", close_t4e16);
+document.getElementById("close-t4e17").addEventListener("click", close_t4e17);
+document.getElementById("close-t4e18").addEventListener("click", close_t4e18);
+document.getElementById("close-t4e19").addEventListener("click", close_t4e19);
+document.getElementById("close-t4e20").addEventListener("click", close_t4e20);
+
+/*Season5*/
+document.getElementById("close-t5e1").addEventListener("click", close_t5e1);
+document.getElementById("close-t5e2").addEventListener("click", close_t5e2);
+document.getElementById("close-t5e3").addEventListener("click", close_t5e3);
+document.getElementById("close-t5e4").addEventListener("click", close_t5e4);
+document.getElementById("close-t5e5").addEventListener("click", close_t5e5);
+document.getElementById("close-t5e6").addEventListener("click", close_t5e6);
+document.getElementById("close-t5e7").addEventListener("click", close_t5e7);
+document.getElementById("close-t5e8").addEventListener("click", close_t5e8);
+document.getElementById("close-t5e9").addEventListener("click", close_t5e9);
+document.getElementById("close-t5e10").addEventListener("click", close_t5e10);
+document.getElementById("close-t5e11").addEventListener("click", close_t5e11);
+document.getElementById("close-t5e12").addEventListener("click", close_t5e12);
+document.getElementById("close-t5e13").addEventListener("click", close_t5e13);
+document.getElementById("close-t5e14").addEventListener("click", close_t5e14);
+document.getElementById("close-t5e15").addEventListener("click", close_t5e15);
+document.getElementById("close-t5e16").addEventListener("click", close_t5e16);
+document.getElementById("close-t5e17").addEventListener("click", close_t5e17);
+document.getElementById("close-t5e18").addEventListener("click", close_t5e18);
+document.getElementById("close-t5e19").addEventListener("click", close_t5e19);
+document.getElementById("close-t5e20").addEventListener("click", close_t5e20);
+document.getElementById("close-t5e21").addEventListener("click", close_t5e21);
+document.getElementById("close-t5e22").addEventListener("click", close_t5e22);
+document.getElementById("close-t5e23").addEventListener("click", close_t5e23);
+document.getElementById("close-t5e24").addEventListener("click", close_t5e24);
+document.getElementById("close-t5e25").addEventListener("click", close_t5e25);
+document.getElementById("close-t5e26").addEventListener("click", close_t5e26);
+document.getElementById("close-t5e27").addEventListener("click", close_t5e27);
+document.getElementById("close-t5e28").addEventListener("click", close_t5e28);
+document.getElementById("close-t5e29").addEventListener("click", close_t5e29);
+document.getElementById("close-t5e30").addEventListener("click", close_t5e30);
+document.getElementById("close-t5e31").addEventListener("click", close_t5e31);
+document.getElementById("close-t5e32").addEventListener("click", close_t5e32);
+document.getElementById("close-t5e33").addEventListener("click", close_t5e33);
+document.getElementById("close-t5e34").addEventListener("click", close_t5e34);
+document.getElementById("close-t5e35").addEventListener("click", close_t5e35);
+document.getElementById("close-t5e36").addEventListener("click", close_t5e36);
+document.getElementById("close-t5e37").addEventListener("click", close_t5e37);
+document.getElementById("close-t5e38").addEventListener("click", close_t5e38);
+document.getElementById("close-t5e39").addEventListener("click", close_t5e39);
+
+
+/*Seasons*/
+document.getElementById('btn_season1').addEventListener('click', showSeason1);
+document.getElementById('btn_season2').addEventListener('click', showSeason2);
+document.getElementById('btn_season3').addEventListener('click', showSeason3);
+document.getElementById('btn_season4').addEventListener('click', showSeason4);
+document.getElementById('btn_season5').addEventListener('click', showSeason5);
+
+function showSeason1() {
+  season1.style.display = "block";
+  season2.style.display = "none";
+  season3.style.display = "none";
+  season4.style.display = "none";
+  season5.style.display = "none";
+}
+
+function showSeason2() {
+  season1.style.display = "none";
+  season2.style.display = "block";
+  season3.style.display = "none";
+  season4.style.display = "none";
+  season5.style.display = "none";
+}
+
+function showSeason3() {
+  season1.style.display = "none";
+  season2.style.display = "none";
+  season3.style.display = "block";
+  season4.style.display = "none";
+  season5.style.display = "none";
+}
+
+function showSeason4() {
+  season1.style.display = "none";
+  season2.style.display = "none";
+  season3.style.display = "none";
+  season4.style.display = "block";
+  season5.style.display = "none";
+}
+
+function showSeason5() {
+  season1.style.display = "none";
+  season2.style.display = "none";
+  season3.style.display = "none";
+  season4.style.display = "none";
+  season5.style.display = "block";
+}
+
+	  
+	</script>
+</body>
+</html>
