@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Series</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	
+	<style type="text/css">
+	  
+	  @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: #090909;
+	font-family: 'Open Sans', sans-serif;
+}
+
+a {
+	text-decoration: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.contenedor {
+	width: 90%;
+	max-width: 1000px;
+	margin: auto;
+	padding: 10px 0;
+}
+
+.selectbox {
+	width: 50%;
+	margin: auto;
+	position: relative;
+}
+
+.select {
+	background: #222;
+	width: 100%;
+	border-radius: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 5px;
+	padding: 10px 0 10px 10px;
+	position: relative;
+}
+
+.select i {
+	font-size: 23px;
+	margin-right: 13px;
+	color: #ddd;
+}
+
+.titulo {
+	margin-bottom: 10px;
+	color: #ddd;
+	font-weight: 600;
+	font-size: 16px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.descripcion {
+	font-size: 14px;
+	color: #ddd;
+}
+
+.opciones {
+	background: #191919;
+	border-radius: 10px;
+	overflow: auto;
+	width: 100%;
+	display: none;
+}
+
+.opciones.active {
+	display: block;
+	animation: fadeIn .3s forwards;
+}
+
+@keyframes fadeIn {
+	from {
+		transform: translateY(-100px) scale(.5);
+	}
+	to {
+		transform: translateY(0) scale(1);
+	}
+}
+
+.textos {
+  width: 100%;
+}
+
+.contenido-opcion {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	transition: .2s ease all;
+}
+
+.opciones .contenido-opcion {
+	padding: 9px;
+}
+
+.opciones .contenido-opcion:hover {
+  background: #101010;
+}
+
+.sinopsis {
+  padding: 0 15px;
+  color: #eee;
+  font-size: 13px;
+  text-align: justify;
+  margin-bottom: 10px;
+}
+
+/*Chapters*/
+
+.episodes {
+	overflow: auto;
+	z-index: 100;
+	width: 100%;
+	display: block;
+}
+
+.episodes .contenido-opcion {
+	background: #090909;
+	padding: 0 10px 14px 10px;
+}
+
+.episodes .contenido-opcion:hover {
+  background: #000;
+}
+
+.contenido-opcion img {
+	width: auto;
+	height: 50px;
+	margin-right: 20px;
+	border-radius: 2px;
+}
+
+/*Responsive*/
+
+@media screen and (max-width: 800px){
+	.selectbox {
+		width: 100%;
+	}
+}
+
+
+
+
+
+
+/*Cards*/
+.card {
+	width: 100%;
+	height: 100vh;
+	max-width: 1100px;
+	position: fixed;
+  font-family: 'Montserrat', sans-serif;
+  top: 50%;
+  transform: translateY(-50%);
+	background: rgba(2, 2, 2, .7);
+	display: none;
+}
+
+.contenedor-card {
+  width: 95%;
+  position: fixed;
+  background: #111;
+  border-radius: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+
+.card .contenido-card h4 {
+  text-align: center;
+	margin-bottom: 10px;
+	color: #ddd;
+}
+
+.card .contenido-card p {
+  padding: 0 10px 10px ;
+	line-height: 1.5;
+	color: #ddd;
+	font-size: 14px;
+	margin-bottom: 5px;
+	text-align: justify;
+}
+
+iframe {
+  border-radius: 7px 7px 0 0;
+}
+
+.close {
+  font-size: 50px;
+  color: #fff;
+  position: absolute;
+  display: flex;
+  top: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.season2, .season3 {
+  display: none;
+}
+	  
+	</style>
+</head>
+<body id="body">
+	
+	<div class="contenedor">
+		<form action="">
+			<div class="selectbox">
+				<div class="select" id="select">
+					<div class="contenido-select">
+						<h1 class="titulo">Temporada 1</h1>
+					</div>
+					<i class="bi bi-chevron-down"></i>
+				</div>
+
+				<div class="opciones" id="opciones">
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season1">Temporada 1</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season2">Temporada 2</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season3">Temporada 3</h1>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<input type="hidden" id="inputSelect" value="">
+		</form>
+
+	</div>
+	
+	<!--Sinopsis-->
+	
+	<div class="sinopsis">
+	  <p>Merlí es un profesor de una materia denostada y apreciada a partes iguales, filosofía. Un tipo contradictorio, y con virtudes y defectos a la par. La producción se centra en la relación del maestro con sus alumnos y, sobre todo, en «los conflictos entre padres e hijos, estudiantes y profesores...»</p>
+	</div>
+	
+	
+<!--Season1-->
+	
+	<div class="episodes" id="season1">
+					<a class="opcion" id="btn-t1e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/qcnhkEM48WTlGIAvBcq7dtabOS1.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Los Peripatéticos</h1>
+								<p class="descripcion">54min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/ivtUWrHx7Nu19Sv69uLmp48vwIv.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Platón</h1>
+								<p class="descripcion">50min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/kfELFRWVvUV71v96crVw1K0ETlM.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Maquiavelo</h1>
+								<p class="descripcion">50min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/ml6jxV3gys0yejHIiIS6tUFIsdr.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Aristóteles</h1>
+								<p class="descripcion">45min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/zRqy3QPCm9R2eS4pAh7MVndKAhr.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Socrates</h1>
+								<p class="descripcion">48min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/k3PHbztxcqoqmlnt6HkOUFNmezK.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Schopenhauer</h1>
+								<p class="descripcion">46min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/jRyPMBfzGOjiJFU9HTJbYgc8MiL.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Foucault</h1>
+								<p class="descripcion">50min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/aGsP7ws5jN9nzHTaelPd8MQpDxk.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Guy Debord</h1>
+								<p class="descripcion">48min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/xH7BfPvA4GpUAmzKYWszQ9fx0Sr.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. Epicuro</h1>
+								<p class="descripcion">51min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/a8qgyhjWuITJyalTDgdwbeRMOMX.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Los escépticos</h1>
+								<p class="descripcion">46min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/bSv3UHVYzRFFmTSoK0DMxJhlSF3.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Los sofistas</h1>
+								<p class="descripcion">47min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/6TkcmEDCbtFNvhupaSicvGQxnGY.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Hume</h1>
+								<p class="descripcion">53min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/H6oAnUq0nNJR3d0X6wL3Kd3XSN.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Nietzsche</h1>
+								<p class="descripcion">57min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season2-->
+			
+	<div class="episodes season2" id="season2">
+					<a class="opcion" id="btn-t2e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/733cz3qwXI50EEER8GxILmQiRh7.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Los Presocráticos</h1>
+								<p class="descripcion">50min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/3tKOhmmQ46UUV2YwI8n2nbBiubT.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Thomas Hobbes</h1>
+								<p class="descripcion">45min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/grJKycyl3sX7hBXp7CltMnujIOi.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Los Estoicos</h1>
+								<p class="descripcion">49min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/7YNPWxTFruAHuWVOyqsdGecqsHV.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Kant</h1>
+								<p class="descripcion">53min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/irfv6FLt0E0PtqsQHWkVd2qlDFx.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Hiparquía</h1>
+								<p class="descripcion">48min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/qeVCTo1vWoqCoPbKsAyqFbE3g4H.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Montaigne</h1>
+								<p class="descripcion">49min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/kfuMjMPIVkPfL6cdJuuZqkJjyYS.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Judith Butler</h1>
+								<p class="descripcion">52min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/bTsbjdRSG8rZLJxKfAon9lXdjf0.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Freud</h1>
+								<p class="descripcion">47min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/l19I1cW246zQhmgyoPOd62FtYFU.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. Descartes</h1>
+								<p class="descripcion">56min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/7xYOIxrnWzaSv4lGR9SHT7imkrx.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Engels</h1>
+								<p class="descripcion">49min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/hsr0Y81MBAEMlFdDNOFNyQmg5BT.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Zizek</h1>
+								<p class="descripcion">47min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/x4ZY7mvFRQBip6g7bRbSDFqB9DA.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. El taoismo</h1>
+								<p class="descripcion">57min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/c0IW3mwWDdFxER4UAnIHmqec6wK.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Boeci</h1>
+								<p class="descripcion">58min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season3-->
+			
+	<div class="episodes season3" id="season3">
+					<a class="opcion" id="btn-t3e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/8ql2xZ7jt7TrQxtc10wLT6o3TBs.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Walter Benjamin</h1>
+								<p class="descripcion">49min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/txl0BCkFM7ZVY8HqRg58g5VHD4z.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Adam Smith</h1>
+								<p class="descripcion">48min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/h8wdbh4lIFNXXeMNr4G17qnQAzV.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Albert Camus</h1>
+								<p class="descripcion">48min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/rBi0X85VBglM5owOGloRsdHCgdQ.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Karl Marx</h1>
+								<p class="descripcion">47min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/7rWGRPg65oNHBKq9WFqdHCW44bk.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Hannah Arendt</h1>
+								<p class="descripcion">49min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/mytpTN7qsOntXFDuH7QNC2tC3Aw.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Kierkegaard</h1>
+								<p class="descripcion">47min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/3oJfAG6I0boFfWgCh2yaHZHwgGu.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Henry David Thoreau</h1>
+								<p class="descripcion">49min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/xVZNv4mlPY0B14TirpMkVku1TGi.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Plotí</h1>
+								<p class="descripcion">49min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/5mYlT94o0iXqKpgfBSnkBhJNKB.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. Zygmunt Bauman</h1>
+								<p class="descripcion">49min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/vYZhmagoKE1zwVwpL4zhZEhU0Qy.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Heidegger</h1>
+								<p class="descripcion">51min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/d5pJhSl7v0nGlec06imICE5AlJM.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Hegel</h1>
+								<p class="descripcion">47min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/d4A9FP524pUKUfPbh83kRtTXhgC.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. San Agustín</h1>
+								<p class="descripcion">46min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/niNwUlrLyZm93Wfp53LbC5RkPD8.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Los peripatéticos del siglo XXI</h1>
+								<p class="descripcion">51min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e14">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/PutfiQzvT3TGh3QWUCklGgBmkl.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. Merlí Bergeron</h1>
+								<p class="descripcion">56min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+	
+
+
+
+
+
+
+	<!--Season1-->
+<div class="card" id="modal_t1e1">
+  
+<div class="close" id="close-t1e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Los Peripatéticos</h4>
+		<p>La llegada del Merlí Bergeron, nuevo profesor de filosofía, al Instituto Àngel Guimerà, provoca reacciones adversas. Mientras se pone a los alumnos en el bolsillo, al profesorado le molesta su manera de ser y de relacionarse con la plantilla. En casa, Merlí intenta recuperar la relación con Bruno, su hijo adolescente.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e2">
+  
+<div class="close" id="close-t1e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Platón</h4>
+		<p>Toni, el director del instituto, advierte a Merlí que se tiene que ceñir a las normas del centro, pero Merlí va a lo suyo y propone a los alumnos saltarse las reglas del certamen literario. Merlí y Eugeni se pelean por encargarse de Ivan, un chico que sufre agorafobia. Bruno explica un secreto a Tània.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e3">
+  
+<div class="close" id="close-t1e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Maquiavelo</h4>
+		<p>La madre de Gerard felicita a Merlí por cómo hace las clases y por haber animado su hijo. Llega una nueva alumna: Mònica. Bruno cree que suspende exámenes por culpa de la presencia de Merlí al instituto, y le amenaza con irse a vivir con su madre. Qué hará Merlí para retenerlo?</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e4">
+  
+<div class="close" id="close-t1e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Aristóteles</h4>
+		<p>Bruno y Pol estudian juntos el examen de catalán, pero este encuentro acaba mal. Eugeni se encuentra con dos exámenes sospechosos. Calduch intentará ayudar a Merlí para resolver sus problemas al instituto.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e5">
+  
+<div class="close" id="close-t1e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Socrates</h4>
+		<p>El padre de Joan cree que Merlí adoctrina a su hijo. Tània tiene un problema con Berta y eso afecta a su relación con Bruno. Gina se queja a Merlí por haber suspendido a Gerard. Merlí obliga a Ivan a salir a la calla.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e6">
+  
+<div class="close" id="close-t1e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Schopenhauer</h4>
+		<p>Berta monta el número en clase. Mònica invita a Gerard a su casa para preparar un trabajo de la escuela. Gina descubre que Merlí ha estado saliendo con Laia.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e7">
+  
+<div class="close" id="close-t1e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Foucault</h4>
+		<p>En casa de Pol las cosas no van nada bien a ningún nivel. Gerard encuentra pruebas que dan a entender que su madre tiene un amante. Joan se rebela contra sus padres.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e8">
+  
+<div class="close" id="close-t1e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Guy Debord</h4>
+		<p>Entre los alumnos circula un vídeo íntimo de Mònica. En el museo, Marc ve a Merlí y a Gina besándose. Iván se entera de que su madre tiene un novio.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e9">
+  
+<div class="close" id="close-t1e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. Epicuro</h4>
+		<p>Los alumnos montan una gran fiesta para Pol en casa de Mònica. Joan, totalmente borracho, hace una confesión, y dos amigos sucumben a la atracción que sienten entre sí.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e10">
+  
+<div class="close" id="close-t1e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Los escépticos</h4>
+		<p>En la familia de Joan surge un conflicto de gran dimensión. Pol se distancia de Bruno. Gerard se niega a aceptar la relación de su madre con Merlí.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e11">
+  
+<div class="close" id="close-t1e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Los sofistas</h4>
+		<p>Eugeni se lleva una desagradable sorpresa. Pol se debe encargar de ayudar a Iván. Merlí descubre el talento oculto de Berta. Un nuevo alumno causa una gran impresión.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e12">
+  
+<div class="close" id="close-t1e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Hume</h4>
+		<p>Joan se niega a participar en la campaña de recogida de alimentos organizada por sus padres. Los chicos de clase, incluido Bruno, se burlan de Oliver y le hacen el vacío.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e13">
+  
+<div class="close" id="close-t1e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Nietzsche</h4>
+		<p>Los planes de suspender las clases de Merlí provocan una protesta. Joan se declara a Mònica. Bruno se sincera con Oliver. Iván da un gran paso para superar su situación.</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season2-->
+<div class="card" id="modal_t2e1">
+  
+<div class="close" id="close-t2e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Los Presocráticos</h4>
+		<p>Con el nuevo curso llega una nueva y provocadora estudiante. Pol deja las clases por presiones familiares y Merlí discute con el padre del joven para que vuelva.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e2">
+  
+<div class="close" id="close-t2e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Thomas Hobbes</h4>
+		<p>Merlí y Coralina, la nueva jefa de estudios, no empiezan con buen pie. Marc intenta echarle una mano a su hermano menor, que no se porta bien y saca malas notas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e3">
+  
+<div class="close" id="close-t2e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Los Estoicos</h4>
+		<p>Joan le pide a Merlí que le aconseje con su novia, pero será Merlí quien aprenda algo. La tensión entre Oliver y su madre alcanza un punto crítico.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e4">
+  
+<div class="close" id="close-t2e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Kant</h4>
+		<p>Merlí le cuenta a su madre una mentira de la que debería avergonzarse. Entre Gerard y Oksana saltan chispas. Pol le dice a Bruno que se sientre atraído por su nueva jefa.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e5">
+  
+<div class="close" id="close-t2e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Hiparquía</h4>
+		<p>Millán le confía un secreto a Glòria. Tània sale en defensa de Berta durante la clase de Coralina, pero se acobarda a la hora de confesarle a Marc lo que siente por él.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e6">
+  
+<div class="close" id="close-t2e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Montaigne</h4>
+		<p>Pau recibe un castigo por tirarle un boli a una profesora amargada. Mientras tanto, entre Tània y Marc la cosa parece avanzar y Pol y Míriam tienen una bronca de espanto.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e7">
+  
+<div class="close" id="close-t2e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Judith Butler</h4>
+		<p>Cuando Coralina intenta deshacerse de una profesora transgénero, los alumnos organizan una protesta. Marc le pide a la abuela de Bruno algunos consejos profesionales.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e8">
+  
+<div class="close" id="close-t2e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Freud</h4>
+		<p>Mònica se harta de los celos de Joan. Gerard descubre lo que Oksana se dedica a hacer cada tarde. Oliver comparte con Merlí un recuerdo traumático.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e9">
+  
+<div class="close" id="close-t2e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. Descartes</h4>
+		<p>Gerard hace de canguro durante una tarde. Tània le confiesa a Marc lo que siente por él. Millán toma una decisión sobre su futuro.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e10">
+  
+<div class="close" id="close-t2e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Engels</h4>
+		<p>Coralina intenta que Ivan dude de su madre e insta a Bruno a que se vaya a vivir a Roma. Joan trata de convencer a Mònica para que cambie de parecer.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e11">
+  
+<div class="close" id="close-t2e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Zizek</h4>
+		<p>La madre de Gerard obliga a su hijo a ser consciente de lo que conlleva salir con Oksana. Pol se disculpa con Ivan. Marc y Pau visitan a su madre en el trabajo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e12">
+  
+<div class="close" id="close-t2e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. El taoismo</h4>
+		<p>Joan ya no quiere ser un "buen chico" y decide probar cosas nuevas. Oliver les anuncia algo a sus padres. Bruno se despide de las personas a las que más quiere.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e13">
+  
+<div class="close" id="close-t2e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Boeci</h4>
+		<p>Pol descubre que su hermano guarda un secreto. Los alumnos se cuelan en el insti de noche y montan una fiesta de Navidad salvaje. A Coralina, el karma le pasa factura.</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season3-->
+<div class="card" id="modal_t3e1">
+  
+<div class="close" id="close-t3e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Walter Benjamin</h4>
+		<p>Un profesor y una profesora nuevos llegan al instituto. El interés que ella muestra por Merlí levanta las sospechas de Gina. Joan le ayuda a Pol a conseguir un trabajo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e2">
+  
+<div class="close" id="close-t3e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Adam Smith</h4>
+		<p>Merlí se da cuenta de que ya no es el profesor más popular. Tània intenta que un compañero de clase se fije en ella. Joan sorprende a sus padres con su actitud.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e3">
+  
+<div class="close" id="close-t3e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Albert Camus</h4>
+		<p>De camino al instituto, Tània, Berta e Ivan presencian un incidente impactante. Oliver cambia de opinión sobre Merlí después de un debate en clase sobre la fe.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e4">
+  
+<div class="close" id="close-t3e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Karl Marx</h4>
+		<p>El turbio negocio del padre de Marc da lugar a una situación inquietante. El portátil de Gerard desaparece de su taquilla y sus compañeros son sospechosos del robo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e5">
+  
+<div class="close" id="close-t3e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Hannah Arendt</h4>
+		<p>Merlí hace un comentario sobre la maternidad de Oksana que no sienta bien. Una discusión en clase sobre el perdón lleva a Pol a enmendar un asunto del pasado.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e6">
+  
+<div class="close" id="close-t3e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Kierkegaard</h4>
+		<p>Gerard empieza a mostrar síntomas extraños. Joan recibe malas noticias en casa. Un asunto marca un antes y un después en la amistad entre Pol y Tània.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e7">
+  
+<div class="close" id="close-t3e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Henry David Thoreau</h4>
+		<p>Merlí pone un examen con poco tiempo de antelación y Silvana llama a los alumnos a la desobediencia. Merlí intenta convencer a Gina de que Gerard tiene problemas serios.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e8">
+  
+<div class="close" id="close-t3e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Plotí</h4>
+		<p>Tània oye a Pol hablando mal de ella y decide cobrarse la revancha. Merlí sale a divertirse una noche con el padre de Joan. Ivan se sincera con Berta.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e9">
+  
+<div class="close" id="close-t3e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. Zygmunt Bauman</h4>
+		<p>Eugeni se entera de que alguien le quiere pisar el puesto como director para el año que viene. Óscar le echa el ojo a alguien del insti. Tània tiene un encuentro íntimo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e10">
+  
+<div class="close" id="close-t3e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Heidegger</h4>
+		<p>Merlí le aconseja a Joan cómo pasar con su padre sus últimos días de vida e intenta demostrarle a Gina que ha cambiado. El padre de Marc cumple una promesa.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e11">
+  
+<div class="close" id="close-t3e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Hegel</h4>
+		<p>Merlí anima a Pol a profundizar en un trabajo de clase y reflexionar sobre sus sentimientos hacia Tània. Un desdichado Ivan recoge los frutos de una buena acción.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e12">
+  
+<div class="close" id="close-t3e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. San Agustín</h4>
+		<p>Pol y Tània se sienten incómodos durante un encuentro sorpresa. Se acerca la acampada y entre Merlí y Silvana la tensión va en aumento.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e13">
+  
+<div class="close" id="close-t3e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Los peripatéticos del siglo XXI</h4>
+		<p>Durante la excursión, entre dos de los acompañantes surge algo, Gerard y Mònica se dejan de tira y afloja, y Tània, Pol y Bruno estrechan su amistad.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e14">
+  
+<div class="close" id="close-t3e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. Merlí Bergeron</h4>
+		<p>Los alumnos sorprenden a Merlí con un homenaje al final del curso. Siete años después, una reunión desvela el rumbo que ha tomado la vida de cada uno.</p>
+	</div>
+	</div>
+</div>
+
+
+	<script>
+	  
+//select
+const select = document.querySelector('#select');
+const opciones = document.querySelector('#opciones');
+const contenidoSelect = document.querySelector('#select .contenido-select');
+const hiddenInput = document.querySelector('#inputSelect');
+
+document.querySelectorAll('#opciones > .opcion').forEach((opcion) => {
+	opcion.addEventListener('click', (e) => {
+		e.preventDefault();
+		contenidoSelect.innerHTML = e.currentTarget.innerHTML;
+		select.classList.toggle('active');
+		opciones.classList.toggle('active');
+		hiddenInput.value = e.currentTarget.querySelector('.titulo').innerText;
+	});
+});
+
+select.addEventListener('click', () => {
+	select.classList.toggle('active');
+	opciones.classList.toggle('active');
+});
+
+
+
+
+
+
+/*open modal*/
+/*Season1*/
+function mostrar_modal_t1e1() {
+  modal_t1e1.style.display = "flex";
+  iframe_t1e1.src = "https://uqload.com/embed-v98270xgatcs.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e2() {
+  modal_t1e2.style.display = "flex";
+  iframe_t1e2.src = "https://uqload.com/embed-8abw849hktsg.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e3() {
+  modal_t1e3.style.display = "flex";
+  iframe_t1e3.src = "https://uqload.com/embed-3v9fycy1hcqn.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e4() {
+  modal_t1e4.style.display = "flex";
+  iframe_t1e4.src = "https://uqload.com/embed-cgk9i2wdbz32.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e5() {
+  modal_t1e5.style.display = "flex";
+  iframe_t1e5.src = "https://uqload.com/embed-wv918dwfrvlq.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e6() {
+  modal_t1e6.style.display = "flex";
+  iframe_t1e6.src = "https://uqload.com/embed-9al3f57bb78o.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e7() {
+  modal_t1e7.style.display = "flex";
+  iframe_t1e7.src = "https://uqload.com/embed-mkt8ec2izg8d.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e8() {
+  modal_t1e8.style.display = "flex";
+  iframe_t1e8.src = "https://uqload.com/embed-cpcv07nwvh6c.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e9() {
+  modal_t1e9.style.display = "flex";
+  iframe_t1e9.src = "https://uqload.com/embed-2kv2bdr7j9ex.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e10() {
+  modal_t1e10.style.display = "flex";
+  iframe_t1e10.src = "https://uqload.com/embed-30wvmd3vzigm.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e11() {
+  modal_t1e11.style.display = "flex";
+  iframe_t1e11.src = "https://uqload.com/embed-au9lpxxdo5df.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e12() {
+  modal_t1e12.style.display = "flex";
+  iframe_t1e12.src = "https://uqload.com/embed-krqyl8848fi6.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e13() {
+  modal_t1e13.style.display = "flex";
+  iframe_t1e13.src = "https://uqload.com/embed-drq2tsmvj27b.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season2*/
+function mostrar_modal_t2e1() {
+  modal_t2e1.style.display = "flex";
+  iframe_t2e1.src = "https://uqload.com/embed-254cumvf3ljt.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e2() {
+  modal_t2e2.style.display = "flex";
+  iframe_t2e2.src = "https://uqload.com/embed-2t0tfbwwpy36.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e3() {
+  modal_t2e3.style.display = "flex";
+  iframe_t2e3.src = "https://uqload.com/embed-dfg78c6arw2l.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e4() {
+  modal_t2e4.style.display = "flex";
+  iframe_t2e4.src = "https://uqload.com/embed-25oo56f5dd0e.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e5() {
+  modal_t2e5.style.display = "flex";
+  iframe_t2e5.src = "https://uqload.com/embed-p23espyezwsp.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e6() {
+  modal_t2e6.style.display = "flex";
+  iframe_t2e6.src = "https://uqload.com/embed-tdv84gjjwmmz.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e7() {
+  modal_t2e7.style.display = "flex";
+  iframe_t2e7.src = "https://uqload.com/embed-51ely49nvkf1.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e8() {
+  modal_t2e8.style.display = "flex";
+  iframe_t2e8.src = "https://uqload.com/embed-n86nd9zti03b.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e9() {
+  modal_t2e9.style.display = "flex";
+  iframe_t2e9.src = "https://uqload.com/embed-c9ey9zrg6fss.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e10() {
+  modal_t2e10.style.display = "flex";
+  iframe_t2e10.src = "https://uqload.com/embed-2f6zd97xzqfj.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e11() {
+  modal_t2e11.style.display = "flex";
+  iframe_t2e11.src = "https://uqload.com/embed-e8yktdfhri1n.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e12() {
+  modal_t2e12.style.display = "flex";
+  iframe_t2e12.src = "https://uqload.com/embed-04lvtljnfym7.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e13() {
+  modal_t2e13.style.display = "flex";
+  iframe_t2e13.src = "https://uqload.com/embed-zlxp3kh04ghw.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season3*/
+function mostrar_modal_t3e1() {
+  modal_t3e1.style.display = "flex";
+  iframe_t3e1.src = "https://uqload.com/embed-7vw53o7ibo3f.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e2() {
+  modal_t3e2.style.display = "flex";
+  iframe_t3e2.src = "https://uqload.com/embed-pasdvocul7xu.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e3() {
+  modal_t3e3.style.display = "flex";
+  iframe_t3e3.src = "https://uqload.com/embed-97vfidprkjdb.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e4() {
+  modal_t3e4.style.display = "flex";
+  iframe_t3e4.src = "https://uqload.com/embed-nvp2rj8i6ycn.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e5() {
+  modal_t3e5.style.display = "flex";
+  iframe_t3e5.src = "https://uqload.com/embed-2zr8vooe46am.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e6() {
+  modal_t3e6.style.display = "flex";
+  iframe_t3e6.src = "https://uqload.com/embed-7u8yfi7aob34.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e7() {
+  modal_t3e7.style.display = "flex";
+  iframe_t3e7.src = "https://uqload.com/embed-1xe452tc6zjj.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e8() {
+  modal_t3e8.style.display = "flex";
+  iframe_t3e8.src = "https://uqload.com/embed-p2hjrkav1kdf.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e9() {
+  modal_t3e9.style.display = "flex";
+  iframe_t3e9.src = "https://uqload.com/embed-t74elghr5085.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e10() {
+  modal_t3e10.style.display = "flex";
+  iframe_t3e10.src = "https://uqload.com/embed-f594gx4idpfe.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e11() {
+  modal_t3e11.style.display = "flex";
+  iframe_t3e11.src = "https://uqload.com/embed-lxn9gl3n2ezo.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e12() {
+  modal_t3e12.style.display = "flex";
+  iframe_t3e12.src = "https://uqload.com/embed-2x80wi59smti.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e13() {
+  modal_t3e13.style.display = "flex";
+  iframe_t3e13.src = "https://uqload.com/embed-a0l02jjx7a9f.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e14() {
+  modal_t3e14.style.display = "flex";
+  iframe_t3e14.src = "https://uqload.com/embed-p5eyzpfhjt2w.html";
+  body.style.overflow = "hidden";
+}
+
+
+
+/*close modal*/
+/*Season1*/
+function close_t1e1() {
+  modal_t1e1.style.display = "none";
+  iframe_t1e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e2() {
+  modal_t1e2.style.display = "none";
+  iframe_t1e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e3() {
+  modal_t1e3.style.display = "none";
+  iframe_t1e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e4() {
+  modal_t1e4.style.display = "none";
+  iframe_t1e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e5() {
+  modal_t1e5.style.display = "none";
+  iframe_t1e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e6() {
+  modal_t1e6.style.display = "none";
+  iframe_t1e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e7() {
+  modal_t1e7.style.display = "none";
+  iframe_t1e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e8() {
+  modal_t1e8.style.display = "none";
+  iframe_t1e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e9() {
+  modal_t1e9.style.display = "none";
+  iframe_t1e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e10() {
+  modal_t1e10.style.display = "none";
+  iframe_t1e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e11() {
+  modal_t1e11.style.display = "none";
+  iframe_t1e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e12() {
+  modal_t1e12.style.display = "none";
+  iframe_t1e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e13() {
+  modal_t1e13.style.display = "none";
+  iframe_t1e13.src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season2*/
+function close_t2e1() {
+  modal_t2e1.style.display = "none";
+  iframe_t2e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e2() {
+  modal_t2e2.style.display = "none";
+  iframe_t2e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e3() {
+  modal_t2e3.style.display = "none";
+  iframe_t2e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e4() {
+  modal_t2e4.style.display = "none";
+  iframe_t2e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e5() {
+  modal_t2e5.style.display = "none";
+  iframe_t2e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e6() {
+  modal_t2e6.style.display = "none";
+  iframe_t2e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e7() {
+  modal_t2e7.style.display = "none";
+  iframe_t2e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e8() {
+  modal_t2e8.style.display = "none";
+  iframe_t2e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e9() {
+  modal_t2e9.style.display = "none";
+  iframe_t2e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e10() {
+  modal_t2e10.style.display = "none";
+  iframe_t2e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e11() {
+  modal_t2e11.style.display = "none";
+  iframe_t2e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e12() {
+  modal_t2e12.style.display = "none";
+  iframe_t2e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e13() {
+  modal_t2e13.style.display = "none";
+  iframe_t2e13.src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season3*/
+function close_t3e1() {
+  modal_t3e1.style.display = "none";
+  iframe_t3e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e2() {
+  modal_t3e2.style.display = "none";
+  iframe_t3e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e3() {
+  modal_t3e3.style.display = "none";
+  iframe_t3e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e4() {
+  modal_t3e4.style.display = "none";
+  iframe_t3e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e5() {
+  modal_t3e5.style.display = "none";
+  iframe_t3e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e6() {
+  modal_t3e6.style.display = "none";
+  iframe_t3e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e7() {
+  modal_t3e7.style.display = "none";
+  iframe_t3e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e8() {
+  modal_t3e8.style.display = "none";
+  iframe_t3e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e9() {
+  modal_t3e9.style.display = "none";
+  iframe_t3e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e10() {
+  modal_t3e10.style.display = "none";
+  iframe_t3e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e11() {
+  modal_t3e11.style.display = "none";
+  iframe_t3e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e12() {
+  modal_t3e12.style.display = "none";
+  iframe_t3e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e13() {
+  modal_t3e13.style.display = "none";
+  iframe_t3e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e14() {
+  modal_t3e14.style.display = "none";
+  iframe_t3e14.src = "";
+  body.style.overflow = "auto";
+}
+
+
+/*Season1*/
+document.getElementById("btn-t1e1").addEventListener("click", mostrar_modal_t1e1);
+document.getElementById("btn-t1e2").addEventListener("click", mostrar_modal_t1e2);
+document.getElementById("btn-t1e3").addEventListener("click", mostrar_modal_t1e3);
+document.getElementById("btn-t1e4").addEventListener("click", mostrar_modal_t1e4);
+document.getElementById("btn-t1e5").addEventListener("click", mostrar_modal_t1e5);
+document.getElementById("btn-t1e6").addEventListener("click", mostrar_modal_t1e6);
+document.getElementById("btn-t1e7").addEventListener("click", mostrar_modal_t1e7);
+document.getElementById("btn-t1e8").addEventListener("click", mostrar_modal_t1e8);
+document.getElementById("btn-t1e9").addEventListener("click", mostrar_modal_t1e9);
+document.getElementById("btn-t1e10").addEventListener("click", mostrar_modal_t1e10);
+document.getElementById("btn-t1e11").addEventListener("click", mostrar_modal_t1e11);
+document.getElementById("btn-t1e12").addEventListener("click", mostrar_modal_t1e12);
+document.getElementById("btn-t1e13").addEventListener("click", mostrar_modal_t1e13);
+
+
+/*Season2*/
+document.getElementById("btn-t2e1").addEventListener("click", mostrar_modal_t2e1);
+document.getElementById("btn-t2e2").addEventListener("click", mostrar_modal_t2e2);
+document.getElementById("btn-t2e3").addEventListener("click", mostrar_modal_t2e3);
+document.getElementById("btn-t2e4").addEventListener("click", mostrar_modal_t2e4);
+document.getElementById("btn-t2e5").addEventListener("click", mostrar_modal_t2e5);
+document.getElementById("btn-t2e6").addEventListener("click", mostrar_modal_t2e6);
+document.getElementById("btn-t2e7").addEventListener("click", mostrar_modal_t2e7);
+document.getElementById("btn-t2e8").addEventListener("click", mostrar_modal_t2e8);
+document.getElementById("btn-t2e9").addEventListener("click", mostrar_modal_t2e9);
+document.getElementById("btn-t2e10").addEventListener("click", mostrar_modal_t2e10);
+document.getElementById("btn-t2e11").addEventListener("click", mostrar_modal_t2e11);
+document.getElementById("btn-t2e12").addEventListener("click", mostrar_modal_t2e12);
+document.getElementById("btn-t2e13").addEventListener("click", mostrar_modal_t2e13);
+
+
+/*Season3*/
+document.getElementById("btn-t3e1").addEventListener("click", mostrar_modal_t3e1);
+document.getElementById("btn-t3e2").addEventListener("click", mostrar_modal_t3e2);
+document.getElementById("btn-t3e3").addEventListener("click", mostrar_modal_t3e3);
+document.getElementById("btn-t3e4").addEventListener("click", mostrar_modal_t3e4);
+document.getElementById("btn-t3e5").addEventListener("click", mostrar_modal_t3e5);
+document.getElementById("btn-t3e6").addEventListener("click", mostrar_modal_t3e6);
+document.getElementById("btn-t3e7").addEventListener("click", mostrar_modal_t3e7);
+document.getElementById("btn-t3e8").addEventListener("click", mostrar_modal_t3e8);
+document.getElementById("btn-t3e9").addEventListener("click", mostrar_modal_t3e9);
+document.getElementById("btn-t3e10").addEventListener("click", mostrar_modal_t3e10);
+document.getElementById("btn-t3e11").addEventListener("click", mostrar_modal_t3e11);
+document.getElementById("btn-t3e12").addEventListener("click", mostrar_modal_t3e12);
+document.getElementById("btn-t3e13").addEventListener("click", mostrar_modal_t3e13);
+document.getElementById("btn-t3e14").addEventListener("click", mostrar_modal_t3e14);
+
+
+/*Season1*/
+document.getElementById("close-t1e1").addEventListener("click", close_t1e1);
+document.getElementById("close-t1e2").addEventListener("click", close_t1e2);
+document.getElementById("close-t1e3").addEventListener("click", close_t1e3);
+document.getElementById("close-t1e4").addEventListener("click", close_t1e4);
+document.getElementById("close-t1e5").addEventListener("click", close_t1e5);
+document.getElementById("close-t1e6").addEventListener("click", close_t1e6);
+document.getElementById("close-t1e7").addEventListener("click", close_t1e7);
+document.getElementById("close-t1e8").addEventListener("click", close_t1e8);
+document.getElementById("close-t1e9").addEventListener("click", close_t1e9);
+document.getElementById("close-t1e10").addEventListener("click", close_t1e10);
+document.getElementById("close-t1e11").addEventListener("click", close_t1e11);
+document.getElementById("close-t1e12").addEventListener("click", close_t1e12);
+document.getElementById("close-t1e13").addEventListener("click", close_t1e13);
+
+/*Season2*/
+document.getElementById("close-t2e1").addEventListener("click", close_t2e1);
+document.getElementById("close-t2e2").addEventListener("click", close_t2e2);
+document.getElementById("close-t2e3").addEventListener("click", close_t2e3);
+document.getElementById("close-t2e4").addEventListener("click", close_t2e4);
+document.getElementById("close-t2e5").addEventListener("click", close_t2e5);
+document.getElementById("close-t2e6").addEventListener("click", close_t2e6);
+document.getElementById("close-t2e7").addEventListener("click", close_t2e7);
+document.getElementById("close-t2e8").addEventListener("click", close_t2e8);
+document.getElementById("close-t2e9").addEventListener("click", close_t2e9);
+document.getElementById("close-t2e10").addEventListener("click", close_t2e10);
+document.getElementById("close-t2e11").addEventListener("click", close_t2e11);
+document.getElementById("close-t2e12").addEventListener("click", close_t2e12);
+document.getElementById("close-t2e13").addEventListener("click", close_t2e13);
+
+/*Season3*/
+document.getElementById("close-t3e1").addEventListener("click", close_t3e1);
+document.getElementById("close-t3e2").addEventListener("click", close_t3e2);
+document.getElementById("close-t3e3").addEventListener("click", close_t3e3);
+document.getElementById("close-t3e4").addEventListener("click", close_t3e4);
+document.getElementById("close-t3e5").addEventListener("click", close_t3e5);
+document.getElementById("close-t3e6").addEventListener("click", close_t3e6);
+document.getElementById("close-t3e7").addEventListener("click", close_t3e7);
+document.getElementById("close-t3e8").addEventListener("click", close_t3e8);
+document.getElementById("close-t3e9").addEventListener("click", close_t3e9);
+document.getElementById("close-t3e10").addEventListener("click", close_t3e10);
+document.getElementById("close-t3e11").addEventListener("click", close_t3e11);
+document.getElementById("close-t3e12").addEventListener("click", close_t3e12);
+document.getElementById("close-t3e13").addEventListener("click", close_t3e13);
+document.getElementById("close-t3e14").addEventListener("click", close_t3e14);
+
+
+/*Seasons*/
+document.getElementById('btn_season1').addEventListener('click', showSeason1);
+document.getElementById('btn_season2').addEventListener('click', showSeason2);
+document.getElementById('btn_season3').addEventListener('click', showSeason3);
+
+function showSeason1() {
+  season1.style.display = "block";
+  season2.style.display = "none";
+  season3.style.display = "none";
+}
+
+function showSeason2() {
+  season1.style.display = "none";
+  season2.style.display = "block";
+  season3.style.display = "none";
+}
+
+function showSeason3() {
+  season1.style.display = "none";
+  season2.style.display = "none";
+  season3.style.display = "block";
+}
+
+	  
+	</script>
+</body>
+</html>
