@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Series</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	
+	<style type="text/css">
+	  
+	  @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: #090909;
+	font-family: 'Open Sans', sans-serif;
+}
+
+a {
+	text-decoration: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.contenedor {
+	width: 90%;
+	max-width: 1000px;
+	margin: auto;
+	padding: 10px 0;
+}
+
+.selectbox {
+	width: 50%;
+	margin: auto;
+	position: relative;
+}
+
+.select {
+	background: #222;
+	width: 100%;
+	border-radius: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 5px;
+	padding: 10px 0 10px 10px;
+	position: relative;
+}
+
+.select i {
+	font-size: 23px;
+	margin-right: 13px;
+	color: #ddd;
+}
+
+.titulo {
+	margin-bottom: 10px;
+	color: #ddd;
+	font-weight: 600;
+	font-size: 16px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.descripcion {
+	font-size: 14px;
+	color: #ddd;
+}
+
+.opciones {
+	background: #191919;
+	border-radius: 10px;
+	max-height: 400px;
+	overflow: auto;
+	width: 100%;
+	display: none;
+}
+
+.opciones.active {
+	display: block;
+	animation: fadeIn .3s forwards;
+}
+
+@keyframes fadeIn {
+	from {
+		transform: translateY(-100px) scale(.5);
+	}
+	to {
+		transform: translateY(0) scale(1);
+	}
+}
+
+.textos {
+  width: 100%;
+}
+
+.contenido-opcion {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	transition: .2s ease all;
+}
+
+.opciones .contenido-opcion {
+	padding: 9px;
+}
+
+.opciones .contenido-opcion:hover {
+  background: #101010;
+}
+
+.sinopsis {
+  padding: 0 15px;
+  color: #eee;
+  font-size: 13px;
+  text-align: justify;
+  margin-bottom: 10px;
+}
+
+/*Chapters*/
+
+.episodes {
+	overflow: auto;
+	z-index: 100;
+	width: 100%;
+	display: block;
+}
+
+.episodes .contenido-opcion {
+	background: #090909;
+	padding: 0 10px 14px 10px;
+}
+
+.episodes .contenido-opcion:hover {
+  background: #000;
+}
+
+.contenido-opcion img {
+	width: auto;
+	height: 50px;
+	margin-right: 20px;
+	border-radius: 2px;
+}
+
+/*Responsive*/
+
+@media screen and (max-width: 800px){
+	.selectbox {
+		width: 100%;
+	}
+}
+
+
+
+
+
+
+/*Cards*/
+.card {
+	width: 100%;
+	height: 100vh;
+	max-width: 1100px;
+	position: fixed;
+  font-family: 'Montserrat', sans-serif;
+  top: 50%;
+  transform: translateY(-50%);
+	background: rgba(2, 2, 2, .7);
+	display: none;
+}
+
+.contenedor-card {
+  width: 95%;
+  position: fixed;
+  background: #111;
+  border-radius: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+
+.card .contenido-card h4 {
+  text-align: center;
+	margin-bottom: 10px;
+	color: #ddd;
+}
+
+.card .contenido-card p {
+  padding: 0 10px 10px ;
+	line-height: 1.5;
+	color: #ddd;
+	font-size: 14px;
+	margin-bottom: 5px;
+	text-align: justify;
+}
+
+iframe {
+  border-radius: 7px 7px 0 0;
+}
+
+.close {
+  font-size: 50px;
+  color: #fff;
+  position: absolute;
+  display: flex;
+  top: 0;
+  right: 0;
+  z-index: 100;
+} 
+	  
+	</style>
+</head>
+<body id="body">
+	
+	<div class="contenedor">
+		<form action="">
+			<div class="selectbox">
+				<div class="select" id="select">
+					<div class="contenido-select">
+						<h1 class="titulo">Temporada 1</h1>
+					</div>
+					<i class="bi bi-chevron-down"></i>
+				</div>
+
+				<div class="opciones" id="opciones">
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo">Temporada 1</h1>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<input type="hidden" id="inputSelect" value="">
+		</form>
+
+	</div>
+	
+	<!--Sinopsis-->
+	
+	<div class="sinopsis">
+	  <p>Una narración de cuentos populares europeos.</p>
+	</div>
+	
+	
+	<!--Episodios-->
+	
+	<div class="episodes" id="season1">
+					<a class="opcion" id="btn-t1e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/xuYf0uLlSKBO6JqfTcBdr1aZTi5.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. El soldado y la muerte</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/3HRJ4Ex1jkXh509K4BQZYN0JFRO.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Juan sin miedo</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/9QTy58hazavLQN6JduBpnKW2Ag6.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. El niño afortunado</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/jLodweARCCNub8Tl62SRz2kO0DJ.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Cuando me faltó un cuento</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/rbeTmHkiYzQcgRx2yzpwHSSEc1k.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Hans, mi pequeño erizo</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/if6MajDkOUImM3GeTuOXsNkTtaK.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Los tres cuervos</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/bH58phpiwhGhC721yQxAT8pdnci.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Natura</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/2MkrFMb6PxKdDbntoZKWMt9ZUce.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. El gigante sin corazón</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/nmycpPHnWtpkkM6in9co84Ho02E.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. La Verdadera Novia</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+	
+
+
+
+
+
+
+	<!--   Tarjetas-->
+<div class="card" id="modal_t1e1">
+  
+<div class="close" id="close-t1e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. El soldado y la muerte</h4>
+		<p>Un soldado regresa a su casa después de 20 años de guerra y expone pequeños demonios del palacio de un zar. Después de convertirse en el benefactor del soldado, el zar enferma.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e2">
+  
+<div class="close" id="close-t1e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Juan sin miedo</h4>
+		<p>Un joven valiente tiene la esperanza de aprender qué es el miedo. Después de enfrentarse a muchos peligros, Juan descubre la verdad.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e3">
+  
+<div class="close" id="close-t1e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. El niño afortunado</h4>
+		<p>Un rey cruel, después de escuchar una profecía sobre un niño que un día se convertirá en rey, intenta matar al chico.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e4">
+  
+<div class="close" id="close-t1e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Cuando me faltó un cuento</h4>
+		<p>Tras estafar al cocinero del rey, un hombre cuenta una historia por día para evitar que el rey lo queme vivo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e5">
+  
+<div class="close" id="close-t1e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Hans, mi pequeño erizo</h4>
+		<p>Un granjero deja a su esposa después de que ella da a luz a un bebé que se parece a un erizo. Después de haber pasado años viviendo junto a animales en las profundidades de un bosque, un día se encuentra con un rey y ayuda al hombre a casarse.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e6">
+  
+<div class="close" id="close-t1e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Los tres cuervos</h4>
+		<p>Tras la muerte de la Reina, una malvada bruja convierte a los tres hijos de la mujer en cuervos, con la esperanza de eliminar a sus rivales.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e7">
+  
+<div class="close" id="close-t1e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Natura</h4>
+		<p>Una princesa se disfraza de una criatura y se pone a trabajar en la cocina de un apuesto príncipe.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e8">
+  
+<div class="close" id="close-t1e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. El gigante sin corazón</h4>
+		<p>Un joven y desafortunado príncipe cae en una trampa y libera a un gigante que aterroriza a la población. Solo hay una manera de detenerlo: el príncipe tendrá que encontrar el corazón de la bestia, que se halla en el huevo de un pato en una montaña.</p>
+	</div>
+	</div>
+</div>
+
+
+<div class="card" id="modal_t1e9">
+  
+<div class="close" id="close-t1e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. La Verdadera Novia</h4>
+		<p>Un troll secuestra a Anja, una joven huérfana, y está decidido a hacerle la vida imposible. Un día, ella pide un deseo y un león blanco lo escucha y acude en su ayuda.</p>
+	</div>
+	</div>
+</div>
+
+
+	<script>
+	  
+//select
+const select = document.querySelector('#select');
+const opciones = document.querySelector('#opciones');
+const contenidoSelect = document.querySelector('#select .contenido-select');
+const hiddenInput = document.querySelector('#inputSelect');
+
+document.querySelectorAll('#opciones > .opcion').forEach((opcion) => {
+	opcion.addEventListener('click', (e) => {
+		e.preventDefault();
+		contenidoSelect.innerHTML = e.currentTarget.innerHTML;
+		select.classList.toggle('active');
+		opciones.classList.toggle('active');
+		hiddenInput.value = e.currentTarget.querySelector('.titulo').innerText;
+	});
+});
+
+select.addEventListener('click', () => {
+	select.classList.toggle('active');
+	opciones.classList.toggle('active');
+});
+
+
+
+
+
+
+/*open modal*/
+function mostrar_modal_t1e1() {
+  modal_t1e1.style.display = "flex";
+  iframe_t1e1.src = "https://uqload.com/embed-bo9arit0umet.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e2() {
+  modal_t1e2.style.display = "flex";
+  iframe_t1e2.src = "https://uqload.com/embed-uwx05e3tpi8c.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e3() {
+  modal_t1e3.style.display = "flex";
+  iframe_t1e3.src = "https://uqload.com/embed-wjszxy3wcfh1.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e4() {
+  modal_t1e4.style.display = "flex";
+  iframe_t1e4.src = "https://uqload.com/embed-8a7zkq0tbbmm.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e5() {
+  modal_t1e5.style.display = "flex";
+  iframe_t1e5.src = "https://uqload.com/embed-uh88c3jxvuh4.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e6() {
+  modal_t1e6.style.display = "flex";
+  iframe_t1e6.src = "https://uqload.com/embed-5arcth3q4arc.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e7() {
+  modal_t1e7.style.display = "flex";
+  iframe_t1e7.src = "https://uqload.com/embed-i538ftpo1tle.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e8() {
+  modal_t1e8.style.display = "flex";
+  iframe_t1e8.src = "https://uqload.com/embed-ylxxu9jmctlw.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e9() {
+  modal_t1e9.style.display = "flex";
+  iframe_t1e9.src = "https://uqload.com/embed-mkwxqqk9mq5f.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*close modal*/
+function close_t1e1() {
+  modal_t1e1.style.display = "none";
+  iframe_t1e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e2() {
+  modal_t1e2.style.display = "none";
+  iframe_t1e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e3() {
+  modal_t1e3.style.display = "none";
+  iframe_t1e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e4() {
+  modal_t1e4.style.display = "none";
+  iframe_t1e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e5() {
+  modal_t1e5.style.display = "none";
+  iframe_t1e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e6() {
+  modal_t1e6.style.display = "none";
+  iframe_t1e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e7() {
+  modal_t1e7.style.display = "none";
+  iframe_t1e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e8() {
+  modal_t1e8.style.display = "none";
+  iframe_t1e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e9() {
+  modal_t1e9.style.display = "none";
+  iframe_t1e9.src = "";
+  body.style.overflow = "auto";
+}
+
+
+document.getElementById("btn-t1e1").addEventListener("click", mostrar_modal_t1e1);
+document.getElementById("btn-t1e2").addEventListener("click", mostrar_modal_t1e2);
+document.getElementById("btn-t1e3").addEventListener("click", mostrar_modal_t1e3);
+document.getElementById("btn-t1e4").addEventListener("click", mostrar_modal_t1e4);
+document.getElementById("btn-t1e5").addEventListener("click", mostrar_modal_t1e5);
+document.getElementById("btn-t1e6").addEventListener("click", mostrar_modal_t1e6);
+document.getElementById("btn-t1e7").addEventListener("click", mostrar_modal_t1e7);
+document.getElementById("btn-t1e8").addEventListener("click", mostrar_modal_t1e8);
+document.getElementById("btn-t1e9").addEventListener("click", mostrar_modal_t1e9);
+
+
+document.getElementById("close-t1e1").addEventListener("click", close_t1e1);
+document.getElementById("close-t1e2").addEventListener("click", close_t1e2);
+document.getElementById("close-t1e3").addEventListener("click", close_t1e3);
+document.getElementById("close-t1e4").addEventListener("click", close_t1e4);
+document.getElementById("close-t1e5").addEventListener("click", close_t1e5);
+document.getElementById("close-t1e6").addEventListener("click", close_t1e6);
+document.getElementById("close-t1e7").addEventListener("click", close_t1e7);
+document.getElementById("close-t1e8").addEventListener("click", close_t1e8);
+document.getElementById("close-t1e9").addEventListener("click", close_t1e9);
+	  
+	</script>
+</body>
+</html>
