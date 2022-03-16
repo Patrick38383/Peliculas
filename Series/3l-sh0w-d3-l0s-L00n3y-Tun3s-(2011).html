@@ -1,0 +1,2286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Series</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	
+	<style type="text/css">
+	  
+	  @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: #090909;
+	font-family: 'Open Sans', sans-serif;
+}
+
+a {
+	text-decoration: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.contenedor {
+	width: 90%;
+	max-width: 1000px;
+	margin: auto;
+	padding: 10px 0;
+}
+
+.selectbox {
+	width: 50%;
+	margin: auto;
+	position: relative;
+}
+
+.select {
+	background: #222;
+	width: 100%;
+	border-radius: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 5px;
+	padding: 10px 0 10px 10px;
+	position: relative;
+}
+
+.select i {
+	font-size: 23px;
+	margin-right: 13px;
+	color: #ddd;
+}
+
+.titulo {
+	margin-bottom: 10px;
+	color: #ddd;
+	font-weight: 600;
+	font-size: 16px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.descripcion {
+	font-size: 14px;
+	color: #ddd;
+}
+
+.opciones {
+	background: #191919;
+	border-radius: 10px;
+	overflow: auto;
+	width: 100%;
+	display: none;
+}
+
+.opciones.active {
+	display: block;
+	animation: fadeIn .3s forwards;
+}
+
+@keyframes fadeIn {
+	from {
+		transform: translateY(-100px) scale(.5);
+	}
+	to {
+		transform: translateY(0) scale(1);
+	}
+}
+
+.textos {
+  width: 100%;
+}
+
+.contenido-opcion {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	transition: .2s ease all;
+}
+
+.opciones .contenido-opcion {
+	padding: 9px;
+}
+
+.opciones .contenido-opcion:hover {
+  background: #101010;
+}
+
+.sinopsis {
+  padding: 0 15px;
+  color: #eee;
+  font-size: 13px;
+  text-align: justify;
+  margin-bottom: 10px;
+}
+
+/*Chapters*/
+
+.episodes {
+	overflow: auto;
+	z-index: 100;
+	width: 100%;
+	display: block;
+}
+
+.episodes .contenido-opcion {
+	background: #090909;
+	padding: 0 10px 14px 10px;
+}
+
+.episodes .contenido-opcion:hover {
+  background: #000;
+}
+
+.contenido-opcion img {
+	width: auto;
+	height: 50px;
+	margin-right: 20px;
+	border-radius: 2px;
+}
+
+/*Responsive*/
+
+@media screen and (max-width: 800px){
+	.selectbox {
+		width: 100%;
+	}
+}
+
+
+
+
+
+
+/*Cards*/
+.card {
+	width: 100%;
+	height: 100vh;
+	max-width: 1100px;
+	position: fixed;
+  font-family: 'Montserrat', sans-serif;
+  top: 50%;
+  transform: translateY(-50%);
+	background: rgba(2, 2, 2, .7);
+	display: none;
+}
+
+.contenedor-card {
+  width: 95%;
+  position: fixed;
+  background: #111;
+  border-radius: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+
+.card .contenido-card h4 {
+  text-align: center;
+	margin-bottom: 10px;
+	color: #ddd;
+}
+
+.card .contenido-card p {
+  padding: 0 10px 10px ;
+	line-height: 1.5;
+	color: #ddd;
+	font-size: 14px;
+	margin-bottom: 5px;
+	text-align: justify;
+}
+
+iframe {
+  border-radius: 7px 7px 0 0;
+}
+
+.close {
+  font-size: 50px;
+  color: #fff;
+  position: absolute;
+  display: flex;
+  top: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.season2 {
+  display: none;
+}
+	  
+	</style>
+</head>
+<body id="body">
+	
+	<div class="contenedor">
+		<form action="">
+			<div class="selectbox">
+				<div class="select" id="select">
+					<div class="contenido-select">
+						<h1 class="titulo">Temporada 1</h1>
+					</div>
+					<i class="bi bi-chevron-down"></i>
+				</div>
+
+				<div class="opciones" id="opciones">
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season1">Temporada 1</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season2">Temporada 2</h1>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<input type="hidden" id="inputSelect" value="">
+		</form>
+
+	</div>
+	
+	<!--Sinopsis-->
+	
+	<div class="sinopsis">
+	  <p>Los entrañables personajes de la Warner: Bugs Bunny, el Pato Lucas, Porky, Silvestre, Piolín, el Correcaminos y el Coyote viven nuevas aventuras.</p>
+	</div>
+	
+	
+<!--Season1-->
+	
+	<div class="episodes" id="season1">
+					<a class="opcion" id="btn-t1e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/i67UIHh1lqnFpGYnXDUyKCB8YOO.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Mejores Amigos</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/aSnZRq3dKTGmFpBZoH03JoUQDjp.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Miembros Solamente</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/9l5y3RLolGMZz3snEaoiOaU8BJa.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Ave y Conejo Presos</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/doeDAoXwDEz5LvAzTygQE6Z0EEh.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Peces y Huéspedes</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/pVy3yCB7ciQGaWxYA29JIrpstLA.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Talento de Monstruo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/4PbeLrcXGTyz7RRwUOjVJNpJCWV.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. La Reunión</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/wSyZelxfX20ShGslnFx6xHuXCWu.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Casa de Calma</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/lmyTIie7KuBuK4mD3q3FrKx0Yiq.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Un Perro Diabólico</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/jJRN7Lv9NjlLGWgCjcDswpotl65.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. La Historia del Gallo Claudio</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/3GkXI0alvPaVBhr73hle7gVxbcV.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Buenos Partidos</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/5S2sNXA5skZSZ74NkR6FU8uJ8X5.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. El Peleador de la Riqueza</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/5N64tf3UuxVxuCSNd86cWCwstG9.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Cita Doble</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/d3L3pK9CDJAk5MyWM1EYo6gimZh.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Jugar Bolos o No Jugar Bolos</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e14">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/6KKN0eve8rM55jGgOrMJJrBdiyF.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. El Ladrón de Periódicos</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e15">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/7U2phE6ovsp8yNHMuj69XJoUdpf.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. Bugs y Lucas y sus Trabajos</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e16">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/lGmqPfUqQkFbj4DRjaWOBHA0LIo.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. Ese es mi Bebé</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e17">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/kjKJZuj74XcNua842LgJM7yPfcY.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. Rebanada de Domingo por la Noche</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e18">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/het77f5yX94YDSv1iwXhvzyeTh5.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. Departamento de Motores y Vehículos</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e19">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/vEGf0Fio0NCJSxW8ncO70juK94p.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">19. Policía Fuera de Servicio</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e20">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/pMrlQknpHy0y51GXIfV61DnMDi7.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">20. Pato Trabajador</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e21">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/hFXtI0YsM2QAB8FuIDHjeIO5aP7.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">21. Papas Fritas</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e22">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/2rupmpJ0ryGQkzVzIqplSE3GLgZ.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">22. Escuela de Belleza</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e23">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/b1AdxkXloQL3fbu7fIbys9C3NbR.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">23. El Barco</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e24">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/6LCN7Hoz9bptZlSkhAmSkzkSVBW.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">24. El Estante</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e25">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/xOV5isaF3oLPQ5EF5a252SQZqnr.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">25. El Ase-Ase-Ase-Asesino</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e26">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/nVU6w48xPn3fIqjbd7KtINxaYUm.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">26. Apunta, Láser, Apunta</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season2-->
+			
+	<div class="episodes season2" id="season2">
+					<a class="opcion" id="btn-t2e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/877cIh8sOt71QWZNfKQw5vQlwX3.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Linces a la Cuenta de Tres</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/fddKYixJXQCdLDKQchkarycZIUh.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Tienes un Correo de Odio</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/sxuPT4XSetTn1s0GZGr5zd38TIO.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Un topito pequeñito</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/pfjzsu4OryiYA3eFpoesu5C1xA5.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Rebelde Sin Guantes</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/cUOqEtMOnsruFrkT2tk4MgfPZbX.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Haz lo Tuyo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/sQJMOhZWVuV6OfT7MGl0TxI6rMt.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Figuras Paternas</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/hK23ej5pfPkeGbC1bm39F8vm4D7.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Servicio al cliente</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/8IPp8lbXwbe357PQfbnhLT6hcAU.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. El semental, el tonto, el hombre común y el santo</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/vM9KSbEwTAVriP5hXZodZ6Q82nw.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. El bolso de mano</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/gF3TSKgq0WUIdUmSc9HEOIBJG6v.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Un Cuento de Navidad</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/tXbQQiC3MrttxbySqbjz1JGrcsE.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. La Gran Trufa</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/yWd99jq1xLvYi92eixb4icUHLEF.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Querido John</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/xsbjb41D0UnwWka3kn6okqE073R.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Don Pato Lucas</h1>
+								<p class="descripcion">20min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e14">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/rtqd56WynEXwyLwFBEFBHs8QZXQ.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. Abre Tus Alas y Vuela</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e15">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/wyGsiQT7ddkX6ob4KlOUn1EDRcM.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. La Viuda Negra</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e16">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/xg0AkQwH4q2wg47eVrlQ8xMW2rF.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. La Señora PorkyBunny</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e17">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/2iCMbcnsBgcopp0wYzA1WJC2ug8.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. La Búsqueda del Gribbler</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e18">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/lTMep64LdrwkfCMNiL9JQvibCyM.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. El Gran Pato de York</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e19">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/olLqob5F8npLNrgDWj7FyknFamT.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">19. El Viaje Ridículo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e20">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/pMY1Xs5Kw5OK32H9737PPCZNkPn.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">20. El Juego del Caparazón</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e21">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/SKvoHu6oS3lsH8xkettalIxA5c.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">21. El Año del Pato</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e22">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/fDW67YQhSzSsr1pkjbN2lzPcaEN.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">22. Gossamer es lo Maximer</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e23">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/tR88deVX4FtQMVZBtEZSmv1dw1Z.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">23. Aquí Viene el Cerdito</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e24">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/jbNIjY63WrY9nKia4SMIEL7u8Dn.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">24. Señor Salchicha</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e25">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/g6B8LLsd5AbJcMdwkuD1ZtmniVO.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">25. Los Mejores Amigos</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e26">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/mRauxtl5inCNq3DsPyHpUqR4Pd6.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">26. Superconejo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div> 
+	
+
+
+
+
+
+
+	<!--Season1-->
+<div class="card" id="modal_t1e1">
+  
+<div class="close" id="close-t1e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Mejores Amigos</h4>
+		<p>Bugs y Lucas van a un show de concursos sobre mejores amigos para ganar un viaje en crucero, al perder contra Mac y Tosh, Speedy le hace reflexionar a Lucas que si pierde a Bugs como amigo se quedará sin amigos. A causa de esto Lucas lleva a Bugs al crucero del concurso, tratando lo mejor que pueda a Bugs, aunque pueda llegar a ser obsesivo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e2">
+  
+<div class="close" id="close-t1e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Miembros Solamente</h4>
+		<p>Lucas usa el número de Walter Bunny quien es 1673 y entra a un club campestre e invita a Bugs. Bugs conoce a Lola Bunny e inician una relación sentimental, pero Bugs descubre que Lola tiene un problema para dejar de hablar. Cuando intenta terminar con ella, un malentendido hace que Lola y sus padres piensen que Bugs quiere casarse con ella.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e3">
+  
+<div class="close" id="close-t1e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Ave y Conejo Presos</h4>
+		<p>Lucas, Bugs y Porky van al Gran Cañón, aburrido por esto Lucas va a la tienda y compra una soda que después tira por el Cañón. Gracias a esto son encarcelados. Ya en la cárcel Lucas y Bugs entran en conflicto: Bugs piensa que la cárcel es lo mejor que le ha pasado, pero Lucas quiere todo lo contrario así que empiezan una vida de fugitivos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e4">
+  
+<div class="close" id="close-t1e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Peces y Huéspedes</h4>
+		<p>El vecino, Sam Bigotes, se aprovecha de la honestidad de Bugs y se queda en su casa permanentemente mientras arreglan la electricidad en su casa.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e5">
+  
+<div class="close" id="close-t1e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Talento de Monstruo</h4>
+		<p>Gossamer se siente aislado en la escuela por lo que su madre busca ayuda en Bugs para proporcionarle un modelo masculino positivo. Mientras, Speedy anuncia su pizzería comercial poniendo a Bugs delante de la cámara como un cliente real.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e6">
+  
+<div class="close" id="close-t1e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. La Reunión</h4>
+		<p>Lucas recibe una invitación a una reunión de Secundaria diciéndole a todos mentiras sobre su futuro. Para controlar sus mentiras lleva a Bugs, pero él está más preocupado por socializar, ya que nunca fue a la secundaria.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e7">
+  
+<div class="close" id="close-t1e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Casa de Calma</h4>
+		<p>Bugs y Lucas se instalan en un Resort llamado Casa de Calma. Lucas se enamora de una Estrella de cine famosa, compitiendo con Bugs por su amor.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e8">
+  
+<div class="close" id="close-t1e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Un Perro Diabólico</h4>
+		<p>Un demonio de Tazmania escapa del zoológico, provocando caos y llega a la casa de Bugs. Bugs piensa que es un perro, y lo adopta.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e9">
+  
+<div class="close" id="close-t1e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. La Historia del Gallo Claudio</h4>
+		<p>Lucas Consigue el Papel Para Interpretar al Gallo Claudio en su película. Mientras Bugs y Sam Bigotes encuentran un Jarrón Antiguo que podría valer mucho dinero, así que pelean por su posesión.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e10">
+  
+<div class="close" id="close-t1e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Buenos Partidos</h4>
+		<p>Porky organiza una subasta de solteros de beneficencia y le pide a Bugs que asista. Bugs es vendido a Lola mientras que a Lucas nadie lo quiere, al final es vendido a la Abuelita. Mientras Bugs y Lola están en París, Lucas escucha las historia bélica de la Abuelita con Piolín.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e11">
+  
+<div class="close" id="close-t1e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. El Peleador de la Riqueza</h4>
+		<p>Lucas le roba la idea a Bugs de un pelador automático de zanahorias y se hace rico, llevando a Bugs a la quiebra y obligándolo a trabajar para él. Sin embargo, los planes de Lucas podrían llevarlo a una aniquilación.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e12">
+  
+<div class="close" id="close-t1e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Cita Doble</h4>
+		<p>Lola ayuda a Lucas a conseguir una cita con una chica del fotocopiado (Tina Russo). Lola se empieza a sentir atraída por , Lucas, lo cual desconcierta a Bugs, haciendo que los cuatro entren en una cita doble.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e13">
+  
+<div class="close" id="close-t1e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Jugar Bolos o No Jugar Bolos</h4>
+		<p>Lucas crea un equipo de bolos con Porky, Marvin y Pete, sin decirle a Bugs. Bugs descubre la mentira, pero Lucas le pide que se vaya, para que no lo opaque por ser mejor jugador de bolos. Más tarde Porky se lesiona, dejando a Lucas con la difícil decisión de incorporar o no a Bugs al equipo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e14">
+  
+<div class="close" id="close-t1e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. El Ladrón de Periódicos</h4>
+		<p>Bugs organiza un cena con sus vecinos para pedir disculpas por las cosas horribles que ha hecho Lucas en el vecindario. Poco después Lucas empieza a acusar a los vecinos porque piensa que uno de ellos se robó su periódico.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e15">
+  
+<div class="close" id="close-t1e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. Bugs y Lucas y sus Trabajos</h4>
+		<p>Bugs visita a Porky a su trabajo, donde Porky vive estresado porque debe calcular nóminas de impuestos. Bugs le aconseja que debe "divertirse", porque trabaja demasiado. Porky se descontrola y empieza a flojear perdiendo su empleo. Mientras Lucas se hace una operación para dejar de roncar.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e16">
+  
+<div class="close" id="close-t1e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. Ese es mi Bebé</h4>
+		<p>Tina se encarga de cuidar a su sobrino, la cual le pide a Lucas que lo cuide mientras trabaja. Lucas se mete a una clase de madres y bebes, descubriendo que tiene dotes de madre. Mientras Bugs intenta ayudar a Porky a que deje de ser un comprador compulsivo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e17">
+  
+<div class="close" id="close-t1e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. Rebanada de Domingo por la Noche</h4>
+		<p>Bugs cuenta la historia de como Speddy consiguió su Pizzeria ("Pizzarriba"). Bugs compra una Pizzeria y se lo deja a Speedy con la condición que le reserve una mesa todo los domingos por la noche.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e18">
+  
+<div class="close" id="close-t1e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. Departamento de Motores y Vehículos</h4>
+		<p>Lucas es detenido por la policía por manejar sin licencia de conducir. Bugs se queda varado en el DMV (departamento de motores y Vehículos), así que decide llamar a Lola, Porky y Speedy para que lo lleven a casa. Pero son detenidos por la policía de tránsito, excepto Speedy que no puede llevarlo porque su carro es muy pequeño.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e19">
+  
+<div class="close" id="close-t1e19"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e19" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>19. Policía Fuera de Servicio</h4>
+		<p>Lucas visita a su actor favorito en una firma de libros de la serie de televisión Off Cop Duty, pero cuando descubre que no se parece en nada, decide suplantar la identidad del personaje de ficción, recreando el espectáculo con terribles resultados.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e20">
+  
+<div class="close" id="close-t1e20"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e20" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>20. Pato Trabajador</h4>
+		<p>Lucas es despedido de su trabajo como vigilante por quedarse dormido. Bugs le encuentra un trabajo en la compañía del gallo Claudio. El cual después le cede el cargo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e21">
+  
+<div class="close" id="close-t1e21"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e21" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>21. Papas Fritas</h4>
+		<p>Porky se come las papas (que según Lucas eran suyas)y su amistad termina, ahora Bugs tratara de reunirlos si quiere ver el torneo de fútbol americano.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e22">
+  
+<div class="close" id="close-t1e22"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e22" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>22. Escuela de Belleza</h4>
+		<p>Lucas ayuda a su novia Tina Russo con sus clases de belleza, descubriendo que tiene habilidad en ello, convirtiéndose en Estilista, mientras Bugs va con Porky a clases de baile disfrazado de mujer y Speedy se enamora de ella (Bugs).</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e23">
+  
+<div class="close" id="close-t1e23"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e23" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>23. El Barco</h4>
+		<p>Lucas pierde su vehículo(carro alegórico) al llevarlo a lavar. Lucas le pide prestado dinero a Porky con engaños para comprarse un bote, el cual le da todo su dinero quedando en la miseria.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e24">
+  
+<div class="close" id="close-t1e24"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e24" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>24. El Estante</h4>
+		<p>Luego de ganar un Premio Nobel, Bugs trata de colgar solo un estante pero termina destruyendo la casa, mientras Lucas se queda con Porky y Lola ayuda a Speedy a conseguir casa propia.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e25">
+  
+<div class="close" id="close-t1e25"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e25" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>25. El Ase-Ase-Ase-Asesino</h4>
+		<p>Lucas cree que Porky es un asesino mencionado en las noticias y piensa que lo ha encerrado en su casa para matarlo. Mientras, Bugs cuida a Lola, quién se lesionó una pierna.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e26">
+  
+<div class="close" id="close-t1e26"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e26" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>26. Apunta, Láser, Apunta</h4>
+		<p>Mientras Silvestre se obsesiona con un puntero-láser, Bugs y Lucas ponen emoción en la vida solitaria de La Abuelita, cansada de vivir sólo con sus mascotas.</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season2-->
+<div class="card" id="modal_t2e1">
+  
+<div class="close" id="close-t2e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Linces a la Cuenta de Tres</h4>
+		<p>Lucas entrena al equipo de polo acuático de Gossamer a pesar de no tener experiencia en la tarea; Bugs se hace adicto al servicio de comida poco saludable y cargada de mantequilla de Porky.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e2">
+  
+<div class="close" id="close-t2e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Tienes un Correo de Odio</h4>
+		<p>Cuando Lucas accidentalmente envía por correo electrónico una carta a cada uno para "explicarle" su imperfección, ahora tiene que sufrir las consecuencias. Mientras tanto, Lola y sus padres quieren corregir los errores en la fotografía de su familia.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e3">
+  
+<div class="close" id="close-t2e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Un topito pequeñito</h4>
+		<p>Cuando Tosh se pierde, Lucas y Lola trabajan en equipo hasta encontrarlo. Mientras tanto, Bugs trata de atrapar una gran araña arena africana que se metió en su casa.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e4">
+  
+<div class="close" id="close-t2e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Rebelde Sin Guantes</h4>
+		<p>Bugs se queda sin guantes cuando Lucas los encoge al lavarlos, mientras tanto, Lucas al cambiar su nombre por "Profesor Pato" es confundido con un verdadero profesor al grado de dar clases de legalidad a Porky y a otros alumnos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e5">
+  
+<div class="close" id="close-t2e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Haz lo Tuyo</h4>
+		<p>Bugs inventa una falsa hermana para no ir al festival del Melocotón ya que fue 3 años seguidos y no lo soportaba, mientras lucas creía que Bugs lo echaba de la casa por la espalda.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e6">
+  
+<div class="close" id="close-t2e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Figuras Paternas</h4>
+		<p>Bugs tiene que jugar en un partido de Tenis padre e hijo con el papa de Lola aunque sea malo jugando, mientras que Lucas se une a un grupo llamado "Figuras Paternas" para conseguir un padre, quien es nada más que el gallo Claudio.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e7">
+  
+<div class="close" id="close-t2e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Servicio al cliente</h4>
+		<p>Cuando Cecil, un empleado de atención al cliente de la empresa de televisión por cable, desconecta intencionadamente la TV por cable a Bugs, éste le declara la guerra y se venga. Mientras tanto, Tina recibe consejos de Lola.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e8">
+  
+<div class="close" id="close-t2e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. El semental, el tonto, el hombre común y el santo</h4>
+		<p>Lucas descubre que Porky va a entrar en un maratón y decide entrar para vencerlo, mientras tanto Bugs le salva la vida a Sam bigotes y este se enoja por tener que devolverle el favor.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e9">
+  
+<div class="close" id="close-t2e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. El bolso de mano</h4>
+		<p>Lucas ha sido víctima de un robo en el centro comercial. Esto le provoca un estado de ansiedad y decide contratar a Porky como guardaespaldas. Mientras, Bugs lo calmará reponiéndole el bolso que le han robado.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e10">
+  
+<div class="close" id="close-t2e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Un Cuento de Navidad</h4>
+		<p>Lola quiere que la Navidad vuelva a ser fría y buena, por eso inventa un cuento con muchos personajes pero al final todo sale mal. Pero Santa Claus prende un ventilador que el gallo Claudio había puesto en la Antártida.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e11">
+  
+<div class="close" id="close-t2e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. La Gran Trufa</h4>
+		<p>Lucas descubre que las trufas son caras por lo que utilizará a Porky para encontrarlas y así enriquecerse, pero terminarán perdidos en el bosque. Además, Bugs hace de canguro de Gozamer, pero lo convierte en rana sin querer.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e12">
+  
+<div class="close" id="close-t2e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Querido John</h4>
+		<p>Después de ver una película en la que el protagonista es abandonado por su novia a través de una nota, Lola cree ver lo mismo en Bugs. Mientras, Lucas se entera de que Porky es concejal y consigue arrebatarle su puesto con una maligna campaña.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e13">
+  
+<div class="close" id="close-t2e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Don Pato Lucas</h4>
+		<p>El padre de Tina llega de visita, Tina le dice a Lucas que no va a conocer jamás a su padre, Lucas se disfrza de abogado para impresionar (Engañar o Mentir a Tina) y Bugs Bunny se ve obligado a ser el compañero bueno para nada de Lucas (fingir ser Lucas para Mentir o Engañar a Tina).</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e14">
+  
+<div class="close" id="close-t2e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. Abre Tus Alas y Vuela</h4>
+		<p>Porky lleva a Lucas, a un seminario de automotivación, pero nada sale como Porky lo tenía pensado, porque Lucas se obsesiona y empieza a Ver el lado positivo de la vida.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e15">
+  
+<div class="close" id="close-t2e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. La Viuda Negra</h4>
+		<p>Lucas decide irse de vacaciones de Semana Santa, y llevarse a Porky, ya que nadie más quiere ir con él, pero sus vacaciones no serán las esperadas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e16">
+  
+<div class="close" id="close-t2e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. La Señora PorkyBunny</h4>
+		<p>La tensión se hace notar entre Porky y Bugs cuando intentan poner un negocio vendiendo un pastel de zanahorias, donde Bugs cosecha las zanahorias y Porky hornea los pasteles.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e17">
+  
+<div class="close" id="close-t2e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. La Búsqueda del Gribbler</h4>
+		<p>Lucas esta obsesionado con las compras en linea y, como Bugs no quieren que lleguen paquetes a la casa, manda a la casa de Sam Bigotes y este le dice que le dará su caja si va a una terapia con él.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e18">
+  
+<div class="close" id="close-t2e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. El Gran Pato de York</h4>
+		<p>Después de llevarse un gran susto, Lucas piensa que debe aprovechar su tiempo, y decide aprender a tocar el piano. Para poder soportar sus ensayos, Bugs se compra unos tapones magníficos con los que no oye absolutamente nada.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e19">
+  
+<div class="close" id="close-t2e19"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e19" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>19. El Viaje Ridículo</h4>
+		<p>Tazz, Silvestre y Piolin, entran en una discusión "comer-ser comido", entrando por accidente en un camión del correo, llegando a Alaska. Al intentar regresar a casa, son salvados por el primo de Sam, quien vive allí.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e20">
+  
+<div class="close" id="close-t2e20"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e20" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>20. El Juego del Caparazón</h4>
+		<p>Cecilio simula ser atropellado por Bugs, pero todo es para estafarlo. Mientras tanto, el sofá de Lucas está muy viejo y debe ser cambiado.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e21">
+  
+<div class="close" id="close-t2e21"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e21" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>21. El Año del Pato</h4>
+		<p>Al ir Bugs, Lucas y Porky a un restaurante de comida china Lucas se molesta de que exista año del conejo, del cerdo pero no del Pato.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e22">
+  
+<div class="close" id="close-t2e22"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e22" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>22. Gossamer es lo Maximer</h4>
+		<p>Lucas anima a Gossamer a participar en una elección escolar. Mientras tanto, Porky y Speedy Gonzales unen fuerzas para abrir una sucursal temática medieval de Pizzarriba!.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e23">
+  
+<div class="close" id="close-t2e23"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e23" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>23. Aquí Viene el Cerdito</h4>
+		<p>Porky va a asistir a la boda de su ex-novia, con Lucas, pero él se lleva el SmartWatch de Bugs y él tiene que ir a salvarlos al km 118, en medio del desierto.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e24">
+  
+<div class="close" id="close-t2e24"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e24" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>24. Señor Salchicha</h4>
+		<p>Lucas intenta conseguir el trofeo de 'Mister Salchicha' comiéndose una gran cantidad de perritos calientes. Mientras, Bugs ayuda a Josemite a conseguir una hazaña con un autobús escolar.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e25">
+  
+<div class="close" id="close-t2e25"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e25" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>25. Los Mejores Amigos</h4>
+		<p>En la vida de Bugs Bunny, re-aparece Rodney Rabbit, y ambos reviven su amistad de infancia. Pero Lucas lo malinterpreta y cree que es una patada por la espalda por parte de Bugs.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e26">
+  
+<div class="close" id="close-t2e26"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e26" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>26. Superconejo</h4>
+		<p>En este episodio, Bugs Bunny interpretará el papel de Superman, intentando salvar Metrópolis. El Pato Lucas interpretará a Zod, y Elmer será Lex Luthor. Juntos recrearán una aventura.</p>
+	</div>
+	</div>
+</div>
+
+
+	<script>
+	  
+//select
+const select = document.querySelector('#select');
+const opciones = document.querySelector('#opciones');
+const contenidoSelect = document.querySelector('#select .contenido-select');
+const hiddenInput = document.querySelector('#inputSelect');
+
+document.querySelectorAll('#opciones > .opcion').forEach((opcion) => {
+	opcion.addEventListener('click', (e) => {
+		e.preventDefault();
+		contenidoSelect.innerHTML = e.currentTarget.innerHTML;
+		select.classList.toggle('active');
+		opciones.classList.toggle('active');
+		hiddenInput.value = e.currentTarget.querySelector('.titulo').innerText;
+	});
+});
+
+select.addEventListener('click', () => {
+	select.classList.toggle('active');
+	opciones.classList.toggle('active');
+});
+
+
+
+
+
+
+/*open modal*/
+/*Season1*/
+function mostrar_modal_t1e1() {
+  modal_t1e1.style.display = "flex";
+  iframe_t1e1.src = "https://uqload.com/embed-6mv30d75uhhu.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e2() {
+  modal_t1e2.style.display = "flex";
+  iframe_t1e2.src = "https://uqload.com/embed-bzieuf2nhkqf.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e3() {
+  modal_t1e3.style.display = "flex";
+  iframe_t1e3.src = "https://uqload.com/embed-b0ingfw1zvnv.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e4() {
+  modal_t1e4.style.display = "flex";
+  iframe_t1e4.src = "https://uqload.com/embed-jarwv1tsmv43.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e5() {
+  modal_t1e5.style.display = "flex";
+  iframe_t1e5.src = "https://uqload.com/embed-bpt5z2kf9jw1.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e6() {
+  modal_t1e6.style.display = "flex";
+  iframe_t1e6.src = "https://uqload.com/embed-gknnw1q7r6xo.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e7() {
+  modal_t1e7.style.display = "flex";
+  iframe_t1e7.src = "https://uqload.com/embed-jhht6xnkvzke.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e8() {
+  modal_t1e8.style.display = "flex";
+  iframe_t1e8.src = "https://uqload.com/embed-4l2c6urnv874.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e9() {
+  modal_t1e9.style.display = "flex";
+  iframe_t1e9.src = "https://uqload.com/embed-qd840pfzikl9.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e10() {
+  modal_t1e10.style.display = "flex";
+  iframe_t1e10.src = "https://uqload.com/embed-b9rzh6n2dhs1.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e11() {
+  modal_t1e11.style.display = "flex";
+  iframe_t1e11.src = "https://uqload.com/embed-5n4vx76lwh9l.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e12() {
+  modal_t1e12.style.display = "flex";
+  iframe_t1e12.src = "https://uqload.com/embed-55798geswr83.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e13() {
+  modal_t1e13.style.display = "flex";
+  iframe_t1e13.src = "https://uqload.com/embed-7ly56tlh5cqu.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e14() {
+  modal_t1e14.style.display = "flex";
+  iframe_t1e14.src = "https://uqload.com/embed-fdcrke7qk9vz.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e15() {
+  modal_t1e15.style.display = "flex";
+  iframe_t1e15.src = "https://uqload.com/embed-hgck9vk1bgsu.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e16() {
+  modal_t1e16.style.display = "flex";
+  iframe_t1e16.src = "https://uqload.com/embed-vcouah0238kk.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e17() {
+  modal_t1e17.style.display = "flex";
+  iframe_t1e17.src = "https://uqload.com/embed-oy4iwex7fisi.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e18() {
+  modal_t1e18.style.display = "flex";
+  iframe_t1e18.src = "https://uqload.com/embed-h7e7x81a6vhr.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e19() {
+  modal_t1e19.style.display = "flex";
+  iframe_t1e19.src = "https://uqload.com/embed-lrd1mhlqoqff.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e20() {
+  modal_t1e20.style.display = "flex";
+  iframe_t1e20.src = "https://uqload.com/embed-eod0nvuzgmxj.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e21() {
+  modal_t1e21.style.display = "flex";
+  iframe_t1e21.src = "https://uqload.com/embed-r4vjj1fzrfx0.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e22() {
+  modal_t1e22.style.display = "flex";
+  iframe_t1e22.src = "https://uqload.com/embed-ls2bpw2mt7ad.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e23() {
+  modal_t1e23.style.display = "flex";
+  iframe_t1e23.src = "https://uqload.com/embed-rtzlk6fvj8aq.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e24() {
+  modal_t1e24.style.display = "flex";
+  iframe_t1e24.src = "https://uqload.com/embed-sri19sr0ra4k.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e25() {
+  modal_t1e25.style.display = "flex";
+  iframe_t1e25.src = "https://uqload.com/embed-qklfqtzo3s0y.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e26() {
+  modal_t1e26.style.display = "flex";
+  iframe_t1e26.src = "https://uqload.com/embed-yzzl9bg5x8cb.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season2*/
+function mostrar_modal_t2e1() {
+  modal_t2e1.style.display = "flex";
+  iframe_t2e1.src = "https://uqload.com/embed-pb3yt8sli35b.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e2() {
+  modal_t2e2.style.display = "flex";
+  iframe_t2e2.src = "https://uqload.com/embed-a9yryk9qo51i.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e3() {
+  modal_t2e3.style.display = "flex";
+  iframe_t2e3.src = "https://uqload.com/embed-2eemx6xnejg9.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e4() {
+  modal_t2e4.style.display = "flex";
+  iframe_t2e4.src = "https://uqload.com/embed-bqyva2iecrya.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e5() {
+  modal_t2e5.style.display = "flex";
+  iframe_t2e5.src = "https://uqload.com/embed-23o7eluopmej.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e6() {
+  modal_t2e6.style.display = "flex";
+  iframe_t2e6.src = "https://uqload.com/embed-mbqo6o30rc1b.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e7() {
+  modal_t2e7.style.display = "flex";
+  iframe_t2e7.src = "https://uqload.com/embed-j65hs18k9rft.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e8() {
+  modal_t2e8.style.display = "flex";
+  iframe_t2e8.src = "https://uqload.com/embed-buhj9w2iz7i3.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e9() {
+  modal_t2e9.style.display = "flex";
+  iframe_t2e9.src = "https://uqload.com/embed-7z0ph43f36ai.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e10() {
+  modal_t2e10.style.display = "flex";
+  iframe_t2e10.src = "https://uqload.com/embed-0zcfowg0hyfd.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e11() {
+  modal_t2e11.style.display = "flex";
+  iframe_t2e11.src = "https://uqload.com/embed-rmt8fttxsudl.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e12() {
+  modal_t2e12.style.display = "flex";
+  iframe_t2e12.src = "https://uqload.com/embed-22h5ucmj5x69.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e13() {
+  modal_t2e13.style.display = "flex";
+  iframe_t2e13.src = "https://uqload.com/embed-z40u1etackfi.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e14() {
+  modal_t2e14.style.display = "flex";
+  iframe_t2e14.src = "https://uqload.com/embed-o56bexmuo39k.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e15() {
+  modal_t2e15.style.display = "flex";
+  iframe_t2e15.src = "https://uqload.com/embed-9p87ct1wx0f9.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e16() {
+  modal_t2e16.style.display = "flex";
+  iframe_t2e16.src = "https://uqload.com/embed-d3dac2kx4i0z.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e17() {
+  modal_t2e17.style.display = "flex";
+  iframe_t2e17.src = "https://uqload.com/embed-cux5q0n206du.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e18() {
+  modal_t2e18.style.display = "flex";
+  iframe_t2e18.src = "https://uqload.com/embed-6elph0qu60gw.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e19() {
+  modal_t2e19.style.display = "flex";
+  iframe_t2e19.src = "https://uqload.com/embed-iya6w7b4wljn.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e20() {
+  modal_t2e20.style.display = "flex";
+  iframe_t2e20.src = "https://uqload.com/embed-sibzzla9cncs.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e21() {
+  modal_t2e21.style.display = "flex";
+  iframe_t2e21.src = "https://uqload.com/embed-usqua2ff3l5e.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e22() {
+  modal_t2e22.style.display = "flex";
+  iframe_t2e22.src = "https://uqload.com/embed-bipyad9mgid8.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e23() {
+  modal_t2e23.style.display = "flex";
+  iframe_t2e23.src = "https://uqload.com/embed-ccxqgfnr6gaz.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e24() {
+  modal_t2e24.style.display = "flex";
+  iframe_t2e24.src = "https://uqload.com/embed-lktihmz1cs5i.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e25() {
+  modal_t2e25.style.display = "flex";
+  iframe_t2e25.src = "https://uqload.com/embed-igoir7kaopf9.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e26() {
+  modal_t2e26.style.display = "flex";
+  iframe_t2e26.src = "https://uqload.com/embed-5qysy1nttadl.html";
+  body.style.overflow = "hidden";
+}
+
+
+
+/*close modal*/
+/*Season1*/
+function close_t1e1() {
+  modal_t1e1.style.display = "none";
+  iframe_t1e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e2() {
+  modal_t1e2.style.display = "none";
+  iframe_t1e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e3() {
+  modal_t1e3.style.display = "none";
+  iframe_t1e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e4() {
+  modal_t1e4.style.display = "none";
+  iframe_t1e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e5() {
+  modal_t1e5.style.display = "none";
+  iframe_t1e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e6() {
+  modal_t1e6.style.display = "none";
+  iframe_t1e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e7() {
+  modal_t1e7.style.display = "none";
+  iframe_t1e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e8() {
+  modal_t1e8.style.display = "none";
+  iframe_t1e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e9() {
+  modal_t1e9.style.display = "none";
+  iframe_t1e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e10() {
+  modal_t1e10.style.display = "none";
+  iframe_t1e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e11() {
+  modal_t1e11.style.display = "none";
+  iframe_t1e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e12() {
+  modal_t1e12.style.display = "none";
+  iframe_t1e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e13() {
+  modal_t1e13.style.display = "none";
+  iframe_t1e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e14() {
+  modal_t1e14.style.display = "none";
+  iframe_t1e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e15() {
+  modal_t1e15.style.display = "none";
+  iframe_t1e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e16() {
+  modal_t1e16.style.display = "none";
+  iframe_t1e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e17() {
+  modal_t1e17.style.display = "none";
+  iframe_t1e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e18() {
+  modal_t1e18.style.display = "none";
+  iframe_t1e18.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e19() {
+  modal_t1e19.style.display = "none";
+  iframe_t1e19.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e20() {
+  modal_t1e20.style.display = "none";
+  iframe_t1e20.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e21() {
+  modal_t1e21.style.display = "none";
+  iframe_t1e21.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e22() {
+  modal_t1e22.style.display = "none";
+  iframe_t1e22.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e23() {
+  modal_t1e23.style.display = "none";
+  iframe_t1e23.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e24() {
+  modal_t1e24.style.display = "none";
+  iframe_t1e24.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e25() {
+  modal_t1e25.style.display = "none";
+  iframe_t1e25.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e26() {
+  modal_t1e26.style.display = "none";
+  iframe_t1e26.src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season2*/
+function close_t2e1() {
+  modal_t2e1.style.display = "none";
+  iframe_t2e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e2() {
+  modal_t2e2.style.display = "none";
+  iframe_t2e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e3() {
+  modal_t2e3.style.display = "none";
+  iframe_t2e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e4() {
+  modal_t2e4.style.display = "none";
+  iframe_t2e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e5() {
+  modal_t2e5.style.display = "none";
+  iframe_t2e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e6() {
+  modal_t2e6.style.display = "none";
+  iframe_t2e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e7() {
+  modal_t2e7.style.display = "none";
+  iframe_t2e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e8() {
+  modal_t2e8.style.display = "none";
+  iframe_t2e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e9() {
+  modal_t2e9.style.display = "none";
+  iframe_t2e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e10() {
+  modal_t2e10.style.display = "none";
+  iframe_t2e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e11() {
+  modal_t2e11.style.display = "none";
+  iframe_t2e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e12() {
+  modal_t2e12.style.display = "none";
+  iframe_t2e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e13() {
+  modal_t2e13.style.display = "none";
+  iframe_t2e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e14() {
+  modal_t2e14.style.display = "none";
+  iframe_t2e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e15() {
+  modal_t2e15.style.display = "none";
+  iframe_t2e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e16() {
+  modal_t2e16.style.display = "none";
+  iframe_t2e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e17() {
+  modal_t2e17.style.display = "none";
+  iframe_t2e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e18() {
+  modal_t2e18.style.display = "none";
+  iframe_t2e18.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e19() {
+  modal_t2e19.style.display = "none";
+  iframe_t2e19.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e20() {
+  modal_t2e20.style.display = "none";
+  iframe_t2e20.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e21() {
+  modal_t2e21.style.display = "none";
+  iframe_t2e21.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e22() {
+  modal_t2e22.style.display = "none";
+  iframe_t2e22.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e23() {
+  modal_t2e23.style.display = "none";
+  iframe_t2e23.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e24() {
+  modal_t2e24.style.display = "none";
+  iframe_t2e24.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e25() {
+  modal_t2e25.style.display = "none";
+  iframe_t2e25.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e26() {
+  modal_t2e26.style.display = "none";
+  iframe_t2e26.src = "";
+  body.style.overflow = "auto";
+}
+
+
+/*Season1*/
+document.getElementById("btn-t1e1").addEventListener("click", mostrar_modal_t1e1);
+document.getElementById("btn-t1e2").addEventListener("click", mostrar_modal_t1e2);
+document.getElementById("btn-t1e3").addEventListener("click", mostrar_modal_t1e3);
+document.getElementById("btn-t1e4").addEventListener("click", mostrar_modal_t1e4);
+document.getElementById("btn-t1e5").addEventListener("click", mostrar_modal_t1e5);
+document.getElementById("btn-t1e6").addEventListener("click", mostrar_modal_t1e6);
+document.getElementById("btn-t1e7").addEventListener("click", mostrar_modal_t1e7);
+document.getElementById("btn-t1e8").addEventListener("click", mostrar_modal_t1e8);
+document.getElementById("btn-t1e9").addEventListener("click", mostrar_modal_t1e9);
+document.getElementById("btn-t1e10").addEventListener("click", mostrar_modal_t1e10);
+document.getElementById("btn-t1e11").addEventListener("click", mostrar_modal_t1e11);
+document.getElementById("btn-t1e12").addEventListener("click", mostrar_modal_t1e12);
+document.getElementById("btn-t1e13").addEventListener("click", mostrar_modal_t1e13);
+document.getElementById("btn-t1e14").addEventListener("click", mostrar_modal_t1e14);
+document.getElementById("btn-t1e15").addEventListener("click", mostrar_modal_t1e15);
+document.getElementById("btn-t1e16").addEventListener("click", mostrar_modal_t1e16);
+document.getElementById("btn-t1e17").addEventListener("click", mostrar_modal_t1e17);
+document.getElementById("btn-t1e18").addEventListener("click", mostrar_modal_t1e18);
+document.getElementById("btn-t1e19").addEventListener("click", mostrar_modal_t1e19);
+document.getElementById("btn-t1e20").addEventListener("click", mostrar_modal_t1e20);
+document.getElementById("btn-t1e21").addEventListener("click", mostrar_modal_t1e21);
+document.getElementById("btn-t1e22").addEventListener("click", mostrar_modal_t1e22);
+document.getElementById("btn-t1e23").addEventListener("click", mostrar_modal_t1e23);
+document.getElementById("btn-t1e24").addEventListener("click", mostrar_modal_t1e24);
+document.getElementById("btn-t1e25").addEventListener("click", mostrar_modal_t1e25);
+document.getElementById("btn-t1e26").addEventListener("click", mostrar_modal_t1e26);
+
+
+/*Season2*/
+document.getElementById("btn-t2e1").addEventListener("click", mostrar_modal_t2e1);
+document.getElementById("btn-t2e2").addEventListener("click", mostrar_modal_t2e2);
+document.getElementById("btn-t2e3").addEventListener("click", mostrar_modal_t2e3);
+document.getElementById("btn-t2e4").addEventListener("click", mostrar_modal_t2e4);
+document.getElementById("btn-t2e5").addEventListener("click", mostrar_modal_t2e5);
+document.getElementById("btn-t2e6").addEventListener("click", mostrar_modal_t2e6);
+document.getElementById("btn-t2e7").addEventListener("click", mostrar_modal_t2e7);
+document.getElementById("btn-t2e8").addEventListener("click", mostrar_modal_t2e8);
+document.getElementById("btn-t2e9").addEventListener("click", mostrar_modal_t2e9);
+document.getElementById("btn-t2e10").addEventListener("click", mostrar_modal_t2e10);
+document.getElementById("btn-t2e11").addEventListener("click", mostrar_modal_t2e11);
+document.getElementById("btn-t2e12").addEventListener("click", mostrar_modal_t2e12);
+document.getElementById("btn-t2e13").addEventListener("click", mostrar_modal_t2e13);
+document.getElementById("btn-t2e14").addEventListener("click", mostrar_modal_t2e14);
+document.getElementById("btn-t2e15").addEventListener("click", mostrar_modal_t2e15);
+document.getElementById("btn-t2e16").addEventListener("click", mostrar_modal_t2e16);
+document.getElementById("btn-t2e17").addEventListener("click", mostrar_modal_t2e17);
+document.getElementById("btn-t2e18").addEventListener("click", mostrar_modal_t2e18);
+document.getElementById("btn-t2e19").addEventListener("click", mostrar_modal_t2e19);
+document.getElementById("btn-t2e20").addEventListener("click", mostrar_modal_t2e20);
+document.getElementById("btn-t2e21").addEventListener("click", mostrar_modal_t2e21);
+document.getElementById("btn-t2e22").addEventListener("click", mostrar_modal_t2e22);
+document.getElementById("btn-t2e23").addEventListener("click", mostrar_modal_t2e23);
+document.getElementById("btn-t2e24").addEventListener("click", mostrar_modal_t2e24);
+document.getElementById("btn-t2e25").addEventListener("click", mostrar_modal_t2e25);
+document.getElementById("btn-t2e26").addEventListener("click", mostrar_modal_t2e26);
+
+
+/*Season1*/
+document.getElementById("close-t1e1").addEventListener("click", close_t1e1);
+document.getElementById("close-t1e2").addEventListener("click", close_t1e2);
+document.getElementById("close-t1e3").addEventListener("click", close_t1e3);
+document.getElementById("close-t1e4").addEventListener("click", close_t1e4);
+document.getElementById("close-t1e5").addEventListener("click", close_t1e5);
+document.getElementById("close-t1e6").addEventListener("click", close_t1e6);
+document.getElementById("close-t1e7").addEventListener("click", close_t1e7);
+document.getElementById("close-t1e8").addEventListener("click", close_t1e8);
+document.getElementById("close-t1e9").addEventListener("click", close_t1e9);
+document.getElementById("close-t1e10").addEventListener("click", close_t1e10);
+document.getElementById("close-t1e11").addEventListener("click", close_t1e11);
+document.getElementById("close-t1e12").addEventListener("click", close_t1e12);
+document.getElementById("close-t1e13").addEventListener("click", close_t1e13);
+document.getElementById("close-t1e14").addEventListener("click", close_t1e14);
+document.getElementById("close-t1e15").addEventListener("click", close_t1e15);
+document.getElementById("close-t1e16").addEventListener("click", close_t1e16);
+document.getElementById("close-t1e17").addEventListener("click", close_t1e17);
+document.getElementById("close-t1e18").addEventListener("click", close_t1e18);
+document.getElementById("close-t1e19").addEventListener("click", close_t1e19);
+document.getElementById("close-t1e20").addEventListener("click", close_t1e20);
+document.getElementById("close-t1e21").addEventListener("click", close_t1e21);
+document.getElementById("close-t1e22").addEventListener("click", close_t1e22);
+document.getElementById("close-t1e23").addEventListener("click", close_t1e23);
+document.getElementById("close-t1e24").addEventListener("click", close_t1e24);
+document.getElementById("close-t1e25").addEventListener("click", close_t1e25);
+document.getElementById("close-t1e26").addEventListener("click", close_t1e26);
+
+/*Season2*/
+document.getElementById("close-t2e1").addEventListener("click", close_t2e1);
+document.getElementById("close-t2e2").addEventListener("click", close_t2e2);
+document.getElementById("close-t2e3").addEventListener("click", close_t2e3);
+document.getElementById("close-t2e4").addEventListener("click", close_t2e4);
+document.getElementById("close-t2e5").addEventListener("click", close_t2e5);
+document.getElementById("close-t2e6").addEventListener("click", close_t2e6);
+document.getElementById("close-t2e7").addEventListener("click", close_t2e7);
+document.getElementById("close-t2e8").addEventListener("click", close_t2e8);
+document.getElementById("close-t2e9").addEventListener("click", close_t2e9);
+document.getElementById("close-t2e10").addEventListener("click", close_t2e10);
+document.getElementById("close-t2e11").addEventListener("click", close_t2e11);
+document.getElementById("close-t2e12").addEventListener("click", close_t2e12);
+document.getElementById("close-t2e13").addEventListener("click", close_t2e13);
+document.getElementById("close-t2e14").addEventListener("click", close_t2e14);
+document.getElementById("close-t2e15").addEventListener("click", close_t2e15);
+document.getElementById("close-t2e16").addEventListener("click", close_t2e16);
+document.getElementById("close-t2e17").addEventListener("click", close_t2e17);
+document.getElementById("close-t2e18").addEventListener("click", close_t2e18);
+document.getElementById("close-t2e19").addEventListener("click", close_t2e19);
+document.getElementById("close-t2e20").addEventListener("click", close_t2e20);
+document.getElementById("close-t2e21").addEventListener("click", close_t2e21);
+document.getElementById("close-t2e22").addEventListener("click", close_t2e22);
+document.getElementById("close-t2e23").addEventListener("click", close_t2e23);
+document.getElementById("close-t2e24").addEventListener("click", close_t2e24);
+document.getElementById("close-t2e25").addEventListener("click", close_t2e25);
+document.getElementById("close-t2e26").addEventListener("click", close_t2e26);
+
+
+/*Seasons*/
+document.getElementById('btn_season1').addEventListener('click', showSeason1);
+document.getElementById('btn_season2').addEventListener('click', showSeason2);
+
+function showSeason1() {
+  season1.style.display = "block";
+  season2.style.display = "none";
+}
+
+function showSeason2() {
+  season1.style.display = "none";
+  season2.style.display = "block";
+}
+
+	  
+	</script>
+</body>
+</html>
