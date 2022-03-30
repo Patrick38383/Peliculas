@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Series</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	
+	<style type="text/css">
+	  
+	  @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: #090909;
+	font-family: 'Open Sans', sans-serif;
+}
+
+a {
+	text-decoration: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.contenedor {
+	width: 90%;
+	max-width: 1000px;
+	margin: auto;
+	padding: 10px 0;
+}
+
+.selectbox {
+	width: 50%;
+	margin: auto;
+	position: relative;
+}
+
+.select {
+	background: #222;
+	width: 100%;
+	border-radius: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 5px;
+	padding: 10px 0 10px 10px;
+	position: relative;
+}
+
+.select i {
+	font-size: 23px;
+	margin-right: 13px;
+	color: #ddd;
+}
+
+.titulo {
+	margin-bottom: 10px;
+	color: #ddd;
+	font-weight: 600;
+	font-size: 16px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.descripcion {
+	font-size: 14px;
+	color: #ddd;
+}
+
+.opciones {
+	background: #191919;
+	border-radius: 10px;
+	overflow: auto;
+	width: 100%;
+	display: none;
+}
+
+.opciones.active {
+	display: block;
+	animation: fadeIn .3s forwards;
+}
+
+@keyframes fadeIn {
+	from {
+		transform: translateY(-100px) scale(.5);
+	}
+	to {
+		transform: translateY(0) scale(1);
+	}
+}
+
+.textos {
+  width: 100%;
+}
+
+.contenido-opcion {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	transition: .2s ease all;
+}
+
+.opciones .contenido-opcion {
+	padding: 9px;
+}
+
+.opciones .contenido-opcion:hover {
+  background: #101010;
+}
+
+.sinopsis {
+  padding: 0 15px;
+  color: #eee;
+  font-size: 13px;
+  text-align: justify;
+  margin-bottom: 10px;
+}
+
+/*Chapters*/
+
+.episodes {
+	overflow: auto;
+	z-index: 100;
+	width: 100%;
+	display: block;
+}
+
+.episodes .contenido-opcion {
+	background: #090909;
+	padding: 0 10px 14px 10px;
+}
+
+.episodes .contenido-opcion:hover {
+  background: #000;
+}
+
+.contenido-opcion img {
+	width: auto;
+	height: 50px;
+	margin-right: 20px;
+	border-radius: 2px;
+}
+
+/*Responsive*/
+
+@media screen and (max-width: 800px){
+	.selectbox {
+		width: 100%;
+	}
+}
+
+
+
+
+
+
+/*Cards*/
+.card {
+	width: 100%;
+	height: 100vh;
+	max-width: 1100px;
+	position: fixed;
+  font-family: 'Montserrat', sans-serif;
+  top: 50%;
+  transform: translateY(-50%);
+	background: rgba(2, 2, 2, .7);
+	display: none;
+}
+
+.contenedor-card {
+  width: 95%;
+  position: fixed;
+  background: #111;
+  border-radius: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+
+.card .contenido-card h4 {
+  text-align: center;
+	margin-bottom: 10px;
+	color: #ddd;
+}
+
+.card .contenido-card p {
+  padding: 0 10px 10px ;
+	line-height: 1.5;
+	color: #ddd;
+	font-size: 14px;
+	margin-bottom: 5px;
+	text-align: justify;
+}
+
+iframe {
+  border-radius: 7px 7px 0 0;
+}
+
+.close {
+  font-size: 50px;
+  color: #fff;
+  position: absolute;
+  display: flex;
+  top: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.season2 {
+  display: none;
+}
+	  
+	</style>
+</head>
+<body id="body">
+	
+	<div class="contenedor">
+		<form action="">
+			<div class="selectbox">
+				<div class="select" id="select">
+					<div class="contenido-select">
+						<h1 class="titulo">Temporada 1</h1>
+					</div>
+					<i class="bi bi-chevron-down"></i>
+				</div>
+
+				<div class="opciones" id="opciones">
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season1">Temporada 1</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season2">Temporada 2</h1>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<input type="hidden" id="inputSelect" value="">
+		</form>
+
+	</div>
+	
+	<!--Sinopsis-->
+	
+	<div class="sinopsis">
+	  <p>Los padres de Dipper y Mabel deciden mandarlos con su tío-abuelo Grunkle Stan, que vive en el corazón de Gravity Falls. Pronto, Dipper y Mabel descubren que en Gravity Falls no todo es lo que parece y confían el uno en el otro y en sus nuevos amigos para descubrir lo que REALMENTE está sucediendo en este extraño lugar...</p>
+	</div>
+	
+	
+<!--Season1-->
+	
+	<div class="episodes" id="season1">
+					<a class="opcion" id="btn-t1e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/jdanXbFmeD9kdQ6XNTdrKUkNDmU.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Turista atrapado</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/9e17jiaO8BihsendSvSVpC6D1uR.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. La leyenda del zampabobos</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/o57KbgV5TDKCMmxEHVNnWFqIycM.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Cazadores de cabezas</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/dRyHz2G6cV1wuwRGskOyE31wp1v.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. La mano que mece la Mabel</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/og0nCOem2TSGX16fQl8cjiy4JOe.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Los molestos</h1>
+								<p class="descripcion">20min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/cBgCheYpdoP51VUdD4XeZ1y5KWJ.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Dipper contra la virilidad</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/lFnNm44mlhShh7c07Gzk7j8Si9l.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Doble Dipper</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/xSxvwfJTbIxZLlTL3ISaqn4F4Ut.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Tesoro irracional</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/paeKQn9QeaMvFzSSBR1tGHdidAV.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. El cerdo del viajero en el tiempo</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/5ry3UPnV9c7qFSfesvq12p6qT8L.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Luchadores de lucha</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/A3OkkE2jSgqqhmCj8FIVJDDDuGC.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Pequeño Dipper</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/2HNtYeGoqdAXZh0fKIkbphPHlN5.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Veranoween</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/qPJgTETJIM2gGjQBdwH6i4Zccnq.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Jefa Mabel</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e14">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/c5yEJOGe2b9KDzb94PRd9xdwvMN.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. ¡Pozo sin fondo!</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e15">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/5GqfHtq5E8w8dKekD1B27CDL5m.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. Prueba de calor</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e16">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/zjbwpttSwnj6ObBMyz6hmxfshDn.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. Carpe Diem</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e17">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/gDnAZRu44XtHejwfbYVUu4IzDr.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. Los chicos locos</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e18">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/iPq4WcEG6sa1CX3VowVD1jXVV3z.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. La tierra antes de los cerdos</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e19">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/or9cjkwvrSW7B1HvQmlkSi66YMi.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">19. Escapemos del sueño</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e20">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/1VR84pLvOgD0lO6GUQKygTsaPST.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">20. Gideon se eleva</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season2-->
+			
+	<div class="episodes season2" id="season2">
+					<a class="opcion" id="btn-t2e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/p6DUpMpPgKH5TsPVWRii7IEj1Wq.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Temible-oke</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/5O0HnQ96hGbwMxKrIJg8CwJHz7E.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Dentro del búnker</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/e51f1OYEgGvxRQIXakITV78gyDw.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. La guerra del golf</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/1hXSXAVxuVXPhCxFm8pIPSSkYsd.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Teatro de calcetines</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/zOkP6Y4IL1yQPdmV9AEZ9AURO4v.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Soos y la chica de verdad</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/s9pAM7rmLqjmghcWxgduhRegyvK.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. La pequeña tienda de regalos de los horrores</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/3NNlfwmAu1HSss3WrgDhwO1LisU.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. La sociedad del ojo ciego</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/gFaMOl7rw3E6Wbu3jhc3z6zOsht.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. El juego de Blendin</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/qnuJLHlZIib8JJQPOEs2ueKG7sh.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. El dios del amor</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/AmVE3qPoTp7UG1OFL02Exv4nuwP.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. El misterio de la mansión Northwest</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/dmNpXBe4Zs6OTnvTmjiHA3CIWDd.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Él no es lo que parece</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/s6gHbBsSypA1kOg3CMDE3EdViHx.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Historia de dos Stans</h1>
+								<p class="descripcion">29min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/kWRZtBWCKGQszBkUo8U4aD9ict.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Mazmorras, mazmorras y más mazmorras</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e14">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/7ESTJuUKxSNjiC2dPsnTHLAQo1F.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. El candidato</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e15">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/llHcvIrufxO52QpHMjNe11HpF4W.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. El último mabelmaíz</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e16">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/fnE2GuA5TQxoSlkOYO3SD9xhgZ4.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. Atracciones al lado de la carretera</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e17">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/9kBBBaocf6GqowVRjrVYLGATFgL.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. Dipper y Mabel contra el futuro</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e18">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/a4v7uSSLkPIbp2NJ6lqmYeKkX6z.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. Anormalgedón (Parte 1)</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e19">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/fWsQhzQSTihitZIEGexqCtzGKiX.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">19. Anormalgedón 2: Escapando de la realidad</h1>
+								<p class="descripcion">22min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e20">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/zDAyQ7r1DxTMVKNSZLSd10CUZUJ.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">20. Anormalgedón 3: Recuperemos el pueblo</h1>
+								<p class="descripcion">44min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div> 
+	
+
+
+
+
+
+
+	<!--Season1-->
+<div class="card" id="modal_t1e1">
+  
+<div class="close" id="close-t1e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Turista atrapado</h4>
+		<p>Los padres de Dipper y Mabel envían a los chicos a pasar el verano a la cabaña de su tío abuelo Stan que está en Gravity Falls, Oregón. Cuando llegan, Mabel está tan contenta por haber encontrado novio que no se da cuenta de que podría ser un zombi.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e2">
+  
+<div class="close" id="close-t1e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. La leyenda del zampabobos</h4>
+		<p>Dipper, Mabel, y Soos asisten a una expedición en bote para probar que un monstruo marino existe, con la esperanza de ganar mil dólares. Mientras tanto Stan, después de haber sido abandonado por Dipper y Mabel, trata de encontrar compañeros de pesca.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e3">
+  
+<div class="close" id="close-t1e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Cazadores de cabezas</h4>
+		<p>Mabel esculpe una cera de la escultura de tamaño natural para añadir a la colección de figuras de cera del museo de Stan. Cuando la figura de cera se pone la cabeza, los gemelos están en el caso.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e4">
+  
+<div class="close" id="close-t1e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. La mano que mece la Mabel</h4>
+		<p>Dipper y Mabel se encuentran con un nuevo vecino intrigante: un chico adorable psíquico llamado Gideon. Cuando Gideon intenta conquistar a Mabel, Dipper trata de detenerlo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e5">
+  
+<div class="close" id="close-t1e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Los molestos</h4>
+		<p>Dipper intenta conquistar a Wendy al mentir sobre su edad. Al salir con Wendy y sus amigos, los niños terminan en una vieja tienda abandonada que está aparentemente embrujada.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e6">
+  
+<div class="close" id="close-t1e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Dipper contra la virilidad</h4>
+		<p>Cuando Dipper quiere "ser un hombre", se adentra en el bosque en una búsqueda épica y conoce a una especie extraña que lo pone a prueba. Mientras tanto, Mabel intenta que Stan impresione a Susan.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e7">
+  
+<div class="close" id="close-t1e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Doble Dipper</h4>
+		<p>Stan hace una fiesta en la Cabaña del Misterio y, al mismo tiempo, Dipper produce clones de sí mismo, para que lo ayuden a impresionar a Wendy.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e8">
+  
+<div class="close" id="close-t1e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Tesoro irracional</h4>
+		<p>Los niños descubren que el fundador de la ciudad es un engaño, y se disponen a exponer la verdad. Pero cuando lo hacen, el Sheriff Blubs y el Oficial Durland amenazan con enviarlos a una instalación gubernamental en Washington.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e9">
+  
+<div class="close" id="close-t1e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. El cerdo del viajero en el tiempo</h4>
+		<p>El deseo de Dipper se hace realidad cuando se roba una máquina del tiempo del viajero en el tiempo para deshacer un error. Mabel lo acompaña para seguir ganando su cerdo, Pato, hasta que Dipper finalmente deshace su error, Mabel pierde su cerdo ante su archienemiga, Pacifica Noroeste.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e10">
+  
+<div class="close" id="close-t1e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Luchadores de lucha</h4>
+		<p>Dipper se sorprende al ver que su personaje favorito de videojuegos cobra vida y le pide que lo defienda en una pelea con Robbie. Pero cuando las cosas van demasiado lejos, Dipper luego se da cuenta que tiene que salvar a Robbie. Mientras tanto, Mabel intenta acabar con el miedo de Stan a las alturas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e11">
+  
+<div class="close" id="close-t1e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Pequeño Dipper</h4>
+		<p>Al sentirse inseguro de que Mabel se está convirtiendo en el gemelo alfa, Dipper busca una manera mágica para ser más alto. Pero cuando Gideon encuentra el cristal, lo utiliza para reducir el tamaño de los niños. Entonces Gideon intenta usarlo en Stan para apoderarse de la Cabaña del misterio.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e12">
+  
+<div class="close" id="close-t1e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Veranoween</h4>
+		<p>Dipper no quiere salir a pedir chuches, pero se ve forzado a hacerlo cuando el monstruo de Veranoween amenaza con comerlo a él y a Mabel si no consiguen suficientes al final de la noche.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e13">
+  
+<div class="close" id="close-t1e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Jefa Mabel</h4>
+		<p>Mabel le dice a Stan que trata a sus empleados de forma innecesariamente dura, y hacen una apuesta para ver quién puede ganar más dinero en tres días.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e14">
+  
+<div class="close" id="close-t1e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. ¡Pozo sin fondo!</h4>
+		<p>Stan, Dipper, Mabel y Soos tiran cosas de las que se quieren deshacer a un pozo sin fondo, y un viento loss arrastra y caen a una oscuridad infinita. Allí, se aburren y deciden contar historias.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e15">
+  
+<div class="close" id="close-t1e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. Prueba de calor</h4>
+		<p>Mabel está decidida a ayudar a un guapo tritón a volver con su familia al océano, a pesar de que eso significa que su romance llegará a su fin; Dipper se entera que Wendy es un salvavidas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e16">
+  
+<div class="close" id="close-t1e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. Carpe Diem</h4>
+		<p>Mabel celebra una fiesta de pijamas con sus amigas y a Dipper le molesta, por lo que deciden que tienen que tener habitaciones separadas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e17">
+  
+<div class="close" id="close-t1e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. Los chicos locos</h4>
+		<p>Mabel descubre que su banda de chicos favorito es en realidad un montón de clones encarcelados, pero ella busca liberarlos sólo mantenerlos para sí misma; Dipper está convencido de que Robbie planea lavar el cerebro de Wendy con un mensaje secreto.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e18">
+  
+<div class="close" id="close-t1e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. La tierra antes de los cerdos</h4>
+		<p>Pato es capturado por una criatura prehistórica tras ser descuidado por el Tío Stan. Mabel, al enterarse de su irresponsabilidad, se niega a hablarle. Al mismo tiempo, Dipper cree que Soos solo entorpecerá la misión para recuperar a Pato.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e19">
+  
+<div class="close" id="close-t1e19"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e19" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>19. Escapemos del sueño</h4>
+		<p>Los niños y Soos viajan a través de la mente de Stan para derrotar a un demonio sueño complicado llamado Bill Cipher, convocado por Gideon. Dipper también usa esto como una oportunidad para tratar de encontrar la razón por la que Stan es tan duro con él.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e20">
+  
+<div class="close" id="close-t1e20"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e20" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>20. Gideon se eleva</h4>
+		<p>Gideon convoca a la criatura malvada Bill Cipher para que lo ayude a abrir la caja fuerte de Stan y robar la escritura de la Cabaña del Misterio.</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season2-->
+<div class="card" id="modal_t2e1">
+  
+<div class="close" id="close-t2e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Temible-oke</h4>
+		<p>En el 'Temible-oke', la familia Pines intenta volver a la normalidad tras el incidente del pequeño Gideon. Entre todos, organizan una fiesta en la reapertura de la Cabaña del Misterio en la que se cuelan unos personajes que no han sido invitados.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e2">
+  
+<div class="close" id="close-t2e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Dentro del búnker</h4>
+		<p>Las páginas del diario secreto llevan a Dipper y al resto del grupo hasta el búnker oculto del autor donde se encuentran cara a cara con un misterioso personaje de Gravity Falls.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e3">
+  
+<div class="close" id="close-t2e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. La guerra del golf</h4>
+		<p>Después de ser menospreciada por Pacifica demasiadas veces, Mabel la desafía a un juego de golf en miniatura que se pone un poco fuera de control cuando ella y Dipper descubren que allí viven unas criaturas que cotrolan las pelotas de golf.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e4">
+  
+<div class="close" id="close-t2e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Teatro de calcetines</h4>
+		<p>Mabel intenta hacer un show de títeres para impresionar a su nuevo enamorado. Mientras tanto, Dipper trata de averiguar la contraseña de la computadora portátil que encontró en el bunker, mientras Bill quiere hacer un "acuerdo" con él.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e5">
+  
+<div class="close" id="close-t2e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Soos y la chica de verdad</h4>
+		<p>Soos no sabe cómo afrontar una cita con una chica porque nunca ha tenido una. Dipper y Mabel le regalan un simulador de citas para que le resulte más fácil pero pronto se complicarán las cosas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e6">
+  
+<div class="close" id="close-t2e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. La pequeña tienda de regalos de los horrores</h4>
+		<p>Stan es hechizado por una bruja. Mientras, Bamboleos come accidentalmente una gelatina que lo hace súper inteligente y construye una máquina que le permite hablar. Además, Mabel nos muestra por primera vez su miedo al stopmotion.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e7">
+  
+<div class="close" id="close-t2e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. La sociedad del ojo ciego</h4>
+		<p>Dipper, Mabel, Soos, Wendy, y el Viejo McGucket descubren una sociedad secreta en Gravity Falls que borra los recuerdos sobrenaturales de las personas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e8">
+  
+<div class="close" id="close-t2e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. El juego de Blendin</h4>
+		<p>Blendin Blandin vuelve a enfrentarse con Dipper y Mabel en una batalla futurista que podría matarlos. Mientras tanto, Soos está triste porque llego su cumpleaños, y Dipper y Mabel tratan de averiguar por qué.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e9">
+  
+<div class="close" id="close-t2e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. El dios del amor</h4>
+		<p>Mabel llega demasiado lejos cuando roba una poción de un verdadero dios del amor para usar sobre Robbie y Tambry. Stan decide crear un globo de aire caliente durante el festival de música Woodstick.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e10">
+  
+<div class="close" id="close-t2e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. El misterio de la mansión Northwest</h4>
+		<p>Los Noroeste contratan a Dipper para hacer frente a un fantasma que amenaza con interrumpir su fiesta. Durante la fiesta Candy, Grenda, y Mabel luchan por un Barón.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e11">
+  
+<div class="close" id="close-t2e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Él no es lo que parece</h4>
+		<p>Los agentes del gobierno sospechan sobre Stan y lo llevan en custodia, mientras Dipper y Mabel se cuestionan si realmente conocen a su tío, y muchas dudas y misterios surgen.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e12">
+  
+<div class="close" id="close-t2e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Historia de dos Stans</h4>
+		<p>Acorralado por debajo de la Cabaña del Misterio, Stan debe finalmente revelar los secretos de su pasado y su misterioso portal a Dipper, Mabel y Soos. Nota: A partir de este episodio, J.K. Simmons se unirá al elenco principal de la serie como el hermano gemelo de Stan.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e13">
+  
+<div class="close" id="close-t2e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Mazmorras, mazmorras y más mazmorras</h4>
+		<p>Dipper estrecha su vínculo con el tío abuelo Ford gracias a un cerebral juego de mesa; sin embargo, un recuerdo de otra dimensión le da un giro terrorífico a las cosas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e14">
+  
+<div class="close" id="close-t2e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. El candidato</h4>
+		<p>Cuando el tío abuelo Stan decide presentarse a alcalde, Dipper y Mabel tienen mucho trabajo para intentar convertir al metepatas de su su tío en el perfecto candidato.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e15">
+  
+<div class="close" id="close-t2e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. El último mabelmaíz</h4>
+		<p>Mabel, Grenda, Candy y Wendy tratan de conseguir cabello de unicornio para proteger a los residentes de la Cabaña del Misterio, mientras tanto, Ford y Dipper se encargan del resto para protegerse de Bill.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e16">
+  
+<div class="close" id="close-t2e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. Atracciones al lado de la carretera</h4>
+		<p>El Tío Stan lleva a los niños en un viaje por carretera para sabotear las otras trampas turísticas en Oregón. Mientras, Dipper aprovecha la ocasión para intentar olvidar un poco su obsesión con Wendy.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e17">
+  
+<div class="close" id="close-t2e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. Dipper y Mabel contra el futuro</h4>
+		<p>Mabel decide hacer planes para su fiesta de cumpleaños en la que ella y Dipper cumplen los 13. Mientras, Dipper se aventura a entrar debajo de la ciudad para descubrir su más sorprendente secreto.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e18">
+  
+<div class="close" id="close-t2e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. Anormalgedón (Parte 1)</h4>
+		<p>Bill se apodera de la ruptura espacio tiempo y entra a su forma física, ahora Dipper y Ford deben detenerlo a cualquier costo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e19">
+  
+<div class="close" id="close-t2e19"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e19" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>19. Anormalgedón 2: Escapando de la realidad</h4>
+		<p>Dipper, Soos y Wendy entran a la burbuja de locura donde deben salvar a Mabel, mientras, Bill y sus amigos planean su intento de invadir el resto del mundo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e20">
+  
+<div class="close" id="close-t2e20"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e20" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>20. Anormalgedón 3: Recuperemos el pueblo</h4>
+		<p>Los chicos llegan a la cabaña del misterio y descubren a una especie de resistencia liderada por Stan, Stan y los demás se protegieron gracias al pelo de unicornio, luego de esto Dipper y Mabel animan al resto para rescatar a Ford y detener a Bill.</p>
+	</div>
+	</div>
+</div>
+
+
+	<script>
+	  
+//select
+const select = document.querySelector('#select');
+const opciones = document.querySelector('#opciones');
+const contenidoSelect = document.querySelector('#select .contenido-select');
+const hiddenInput = document.querySelector('#inputSelect');
+
+document.querySelectorAll('#opciones > .opcion').forEach((opcion) => {
+	opcion.addEventListener('click', (e) => {
+		e.preventDefault();
+		contenidoSelect.innerHTML = e.currentTarget.innerHTML;
+		select.classList.toggle('active');
+		opciones.classList.toggle('active');
+		hiddenInput.value = e.currentTarget.querySelector('.titulo').innerText;
+	});
+});
+
+select.addEventListener('click', () => {
+	select.classList.toggle('active');
+	opciones.classList.toggle('active');
+});
+
+
+
+
+
+
+/*open modal*/
+/*Season1*/
+function mostrar_modal_t1e1() {
+  modal_t1e1.style.display = "flex";
+  iframe_t1e1.src = "https://uqload.com/embed-3x6l6gny28uv.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e2() {
+  modal_t1e2.style.display = "flex";
+  iframe_t1e2.src = "https://uqload.com/embed-ugkih2wu2gt8.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e3() {
+  modal_t1e3.style.display = "flex";
+  iframe_t1e3.src = "https://uqload.com/embed-70zkhv2f8618.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e4() {
+  modal_t1e4.style.display = "flex";
+  iframe_t1e4.src = "https://uqload.com/embed-ah8464awtreo.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e5() {
+  modal_t1e5.style.display = "flex";
+  iframe_t1e5.src = "https://uqload.com/embed-61l353bkf0h2.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e6() {
+  modal_t1e6.style.display = "flex";
+  iframe_t1e6.src = "https://uqload.com/embed-a0csvo1zuyo5.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e7() {
+  modal_t1e7.style.display = "flex";
+  iframe_t1e7.src = "https://uqload.com/embed-o7sbh1usdyzi.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e8() {
+  modal_t1e8.style.display = "flex";
+  iframe_t1e8.src = "https://uqload.com/embed-jxm3cpyxrztl.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e9() {
+  modal_t1e9.style.display = "flex";
+  iframe_t1e9.src = "https://uqload.com/embed-o2myth3148v7.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e10() {
+  modal_t1e10.style.display = "flex";
+  iframe_t1e10.src = "https://uqload.com/embed-0yds9tj65yz4.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e11() {
+  modal_t1e11.style.display = "flex";
+  iframe_t1e11.src = "https://uqload.com/embed-q04kcgqm041u.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e12() {
+  modal_t1e12.style.display = "flex";
+  iframe_t1e12.src = "https://uqload.com/embed-1d38n28xote9.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e13() {
+  modal_t1e13.style.display = "flex";
+  iframe_t1e13.src = "https://uqload.com/embed-o8qxz922adaz.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e14() {
+  modal_t1e14.style.display = "flex";
+  iframe_t1e14.src = "https://uqload.com/embed-b2ylp3vcqh2c.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e15() {
+  modal_t1e15.style.display = "flex";
+  iframe_t1e15.src = "https://uqload.com/embed-gado0xla544q.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e16() {
+  modal_t1e16.style.display = "flex";
+  iframe_t1e16.src = "https://uqload.com/embed-vbuvdjdtlb1e.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e17() {
+  modal_t1e17.style.display = "flex";
+  iframe_t1e17.src = "https://uqload.com/embed-3qxtte6ocflr.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e18() {
+  modal_t1e18.style.display = "flex";
+  iframe_t1e18.src = "https://uqload.com/embed-6regchnjtt9b.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e19() {
+  modal_t1e19.style.display = "flex";
+  iframe_t1e19.src = "https://uqload.com/embed-yicm73np0tbb.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e20() {
+  modal_t1e20.style.display = "flex";
+  iframe_t1e20.src = "https://uqload.com/embed-luipn48f2xb4.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season2*/
+function mostrar_modal_t2e1() {
+  modal_t2e1.style.display = "flex";
+  iframe_t2e1.src = "https://uqload.com/embed-jictwhcw30yc.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e2() {
+  modal_t2e2.style.display = "flex";
+  iframe_t2e2.src = "https://uqload.com/embed-bbjzeu89jo0j.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e3() {
+  modal_t2e3.style.display = "flex";
+  iframe_t2e3.src = "https://uqload.com/embed-5kxsv1j1rb1p.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e4() {
+  modal_t2e4.style.display = "flex";
+  iframe_t2e4.src = "https://uqload.com/embed-vl663mbgw4hv.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e5() {
+  modal_t2e5.style.display = "flex";
+  iframe_t2e5.src = "https://uqload.com/embed-hrtcdu6yfeit.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e6() {
+  modal_t2e6.style.display = "flex";
+  iframe_t2e6.src = "https://uqload.com/embed-hd5nwqmqwo27.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e7() {
+  modal_t2e7.style.display = "flex";
+  iframe_t2e7.src = "https://uqload.com/embed-u6eirmq5l52f.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e8() {
+  modal_t2e8.style.display = "flex";
+  iframe_t2e8.src = "https://uqload.com/embed-cn65k30ojmzx.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e9() {
+  modal_t2e9.style.display = "flex";
+  iframe_t2e9.src = "https://uqload.com/embed-e44fj7clo0hn.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e10() {
+  modal_t2e10.style.display = "flex";
+  iframe_t2e10.src = "https://uqload.com/embed-usb3ov62r3q2.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e11() {
+  modal_t2e11.style.display = "flex";
+  iframe_t2e11.src = "https://uqload.com/embed-lx3vp6ikq2ci.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e12() {
+  modal_t2e12.style.display = "flex";
+  iframe_t2e12.src = "https://uqload.com/embed-1wyliekrnlzt.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e13() {
+  modal_t2e13.style.display = "flex";
+  iframe_t2e13.src = "https://uqload.com/embed-z37kb922up8o.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e14() {
+  modal_t2e14.style.display = "flex";
+  iframe_t2e14.src = "https://uqload.com/embed-exz090zvo07t.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e15() {
+  modal_t2e15.style.display = "flex";
+  iframe_t2e15.src = "https://uqload.com/embed-2a5v2tu3y647.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e16() {
+  modal_t2e16.style.display = "flex";
+  iframe_t2e16.src = "https://uqload.com/embed-4j40psyd6ohy.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e17() {
+  modal_t2e17.style.display = "flex";
+  iframe_t2e17.src = "https://uqload.com/embed-brqnlnp1gd1e.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e18() {
+  modal_t2e18.style.display = "flex";
+  iframe_t2e18.src = "https://uqload.com/embed-ydb8t0qzf4f8.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e19() {
+  modal_t2e19.style.display = "flex";
+  iframe_t2e19.src = "https://uqload.com/embed-i9p0kzf28nrv.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e20() {
+  modal_t2e20.style.display = "flex";
+  iframe_t2e20.src = "https://uqload.com/embed-ftgfvamogpbu.html";
+  body.style.overflow = "hidden";
+}
+
+
+
+/*close modal*/
+/*Season1*/
+function close_t1e1() {
+  modal_t1e1.style.display = "none";
+  iframe_t1e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e2() {
+  modal_t1e2.style.display = "none";
+  iframe_t1e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e3() {
+  modal_t1e3.style.display = "none";
+  iframe_t1e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e4() {
+  modal_t1e4.style.display = "none";
+  iframe_t1e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e5() {
+  modal_t1e5.style.display = "none";
+  iframe_t1e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e6() {
+  modal_t1e6.style.display = "none";
+  iframe_t1e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e7() {
+  modal_t1e7.style.display = "none";
+  iframe_t1e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e8() {
+  modal_t1e8.style.display = "none";
+  iframe_t1e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e9() {
+  modal_t1e9.style.display = "none";
+  iframe_t1e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e10() {
+  modal_t1e10.style.display = "none";
+  iframe_t1e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e11() {
+  modal_t1e11.style.display = "none";
+  iframe_t1e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e12() {
+  modal_t1e12.style.display = "none";
+  iframe_t1e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e13() {
+  modal_t1e13.style.display = "none";
+  iframe_t1e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e14() {
+  modal_t1e14.style.display = "none";
+  iframe_t1e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e15() {
+  modal_t1e15.style.display = "none";
+  iframe_t1e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e16() {
+  modal_t1e16.style.display = "none";
+  iframe_t1e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e17() {
+  modal_t1e17.style.display = "none";
+  iframe_t1e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e18() {
+  modal_t1e18.style.display = "none";
+  iframe_t1e18.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e19() {
+  modal_t1e19.style.display = "none";
+  iframe_t1e19.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e20() {
+  modal_t1e20.style.display = "none";
+  iframe_t1e20.src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season2*/
+function close_t2e1() {
+  modal_t2e1.style.display = "none";
+  iframe_t2e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e2() {
+  modal_t2e2.style.display = "none";
+  iframe_t2e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e3() {
+  modal_t2e3.style.display = "none";
+  iframe_t2e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e4() {
+  modal_t2e4.style.display = "none";
+  iframe_t2e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e5() {
+  modal_t2e5.style.display = "none";
+  iframe_t2e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e6() {
+  modal_t2e6.style.display = "none";
+  iframe_t2e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e7() {
+  modal_t2e7.style.display = "none";
+  iframe_t2e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e8() {
+  modal_t2e8.style.display = "none";
+  iframe_t2e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e9() {
+  modal_t2e9.style.display = "none";
+  iframe_t2e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e10() {
+  modal_t2e10.style.display = "none";
+  iframe_t2e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e11() {
+  modal_t2e11.style.display = "none";
+  iframe_t2e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e12() {
+  modal_t2e12.style.display = "none";
+  iframe_t2e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e13() {
+  modal_t2e13.style.display = "none";
+  iframe_t2e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e14() {
+  modal_t2e14.style.display = "none";
+  iframe_t2e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e15() {
+  modal_t2e15.style.display = "none";
+  iframe_t2e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e16() {
+  modal_t2e16.style.display = "none";
+  iframe_t2e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e17() {
+  modal_t2e17.style.display = "none";
+  iframe_t2e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e18() {
+  modal_t2e18.style.display = "none";
+  iframe_t2e18.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e19() {
+  modal_t2e19.style.display = "none";
+  iframe_t2e19.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e20() {
+  modal_t2e20.style.display = "none";
+  iframe_t2e20.src = "";
+  body.style.overflow = "auto";
+}
+
+
+/*Season1*/
+document.getElementById("btn-t1e1").addEventListener("click", mostrar_modal_t1e1);
+document.getElementById("btn-t1e2").addEventListener("click", mostrar_modal_t1e2);
+document.getElementById("btn-t1e3").addEventListener("click", mostrar_modal_t1e3);
+document.getElementById("btn-t1e4").addEventListener("click", mostrar_modal_t1e4);
+document.getElementById("btn-t1e5").addEventListener("click", mostrar_modal_t1e5);
+document.getElementById("btn-t1e6").addEventListener("click", mostrar_modal_t1e6);
+document.getElementById("btn-t1e7").addEventListener("click", mostrar_modal_t1e7);
+document.getElementById("btn-t1e8").addEventListener("click", mostrar_modal_t1e8);
+document.getElementById("btn-t1e9").addEventListener("click", mostrar_modal_t1e9);
+document.getElementById("btn-t1e10").addEventListener("click", mostrar_modal_t1e10);
+document.getElementById("btn-t1e11").addEventListener("click", mostrar_modal_t1e11);
+document.getElementById("btn-t1e12").addEventListener("click", mostrar_modal_t1e12);
+document.getElementById("btn-t1e13").addEventListener("click", mostrar_modal_t1e13);
+document.getElementById("btn-t1e14").addEventListener("click", mostrar_modal_t1e14);
+document.getElementById("btn-t1e15").addEventListener("click", mostrar_modal_t1e15);
+document.getElementById("btn-t1e16").addEventListener("click", mostrar_modal_t1e16);
+document.getElementById("btn-t1e17").addEventListener("click", mostrar_modal_t1e17);
+document.getElementById("btn-t1e18").addEventListener("click", mostrar_modal_t1e18);
+document.getElementById("btn-t1e19").addEventListener("click", mostrar_modal_t1e19);
+document.getElementById("btn-t1e20").addEventListener("click", mostrar_modal_t1e20);
+
+
+/*Season2*/
+document.getElementById("btn-t2e1").addEventListener("click", mostrar_modal_t2e1);
+document.getElementById("btn-t2e2").addEventListener("click", mostrar_modal_t2e2);
+document.getElementById("btn-t2e3").addEventListener("click", mostrar_modal_t2e3);
+document.getElementById("btn-t2e4").addEventListener("click", mostrar_modal_t2e4);
+document.getElementById("btn-t2e5").addEventListener("click", mostrar_modal_t2e5);
+document.getElementById("btn-t2e6").addEventListener("click", mostrar_modal_t2e6);
+document.getElementById("btn-t2e7").addEventListener("click", mostrar_modal_t2e7);
+document.getElementById("btn-t2e8").addEventListener("click", mostrar_modal_t2e8);
+document.getElementById("btn-t2e9").addEventListener("click", mostrar_modal_t2e9);
+document.getElementById("btn-t2e10").addEventListener("click", mostrar_modal_t2e10);
+document.getElementById("btn-t2e11").addEventListener("click", mostrar_modal_t2e11);
+document.getElementById("btn-t2e12").addEventListener("click", mostrar_modal_t2e12);
+document.getElementById("btn-t2e13").addEventListener("click", mostrar_modal_t2e13);
+document.getElementById("btn-t2e14").addEventListener("click", mostrar_modal_t2e14);
+document.getElementById("btn-t2e15").addEventListener("click", mostrar_modal_t2e15);
+document.getElementById("btn-t2e16").addEventListener("click", mostrar_modal_t2e16);
+document.getElementById("btn-t2e17").addEventListener("click", mostrar_modal_t2e17);
+document.getElementById("btn-t2e18").addEventListener("click", mostrar_modal_t2e18);
+document.getElementById("btn-t2e19").addEventListener("click", mostrar_modal_t2e19);
+document.getElementById("btn-t2e20").addEventListener("click", mostrar_modal_t2e20);
+
+
+/*Season1*/
+document.getElementById("close-t1e1").addEventListener("click", close_t1e1);
+document.getElementById("close-t1e2").addEventListener("click", close_t1e2);
+document.getElementById("close-t1e3").addEventListener("click", close_t1e3);
+document.getElementById("close-t1e4").addEventListener("click", close_t1e4);
+document.getElementById("close-t1e5").addEventListener("click", close_t1e5);
+document.getElementById("close-t1e6").addEventListener("click", close_t1e6);
+document.getElementById("close-t1e7").addEventListener("click", close_t1e7);
+document.getElementById("close-t1e8").addEventListener("click", close_t1e8);
+document.getElementById("close-t1e9").addEventListener("click", close_t1e9);
+document.getElementById("close-t1e10").addEventListener("click", close_t1e10);
+document.getElementById("close-t1e11").addEventListener("click", close_t1e11);
+document.getElementById("close-t1e12").addEventListener("click", close_t1e12);
+document.getElementById("close-t1e13").addEventListener("click", close_t1e13);
+document.getElementById("close-t1e14").addEventListener("click", close_t1e14);
+document.getElementById("close-t1e15").addEventListener("click", close_t1e15);
+document.getElementById("close-t1e16").addEventListener("click", close_t1e16);
+document.getElementById("close-t1e17").addEventListener("click", close_t1e17);
+document.getElementById("close-t1e18").addEventListener("click", close_t1e18);
+document.getElementById("close-t1e19").addEventListener("click", close_t1e19);
+document.getElementById("close-t1e20").addEventListener("click", close_t1e20);
+
+/*Season2*/
+document.getElementById("close-t2e1").addEventListener("click", close_t2e1);
+document.getElementById("close-t2e2").addEventListener("click", close_t2e2);
+document.getElementById("close-t2e3").addEventListener("click", close_t2e3);
+document.getElementById("close-t2e4").addEventListener("click", close_t2e4);
+document.getElementById("close-t2e5").addEventListener("click", close_t2e5);
+document.getElementById("close-t2e6").addEventListener("click", close_t2e6);
+document.getElementById("close-t2e7").addEventListener("click", close_t2e7);
+document.getElementById("close-t2e8").addEventListener("click", close_t2e8);
+document.getElementById("close-t2e9").addEventListener("click", close_t2e9);
+document.getElementById("close-t2e10").addEventListener("click", close_t2e10);
+document.getElementById("close-t2e11").addEventListener("click", close_t2e11);
+document.getElementById("close-t2e12").addEventListener("click", close_t2e12);
+document.getElementById("close-t2e13").addEventListener("click", close_t2e13);
+document.getElementById("close-t2e14").addEventListener("click", close_t2e14);
+document.getElementById("close-t2e15").addEventListener("click", close_t2e15);
+document.getElementById("close-t2e16").addEventListener("click", close_t2e16);
+document.getElementById("close-t2e17").addEventListener("click", close_t2e17);
+document.getElementById("close-t2e18").addEventListener("click", close_t2e18);
+document.getElementById("close-t2e19").addEventListener("click", close_t2e19);
+document.getElementById("close-t2e20").addEventListener("click", close_t2e20);
+
+
+/*Seasons*/
+document.getElementById('btn_season1').addEventListener('click', showSeason1);
+document.getElementById('btn_season2').addEventListener('click', showSeason2);
+
+function showSeason1() {
+  season1.style.display = "block";
+  season2.style.display = "none";
+}
+
+function showSeason2() {
+  season1.style.display = "none";
+  season2.style.display = "block";
+}
+
+	  
+	</script>
+</body>
+</html>
