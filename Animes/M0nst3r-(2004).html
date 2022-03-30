@@ -1,0 +1,3046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Series</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	
+	<style type="text/css">
+	  
+	  @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: #090909;
+	font-family: 'Open Sans', sans-serif;
+}
+
+a {
+	text-decoration: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.contenedor {
+	width: 90%;
+	max-width: 1000px;
+	margin: auto;
+	padding: 10px 0;
+}
+
+.selectbox {
+	width: 50%;
+	margin: auto;
+	position: relative;
+}
+
+.select {
+	background: #222;
+	width: 100%;
+	border-radius: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 5px;
+	padding: 10px 0 10px 10px;
+	position: relative;
+}
+
+.select i {
+	font-size: 23px;
+	margin-right: 13px;
+	color: #ddd;
+}
+
+.titulo {
+	margin-bottom: 10px;
+	color: #ddd;
+	font-weight: 600;
+	font-size: 16px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.descripcion {
+	font-size: 14px;
+	color: #ddd;
+}
+
+.opciones {
+	background: #191919;
+	border-radius: 10px;
+	max-height: 400px;
+	overflow: auto;
+	width: 100%;
+	display: none;
+}
+
+.opciones.active {
+	display: block;
+	animation: fadeIn .3s forwards;
+}
+
+@keyframes fadeIn {
+	from {
+		transform: translateY(-100px) scale(.5);
+	}
+	to {
+		transform: translateY(0) scale(1);
+	}
+}
+
+.textos {
+  width: 100%;
+}
+
+.contenido-opcion {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	transition: .2s ease all;
+}
+
+.opciones .contenido-opcion {
+	padding: 9px;
+}
+
+.opciones .contenido-opcion:hover {
+  background: #101010;
+}
+
+.sinopsis {
+  padding: 0 15px;
+  color: #eee;
+  font-size: 13px;
+  text-align: justify;
+  margin-bottom: 10px;
+}
+
+/*Chapters*/
+
+.episodes {
+	overflow: auto;
+	z-index: 100;
+	width: 100%;
+	display: block;
+}
+
+.episodes .contenido-opcion {
+	background: #090909;
+	padding: 0 10px 14px 10px;
+}
+
+.episodes .contenido-opcion:hover {
+  background: #000;
+}
+
+.contenido-opcion img {
+	width: auto;
+	height: 50px;
+	margin-right: 20px;
+	border-radius: 2px;
+}
+
+/*Responsive*/
+
+@media screen and (max-width: 800px){
+	.selectbox {
+		width: 100%;
+	}
+}
+
+
+
+
+
+
+/*Cards*/
+.card {
+	width: 100%;
+	height: 100vh;
+	max-width: 1100px;
+	position: fixed;
+  font-family: 'Montserrat', sans-serif;
+  top: 50%;
+  transform: translateY(-50%);
+	background: rgba(2, 2, 2, .7);
+	display: none;
+}
+
+.contenedor-card {
+  width: 95%;
+  position: fixed;
+  background: #111;
+  border-radius: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+
+.card .contenido-card h4 {
+  text-align: center;
+	margin-bottom: 10px;
+	color: #ddd;
+}
+
+.card .contenido-card p {
+  padding: 0 10px 10px ;
+	line-height: 1.5;
+	color: #ddd;
+	font-size: 14px;
+	margin-bottom: 5px;
+	text-align: justify;
+}
+
+iframe {
+  border-radius: 7px 7px 0 0;
+}
+
+.close {
+  font-size: 50px;
+  color: #fff;
+  position: absolute;
+  display: flex;
+  top: 0;
+  right: 0;
+  z-index: 100;
+} 
+	  
+	</style>
+</head>
+<body id="body">
+	
+	<div class="contenedor">
+		<form action="">
+			<div class="selectbox">
+				<div class="select" id="select">
+					<div class="contenido-select">
+						<h1 class="titulo">Temporada 1</h1>
+					</div>
+					<i class="bi bi-chevron-down"></i>
+				</div>
+
+				<div class="opciones" id="opciones">
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo">Temporada 1</h1>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<input type="hidden" id="inputSelect" value="">
+		</form>
+
+	</div>
+	
+	<!--Sinopsis-->
+	
+	<div class="sinopsis">
+	  <p>El doctor Kenzo Tenma es un prometedor neurocirujano japonés que lo tiene todo en la vida. Sin embargo, un día decide ignorar una orden de su superior y salva a un niño desconocido en lugar de la vida del alcalde de la ciudad. Como consecuencia de esto pierde su privilegiado trabajo y a su novia. Poco después, los médicos que lo destituyeron aparecen muertos y él se convierte en principal sospechoso.</p>
+	</div>
+	
+	
+	<!--Episodios-->
+	
+	<div class="episodes" id="season1">
+					<a class="opcion" id="btn-t1e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/gRrJaEe5oj8gsy54buNLkW8FHAZ.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Dr. Tenma</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/yIoVsDbmIduGojXaTR8DzpBbTVr.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Degradación</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/nMQqe7HJH1Dk8F6ALS1nbfFWXL0.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Asesinato</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/DpBHxNXO5VHwLTInBGi80L5Io.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Ejecucion nocturna</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/6FKz2pfpTlGXMxdH4h5op6j1aku.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. La chica de Heidelberg</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/tLso0ODwU9bAUFIPdAvCUSvlelI.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Artículos de desapariciones</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/iVIw85BQXHZaZVhPk4QDPTWqZxc.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. La mansión de la tragedia</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/wlMYF7b88FPoCvjVnNqKPixF5Ha.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. El fugitivo</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/96WWv4x4wTlhJfpmY1KKkj3LQCt.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. El mercenario y la niña</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/kR95nSJmdt3BPmc4NSvrGA1m2hz.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. El pasado que fue borrado</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/ngPjRictfjaYKwIX1bV0JtfdDlM.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Kinderheim 511</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/8a9l0cGDV9FDwkHcMgQw6IoD9ok.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Un experimento insignificante</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/hlKdVyUkvKg0GP565domhD4bAZk.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Petra y Schuhmann</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e14">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/bnmF3AAbHKxf3K9yY5SlXtM9CSy.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. El último hombre, la última mujer</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e15">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/nTkNXYoOLeN9HP37IFQvWNdLE6y.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. Be my baby</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e16">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/5VjzqfvUbnjHmrfLY9KtUUFRO7M.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. La confesión de Wolf</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e17">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/g5XrO7E75jUleiYDBWMFVv983ok.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. Reunión</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e18">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/vujsVa6Pl2eRnYbqL6gwpOkENxQ.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. La quinta cucharada de azúcar</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e19">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/iedKDiD6BYGUX8In7gin7ZTC1e2.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">19. El abismo del Monstruo</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e20">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/hnIFlLzJbk3F2Fl3P9jDyk9LXtY.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">20. Viaje a Freinheim</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e21">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/evKSBqCNwbkcfwvgHOyFqRS75Wr.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">21. Unas felices vacaciones</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e22">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/ucHFHWlTlFFcFo2swpHW2rH8O2S.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">22. La trampa de Lunge</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e23">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/smpyendH3uITqcKHlacuUr9LIbo.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">23. La confesión de Eva</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e24">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/m4fL3hJku5ytZBSlfkQ5Z1VMQMJ.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">24. Alrededor de una mesa</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e25">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/oA7Y1IR4uJvhmcIOjjlGAxQ8byB.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">25. El chico de los jueves</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e26">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/rtdgEwAQtM9b731M1KXwpkKKl41.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">26. El bosque secreto</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e27">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/gSzKRaoqu0hxaZ4IYgjW8FRBdwG.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">27. La prueba</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e28">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/4ScD6otPzx2B7r5mTvPw0PdyHMf.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">28. Un solo asesino</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e29">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/5IM7Jc5LiX27MmEjV2glotEhN5H.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">29. Ejecutado</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e30">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/uTd9PmGOYn5mpNAWMUXcxNpDtyI.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">30. La decisión</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e31">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/7C24YnfzxwM7ZNQDhC7m4ldynJV.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">31. A plena luz del día</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e32">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/oDFFnKWyt0eTyIJercgD0kpBXSu.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">32. Santuario</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e33">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/wLzZfg51P24TKL5zIOgqwz5kV8w.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">33. A los ojos de un niño</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e34">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/zQnTrYLoKTVGVpkMCe8izx0aaJG.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">34. El fin de la oscuridad</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e35">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/85rn4WWk0mYIvGcQoBEtJTH2a2j.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">35. Un héroe sin nombre</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e36">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/Ap21b2eXMchLQEMurLjmC4TIozM.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">36. El monstruo que siembra el caos</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e37">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/4Jobs7gVFbD7cJYTea0V1EHh6kh.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">37. Un monstruo sin nombre</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e38">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/mwmzanlKAGfPYJ7Q4pdHS35p2Tv.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">38. El demonio ante tus ojos</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e39">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/sTFxScrDaiIxfwOc5wz2DRNlsKY.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">39. El infierno en sus ojos</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e40">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/jaJgMOPU8UlAZZ0WMDxKeLxmWQJ.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">40. Grimmer</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e41">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/ad7Wgv9ILsh4tcbv5fcITHPQOw8.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">41. El fantasma del Kinderheim 511</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e42">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/okzyjsp5Lv7UOkhVsKfSlNEoCDi.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">42. Las aventuras de Steiner el Magnífico</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e43">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/gjmsRU29pBFZELcvJROYh0R7bGH.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">43. El detective Suk</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e44">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/bVPANfu9HXNA8MtbAX9HP2Ntx2q.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">44. Dobles tinieblas</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e45">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/2ovvgmyz0cH6FzYv9qbvoe2zH7f.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">45. El rastro del monstruo</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e46">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/8Cq45zBn14obRO3AESmyjt4Ouqu.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">46. Ángulo muerto</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e47">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/x0abqV6R2kJ0MY8G6Av5jwxUNAb.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">47. Las puertas de la pesadilla</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e48">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/nZeEw7e216DupgtpRNWIWyOgwYC.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">48. Lo que más miedo te da</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e49">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/ogKFo4cfgH4S2YiUEuTxHAaUl1v.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">49. La crueldad extrema</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e50">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/ucHFHWlTlFFcFo2swpHW2rH8O2S.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">50. La mansión de las rosas rojas</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e51">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/9owNlaW8EJ5daDXrY016JZTDYyw.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">51. La carta de amor del monstruo</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e52">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/bAO3AxPdptq5YmN8FP7xS4fZTH5.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">52. El abogado</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e53">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/8FqSJMnu6z46PLiLdpJpkhFBNU2.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">53. La decisión</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e54">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/x5C9rsGKe7YoZTDnccSjucs87j7.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">54. La huida</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e55">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/pWGuNnYw5MuLw5ViJ8lIvX5YMxT.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">55. La habitación 402</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e56">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/9AAOAwTWGkOG3xpoNMxrYOxPwpt.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">56. Un viaje sin fin</h1>
+								<p class="descripcion">20min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e57">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/oE1auDwSzQw1obHBrXanO2Rbe3z.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">57. Aquella noche</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e58">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/hCgDXMWTKCOAgLD2J8V1doWsHmx.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">58. Odio este trabajo</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e59">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/zFQyzwZqmTh3J6RSh60AVg9naZ.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">59. El hombre que vio al diablo</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e60">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/jNMgDbmUtwiWZPIEPiGylrktDNi.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">60. El hombre que sabía demasiado</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e61">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/l60BAu0Uh2Iwop8NwVcSLuZBuJA.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">61. La puerta de los recuerdos</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e62">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/xE8gQWJVbBExnVTDiXxmFgcLG0a.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">62. Disfrutar la comida</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e63">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/4FoBZs3ndG3tiernRySrdXDravt.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">63. Asesinatos inconexos</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e64">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/p4doe6lLhhh8giZ9hO3AYJ7005N.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">64. La angustia del Bebé</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e65">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/tA28qaG2DoJgslpJ78xtGXeTVHB.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">65. Las huellas de Johan</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e66">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/op09o7GsIYWqYSpbLpznnvD5JMa.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">66. ¿Ya estás de vuelta?</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e67">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/aLmAaiiXvdQYJcLOFDsIzPjffei.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">67. Ya estoy en casa</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e68">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/dWoaXlZnl0AnNWfLHR3zxvKCkg4.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">68. Ruhenheim</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e69">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/6swDish7SjX8mDev2IGOqojdCvz.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">69. Un lugar para el reposo</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e70">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/ym9CtBHMfwiAgZ8TvoQcAftejL0.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">70. El pueblo de la masacre</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e71">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/nRSnVZ2zekxzKseNIgGGDKvCBaV.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">71. La ira de Steiner el Magnífico</h1>
+								<p class="descripcion">23min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e72">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/cYwkZ7sVHuTWj1eKFqcV2vej1Uh.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">72. El hombre sin nombre</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e73">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/50zYRfi1u6O11VsgKbn84lG0RQx.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">73. El paisaje final</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e74">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/nPvjX9pqeuNeIlr0YGB9LoT1efh.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">74. El auténtico monstruo</h1>
+								<p class="descripcion">21min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+	
+
+
+
+
+
+	<!--   Tarjetas-->
+<div class="card" id="modal_t1e1">
+  
+<div class="close" id="close-t1e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Dr. Tenma</h4>
+		<p>El doctor Tenma es un brillante neurocirujano japones que trabaja en el Eisler Memorial Hospital en Alemania. Lo está haciendo bien profesionalmente e incluso está comprometido con la hija del director, Eva. Un día, le traen a un niño con una herida de bala en la cabeza.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e2">
+  
+<div class="close" id="close-t1e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Degradación</h4>
+		<p>El precio por desobedecer las órdenes del Dr. Heinemann de operar con el niño resulta muy costoso para el Dr. Tenma y su carrera</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e3">
+  
+<div class="close" id="close-t1e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Asesinato</h4>
+		<p>Después de que tres médicos son encontrados muertos, Tenma es reincorporado como cirujano jefe. Su carrera despega, e incluso Eva intenta recuperarlo. Desafortunadamente, todo ese éxito ha atraído la atención del Detective Lunge.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e4">
+  
+<div class="close" id="close-t1e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Ejecucion nocturna</h4>
+		<p>Adolf Junkers tiene información sobre los asesinatos en serie que es vital para la policía, pero tiene miedo de revelarlos. El cuidado del Dr. Tenma por Adolf Junkers, sin embargo, le gana. Sin embargo, su estrecha relación con Junkers lo lleva a una noche de horror espantoso.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e5">
+  
+<div class="close" id="close-t1e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. La chica de Heidelberg</h4>
+		<p>Nina Fortner, una joven estudiante talentosa en Heidelberg ha estado teniendo pesadillas. Tampoco puede recordar nada de su vida antes de cumplir los 10 años. Ella pronto sufre de desmayos en su universidad y comienza a recibir correos electrónicos anónimos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e6">
+  
+<div class="close" id="close-t1e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Artículos de desapariciones</h4>
+		<p>Nina finalmente recibe un correo electrónico informándole que se reúna con el remitente anónimo en un momento y lugar específicos. Mientras tanto, el Dr. Tenma le pide ayuda a Mauler, un editor de un editor local, en su búsqueda de la niña Liebert.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e7">
+  
+<div class="close" id="close-t1e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. La mansión de la tragedia</h4>
+		<p>Tenma y Nina regresan a la residencia de los Fortners para encontrar a los padres de Mauler y Nina muertos. Dos detectives llegan para llevarlos a la estación para interrogarlos, pero ciertas cosas no se ven bien.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e8">
+  
+<div class="close" id="close-t1e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. El fugitivo</h4>
+		<p>Eva intenta amenazar al Dr. Tenma, ¡a menos que vuelva con ella, ella le revelará a la policía que la corbata que se encontró en la escena del crimen es suya!</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e9">
+  
+<div class="close" id="close-t1e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. El mercenario y la niña</h4>
+		<p>Un viejo mercenario llamado Hugo es interrogado por Lunge sobre un estudiante suyo, un médico llamado Tenma.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e10">
+  
+<div class="close" id="close-t1e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. El pasado que fue borrado</h4>
+		<p>Tenma se encuentra con un ladrón llamado Heckel que dice haber visto al asesino. Pronto resulta en que Heckel lleve a Tenma a un par de asesinos.</p>
+	</div>
+	</div>
+</div>
+
+
+<div class="card" id="modal_t1e11">
+  
+<div class="close" id="close-t1e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Kinderheim 511</h4>
+		<p>Tenma se entera de que Johan solía estar en un orfanato conocido como Kinderheim 511, donde conoce a un niño lesionado llamado Dieter y un ex funcionario de Alemania del Este llamado Hartmann, que solía trabajar allí.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e12">
+  
+<div class="close" id="close-t1e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Un experimento insignificante</h4>
+		<p>Hartmann recoge a Dieter antes de que Tenma pudiera regresar, y Tenma aprende más sobre los experimentos en Kinderheim 511.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e13">
+  
+<div class="close" id="close-t1e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Petra y Schuhmann</h4>
+		<p>En una pequeña aldea, el Dr. Schumann se preocupa por la salud de su vieja amiga enferma pero obstinada, Petra.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e14">
+  
+<div class="close" id="close-t1e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. El último hombre, la última mujer</h4>
+		<p>El inspector Lunge investiga el asesinato de una prostituta y sospecha que un senador llamado Dr. Boltzmann está involucrado. Su dedicación a su trabajo, sin embargo, hace mella en su vida familiar. Mientras tanto, la vengativa Eva continúa presionando a Lunge para atrapar a Tenma. Ella también tiene un nuevo amante, su jardinero.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e15">
+  
+<div class="close" id="close-t1e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. Be my baby</h4>
+		<p>Las investigaciones del Dr. Tenma y Nina Fortner los llevan a un hombre poderoso conocido como 'The Baby', que pertenece a una organización extremista. Pronto se enteran de que la organización tiene planes especiales para el distrito turco mañana.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e16">
+  
+<div class="close" id="close-t1e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. La confesión de Wolf</h4>
+		<p>Nina se escapa de la mansión. Y Tenma se reúne con el irreconocible General Wolf en la mansión más tarde.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e17">
+  
+<div class="close" id="close-t1e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. Reunión</h4>
+		<p>Los planes extremistas se ponen en acción y Tenma decide posponer su búsqueda de Johan y en su lugar se dirige al distrito turco para advertir a la gente allí. Dieter y Heckel son capturados por los skinheads. Mientras Nina intenta obtener información sobre el 'plato principal' de 'The Baby'.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e18">
+  
+<div class="close" id="close-t1e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. La quinta cucharada de azúcar</h4>
+		<p>Nina se encuentra con un viejo amigo y jefe, el señor Rosso. El encantador viejo jefe, sin embargo, tiene un pasado muy oscuro.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e19">
+  
+<div class="close" id="close-t1e19"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e19" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>19. El abismo del Monstruo</h4>
+		<p>Tenma visita a Rudy, un psicólogo criminal, que está trabajando en casos relacionados con un asesino llamado Jurgens.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e20">
+  
+<div class="close" id="close-t1e20"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e20" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>20. Viaje a Freinheim</h4>
+		<p>Tenma y Dieter viajan con una pareja de ancianos de camino a Freiham. Tenma se pregunta si la pareja planea entregarlo a la policía.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e21">
+  
+<div class="close" id="close-t1e21"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e21" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>21. Unas felices vacaciones</h4>
+		<p>Nina se enfrenta a Muller, uno de los dos detectives responsables de la muerte de sus padres adoptivos, los Fortner. Muller descubre que su protegido, Roberto, en realidad trabaja para Johan y ahora tiene la tarea de matar a Nina.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e22">
+  
+<div class="close" id="close-t1e22"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e22" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>22. La trampa de Lunge</h4>
+		<p>Lunge determina que el asesinato de una pareja adinerada, de mediana edad y sin hijos no se ajusta al modus operandi habitual de los asesinatos en serie y decide aprovechar esta oportunidad para atraer a Tenma a una trampa. Sin embargo, antes de que pueda arrestarlo, Lunge es gravemente herido por el verdadero criminal. Tenma puede tratar las heridas de Lunge.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e23">
+  
+<div class="close" id="close-t1e23"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e23" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>23. La confesión de Eva</h4>
+		<p>Eva Heinemann es arrestada por borrachera pública y se engancha con Roberto, con quien estaba la noche anterior a su arresto. Roberto luego revela su vínculo con Johan y Eva confiesa que en realidad fue testigo la noche en que Johan mató a Junkers.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e24">
+  
+<div class="close" id="close-t1e24"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e24" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>24. Alrededor de una mesa</h4>
+		<p>A cambio de su vida, Roberto le dice a Eva que se enfrente a Tenma, quien actualmente está tratando con un jefe de la mafia en una casa de campo. Eva es herida de inmediato por Roberto cuando no puede completar su tarea, pero Tenma la salva.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e25">
+  
+<div class="close" id="close-t1e25"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e25" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>25. El chico de los jueves</h4>
+		<p>Karl Neumann y Lotte Frank son estudiantes que leen latín a Hans Georg Schubert. Lotte intenta ayudar a Karl a descubrir su pasado mientras trata de averiguar la identidad de un niño que lee a Schubert los jueves. Cuando ambos descubren quién es, encuentran al niño, Edmund Farren, muerto en su dormitorio.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e26">
+  
+<div class="close" id="close-t1e26"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e26" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>26. El bosque secreto</h4>
+		<p>Un hombre que dice ser hijo de un millonario se ha suicidado y un detective está decidido a resolver el caso.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e27">
+  
+<div class="close" id="close-t1e27"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e27" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>27. La prueba</h4>
+		<p>Se revela la situación pasada y presente de Richard. Johan continúa vinculándose con la familia Schuwald y se revela su intención.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e28">
+  
+<div class="close" id="close-t1e28"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e28" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>28. Un solo asesino</h4>
+		<p>Richard vuelve a investigar sus antiguos casos de homicidio y hace un descubrimiento aterrador.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e29">
+  
+<div class="close" id="close-t1e29"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e29" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>29. Ejecutado</h4>
+		<p>Robert se adentra en el pasado de Johan y hace un descubrimiento sorprendente. El doctor Gillen habla con Peter Jurgens, un asesino en serie, sobre la posible participación de Johan y obtiene una respuesta trágica. Johan se enfrenta a Robert sobre Stephen Joos. Y el doctor Reichwen recibe trágicas noticias de la policía.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e30">
+  
+<div class="close" id="close-t1e30"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e30" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>30. La decisión</h4>
+		<p>Ante la sospecha de un juego sucio en la caída de la muerte "accidental" de Robert, el doctor Reichwen hace algunos descubrimientos en sus investigaciones. Pero como luego se da cuenta, sus investigaciones pueden haberlo puesto en peligro.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e31">
+  
+<div class="close" id="close-t1e31"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e31" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>31. A plena luz del día</h4>
+		<p>El doctor Tenma y el doctor Reichwen finalmente se conocen. El doctor Reichwen tiene la intención de probar la inocencia del doctor Tenma en los homicidios, pero Tenma tiene otras ideas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e32">
+  
+<div class="close" id="close-t1e32"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e32" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>32. Santuario</h4>
+		<p>Lotte, Frank y Karl se están distanciando. Lotte conoce a Nina Fortner y se hacen amigos. El doctor Tenma busca un lugar perfecto para dispararle a Johan.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e33">
+  
+<div class="close" id="close-t1e33"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e33" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>33. A los ojos de un niño</h4>
+		<p>Dieter se entera de un juego que pone en peligro la vida de los niños. El señor Schuwald decide donar toda su colección de libros a la Biblioteca de la Universidad de Munich por sugerencia de Karl y Johan.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e34">
+  
+<div class="close" id="close-t1e34"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e34" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>34. El fin de la oscuridad</h4>
+		<p>El impostor de 'Margot Langer' intenta chantajear a Johan. El doctor Tenma ayuda a una joven 'médico' en una clínica ilegal.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e35">
+  
+<div class="close" id="close-t1e35"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e35" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>35. Un héroe sin nombre</h4>
+		<p>Lunge intenta meterse en la mente del doctor Tenma pretendiendo ser él. El doctor Gillen descubre algo sobre Johan durante una entrevista con un asesino psicótico. El doctor Reichwen intenta advertir a los Liebert sobre la verdadera naturaleza de Johan. El doctor Tenma busca una ubicación perfecta para francotiradores.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e36">
+  
+<div class="close" id="close-t1e36"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e36" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>36. El monstruo que siembra el caos</h4>
+		<p>El doctor Reichwein le revela la verdadera naturaleza de Johan al señor Schuwald. El doctor Tenma se prepara para asesinar a Johan. Lunge concluye que Tenma matará a Schuwald a continuación. Lotte se enfrenta a Nina por Johan.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e37">
+  
+<div class="close" id="close-t1e37"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e37" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>37. Un monstruo sin nombre</h4>
+		<p>Nina lee la historia del libro de imágenes y tiene una sensación de deja vu. Los malvados planes de Johan para la ceremonia de donación del libro se llevan a cabo. Tenma encuentra un gran obstáculo en su intento de matar a Johan.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e38">
+  
+<div class="close" id="close-t1e38"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e38" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>38. El demonio ante tus ojos</h4>
+		<p>Tenma tiene un arma apuntando a Roberto, pero Roberto le apunta con el rifle. Nina, el doctor Reichwen y Dieter llegan y encuentran toda la biblioteca en llamas. La gente está atrapada dentro y las puertas están cerradas. Karl lee el informe sobre la vida y la muerte de su madre. Tenma intenta rescatar a los atrapados en el edificio. Johan revela el monstruo dentro de él a Schuwald.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e39">
+  
+<div class="close" id="close-t1e39"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e39" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>39. El infierno en sus ojos</h4>
+		<p>Lunge, de la BKA, se entera de que Johan puede existir. Nina entra en hipnosis regresiva para aprender más sobre el libro ilustrado y su pasado. Schuwald tiene un mensaje para Tenma y envía a Karl a Dresde para que se lo pase.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e40">
+  
+<div class="close" id="close-t1e40"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e40" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>40. Grimmer</h4>
+		<p>Grimmer es un periodista independiente que investiga en profundidad los abusos en los orfanatos de Alemania Oriental. Grimmer se encuentra con Tenma durante su viaje a Praga, y se familiarizan más cuando Tenma se enfrenta a un problema de inmigración.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e41">
+  
+<div class="close" id="close-t1e41"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e41" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>41. El fantasma del Kinderheim 511</h4>
+		<p>Grimmer persigue obstinadamente a Petrov por sus trabajos de investigación experimental que relatan los abusos en Kinderheim 511, pero en su lugar recibe una sorpresa.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e42">
+  
+<div class="close" id="close-t1e42"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e42" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>42. Las aventuras de Steiner el Magnífico</h4>
+		<p>Grimmer tiene la llave que le dio Petrov y una antigua organización de la policía secreta checoslovaca la quiere. Atrapado y torturado, Grimmer les cuenta a sus secuestradores sobre Steiner el Magnífico.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e43">
+  
+<div class="close" id="close-t1e43"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e43" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>43. El detective Suk</h4>
+		<p>Un nuevo inspector, el detective Suk, está en el caso del homicidio de Zeman. Durante su investigación, descubre que hay más en el asesinato de Zeman de lo que se suponía. Suk también conoce a una dama por la que se enamora de las colinas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e44">
+  
+<div class="close" id="close-t1e44"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e44" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>44. Dobles tinieblas</h4>
+		<p>Después de la muerte de sus superiores, Suk debe volver a investigar el caso desde el principio. Obtiene información de los huérfanos sobre una reunión con Grimmer. Sin embargo, su intención de arrestar a Grimmer toma un giro diferente cuando profundiza en la investigación. El episodio también revela que hay más en la dama sin nombre en el bar de lo que deja ver.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e45">
+  
+<div class="close" id="close-t1e45"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e45" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>45. El rastro del monstruo</h4>
+		<p>Suk es vigilado por el nuevo comisario. Junto con Grimmer, Suk recupera la cinta y los papeles de investigación de la caja de depósito. Pero sus movimientos son vigilados por varios bandos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e46">
+  
+<div class="close" id="close-t1e46"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e46" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>46. Ángulo muerto</h4>
+		<p>Tenma se entera del estado fugitivo de Suk por medio de un periodista. Y se propone encontrarlo. Mientras tanto, Suk y Grimmer se esconden, pero el STB los encuentra rápidamente, los rodea y los ataca. El asalto del STB llega a un sangriento final.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e47">
+  
+<div class="close" id="close-t1e47"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e47" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>47. Las puertas de la pesadilla</h4>
+		<p>La experiencia de Nina en Praga es una pesadilla para ella. Tenma y Grimmer se encuentran con un hombre superior en el STB checoslovaco. Se les ofrece un trato que Grimmer se niega a aceptar.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e48">
+  
+<div class="close" id="close-t1e48"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e48" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>48. Lo que más miedo te da</h4>
+		<p>Johan visita a la madre de Suk. Tenma y Grimmer se enteran de su visita. Ellos, incluido el coronel Ranke, escuchan la cinta de Johan. Lunge llega a Praga para pasar unas "vacaciones". Su investigación lo lleva a los bocetos de Franz Bonaparta.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e49">
+  
+<div class="close" id="close-t1e49"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e49" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>49. La crueldad extrema</h4>
+		<p>Grimmer y Tenma intentan evitar que Johan someta a Milo, uno de los huérfanos, a uno de los destinos más crueles.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e50">
+  
+<div class="close" id="close-t1e50"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e50" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>50. La mansión de las rosas rojas</h4>
+		<p>Lunge investiga el secreto detrás de La mansión de las rosas rojas. Tenma y Grimmer se separan, pero Tenma se encuentra en problemas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e51">
+  
+<div class="close" id="close-t1e51"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e51" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>51. La carta de amor del monstruo</h4>
+		<p>Schubert, con la ayuda de Reichwein, vuelve a explorar su pasado con la verdadera madre de Karl Neumann y se da cuenta de su vínculo con Johan. Eva Heinemann insiste en que Tenma pague un alto precio por rechazarla. Suk intenta salir del hospital en el que se encuentra para ayudar a Tenma.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e52">
+  
+<div class="close" id="close-t1e52"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e52" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>52. El abogado</h4>
+		<p>Antiguos pacientes del Eisler Memorial Hospital solicitan la ayuda de Alfred Baul, un abogado, para representar a Tenma. Baul, a su vez, pide la ayuda de Fritz Vardemann. Vardemann visita a Tenma en prisión y acepta hacerse cargo de la defensa.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e53">
+  
+<div class="close" id="close-t1e53"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e53" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>53. La decisión</h4>
+		<p>Después de escuchar la amenaza de Roberto contra Eva, Tenma decide confesar todos los cargos en su contra para que pueda ser llevado en la misma camioneta que transporta a un prisionero a un Pententario Federal mientras el prisionero está arreglando una fuga.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e54">
+  
+<div class="close" id="close-t1e54"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e54" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>54. La huida</h4>
+		<p>Tenma y Milch están huyendo con los lesionados Gustav y Helene. Eva encuentra su vida en peligro cuando descubre que el abogado que se supone debe conocer, el señor Baul, no es otro que Roberto.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e55">
+  
+<div class="close" id="close-t1e55"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e55" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>55. La habitación 402</h4>
+		<p>Tenma toma como rehén a Verderman en una búsqueda desesperada de Eva. Y se revela el oscuro pasado de Verderman.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e56">
+  
+<div class="close" id="close-t1e56"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e56" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>56. Un viaje sin fin</h4>
+		<p>Nina y Dieter entran en la Mansión de la Rosa Roja, pero Nina se desmaya por su inquietante experiencia. Y terminan al cuidado de un titiritero llamado Lipsky.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e57">
+  
+<div class="close" id="close-t1e57"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e57" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>57. Aquella noche</h4>
+		<p>Un flashback al pasado de Johan y Nina, a la época anterior a los homicidios de Liebert revela la razón detrás del asesinato de Johan. La policía hace un descubrimiento sorprendente en la mansión incendiada. Tenma finalmente descubre dónde está Eva. Y Lunge revela la verdadera identidad de Lipsky.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e58">
+  
+<div class="close" id="close-t1e58"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e58" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>58. Odio este trabajo</h4>
+		<p>Martin, un trabajador contratado, es contratado por los ex asociados del general Wolf para "cuidar" de Eva. Pero sus emociones se interponen en el camino de sus órdenes.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e59">
+  
+<div class="close" id="close-t1e59"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e59" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>59. El hombre que vio al diablo</h4>
+		<p>Tenma logra encontrar a Martin. Eva borracha ve a Johan en una fiesta. Martin recibe sus órdenes finales de su jefe, pero sus sentimientos se interponen. Y Martin se vuelve loco cuando intenta investigar a Johan y su discípulo, y se revela la verdad sobre su pasado.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e60">
+  
+<div class="close" id="close-t1e60"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e60" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>60. El hombre que sabía demasiado</h4>
+		<p>El intento de Martin de salvar a Eva le cuesta la vida, sus últimos minutos con Tenma revelan terribles secretos sobre el jefe de Martin, Peter Chapek y sobre los experimentos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e61">
+  
+<div class="close" id="close-t1e61"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e61" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>61. La puerta de los recuerdos</h4>
+		<p>Nina regresa al apartamento en el que vivía con su madre y Johan y se encuentra con otro recuerdo. Luego regresa a Munich donde se ofrece como voluntaria para la hipnosis para encontrar la verdad detrás de estos recuerdos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e62">
+  
+<div class="close" id="close-t1e62"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e62" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>62. Disfrutar la comida</h4>
+		<p>Mientras intenta escapar de la policía en Frankfurt, Tenma es atropellado por una camioneta. Se despierta en el Barrio Turco de la ciudad, el mismo que salvó del complot de El Bebé. El hombre que lo salvó planea matar a Petr Capek en una convención.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e63">
+  
+<div class="close" id="close-t1e63"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e63" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>63. Asesinatos inconexos</h4>
+		<p>Egon Weisbach fue uno de los primeros investigadores en el asesinato de los padres Liebert. En su último día de trabajo antes de jubilarse, escolta a un asesino en serie convicto, pero quiere saber por qué mató a alguien que no encajaba en su modus operandi. Gillen está entrevistando a varios asesinos preguntándose por qué mataron a alguien que tampoco encajaba con sus objetivos habituales.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e64">
+  
+<div class="close" id="close-t1e64"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e64" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>64. La angustia del Bebé</h4>
+		<p>El Bebé es asesinado por una prostituta y su muerte genera problemas internos en la organización de Petr Capek. Capek se vuelve paranoico sobre quién es leal o no y accidentalmente mata a uno de sus guardias. Llega a su cabaña donde Johan lo está esperando.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e65">
+  
+<div class="close" id="close-t1e65"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e65" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>65. Las huellas de Johan</h4>
+		<p>Capek intenta reprender a Johan por sus acciones y le dice que todo debe hacerse de acuerdo con los planes de Capek, pero Johan no está de acuerdo y desaparece. Capek se da cuenta de que su control sobre su organización se está desmoronando y hace que sus hombres recojan a Nina en Frankfurt. Eva aborda al joven que fue presentado a Johan, Christof Sievernich, exigiendo respuestas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e66">
+  
+<div class="close" id="close-t1e66"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e66" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>66. ¿Ya estás de vuelta?</h4>
+		<p>Capek le revela a Nina que ella y su hermano gemelo Johan son el producto de un experimento de eugenesia diseñado para engendrar "niños perfectos". Tenma ha herido a Christof y lo lleva a él y a Eva al hospital mientras exige respuestas a Petr Capek. Mientras Eva hace una llamada telefónica en un teléfono público, Tenma se escapa.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e67">
+  
+<div class="close" id="close-t1e67"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e67" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>67. Ya estoy en casa</h4>
+		<p>Nina se enfrenta a Johan, quien le presenta una historia sobre lo que sucedió cuando muchas personas fueron envenenadas en la Mansión de las Rosas Rojas. Nina se da cuenta de que ella fue la que presenció estas muertes.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e68">
+  
+<div class="close" id="close-t1e68"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e68" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>68. Ruhenheim</h4>
+		<p>Con una postal de Lipsky, Lunge llega a Ruhenheim. Allí se encuentra con Grimmer, cuya investigación también lo ha llevado a esta ciudad. Una pareja de clase trabajadora de este pueblo se da cuenta de que han ganado la lotería y, temiendo que todos los demás quieran matarlos, el marido compra un arsenal de armas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e69">
+  
+<div class="close" id="close-t1e69"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e69" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>69. Un lugar para el reposo</h4>
+		<p>Lunge y Grimmer concluyen que algo terrible está sucediendo en Ruhenheim cuando suenan disparos al azar, la gente es asesinada o desaparece, y los accesos fuera de la ciudad están inundados por una lluvia torrencial. Mientras Nina se recupera en un hospital cercano, Tenma, usando una pista de Capek, viaja a Praga y se encuentra con Lipsky y determina que Johan está en Ruhenheim.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e70">
+  
+<div class="close" id="close-t1e70"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e70" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>70. El pueblo de la masacre</h4>
+		<p>A medida que pasa el tiempo, más personas en Ruhenheim son asesinadas a tiros por personas misteriosas y entre sí. Tanto Grimmer como Lunge determinan que el propietario de un hotel local es Klaus Poppe, también conocido como Franz Bonaparta.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e71">
+  
+<div class="close" id="close-t1e71"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e71" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>71. La ira de Steiner el Magnífico</h4>
+		<p>Tenma se encuentra con Lunge, este último disculpándose por sus acusaciones anteriores contra Tenma. Nina y Gillen se acercan a Ruhenheim. Después de que la pareja ganadora de la lotería resulta herida en un ataque al hotel de Bonaparta, Grimmer se apresura a salir a las calles para razonar con los asaltantes desconocidos.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e72">
+  
+<div class="close" id="close-t1e72"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e72" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>72. El hombre sin nombre</h4>
+		<p>Lunge se enfrenta a Roberto, uno de los cabecillas, en una habitación de hotel. Nina y Gillen llegan a Ruhenheim donde encuentran una casa que contiene dibujos de los dos gemelos de Bonaparta. Bonaparta acompaña a Tenma en su búsqueda para encontrar y matar a Johan.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e73">
+  
+<div class="close" id="close-t1e73"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e73" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>73. El paisaje final</h4>
+		<p>Bonaparta intenta matar a Johan. Con la masacre ahora terminada, las autoridades llegan a la ciudad e intentan determinar qué ha ocurrido.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e74">
+  
+<div class="close" id="close-t1e74"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e74" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>74. El auténtico monstruo</h4>
+		<p>Ha pasado algún tiempo desde la matanza de Ruhenheim, y todos están trabajando duro para que sus vidas vuelvan a la normalidad. Tenma finalmente localiza a una mujer que ha estado buscando y ella revela información sorprendente.</p>
+	</div>
+	</div>
+</div>
+
+
+	<script>
+	  
+//select
+const select = document.querySelector('#select');
+const opciones = document.querySelector('#opciones');
+const contenidoSelect = document.querySelector('#select .contenido-select');
+const hiddenInput = document.querySelector('#inputSelect');
+
+document.querySelectorAll('#opciones > .opcion').forEach((opcion) => {
+	opcion.addEventListener('click', (e) => {
+		e.preventDefault();
+		contenidoSelect.innerHTML = e.currentTarget.innerHTML;
+		select.classList.toggle('active');
+		opciones.classList.toggle('active');
+		hiddenInput.value = e.currentTarget.querySelector('.titulo').innerText;
+	});
+});
+
+select.addEventListener('click', () => {
+	select.classList.toggle('active');
+	opciones.classList.toggle('active');
+});
+
+
+
+
+
+
+/*open modal*/
+function mostrar_modal_t1e1() {
+  modal_t1e1.style.display = "flex";
+  iframe_t1e1.src = "https://uqload.com/embed-pu4rovtl5id4.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e2() {
+  modal_t1e2.style.display = "flex";
+  iframe_t1e2.src = "https://uqload.com/embed-ijjyphsrya6w.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e3() {
+  modal_t1e3.style.display = "flex";
+  iframe_t1e3.src = "https://uqload.com/embed-k3ukjq2p4zzd.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e4() {
+  modal_t1e4.style.display = "flex";
+  iframe_t1e4.src = "https://uqload.com/embed-hyxdnoq9k0y5.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e5() {
+  modal_t1e5.style.display = "flex";
+  iframe_t1e5.src = "https://uqload.com/embed-qqaenkhccgy4.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e6() {
+  modal_t1e6.style.display = "flex";
+  iframe_t1e6.src = "https://uqload.com/embed-lxafqu2niu32.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e7() {
+  modal_t1e7.style.display = "flex";
+  iframe_t1e7.src = "https://uqload.com/embed-xkdi7ixr05lg.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e8() {
+  modal_t1e8.style.display = "flex";
+  iframe_t1e8.src = "https://uqload.com/embed-1yrxtydygpn6.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e9() {
+  modal_t1e9.style.display = "flex";
+  iframe_t1e9.src = "https://uqload.com/embed-5g4p1nx83h6y.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e10() {
+  modal_t1e10.style.display = "flex";
+  iframe_t1e10.src = "https://uqload.com/embed-4mxfhy2x58tn.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e11() {
+  modal_t1e11.style.display = "flex";
+  iframe_t1e11.src = "https://uqload.com/embed-atmj8e3hacte.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e12() {
+  modal_t1e12.style.display = "flex";
+  iframe_t1e12.src = "https://uqload.com/embed-50l1m5sghync.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e13() {
+  modal_t1e13.style.display = "flex";
+  iframe_t1e13.src = "https://uqload.com/embed-m0ep0rau3u2l.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e14() {
+  modal_t1e14.style.display = "flex";
+  iframe_t1e14.src = "https://uqload.com/embed-6f21l4u4w00o.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e15() {
+  modal_t1e15.style.display = "flex";
+  iframe_t1e15.src = "https://uqload.com/embed-pogeah4z33bx.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e16() {
+  modal_t1e16.style.display = "flex";
+  iframe_t1e16.src = "https://uqload.com/embed-jgb51tb0tydi.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e17() {
+  modal_t1e17.style.display = "flex";
+  iframe_t1e17.src = "https://uqload.com/embed-ltptf6de7vkg.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e18() {
+  modal_t1e18.style.display = "flex";
+  iframe_t1e18.src = "https://uqload.com/embed-8i64bh34c5ih.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e19() {
+  modal_t1e19.style.display = "flex";
+  iframe_t1e19.src = "https://uqload.com/embed-8obzr4133pag.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e20() {
+  modal_t1e20.style.display = "flex";
+  iframe_t1e20.src = "https://uqload.com/embed-h8r20vapkien.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e21() {
+  modal_t1e21.style.display = "flex";
+  iframe_t1e21.src = "https://uqload.com/embed-9yjtutbaqgwo.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e22() {
+  modal_t1e22.style.display = "flex";
+  iframe_t1e22.src = "https://uqload.com/embed-njuhj7vbiyal.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e23() {
+  modal_t1e23.style.display = "flex";
+  iframe_t1e23.src = "https://uqload.com/embed-bv2y25y0os78.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e24() {
+  modal_t1e24.style.display = "flex";
+  iframe_t1e24.src = "https://uqload.com/embed-mjinx8ta8m9j.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e25() {
+  modal_t1e25.style.display = "flex";
+  iframe_t1e25.src = "https://uqload.com/embed-9d9ak5ec0j40.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e26() {
+  modal_t1e26.style.display = "flex";
+  iframe_t1e26.src = "https://uqload.com/embed-3itj5ux2ch09.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e27() {
+  modal_t1e27.style.display = "flex";
+  iframe_t1e27.src = "https://uqload.com/embed-244fq7nwnfu3.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e28() {
+  modal_t1e28.style.display = "flex";
+  iframe_t1e28.src = "https://uqload.com/embed-qdkia1b0fnob.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e29() {
+  modal_t1e29.style.display = "flex";
+  iframe_t1e29.src = "https://uqload.com/embed-fyptvju0jolj.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e30() {
+  modal_t1e30.style.display = "flex";
+  iframe_t1e30.src = "https://uqload.com/embed-q1wga5m4rgfc.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e31() {
+  modal_t1e31.style.display = "flex";
+  iframe_t1e31.src = "https://uqload.com/embed-4h54b1y92vih.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e32() {
+  modal_t1e32.style.display = "flex";
+  iframe_t1e32.src = "https://uqload.com/embed-akqdszxjmcz4.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e33() {
+  modal_t1e33.style.display = "flex";
+  iframe_t1e33.src = "https://uqload.com/embed-ii6m7nis5byg.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e34() {
+  modal_t1e34.style.display = "flex";
+  iframe_t1e34.src = "https://uqload.com/embed-0m9ev6pvz7t5.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e35() {
+  modal_t1e35.style.display = "flex";
+  iframe_t1e35.src = "https://uqload.com/embed-u1e7s5gxp5aj.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e36() {
+  modal_t1e36.style.display = "flex";
+  iframe_t1e36.src = "https://uqload.com/embed-yp8szcci5oum.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e37() {
+  modal_t1e37.style.display = "flex";
+  iframe_t1e37.src = "https://uqload.com/embed-2mf50og985yd.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e38() {
+  modal_t1e38.style.display = "flex";
+  iframe_t1e38.src = "https://uqload.com/embed-nua8cp029n0b.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e39() {
+  modal_t1e39.style.display = "flex";
+  iframe_t1e39.src = "https://uqload.com/embed-aj1aknsar1hy.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e40() {
+  modal_t1e40.style.display = "flex";
+  iframe_t1e40.src = "https://uqload.com/embed-wekex4jkdwd6.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e41() {
+  modal_t1e41.style.display = "flex";
+  iframe_t1e41.src = "https://uqload.com/embed-m0rjwl0p0a7u.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e42() {
+  modal_t1e42.style.display = "flex";
+  iframe_t1e42.src = "https://uqload.com/embed-i7my5cnwqavb.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e43() {
+  modal_t1e43.style.display = "flex";
+  iframe_t1e43.src = "https://uqload.com/embed-7s1pbe3fs1qg.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e44() {
+  modal_t1e44.style.display = "flex";
+  iframe_t1e44.src = "https://uqload.com/embed-yrpbvjk13s0u.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e45() {
+  modal_t1e45.style.display = "flex";
+  iframe_t1e45.src = "https://uqload.com/embed-bvupsrvt5sr8.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e46() {
+  modal_t1e46.style.display = "flex";
+  iframe_t1e46.src = "https://uqload.com/embed-v5e17cg8howh.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e47() {
+  modal_t1e47.style.display = "flex";
+  iframe_t1e47.src = "https://uqload.com/embed-3ieln79mu79n.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e48() {
+  modal_t1e48.style.display = "flex";
+  iframe_t1e48.src = "https://uqload.com/embed-8cfaq530fde6.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e49() {
+  modal_t1e49.style.display = "flex";
+  iframe_t1e49.src = "https://uqload.com/embed-pqnf4rbr3nlu.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e50() {
+  modal_t1e50.style.display = "flex";
+  iframe_t1e50.src = "https://uqload.com/embed-mnqpzo3ytqxq.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e51() {
+  modal_t1e51.style.display = "flex";
+  iframe_t1e51.src = "https://uqload.com/embed-mca8w8rb0qz9.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e52() {
+  modal_t1e52.style.display = "flex";
+  iframe_t1e52.src = "https://uqload.com/embed-l3axj46125km.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e53() {
+  modal_t1e53.style.display = "flex";
+  iframe_t1e53.src = "https://uqload.com/embed-ityh32hvo7hc.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e54() {
+  modal_t1e54.style.display = "flex";
+  iframe_t1e54.src = "https://uqload.com/embed-qj4pscvf7kz6.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e55() {
+  modal_t1e55.style.display = "flex";
+  iframe_t1e55.src = "https://uqload.com/embed-n5h3rq7gpt4d.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e56() {
+  modal_t1e56.style.display = "flex";
+  iframe_t1e56.src = "https://uqload.com/embed-tl6lwtph3vcn.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e57() {
+  modal_t1e57.style.display = "flex";
+  iframe_t1e57.src = "https://uqload.com/embed-xelia31grcet.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e58() {
+  modal_t1e58.style.display = "flex";
+  iframe_t1e58.src = "https://uqload.com/embed-h90ywdgqbakr.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e59() {
+  modal_t1e59.style.display = "flex";
+  iframe_t1e59.src = "https://uqload.com/embed-c6cbsoj4n8hb.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e60() {
+  modal_t1e60.style.display = "flex";
+  iframe_t1e60.src = "https://uqload.com/embed-6tk1jm3usnyg.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e61() {
+  modal_t1e61.style.display = "flex";
+  iframe_t1e61.src = "https://uqload.com/embed-eldyispxnp8h.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e62() {
+  modal_t1e62.style.display = "flex";
+  iframe_t1e62.src = "https://uqload.com/embed-l8njgwzlvzm5.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e63() {
+  modal_t1e63.style.display = "flex";
+  iframe_t1e63.src = "https://uqload.com/embed-z4wz1a8dnopf.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e64() {
+  modal_t1e64.style.display = "flex";
+  iframe_t1e64.src = "https://uqload.com/embed-uiadgqksbc6b.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e65() {
+  modal_t1e65.style.display = "flex";
+  iframe_t1e65.src = "https://uqload.com/embed-kzp2z9vr9x13.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e66() {
+  modal_t1e66.style.display = "flex";
+  iframe_t1e66.src = "https://uqload.com/embed-bsoqddk324zr.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e67() {
+  modal_t1e67.style.display = "flex";
+  iframe_t1e67.src = "https://uqload.com/embed-7k0nqn176c4q.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e68() {
+  modal_t1e68.style.display = "flex";
+  iframe_t1e68.src = "https://uqload.com/embed-zvqlagxvdu49.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e69() {
+  modal_t1e69.style.display = "flex";
+  iframe_t1e69.src = "https://uqload.com/embed-pq7gsif23brd.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e70() {
+  modal_t1e70.style.display = "flex";
+  iframe_t1e70.src = "https://uqload.com/embed-flwstn0ovrgy.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e71() {
+  modal_t1e71.style.display = "flex";
+  iframe_t1e71.src = "https://uqload.com/embed-c0g4qokdfq0t.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e72() {
+  modal_t1e72.style.display = "flex";
+  iframe_t1e72.src = "https://uqload.com/embed-p8iyekr3nmpp.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e73() {
+  modal_t1e73.style.display = "flex";
+  iframe_t1e73.src = "https://uqload.com/embed-8448za6bfvlz.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e74() {
+  modal_t1e74.style.display = "flex";
+  iframe_t1e74.src = "https://uqload.com/embed-1s1w3v6kwxzr.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*close modal*/
+function close_t1e1() {
+  modal_t1e1.style.display = "none";
+  iframe_t1e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e2() {
+  modal_t1e2.style.display = "none";
+  iframe_t1e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e3() {
+  modal_t1e3.style.display = "none";
+  iframe_t1e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e4() {
+  modal_t1e4.style.display = "none";
+  iframe_t1e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e5() {
+  modal_t1e5.style.display = "none";
+  iframe_t1e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e6() {
+  modal_t1e6.style.display = "none";
+  iframe_t1e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e7() {
+  modal_t1e7.style.display = "none";
+  iframe_t1e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e8() {
+  modal_t1e8.style.display = "none";
+  iframe_t1e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e9() {
+  modal_t1e9.style.display = "none";
+  iframe_t1e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e10() {
+  modal_t1e10.style.display = "none";
+  iframe_t1e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e11() {
+  modal_t1e11.style.display = "none";
+  iframe_t1e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e12() {
+  modal_t1e12.style.display = "none";
+  iframe_t1e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e13() {
+  modal_t1e13.style.display = "none";
+  iframe_t1e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e14() {
+  modal_t1e14.style.display = "none";
+  iframe_t1e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e15() {
+  modal_t1e15.style.display = "none";
+  iframe_t1e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e16() {
+  modal_t1e16.style.display = "none";
+  iframe_t1e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e17() {
+  modal_t1e17.style.display = "none";
+  iframe_t1e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e18() {
+  modal_t1e18.style.display = "none";
+  iframe_t1e18.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e19() {
+  modal_t1e19.style.display = "none";
+  iframe_t1e19.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e20() {
+  modal_t1e20.style.display = "none";
+  iframe_t1e20.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e21() {
+  modal_t1e21.style.display = "none";
+  iframe_t1e21.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e22() {
+  modal_t1e22.style.display = "none";
+  iframe_t1e22.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e23() {
+  modal_t1e23.style.display = "none";
+  iframe_t1e23.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e24() {
+  modal_t1e24.style.display = "none";
+  iframe_t1e24.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e25() {
+  modal_t1e25.style.display = "none";
+  iframe_t1e25.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e26() {
+  modal_t1e26.style.display = "none";
+  iframe_t1e26.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e27() {
+  modal_t1e27.style.display = "none";
+  iframe_t1e27.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e28() {
+  modal_t1e28.style.display = "none";
+  iframe_t1e28.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e29() {
+  modal_t1e29.style.display = "none";
+  iframe_t1e29.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e30() {
+  modal_t1e30.style.display = "none";
+  iframe_t1e30.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e31() {
+  modal_t1e31.style.display = "none";
+  iframe_t1e31.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e32() {
+  modal_t1e32.style.display = "none";
+  iframe_t1e32.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e33() {
+  modal_t1e33.style.display = "none";
+  iframe_t1e33.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e34() {
+  modal_t1e34.style.display = "none";
+  iframe_t1e34.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e35() {
+  modal_t1e35.style.display = "none";
+  iframe_t1e35.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e36() {
+  modal_t1e36.style.display = "none";
+  iframe_t1e36.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e37() {
+  modal_t1e37.style.display = "none";
+  iframe_t1e37.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e38() {
+  modal_t1e38.style.display = "none";
+  iframe_t1e38.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e39() {
+  modal_t1e39.style.display = "none";
+  iframe_t1e39.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e40() {
+  modal_t1e40.style.display = "none";
+  iframe_t1e40.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e41() {
+  modal_t1e41.style.display = "none";
+  iframe_t1e41.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e42() {
+  modal_t1e42.style.display = "none";
+  iframe_t1e42.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e43() {
+  modal_t1e43.style.display = "none";
+  iframe_t1e43.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e44() {
+  modal_t1e44.style.display = "none";
+  iframe_t1e44.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e45() {
+  modal_t1e45.style.display = "none";
+  iframe_t1e45.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e46() {
+  modal_t1e46.style.display = "none";
+  iframe_t1e46.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e47() {
+  modal_t1e47.style.display = "none";
+  iframe_t1e47.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e48() {
+  modal_t1e48.style.display = "none";
+  iframe_t1e48.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e49() {
+  modal_t1e49.style.display = "none";
+  iframe_t1e49.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e50() {
+  modal_t1e50.style.display = "none";
+  iframe_t1e50.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e51() {
+  modal_t1e51.style.display = "none";
+  iframe_t1e51.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e52() {
+  modal_t1e52.style.display = "none";
+  iframe_t1e52.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e53() {
+  modal_t1e53.style.display = "none";
+  iframe_t1e53.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e54() {
+  modal_t1e54.style.display = "none";
+  iframe_t1e54.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e55() {
+  modal_t1e55.style.display = "none";
+  iframe_t1e55.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e56() {
+  modal_t1e56.style.display = "none";
+  iframe_t1e56.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e57() {
+  modal_t1e57.style.display = "none";
+  iframe_t1e57.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e58() {
+  modal_t1e58.style.display = "none";
+  iframe_t1e58.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e59() {
+  modal_t1e59.style.display = "none";
+  iframe_t1e59.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e60() {
+  modal_t1e60.style.display = "none";
+  iframe_t1e60.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e61() {
+  modal_t1e61.style.display = "none";
+  iframe_t1e61.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e62() {
+  modal_t1e62.style.display = "none";
+  iframe_t1e62.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e63() {
+  modal_t1e63.style.display = "none";
+  iframe_t1e63.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e64() {
+  modal_t1e64.style.display = "none";
+  iframe_t1e64.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e65() {
+  modal_t1e65.style.display = "none";
+  iframe_t1e65.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e66() {
+  modal_t1e66.style.display = "none";
+  iframe_t1e66.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e67() {
+  modal_t1e67.style.display = "none";
+  iframe_t1e67.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e68() {
+  modal_t1e68.style.display = "none";
+  iframe_t1e68.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e69() {
+  modal_t1e69.style.display = "none";
+  iframe_t1e69.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e70() {
+  modal_t1e70.style.display = "none";
+  iframe_t1e70.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e71() {
+  modal_t1e71.style.display = "none";
+  iframe_t1e71.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e72() {
+  modal_t1e72.style.display = "none";
+  iframe_t1e72.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e73() {
+  modal_t1e73.style.display = "none";
+  iframe_t1e73.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e74() {
+  modal_t1e74.style.display = "none";
+  iframe_t1e74.src = "";
+  body.style.overflow = "auto";
+}
+
+
+document.getElementById("btn-t1e1").addEventListener("click", mostrar_modal_t1e1);
+document.getElementById("btn-t1e2").addEventListener("click", mostrar_modal_t1e2);
+document.getElementById("btn-t1e3").addEventListener("click", mostrar_modal_t1e3);
+document.getElementById("btn-t1e4").addEventListener("click", mostrar_modal_t1e4);
+document.getElementById("btn-t1e5").addEventListener("click", mostrar_modal_t1e5);
+document.getElementById("btn-t1e6").addEventListener("click", mostrar_modal_t1e6);
+document.getElementById("btn-t1e7").addEventListener("click", mostrar_modal_t1e7);
+document.getElementById("btn-t1e8").addEventListener("click", mostrar_modal_t1e8);
+document.getElementById("btn-t1e9").addEventListener("click", mostrar_modal_t1e9);
+document.getElementById("btn-t1e10").addEventListener("click", mostrar_modal_t1e10);
+document.getElementById("btn-t1e11").addEventListener("click", mostrar_modal_t1e11);
+document.getElementById("btn-t1e12").addEventListener("click", mostrar_modal_t1e12);
+document.getElementById("btn-t1e13").addEventListener("click", mostrar_modal_t1e13);
+document.getElementById("btn-t1e14").addEventListener("click", mostrar_modal_t1e14);
+document.getElementById("btn-t1e15").addEventListener("click", mostrar_modal_t1e15);
+document.getElementById("btn-t1e16").addEventListener("click", mostrar_modal_t1e16);
+document.getElementById("btn-t1e17").addEventListener("click", mostrar_modal_t1e17);
+document.getElementById("btn-t1e18").addEventListener("click", mostrar_modal_t1e18);
+document.getElementById("btn-t1e19").addEventListener("click", mostrar_modal_t1e19);
+document.getElementById("btn-t1e20").addEventListener("click", mostrar_modal_t1e20);
+document.getElementById("btn-t1e21").addEventListener("click", mostrar_modal_t1e21);
+document.getElementById("btn-t1e22").addEventListener("click", mostrar_modal_t1e22);
+document.getElementById("btn-t1e23").addEventListener("click", mostrar_modal_t1e23);
+document.getElementById("btn-t1e24").addEventListener("click", mostrar_modal_t1e24);
+document.getElementById("btn-t1e25").addEventListener("click", mostrar_modal_t1e25);
+document.getElementById("btn-t1e26").addEventListener("click", mostrar_modal_t1e26);
+document.getElementById("btn-t1e27").addEventListener("click", mostrar_modal_t1e27);
+document.getElementById("btn-t1e28").addEventListener("click", mostrar_modal_t1e28);
+document.getElementById("btn-t1e29").addEventListener("click", mostrar_modal_t1e29);
+document.getElementById("btn-t1e30").addEventListener("click", mostrar_modal_t1e30);
+document.getElementById("btn-t1e31").addEventListener("click", mostrar_modal_t1e31);
+document.getElementById("btn-t1e32").addEventListener("click", mostrar_modal_t1e32);
+document.getElementById("btn-t1e33").addEventListener("click", mostrar_modal_t1e33);
+document.getElementById("btn-t1e34").addEventListener("click", mostrar_modal_t1e34);
+document.getElementById("btn-t1e35").addEventListener("click", mostrar_modal_t1e35);
+document.getElementById("btn-t1e36").addEventListener("click", mostrar_modal_t1e36);
+document.getElementById("btn-t1e37").addEventListener("click", mostrar_modal_t1e37);
+document.getElementById("btn-t1e38").addEventListener("click", mostrar_modal_t1e38);
+document.getElementById("btn-t1e39").addEventListener("click", mostrar_modal_t1e39);
+document.getElementById("btn-t1e40").addEventListener("click", mostrar_modal_t1e40);
+document.getElementById("btn-t1e41").addEventListener("click", mostrar_modal_t1e41);
+document.getElementById("btn-t1e42").addEventListener("click", mostrar_modal_t1e42);
+document.getElementById("btn-t1e43").addEventListener("click", mostrar_modal_t1e43);
+document.getElementById("btn-t1e44").addEventListener("click", mostrar_modal_t1e44);
+document.getElementById("btn-t1e45").addEventListener("click", mostrar_modal_t1e45);
+document.getElementById("btn-t1e46").addEventListener("click", mostrar_modal_t1e46);
+document.getElementById("btn-t1e47").addEventListener("click", mostrar_modal_t1e47);
+document.getElementById("btn-t1e48").addEventListener("click", mostrar_modal_t1e48);
+document.getElementById("btn-t1e49").addEventListener("click", mostrar_modal_t1e49);
+document.getElementById("btn-t1e50").addEventListener("click", mostrar_modal_t1e50);
+document.getElementById("btn-t1e51").addEventListener("click", mostrar_modal_t1e51);
+document.getElementById("btn-t1e52").addEventListener("click", mostrar_modal_t1e52);
+document.getElementById("btn-t1e53").addEventListener("click", mostrar_modal_t1e53);
+document.getElementById("btn-t1e54").addEventListener("click", mostrar_modal_t1e54);
+document.getElementById("btn-t1e55").addEventListener("click", mostrar_modal_t1e55);
+document.getElementById("btn-t1e56").addEventListener("click", mostrar_modal_t1e56);
+document.getElementById("btn-t1e57").addEventListener("click", mostrar_modal_t1e57);
+document.getElementById("btn-t1e58").addEventListener("click", mostrar_modal_t1e58);
+document.getElementById("btn-t1e59").addEventListener("click", mostrar_modal_t1e59);
+document.getElementById("btn-t1e60").addEventListener("click", mostrar_modal_t1e60);
+document.getElementById("btn-t1e61").addEventListener("click", mostrar_modal_t1e61);
+document.getElementById("btn-t1e62").addEventListener("click", mostrar_modal_t1e62);
+document.getElementById("btn-t1e63").addEventListener("click", mostrar_modal_t1e63);
+document.getElementById("btn-t1e64").addEventListener("click", mostrar_modal_t1e64);
+document.getElementById("btn-t1e65").addEventListener("click", mostrar_modal_t1e65);
+document.getElementById("btn-t1e66").addEventListener("click", mostrar_modal_t1e66);
+document.getElementById("btn-t1e67").addEventListener("click", mostrar_modal_t1e67);
+document.getElementById("btn-t1e68").addEventListener("click", mostrar_modal_t1e68);
+document.getElementById("btn-t1e69").addEventListener("click", mostrar_modal_t1e69);
+document.getElementById("btn-t1e70").addEventListener("click", mostrar_modal_t1e70);
+document.getElementById("btn-t1e71").addEventListener("click", mostrar_modal_t1e71);
+document.getElementById("btn-t1e72").addEventListener("click", mostrar_modal_t1e72);
+document.getElementById("btn-t1e73").addEventListener("click", mostrar_modal_t1e73);
+document.getElementById("btn-t1e74").addEventListener("click", mostrar_modal_t1e74);
+
+
+document.getElementById("close-t1e1").addEventListener("click", close_t1e1);
+document.getElementById("close-t1e2").addEventListener("click", close_t1e2);
+document.getElementById("close-t1e3").addEventListener("click", close_t1e3);
+document.getElementById("close-t1e4").addEventListener("click", close_t1e4);
+document.getElementById("close-t1e5").addEventListener("click", close_t1e5);
+document.getElementById("close-t1e6").addEventListener("click", close_t1e6);
+document.getElementById("close-t1e7").addEventListener("click", close_t1e7);
+document.getElementById("close-t1e8").addEventListener("click", close_t1e8);
+document.getElementById("close-t1e9").addEventListener("click", close_t1e9);
+document.getElementById("close-t1e10").addEventListener("click", close_t1e10);
+document.getElementById("close-t1e11").addEventListener("click", close_t1e11);
+document.getElementById("close-t1e12").addEventListener("click", close_t1e12);
+document.getElementById("close-t1e13").addEventListener("click", close_t1e13);
+document.getElementById("close-t1e14").addEventListener("click", close_t1e14);
+document.getElementById("close-t1e15").addEventListener("click", close_t1e15);
+document.getElementById("close-t1e16").addEventListener("click", close_t1e16);
+document.getElementById("close-t1e17").addEventListener("click", close_t1e17);
+document.getElementById("close-t1e18").addEventListener("click", close_t1e18);
+document.getElementById("close-t1e19").addEventListener("click", close_t1e19);
+document.getElementById("close-t1e20").addEventListener("click", close_t1e20);
+document.getElementById("close-t1e21").addEventListener("click", close_t1e21);
+document.getElementById("close-t1e22").addEventListener("click", close_t1e22);
+document.getElementById("close-t1e23").addEventListener("click", close_t1e23);
+document.getElementById("close-t1e24").addEventListener("click", close_t1e24);
+document.getElementById("close-t1e25").addEventListener("click", close_t1e25);
+document.getElementById("close-t1e26").addEventListener("click", close_t1e26);
+document.getElementById("close-t1e27").addEventListener("click", close_t1e27);
+document.getElementById("close-t1e28").addEventListener("click", close_t1e28);
+document.getElementById("close-t1e29").addEventListener("click", close_t1e29);
+document.getElementById("close-t1e30").addEventListener("click", close_t1e30);
+document.getElementById("close-t1e31").addEventListener("click", close_t1e31);
+document.getElementById("close-t1e32").addEventListener("click", close_t1e32);
+document.getElementById("close-t1e33").addEventListener("click", close_t1e33);
+document.getElementById("close-t1e34").addEventListener("click", close_t1e34);
+document.getElementById("close-t1e35").addEventListener("click", close_t1e35);
+document.getElementById("close-t1e36").addEventListener("click", close_t1e36);
+document.getElementById("close-t1e37").addEventListener("click", close_t1e37);
+document.getElementById("close-t1e38").addEventListener("click", close_t1e38);
+document.getElementById("close-t1e39").addEventListener("click", close_t1e39);
+document.getElementById("close-t1e40").addEventListener("click", close_t1e40);
+document.getElementById("close-t1e41").addEventListener("click", close_t1e41);
+document.getElementById("close-t1e42").addEventListener("click", close_t1e42);
+document.getElementById("close-t1e43").addEventListener("click", close_t1e43);
+document.getElementById("close-t1e44").addEventListener("click", close_t1e44);
+document.getElementById("close-t1e45").addEventListener("click", close_t1e45);
+document.getElementById("close-t1e46").addEventListener("click", close_t1e46);
+document.getElementById("close-t1e47").addEventListener("click", close_t1e47);
+document.getElementById("close-t1e48").addEventListener("click", close_t1e48);
+document.getElementById("close-t1e49").addEventListener("click", close_t1e49);
+document.getElementById("close-t1e50").addEventListener("click", close_t1e50);
+document.getElementById("close-t1e51").addEventListener("click", close_t1e51);
+document.getElementById("close-t1e52").addEventListener("click", close_t1e52);
+document.getElementById("close-t1e53").addEventListener("click", close_t1e53);
+document.getElementById("close-t1e54").addEventListener("click", close_t1e54);
+document.getElementById("close-t1e55").addEventListener("click", close_t1e55);
+document.getElementById("close-t1e56").addEventListener("click", close_t1e56);
+document.getElementById("close-t1e57").addEventListener("click", close_t1e57);
+document.getElementById("close-t1e58").addEventListener("click", close_t1e58);
+document.getElementById("close-t1e59").addEventListener("click", close_t1e59);
+document.getElementById("close-t1e60").addEventListener("click", close_t1e60);
+document.getElementById("close-t1e61").addEventListener("click", close_t1e61);
+document.getElementById("close-t1e62").addEventListener("click", close_t1e62);
+document.getElementById("close-t1e63").addEventListener("click", close_t1e63);
+document.getElementById("close-t1e64").addEventListener("click", close_t1e64);
+document.getElementById("close-t1e65").addEventListener("click", close_t1e65);
+document.getElementById("close-t1e66").addEventListener("click", close_t1e66);
+document.getElementById("close-t1e67").addEventListener("click", close_t1e67);
+document.getElementById("close-t1e68").addEventListener("click", close_t1e68);
+document.getElementById("close-t1e69").addEventListener("click", close_t1e69);
+document.getElementById("close-t1e70").addEventListener("click", close_t1e70);
+document.getElementById("close-t1e71").addEventListener("click", close_t1e71);
+document.getElementById("close-t1e72").addEventListener("click", close_t1e72);
+document.getElementById("close-t1e73").addEventListener("click", close_t1e73);
+document.getElementById("close-t1e74").addEventListener("click", close_t1e74);
+	  
+	</script>
+</body>
+</html>
