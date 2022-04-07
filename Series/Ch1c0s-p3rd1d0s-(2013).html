@@ -1,0 +1,2367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Series</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	
+	<style type="text/css">
+	  
+	  @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: #090909;
+	font-family: 'Open Sans', sans-serif;
+}
+
+a {
+	text-decoration: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.contenedor {
+	width: 90%;
+	max-width: 1000px;
+	margin: auto;
+	padding: 10px 0;
+}
+
+.selectbox {
+	width: 50%;
+	margin: auto;
+	position: relative;
+}
+
+.select {
+	background: #222;
+	width: 100%;
+	border-radius: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 5px;
+	padding: 10px 0 10px 10px;
+	position: relative;
+}
+
+.select i {
+	font-size: 23px;
+	margin-right: 13px;
+	color: #ddd;
+}
+
+.titulo {
+	margin-bottom: 10px;
+	color: #ddd;
+	font-weight: 600;
+	font-size: 16px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.descripcion {
+	font-size: 14px;
+	color: #ddd;
+}
+
+.opciones {
+	background: #191919;
+	border-radius: 10px;
+	overflow: auto;
+	width: 100%;
+	display: none;
+}
+
+.opciones.active {
+	display: block;
+	animation: fadeIn .3s forwards;
+}
+
+@keyframes fadeIn {
+	from {
+		transform: translateY(-100px) scale(.5);
+	}
+	to {
+		transform: translateY(0) scale(1);
+	}
+}
+
+.textos {
+  width: 100%;
+}
+
+.contenido-opcion {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	transition: .2s ease all;
+}
+
+.opciones .contenido-opcion {
+	padding: 9px;
+}
+
+.opciones .contenido-opcion:hover {
+  background: #101010;
+}
+
+.sinopsis {
+  padding: 0 15px;
+  color: #eee;
+  font-size: 13px;
+  text-align: justify;
+  margin-bottom: 10px;
+}
+
+/*Chapters*/
+
+.episodes {
+	overflow: auto;
+	z-index: 100;
+	width: 100%;
+	display: block;
+}
+
+.episodes .contenido-opcion {
+	background: #090909;
+	padding: 0 10px 14px 10px;
+}
+
+.episodes .contenido-opcion:hover {
+  background: #000;
+}
+
+.contenido-opcion img {
+	width: auto;
+	height: 50px;
+	margin-right: 20px;
+	border-radius: 2px;
+}
+
+/*Responsive*/
+
+@media screen and (max-width: 800px){
+	.selectbox {
+		width: 100%;
+	}
+}
+
+
+
+
+
+
+/*Cards*/
+.card {
+	width: 100%;
+	height: 100vh;
+	max-width: 1100px;
+	position: fixed;
+  font-family: 'Montserrat', sans-serif;
+  top: 50%;
+  transform: translateY(-50%);
+	background: rgba(2, 2, 2, .7);
+	display: none;
+}
+
+.contenedor-card {
+  width: 95%;
+  position: fixed;
+  background: #111;
+  border-radius: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+
+.card .contenido-card h4 {
+  text-align: center;
+	margin-bottom: 10px;
+	color: #ddd;
+}
+
+.card .contenido-card p {
+  padding: 0 10px 10px ;
+	line-height: 1.5;
+	color: #ddd;
+	font-size: 14px;
+	margin-bottom: 5px;
+	text-align: justify;
+}
+
+iframe {
+  border-radius: 7px 7px 0 0;
+}
+
+.close {
+  font-size: 50px;
+  color: #fff;
+  position: absolute;
+  display: flex;
+  top: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.season2, .season3, .season4 {
+  display: none;
+}
+	  
+	</style>
+</head>
+<body id="body">
+	
+	<div class="contenedor">
+		<form action="">
+			<div class="selectbox">
+				<div class="select" id="select">
+					<div class="contenido-select">
+						<h1 class="titulo">Temporada 1</h1>
+					</div>
+					<i class="bi bi-chevron-down"></i>
+				</div>
+
+				<div class="opciones" id="opciones">
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season1">Temporada 1</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season2">Temporada 2</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season3">Temporada 3</h1>
+							</div>
+						</div>
+					</a><!--
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season4">Temporada 4</h1>
+							</div>
+						</div>
+					</a>-->
+				</div>
+			</div>
+
+			<input type="hidden" id="inputSelect" value="">
+		</form>
+
+	</div>
+	
+	<!--Sinopsis-->
+	
+	<div class="sinopsis">
+	  <p>Cuatro adolescentes se pierden en el bosque y descubren, cuando regresan a sus casas, que están inmersos en un mundo alternativo, idéntico al mundo real, excepto por una diferencia que es sorprendente: ellos nunca nacieron.</p>
+	</div>
+	
+	
+<!--Season1-->
+	
+	<div class="episodes" id="season1">
+					<a class="opcion" id="btn-t1e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/qHGx6kVP8TLLcxcQCL1HhfHMlYf.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Episodio 1</h1>
+								<p class="descripcion">27min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/ucb8jbdDOQOwIG9svXCelJ24QUE.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Episodio 2</h1>
+								<p class="descripcion">26min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/2tb8cjG5i2kOcpagxU2jLvtiy9t.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Episodio 3</h1>
+								<p class="descripcion">26min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/zxB3jwB61yTM4VN9RK6fpoU0zfz.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Episodio 4</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/Thbk4copC8rN3320ReSRN0GvMo.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Episodio 5</h1>
+								<p class="descripcion">25min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/ksHJJJlqEi4hJ9VcgsdX43mr1ZJ.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Episodio 6</h1>
+								<p class="descripcion">26min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/k7Z5hWlGqo2KM4XDBtzQCJrSYkC.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Episodio 7</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/7hublduymvFP30TBJ3vx1B4XUbu.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Episodio 8</h1>
+								<p class="descripcion">27min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/EtH5fS95c4ua2ruvlnwt4IKemK.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. Episodio 9</h1>
+								<p class="descripcion">26min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/l6cvAXdmw0WmgLq7YnhFkBh49Ij.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Episodio 10</h1>
+								<p class="descripcion">27min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/kImqjyQbv2AHX4g6WaKqT9AFINt.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Episodio 11</h1>
+								<p class="descripcion">26min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/j9LHkxi5zfGZICw5h6D4ySxddLc.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Episodio 12</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/8Q5OnihJbtR5TT1U744Zq0dJO4f.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Episodio 13</h1>
+								<p class="descripcion">25min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season2-->
+			
+	<div class="episodes season2" id="season2">
+					<a class="opcion" id="btn-t2e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/6rbWA9AWXhzFZAFIW4TP05hEyMM.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Episodio 1</h1>
+								<p class="descripcion">27min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/sbKkUAAvQCP6ha535cp7T7MXv1b.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Episodio 2</h1>
+								<p class="descripcion">26min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/q97a884yqwrNAZgkMpgNy9FaC4F.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Episodio 3</h1>
+								<p class="descripcion">26min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w320_and_h180_bestv2/zBPUM0gahIovj3rZ1XQ7XcAzrlz.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Episodio 4</h1>
+								<p class="descripcion">27min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w320_and_h180_bestv2/vbE8ZeX4fzKj0dwNrwTAojwIjpq.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Episodio 5</h1>
+								<p class="descripcion">26min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w320_and_h180_bestv2/lDjN84vqjjo28buGTyaMnMR9IVe.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Episodio 6</h1>
+								<p class="descripcion">26min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w320_and_h180_bestv2/hB1PQ29w1Olf3lZh2E7PruW2uiv.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Episodio 7</h1>
+								<p class="descripcion">27min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w320_and_h180_bestv2/mybkg82loaa8LZ2grDyZLbFowlB.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Episodio 8</h1>
+								<p class="descripcion">26min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w320_and_h180_bestv2/rKsSkVg3F8ilU3NEqtjKzqhMPHh.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. Episodio 9</h1>
+								<p class="descripcion">26min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w320_and_h180_bestv2/rtAtN6TA0YRz18rT5qvKVBdBscj.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Episodio 10</h1>
+								<p class="descripcion">26min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w320_and_h180_bestv2/fMQspCWtCHzfAME2YKxEDbE4Ost.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Episodio 11</h1>
+								<p class="descripcion">27min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w320_and_h180_bestv2/afycwxpo6WOL6GrUfLqeJni57bq.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Episodio 12</h1>
+								<p class="descripcion">26min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w320_and_h180_bestv2/klI2caTsqzHlmlM43rhAfFInblw.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Episodio 13</h1>
+								<p class="descripcion">26min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season3-->
+			
+	<div class="episodes season3" id="season3">
+					<a class="opcion" id="btn-t3e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/yxZtJ000y8Ig0QR9sBV6nw4OMtN.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. El chico nuevo</h1>
+								<p class="descripcion">26min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/ljX4bXe1cGZFbm1N0xLWYiSr8oE.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. ¿Qué pasó en Bremin?</h1>
+								<p class="descripcion">26min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/5zPczSI1Tu90GSh9LGdFPIht73.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. No estamos solos</h1>
+								<p class="descripcion">27min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/oFYO9zhhIurS7ZCNOUZVETWUNP0.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Encuentro con la magia</h1>
+								<p class="descripcion">25min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/50IHwi5ie1638fer6bgjfsZz77N.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Bates al rescate</h1>
+								<p class="descripcion">26min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/fe7Ynuq5JdLzf94PSb8oWzGAX5a.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. ¿Estamos en casa?</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/k5yyd4t2UqD9GExraYtR9LQni8U.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Problemas con Ben</h1>
+								<p class="descripcion">25min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/ztduYO6tGg2X3NLRHH6ZGhEn9KT.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Regreso al Mundo Vacío</h1>
+								<p class="descripcion">25min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/lbBayJmyZGJBub1UM9kPX95jYFN.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. El hechizo de la verdad</h1>
+								<p class="descripcion">26min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/79nyJ98ltcfIa4B3jF3QpYwaQm6.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Visitantes no deseados</h1>
+								<p class="descripcion">26min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/vqpUx0VXh8JW2cZZQoAPbNDovcr.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. En busca de los Atridax</h1>
+								<p class="descripcion">26min</p>
+							</div>
+						</div>
+					</a><!--
+					<a class="opcion" id="btn-t3e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/pny78uw9JSpj8LYsp6xwQPpBkF5.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. El nacimiento del megademonio</h1>
+								<p class="descripcion">http</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t3e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/1UOOWU8ERecDwJeCUt77XTiGp6.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. El destino de Bremin</h1>
+								<p class="descripcion">http</p>
+							</div>
+						</div>
+					</a>-->
+				</div>
+			</div>
+			
+
+<!--Season4--><!--
+			
+	<div class="episodes season4" id="season4">
+					<a class="opcion" id="btn-t4e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/sdEXGGKWFPladndet5bDn3h1Zsq.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Ya no estamos solos</h1>
+								<p class="descripcion">http</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/sXLDmkKwHHvbXdxQatnqMqWNeC8.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Secretos, mentiras y parásitos</h1>
+								<p class="descripcion">http</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/lviOIISaw7V4mSJJDyKstZaCpR0.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Perdido en el espacio negativo</h1>
+								<p class="descripcion">http</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/vTRpAZnWmSvzihV4P0Bn7HwEUGB.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. El chico Cool</h1>
+								<p class="descripcion">http</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/xbAASuPT6zw5nRPqYP1G4EgMSPK.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Peligro extraño</h1>
+								<p class="descripcion">http</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/ih6we6I5CP4xYmweVPHlApRwz2X.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Identidad equivocada</h1>
+								<p class="descripcion">http</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/uxNJCIy73n3kBjUhKHY2HvcakWT.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Mantén a tus amigos cerca</h1>
+								<p class="descripcion">http</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/oh9Cjavepty0TuLGowHhPgV5otI.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Fuera del mapa</h1>
+								<p class="descripcion">http</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/bYJHrQqtnqrsHS23i1w6roKgX52.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. Problemas de dobles</h1>
+								<p class="descripcion">http</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/c3rBr3kl7103m9iSWQk60gEFXrJ.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Ataque de los nematodos</h1>
+								<p class="descripcion">http</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/eyeTH8aONYhENBYuMm10DUcx07F.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. El elegido</h1>
+								<p class="descripcion">http</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/A31eOBCWFuEu3WcYR7VyYGbCckg.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. El mundo alternativo está aquí</h1>
+								<p class="descripcion">http</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t4e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/sqasJQQ0Rhf9L9CquGL8iUnVTrM.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. La entidad se enfrenta</h1>
+								<p class="descripcion">http</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+	
+
+
+
+
+
+
+	<!--Season1-->
+<div class="card" id="modal_t1e1">
+  
+<div class="close" id="close-t1e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Episodio 1</h4>
+		<p>Tras sobrevivir a una noche aterradora en un bosque, cuatro adolescentes con muy poco en común vuelven a casa y descubren que ya nada es lo que era.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e2">
+  
+<div class="close" id="close-t1e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Episodio 2</h4>
+		<p>Los chicos, reunidos en un refugio abandonado, tienen que afrontar el hecho de que son unos completos desconocidos para sus amigos y familias.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e3">
+  
+<div class="close" id="close-t1e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Episodio 3</h4>
+		<p>El empeño de los chicos por demostrar que siguen existiendo lleva a Sam a descubrir que él mismo ha sido reemplazado por Sammy, un alter ego.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e4">
+  
+<div class="close" id="close-t1e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Episodio 4</h4>
+		<p>La obsesión de Andy por encontrar una explicación racional al enigma del que son parte, casi acaba con él atropellado bajo las ruedas de un autobús escolar.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e5">
+  
+<div class="close" id="close-t1e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Episodio 5</h4>
+		<p>Felix descubre que los otros chicos poseen los poderes mágicos que necesitan para enfrentarse a la fuerza maligna que los acecha.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e6">
+  
+<div class="close" id="close-t1e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Episodio 6</h4>
+		<p>El hambre obliga a los chicos a tomar medidas desesperadas, y la policía de Bremin toman custodia de Jake. El sargento Riles interroga a Jake.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e7">
+  
+<div class="close" id="close-t1e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Episodio 7</h4>
+		<p>Sam debe enfrentarse a sus defectos mientras el demonio lanza su ataque más virulento, esta vez sobre el instituto Bremin.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e8">
+  
+<div class="close" id="close-t1e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Episodio 8</h4>
+		<p>Los chicos descubren la verdad sobre Phoebe y sospechan que está detrás los ataques. Mientras tanto, el demonio adopta la apariencia de la abuela de Andy.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e9">
+  
+<div class="close" id="close-t1e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. Episodio 9</h4>
+		<p>Una excursión escolar al mismo bosque donde se perdieron los chicos presenta una oportunidad para que estos puedan volver a casa y recuperar sus vidas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e10">
+  
+<div class="close" id="close-t1e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Episodio 10</h4>
+		<p>Cuando el sargento Riles descubre el escondite de los niños, llaman a Phoebe para que les dé refugio. Mientras tanto la fuerza maligna apunta a Sam para acercarse al talismán.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e11">
+  
+<div class="close" id="close-t1e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Episodio 11</h4>
+		<p>El Día de la Madre llega cargado de problemas para los chicos cuando las dobles de sus madres padecen la misma enfermedad misteriosa.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e12">
+  
+<div class="close" id="close-t1e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Episodio 12</h4>
+		<p>Los chicos no pueden dar crédito al hecho de que Felix les haya traicionado. Sin embargo, es él quien ha descubierto la manera de volver a casa.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e13">
+  
+<div class="close" id="close-t1e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Episodio 13</h4>
+		<p>Cuando el demonio está a punto de dar su golpe final, Andy, Jake y Sam se unen para salvar a Felix y sirviéndose de un hechizo vuelven a su propio mundo.</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season2-->
+<div class="card" id="modal_t2e1">
+  
+<div class="close" id="close-t2e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Episodio 1</h4>
+		<p>Felix, Andy, Jake y Sam se dan cuenta de que algunas cosas han cambiado mientras estaban fuera, sobre todo ellos. Los conflictos entre Andy y Felix dan un giro radical.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e2">
+  
+<div class="close" id="close-t2e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Episodio 2</h4>
+		<p>La desaparición de Andy hace que sus amigos intenten de todo por recuperarlo, incluso hechizos que no comprenden, pero mientras tanto siguen sospechando de Alice.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e3">
+  
+<div class="close" id="close-t2e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Episodio 3</h4>
+		<p>Conforme la desaparición de Andy se vuelve pública, las sospechas recaen en Felix, Jake y Sam. Oscar espía a Alice y descubre que ella sabe dónde está el libro.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e4">
+  
+<div class="close" id="close-t2e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Episodio 4</h4>
+		<p>Roland se centra en Felix y Liv, la hermana de Andy, revisa su historial de navegación. Los chicos descubren que necesitan otro elemento de agua para reemplazar a Andy.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e5">
+  
+<div class="close" id="close-t2e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Episodio 5</h4>
+		<p>Jake muestra extraños síntomas y la abuela de Andy les ayuda. Ningún hechizo funciona hasta que Felix descubre cuál es el elemento que falta.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e6">
+  
+<div class="close" id="close-t2e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Episodio 6</h4>
+		<p>Los chicos vuelven al universo alternativo, pero esta vez no están solos. Phoebe ofrece su ayuda por un módico precio y alguien más atraviesa el portal.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e7">
+  
+<div class="close" id="close-t2e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Episodio 7</h4>
+		<p>A Ellen le cuesta aceptar su nueva realidad y sus poderes. A Jake le gusta tener al policía Gary cerca, pero eso tendrá sus consecuencias cuando los universos se fundan.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e8">
+  
+<div class="close" id="close-t2e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Episodio 8</h4>
+		<p>Andy parece estar cerca hasta que el talismán desaparece. Jake siente debilidad por Saskia, pero Ellen, Sam y Felix no confían en ella.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e9">
+  
+<div class="close" id="close-t2e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. Episodio 9</h4>
+		<p>El grupo consigue contactar con Andy, pero una tormenta bloquea la conexión. Alice soborna a Oscar para seguir buscando el talismán.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e10">
+  
+<div class="close" id="close-t2e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Episodio 10</h4>
+		<p>Roland se enfrenta a Oscar y Felix tras encontrar indicios de magia en la cabaña de Alice. Jake se enfrenta a Alice y Viv le cuenta a Roland todo lo que ha descubierto.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e11">
+  
+<div class="close" id="close-t2e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Episodio 11</h4>
+		<p>Durante el vórtice, Roland y Sam intercambian cuerpos pero nadie se da cuenta. Roland intenta seguir adelante con su investigación, aunque Sam tiene otros planes.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e12">
+  
+<div class="close" id="close-t2e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Episodio 12</h4>
+		<p>La escuela esconde secretos inquietantes. Los chicos esperan que el nuevo talismán traiga a Andy de vuelta, pero Alice tiene otros planes. Mientras tanto Roland es retirado del caso.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e13">
+  
+<div class="close" id="close-t2e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Episodio 13</h4>
+		<p>Ahora Phoebe tiene todo el poder, pero Andy sigue en el espacio negativo. A Felix se le ocurre un peligroso plan para traer a Andy de vuelta de una vez por todas.</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season3-->
+<div class="card" id="modal_t3e1">
+  
+<div class="close" id="close-t3e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. El chico nuevo</h4>
+		<p>Durante su primer día de escuela, Luke encuentra un grupo de amigos bastante insólito. Pero todo se vuelve más extraño aún cuando varias personas comienzan a desaparecer.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e2">
+  
+<div class="close" id="close-t3e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. ¿Qué pasó en Bremin?</h4>
+		<p>El grupo camina por las calles de una ciudad que parece deshabitada mientras buscan señales de vida, pero pronto se encuentran bajo ataque de una fuente de vida extraña.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e3">
+  
+<div class="close" id="close-t3e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. No estamos solos</h4>
+		<p>El grupo continúa alimentándose de lo que va encontrando en un Bremin vacío. Jesse no se lo cuenta a nadie, pero está preocupado porque le queda poca insulina.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e4">
+  
+<div class="close" id="close-t3e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Encuentro con la magia</h4>
+		<p>El grupo se enfrenta con una criatura temible mientras intentan encontrar a Brooklyn, pero descubren que tienen habilidades mágicas que pueden usar.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e5">
+  
+<div class="close" id="close-t3e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Bates al rescate</h4>
+		<p>El Sr. Bates, cada vez más trastornado, insiste en que todo es normal y encierra a la pandilla en un salón de clases, pero finalmente escapan y lanzan el hechizo de retorno dimensional.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e6">
+  
+<div class="close" id="close-t3e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. ¿Estamos en casa?</h4>
+		<p>La pandilla llega a casa y todo parece estar perfecto, las cosas no podrían mejorar, excepto para Nicco, que sospecha que algo anda mal.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e7">
+  
+<div class="close" id="close-t3e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Problemas con Ben</h4>
+		<p>Tras llevar a cabo un hechizo para volver, el grupo se enfrenta a un nuevo dilema: ahora hay dos Ben en Bremin y uno de ellos no tiene buenas intenciones.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e8">
+  
+<div class="close" id="close-t3e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Regreso al Mundo Vacío</h4>
+		<p>Los dos Ben siguen atrapados y se pelean en un Bremin vacío. Los amigos intentan decidir si deben iniciar un plan de rescate más arriesgado.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e9">
+  
+<div class="close" id="close-t3e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. El hechizo de la verdad</h4>
+		<p>El grupo trata de encontrar una solución para poder distinguir a los dos Ben, pero todo se arruina cuando Health dice mal el hechizo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e10">
+  
+<div class="close" id="close-t3e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Visitantes no deseados</h4>
+		<p>Los Mini Demons llegan a Bremin High y causan estragos. La pandilla los atrapa y los guarda en sus mochilas, pero los demonios ejercen una influencia negativa sobre la pandilla. ¿Puede Ben Two detenerlos antes de que sea demasiado tarde?</p>
+	</div>
+	</div>
+</div>
+
+
+<div class="card" id="modal_t3e11">
+  
+<div class="close" id="close-t3e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. En busca de los Atridax</h4>
+		<p>Desaparecen los maletines con los Atridax y el grupo quiere usar la magia para encontrarlos. Para ello necesitan a Luke, que tiene un montón de problemas.</p>
+	</div>
+	</div>
+</div><!--
+
+<div class="card" id="modal_t3e12">
+  
+<div class="close" id="close-t3e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. El nacimiento del megademonio</h4>
+		<p>La pandilla está a la caza del talismán perdido. Se dan cuenta de que Kayla lo tiene, pero es demasiado tarde. Ella ha sido engañada por el Ben malo. ¿Podrá Nicco salvar a su hermana?</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t3e13">
+  
+<div class="close" id="close-t3e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t3e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. El destino de Bremin</h4>
+		<p>Kayla no se siente muy bien y descubre que tiene parte del demonio dentro de ella. Por esta razón, el grupo decide caminar hacia el bosque para enfrentarse a él.</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season4--><!--
+<div class="card" id="modal_t4e1">
+  
+<div class="close" id="close-t4e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Ya no estamos solos</h4>
+		<p>Los Chicos Perdidos están de regreso y los intentos de Luke de convencer a la pandilla de que una nueva amenaza es inminente son descartados, hasta que la amenaza resulta demasiado grande para ignorarla.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e2">
+  
+<div class="close" id="close-t4e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Secretos, mentiras y parásitos</h4>
+		<p>Mientras la pandilla lucha contra la última amenaza, la preocupación de Jesse por un acosador cibernético pone en riesgo su mayor secreto. Cuando las criaturas amenazantes atacan de nuevo, la pandilla contraataca enviándolas fuera de este mundo, pero ¿a qué precio?</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e3">
+  
+<div class="close" id="close-t4e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Perdido en el espacio negativo</h4>
+		<p>Nicco pone en peligro tanto el plan de la pandilla para rescatar a uno de los suyos como su ambición futbolística, pero cuando Bates se acerca, ¿puede Nicco redimirse y salvar el día?</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e4">
+  
+<div class="close" id="close-t4e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. El chico Cool</h4>
+		<p>Bates está en pie de guerra. Convencido de que está cerca de exponer una conspiración que afecta a Bremin High, interroga a la pandilla. ¿Alguno de ellos se romperá bajo la presión? Mientras tanto, la llegada de un extraño pone a Heath bajo los reflectores.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e5">
+  
+<div class="close" id="close-t4e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Peligro extraño</h4>
+		<p>Desesperados por recuperar el libro de Félix, la pandilla busca a Zeb, el misterioso extraño. Pero cuando secuestran a Luke, todos se ven envueltos en una trampa peligrosa.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e6">
+  
+<div class="close" id="close-t4e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Identidad equivocada</h4>
+		<p>Cuando un amigo de repente se convierte en enemigo, la pandilla queda conmocionada. Mientras tanto, Jesse se enfrenta a su acosador cibernético y obtiene una victoria inesperada.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e7">
+  
+<div class="close" id="close-t4e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Mantén a tus amigos cerca</h4>
+		<p>Mientras la pandilla lucha contra uno de los suyos, se ven obligados a enfrentar algunas verdades caseras. Pero eso no es todo lo que aprenden: ¿se equivocaron con Zeb?</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e8">
+  
+<div class="close" id="close-t4e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Fuera del mapa</h4>
+		<p>Los Chicos Perdidos toman un giro equivocado en su búsqueda para encontrar a Zeb, poniéndolos en peligro y huyendo. Mientras tanto, Ben y Ellen decodifican las pistas dejadas por Zeb y tratan de encontrar la manera de llevarlas a casa.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e9">
+  
+<div class="close" id="close-t4e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. Problemas de dobles</h4>
+		<p>Capturados, Nicco y Luke son interrogados y obligados a enfrentarse a versiones alternativas de sí mismos. Heath y Jesse se enteran de que sus amigos están encarcelados en un centro de alta seguridad y planean una fuga.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e10">
+  
+<div class="close" id="close-t4e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Ataque de los nematodos</h4>
+		<p>La pandilla y sus dobles unen sus fuerzas para tratar de escapar de sus captores en medio de los crecientes ataques de nematodos, pero ¿podrán reparar el talismán a tiempo para evitar la tragedia y encontrar el camino a casa?</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e11">
+  
+<div class="close" id="close-t4e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. El elegido</h4>
+		<p>La pandilla contacta a Zeb y descubre que uno de ellos es el guardián todopoderoso del multiverso y debe viajar a Negative Space para salvar el suyo y todos los mundos de la Entidad, el enemigo más poderoso al que se han enfrentado. Pero, ¿quién es realmente el Guardián?</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e12">
+  
+<div class="close" id="close-t4e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. El mundo alternativo está aquí</h4>
+		<p>Con The Guardian en Negative Space, la pandilla cree que han salvado el multiverso hasta que un evento catastrófico en Bremin High sugiere lo contrario. ¿Se verá obligada la pandilla a exponer sus poderes y magia para salvar la escuela?</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t4e13">
+  
+<div class="close" id="close-t4e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t4e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. La entidad se enfrenta</h4>
+		<p>La pandilla llega a Negative Space para un enfrentamiento final con la Entidad: el destino del multiverso está en sus manos. Si tan solo el Guardián pudiera recordar el plan.</p>
+	</div>
+	</div>
+</div>-->
+
+
+	<script>
+	  
+//select
+const select = document.querySelector('#select');
+const opciones = document.querySelector('#opciones');
+const contenidoSelect = document.querySelector('#select .contenido-select');
+const hiddenInput = document.querySelector('#inputSelect');
+
+document.querySelectorAll('#opciones > .opcion').forEach((opcion) => {
+	opcion.addEventListener('click', (e) => {
+		e.preventDefault();
+		contenidoSelect.innerHTML = e.currentTarget.innerHTML;
+		select.classList.toggle('active');
+		opciones.classList.toggle('active');
+		hiddenInput.value = e.currentTarget.querySelector('.titulo').innerText;
+	});
+});
+
+select.addEventListener('click', () => {
+	select.classList.toggle('active');
+	opciones.classList.toggle('active');
+});
+
+
+
+
+
+
+/*open modal*/
+/*Season1*/
+function mostrar_modal_t1e1() {
+  modal_t1e1.style.display = "flex";
+  iframe_t1e1.src = "https://uqload.com/embed-vh4craw9akgb.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e2() {
+  modal_t1e2.style.display = "flex";
+  iframe_t1e2.src = "https://uqload.com/embed-q2sqrmy826sa.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e3() {
+  modal_t1e3.style.display = "flex";
+  iframe_t1e3.src = "https://uqload.com/embed-3iwvg5pupikg.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e4() {
+  modal_t1e4.style.display = "flex";
+  iframe_t1e4.src = "https://uqload.com/embed-4hxiv6851bll.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e5() {
+  modal_t1e5.style.display = "flex";
+  iframe_t1e5.src = "https://uqload.com/embed-xuwnp7dum45o.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e6() {
+  modal_t1e6.style.display = "flex";
+  iframe_t1e6.src = "https://uqload.com/embed-1hh7llco1z04.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e7() {
+  modal_t1e7.style.display = "flex";
+  iframe_t1e7.src = "https://uqload.com/embed-10ay52123kf4.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e8() {
+  modal_t1e8.style.display = "flex";
+  iframe_t1e8.src = "https://uqload.com/embed-1z31dskwya72.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e9() {
+  modal_t1e9.style.display = "flex";
+  iframe_t1e9.src = "https://uqload.com/embed-c1zaldst8qcj.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e10() {
+  modal_t1e10.style.display = "flex";
+  iframe_t1e10.src = "https://uqload.com/embed-dfntgjxyatkv.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e11() {
+  modal_t1e11.style.display = "flex";
+  iframe_t1e11.src = "https://uqload.com/embed-p5lg681m4two.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e12() {
+  modal_t1e12.style.display = "flex";
+  iframe_t1e12.src = "https://uqload.com/embed-rrebezkjivla.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e13() {
+  modal_t1e13.style.display = "flex";
+  iframe_t1e13.src = "https://uqload.com/embed-tbaijs8rivot.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season2*/
+function mostrar_modal_t2e1() {
+  modal_t2e1.style.display = "flex";
+  iframe_t2e1.src = "https://uqload.com/embed-8cxw8aqerjqs.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e2() {
+  modal_t2e2.style.display = "flex";
+  iframe_t2e2.src = "https://uqload.com/embed-anrd8swzq6yw.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e3() {
+  modal_t2e3.style.display = "flex";
+  iframe_t2e3.src = "https://uqload.com/embed-pj9g12h9drvb.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e4() {
+  modal_t2e4.style.display = "flex";
+  iframe_t2e4.src = "https://uqload.com/embed-9onrrh746yki.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e5() {
+  modal_t2e5.style.display = "flex";
+  iframe_t2e5.src = "https://uqload.com/embed-z19ybfn7ixkm.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e6() {
+  modal_t2e6.style.display = "flex";
+  iframe_t2e6.src = "https://uqload.com/embed-fei7k7ec4991.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e7() {
+  modal_t2e7.style.display = "flex";
+  iframe_t2e7.src = "https://uqload.com/embed-jm5ex9jnqap9.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e8() {
+  modal_t2e8.style.display = "flex";
+  iframe_t2e8.src = "https://uqload.com/embed-5vlbmwao837j.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e9() {
+  modal_t2e9.style.display = "flex";
+  iframe_t2e9.src = "https://uqload.com/embed-zlzoojgzhbl6.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e10() {
+  modal_t2e10.style.display = "flex";
+  iframe_t2e10.src = "https://uqload.com/embed-wtuxiaxwktha.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e11() {
+  modal_t2e11.style.display = "flex";
+  iframe_t2e11.src = "https://uqload.com/embed-3fkczuct64o7.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e12() {
+  modal_t2e12.style.display = "flex";
+  iframe_t2e12.src = "https://uqload.com/embed-ekzvpb1jh879.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e13() {
+  modal_t2e13.style.display = "flex";
+  iframe_t2e13.src = "https://uqload.com/embed-96z5eiza1bjt.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season3*/
+function mostrar_modal_t3e1() {
+  modal_t3e1.style.display = "flex";
+  iframe_t3e1.src = "https://uqload.com/embed-2058d79w2bs6.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e2() {
+  modal_t3e2.style.display = "flex";
+  iframe_t3e2.src = "https://uqload.com/embed-6rc2qfwprvkf.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e3() {
+  modal_t3e3.style.display = "flex";
+  iframe_t3e3.src = "https://uqload.com/embed-9zwa1ha8w7yk.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e4() {
+  modal_t3e4.style.display = "flex";
+  iframe_t3e4.src = "https://uqload.com/embed-9qgfr0yh8dt1.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e5() {
+  modal_t3e5.style.display = "flex";
+  iframe_t3e5.src = "https://uqload.com/embed-iyb4gg1a5p4x.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e6() {
+  modal_t3e6.style.display = "flex";
+  iframe_t3e6.src = "https://uqload.com/embed-hni8d63d35cv.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e7() {
+  modal_t3e7.style.display = "flex";
+  iframe_t3e7.src = "https://uqload.com/embed-xdfa911x3wiu.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e8() {
+  modal_t3e8.style.display = "flex";
+  iframe_t3e8.src = "https://uqload.com/embed-3n3dmkw1i3qu.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e9() {
+  modal_t3e9.style.display = "flex";
+  iframe_t3e9.src = "https://uqload.com/embed-dwcfi0pfa8w9.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e10() {
+  modal_t3e10.style.display = "flex";
+  iframe_t3e10.src = "https://uqload.com/embed-wx0pmy5wtv9b.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e11() {
+  modal_t3e11.style.display = "flex";
+  iframe_t3e11.src = "https://uqload.com/embed-pjd8d75j02o1.html";
+  body.style.overflow = "hidden";
+}/*
+function mostrar_modal_t3e12() {
+  modal_t3e12.style.display = "flex";
+  iframe_t3e12.src = "http";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t3e13() {
+  modal_t3e13.style.display = "flex";
+  iframe_t3e13.src = "http";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season4*//*
+function mostrar_modal_t4e1() {
+  modal_t4e1.style.display = "flex";
+  iframe_t4e1.src = "http";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e2() {
+  modal_t4e2.style.display = "flex";
+  iframe_t4e2.src = "http";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e3() {
+  modal_t4e3.style.display = "flex";
+  iframe_t4e3.src = "http";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e4() {
+  modal_t4e4.style.display = "flex";
+  iframe_t4e4.src = "http";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e5() {
+  modal_t4e5.style.display = "flex";
+  iframe_t4e5.src = "http";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e6() {
+  modal_t4e6.style.display = "flex";
+  iframe_t4e6.src = "http";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e7() {
+  modal_t4e7.style.display = "flex";
+  iframe_t4e7.src = "http";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e8() {
+  modal_t4e8.style.display = "flex";
+  iframe_t4e8.src = "http";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e9() {
+  modal_t4e9.style.display = "flex";
+  iframe_t4e9.src = "http";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e10() {
+  modal_t4e10.style.display = "flex";
+  iframe_t4e10.src = "http";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e11() {
+  modal_t4e11.style.display = "flex";
+  iframe_t4e11.src = "http";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e12() {
+  modal_t4e12.style.display = "flex";
+  iframe_t4e12.src = "http";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t4e13() {
+  modal_t4e13.style.display = "flex";
+  iframe_t4e13.src = "http";
+  body.style.overflow = "hidden";
+}
+
+
+
+/*close modal*/
+/*Season1*/
+function close_t1e1() {
+  modal_t1e1.style.display = "none";
+  iframe_t1e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e2() {
+  modal_t1e2.style.display = "none";
+  iframe_t1e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e3() {
+  modal_t1e3.style.display = "none";
+  iframe_t1e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e4() {
+  modal_t1e4.style.display = "none";
+  iframe_t1e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e5() {
+  modal_t1e5.style.display = "none";
+  iframe_t1e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e6() {
+  modal_t1e6.style.display = "none";
+  iframe_t1e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e7() {
+  modal_t1e7.style.display = "none";
+  iframe_t1e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e8() {
+  modal_t1e8.style.display = "none";
+  iframe_t1e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e9() {
+  modal_t1e9.style.display = "none";
+  iframe_t1e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e10() {
+  modal_t1e10.style.display = "none";
+  iframe_t1e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e11() {
+  modal_t1e11.style.display = "none";
+  iframe_t1e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e12() {
+  modal_t1e12.style.display = "none";
+  iframe_t1e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e13() {
+  modal_t1e13.style.display = "none";
+  iframe_t1e13.src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season2*/
+function close_t2e1() {
+  modal_t2e1.style.display = "none";
+  iframe_t2e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e2() {
+  modal_t2e2.style.display = "none";
+  iframe_t2e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e3() {
+  modal_t2e3.style.display = "none";
+  iframe_t2e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e4() {
+  modal_t2e4.style.display = "none";
+  iframe_t2e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e5() {
+  modal_t2e5.style.display = "none";
+  iframe_t2e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e6() {
+  modal_t2e6.style.display = "none";
+  iframe_t2e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e7() {
+  modal_t2e7.style.display = "none";
+  iframe_t2e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e8() {
+  modal_t2e8.style.display = "none";
+  iframe_t2e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e9() {
+  modal_t2e9.style.display = "none";
+  iframe_t2e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e10() {
+  modal_t2e10.style.display = "none";
+  iframe_t2e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e11() {
+  modal_t2e11.style.display = "none";
+  iframe_t2e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e12() {
+  modal_t2e12.style.display = "none";
+  iframe_t2e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e13() {
+  modal_t2e13.style.display = "none";
+  iframe_t2e13.src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season3*/
+function close_t3e1() {
+  modal_t3e1.style.display = "none";
+  iframe_t3e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e2() {
+  modal_t3e2.style.display = "none";
+  iframe_t3e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e3() {
+  modal_t3e3.style.display = "none";
+  iframe_t3e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e4() {
+  modal_t3e4.style.display = "none";
+  iframe_t3e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e5() {
+  modal_t3e5.style.display = "none";
+  iframe_t3e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e6() {
+  modal_t3e6.style.display = "none";
+  iframe_t3e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e7() {
+  modal_t3e7.style.display = "none";
+  iframe_t3e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e8() {
+  modal_t3e8.style.display = "none";
+  iframe_t3e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e9() {
+  modal_t3e9.style.display = "none";
+  iframe_t3e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e10() {
+  modal_t3e10.style.display = "none";
+  iframe_t3e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e11() {
+  modal_t3e11.style.display = "none";
+  iframe_t3e11.src = "";
+  body.style.overflow = "auto";
+}/*
+function close_t3e12() {
+  modal_t3e12.style.display = "none";
+  iframe_t3e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t3e13() {
+  modal_t3e13.style.display = "none";
+  iframe_t3e13.src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season4*//*
+function close_t4e1() {
+  modal_t4e1.style.display = "none";
+  iframe_t4e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e2() {
+  modal_t4e2.style.display = "none";
+  iframe_t4e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e3() {
+  modal_t4e3.style.display = "none";
+  iframe_t4e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e4() {
+  modal_t4e4.style.display = "none";
+  iframe_t4e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e5() {
+  modal_t4e5.style.display = "none";
+  iframe_t4e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e6() {
+  modal_t4e6.style.display = "none";
+  iframe_t4e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e7() {
+  modal_t4e7.style.display = "none";
+  iframe_t4e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e8() {
+  modal_t4e8.style.display = "none";
+  iframe_t4e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e9() {
+  modal_t4e9.style.display = "none";
+  iframe_t4e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e10() {
+  modal_t4e10.style.display = "none";
+  iframe_t4e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e11() {
+  modal_t4e11.style.display = "none";
+  iframe_t4e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e12() {
+  modal_t4e12.style.display = "none";
+  iframe_t4e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t4e13() {
+  modal_t4e13.style.display = "none";
+  iframe_t4e13.src = "";
+  body.style.overflow = "auto";
+}
+
+
+/*Season1*/
+document.getElementById("btn-t1e1").addEventListener("click", mostrar_modal_t1e1);
+document.getElementById("btn-t1e2").addEventListener("click", mostrar_modal_t1e2);
+document.getElementById("btn-t1e3").addEventListener("click", mostrar_modal_t1e3);
+document.getElementById("btn-t1e4").addEventListener("click", mostrar_modal_t1e4);
+document.getElementById("btn-t1e5").addEventListener("click", mostrar_modal_t1e5);
+document.getElementById("btn-t1e6").addEventListener("click", mostrar_modal_t1e6);
+document.getElementById("btn-t1e7").addEventListener("click", mostrar_modal_t1e7);
+document.getElementById("btn-t1e8").addEventListener("click", mostrar_modal_t1e8);
+document.getElementById("btn-t1e9").addEventListener("click", mostrar_modal_t1e9);
+document.getElementById("btn-t1e10").addEventListener("click", mostrar_modal_t1e10);
+document.getElementById("btn-t1e11").addEventListener("click", mostrar_modal_t1e11);
+document.getElementById("btn-t1e12").addEventListener("click", mostrar_modal_t1e12);
+document.getElementById("btn-t1e13").addEventListener("click", mostrar_modal_t1e13);
+
+
+/*Season2*/
+document.getElementById("btn-t2e1").addEventListener("click", mostrar_modal_t2e1);
+document.getElementById("btn-t2e2").addEventListener("click", mostrar_modal_t2e2);
+document.getElementById("btn-t2e3").addEventListener("click", mostrar_modal_t2e3);
+document.getElementById("btn-t2e4").addEventListener("click", mostrar_modal_t2e4);
+document.getElementById("btn-t2e5").addEventListener("click", mostrar_modal_t2e5);
+document.getElementById("btn-t2e6").addEventListener("click", mostrar_modal_t2e6);
+document.getElementById("btn-t2e7").addEventListener("click", mostrar_modal_t2e7);
+document.getElementById("btn-t2e8").addEventListener("click", mostrar_modal_t2e8);
+document.getElementById("btn-t2e9").addEventListener("click", mostrar_modal_t2e9);
+document.getElementById("btn-t2e10").addEventListener("click", mostrar_modal_t2e10);
+document.getElementById("btn-t2e11").addEventListener("click", mostrar_modal_t2e11);
+document.getElementById("btn-t2e12").addEventListener("click", mostrar_modal_t2e12);
+document.getElementById("btn-t2e13").addEventListener("click", mostrar_modal_t2e13);
+
+
+/*Season3*/
+document.getElementById("btn-t3e1").addEventListener("click", mostrar_modal_t3e1);
+document.getElementById("btn-t3e2").addEventListener("click", mostrar_modal_t3e2);
+document.getElementById("btn-t3e3").addEventListener("click", mostrar_modal_t3e3);
+document.getElementById("btn-t3e4").addEventListener("click", mostrar_modal_t3e4);
+document.getElementById("btn-t3e5").addEventListener("click", mostrar_modal_t3e5);
+document.getElementById("btn-t3e6").addEventListener("click", mostrar_modal_t3e6);
+document.getElementById("btn-t3e7").addEventListener("click", mostrar_modal_t3e7);
+document.getElementById("btn-t3e8").addEventListener("click", mostrar_modal_t3e8);
+document.getElementById("btn-t3e9").addEventListener("click", mostrar_modal_t3e9);
+document.getElementById("btn-t3e10").addEventListener("click", mostrar_modal_t3e10);
+document.getElementById("btn-t3e11").addEventListener("click", mostrar_modal_t3e11);/*
+document.getElementById("btn-t3e12").addEventListener("click", mostrar_modal_t3e12);
+document.getElementById("btn-t3e13").addEventListener("click", mostrar_modal_t3e13);
+
+
+/*Season4*//*
+document.getElementById("btn-t4e1").addEventListener("click", mostrar_modal_t4e1);
+document.getElementById("btn-t4e2").addEventListener("click", mostrar_modal_t4e2);
+document.getElementById("btn-t4e3").addEventListener("click", mostrar_modal_t4e3);
+document.getElementById("btn-t4e4").addEventListener("click", mostrar_modal_t4e4);
+document.getElementById("btn-t4e5").addEventListener("click", mostrar_modal_t4e5);
+document.getElementById("btn-t4e6").addEventListener("click", mostrar_modal_t4e6);
+document.getElementById("btn-t4e7").addEventListener("click", mostrar_modal_t4e7);
+document.getElementById("btn-t4e8").addEventListener("click", mostrar_modal_t4e8);
+document.getElementById("btn-t4e9").addEventListener("click", mostrar_modal_t4e9);
+document.getElementById("btn-t4e10").addEventListener("click", mostrar_modal_t4e10);
+document.getElementById("btn-t4e11").addEventListener("click", mostrar_modal_t4e11);
+document.getElementById("btn-t4e12").addEventListener("click", mostrar_modal_t4e12);
+document.getElementById("btn-t4e13").addEventListener("click", mostrar_modal_t4e13);
+
+
+/*Season1*/
+document.getElementById("close-t1e1").addEventListener("click", close_t1e1);
+document.getElementById("close-t1e2").addEventListener("click", close_t1e2);
+document.getElementById("close-t1e3").addEventListener("click", close_t1e3);
+document.getElementById("close-t1e4").addEventListener("click", close_t1e4);
+document.getElementById("close-t1e5").addEventListener("click", close_t1e5);
+document.getElementById("close-t1e6").addEventListener("click", close_t1e6);
+document.getElementById("close-t1e7").addEventListener("click", close_t1e7);
+document.getElementById("close-t1e8").addEventListener("click", close_t1e8);
+document.getElementById("close-t1e9").addEventListener("click", close_t1e9);
+document.getElementById("close-t1e10").addEventListener("click", close_t1e10);
+document.getElementById("close-t1e11").addEventListener("click", close_t1e11);
+document.getElementById("close-t1e12").addEventListener("click", close_t1e12);
+document.getElementById("close-t1e13").addEventListener("click", close_t1e13);
+
+/*Season2*/
+document.getElementById("close-t2e1").addEventListener("click", close_t2e1);
+document.getElementById("close-t2e2").addEventListener("click", close_t2e2);
+document.getElementById("close-t2e3").addEventListener("click", close_t2e3);
+document.getElementById("close-t2e4").addEventListener("click", close_t2e4);
+document.getElementById("close-t2e5").addEventListener("click", close_t2e5);
+document.getElementById("close-t2e6").addEventListener("click", close_t2e6);
+document.getElementById("close-t2e7").addEventListener("click", close_t2e7);
+document.getElementById("close-t2e8").addEventListener("click", close_t2e8);
+document.getElementById("close-t2e9").addEventListener("click", close_t2e9);
+document.getElementById("close-t2e10").addEventListener("click", close_t2e10);
+document.getElementById("close-t2e11").addEventListener("click", close_t2e11);
+document.getElementById("close-t2e12").addEventListener("click", close_t2e12);
+document.getElementById("close-t2e13").addEventListener("click", close_t2e13);
+
+/*Season3*/
+document.getElementById("close-t3e1").addEventListener("click", close_t3e1);
+document.getElementById("close-t3e2").addEventListener("click", close_t3e2);
+document.getElementById("close-t3e3").addEventListener("click", close_t3e3);
+document.getElementById("close-t3e4").addEventListener("click", close_t3e4);
+document.getElementById("close-t3e5").addEventListener("click", close_t3e5);
+document.getElementById("close-t3e6").addEventListener("click", close_t3e6);
+document.getElementById("close-t3e7").addEventListener("click", close_t3e7);
+document.getElementById("close-t3e8").addEventListener("click", close_t3e8);
+document.getElementById("close-t3e9").addEventListener("click", close_t3e9);
+document.getElementById("close-t3e10").addEventListener("click", close_t3e10);
+document.getElementById("close-t3e11").addEventListener("click", close_t3e11);/*
+document.getElementById("close-t3e12").addEventListener("click", close_t3e12);
+document.getElementById("close-t3e13").addEventListener("click", close_t3e13);
+
+/*Season4*//*
+document.getElementById("close-t4e1").addEventListener("click", close_t4e1);
+document.getElementById("close-t4e2").addEventListener("click", close_t4e2);
+document.getElementById("close-t4e3").addEventListener("click", close_t4e3);
+document.getElementById("close-t4e4").addEventListener("click", close_t4e4);
+document.getElementById("close-t4e5").addEventListener("click", close_t4e5);
+document.getElementById("close-t4e6").addEventListener("click", close_t4e6);
+document.getElementById("close-t4e7").addEventListener("click", close_t4e7);
+document.getElementById("close-t4e8").addEventListener("click", close_t4e8);
+document.getElementById("close-t4e9").addEventListener("click", close_t4e9);
+document.getElementById("close-t4e10").addEventListener("click", close_t4e10);
+document.getElementById("close-t4e11").addEventListener("click", close_t4e11);
+document.getElementById("close-t4e12").addEventListener("click", close_t4e12);
+document.getElementById("close-t4e13").addEventListener("click", close_t4e13);
+
+
+/*Seasons*/
+document.getElementById('btn_season1').addEventListener('click', showSeason1);
+document.getElementById('btn_season2').addEventListener('click', showSeason2);
+document.getElementById('btn_season3').addEventListener('click', showSeason3);/*
+document.getElementById('btn_season4').addEventListener('click', showSeason4);*/
+
+function showSeason1() {
+  season1.style.display = "block";
+  season2.style.display = "none";
+  season3.style.display = "none";/*
+  season4.style.display = "none";*/
+}
+
+function showSeason2() {
+  season1.style.display = "none";
+  season2.style.display = "block";
+  season3.style.display = "none";/*
+  season4.style.display = "none";*/
+}
+
+function showSeason3() {
+  season1.style.display = "none";
+  season2.style.display = "none";
+  season3.style.display = "block";/*
+  season4.style.display = "none";*/
+}
+/*
+function showSeason4() {
+  season1.style.display = "none";
+  season2.style.display = "none";
+  season3.style.display = "none";
+  season4.style.display = "block";
+}
+*/
+	  
+	</script>
+</body>
+</html>
