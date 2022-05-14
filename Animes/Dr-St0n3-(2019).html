@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Series</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	
+	<style type="text/css">
+	  
+	  @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: #090909;
+	font-family: 'Open Sans', sans-serif;
+}
+
+a {
+	text-decoration: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.contenedor {
+	width: 90%;
+	max-width: 1000px;
+	margin: auto;
+	padding: 10px 0;
+}
+
+.selectbox {
+	width: 50%;
+	margin: auto;
+	position: relative;
+}
+
+.select {
+	background: #222;
+	width: 100%;
+	border-radius: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 5px;
+	padding: 10px 0 10px 10px;
+	position: relative;
+}
+
+.select i {
+	font-size: 23px;
+	margin-right: 13px;
+	color: #ddd;
+}
+
+.titulo {
+	margin-bottom: 10px;
+	color: #ddd;
+	font-weight: 600;
+	font-size: 16px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.descripcion {
+	font-size: 14px;
+	color: #ddd;
+}
+
+.opciones {
+	background: #191919;
+	border-radius: 10px;
+	overflow: auto;
+	width: 100%;
+	display: none;
+}
+
+.opciones.active {
+	display: block;
+	animation: fadeIn .3s forwards;
+}
+
+@keyframes fadeIn {
+	from {
+		transform: translateY(-100px) scale(.5);
+	}
+	to {
+		transform: translateY(0) scale(1);
+	}
+}
+
+.textos {
+  width: 100%;
+}
+
+.contenido-opcion {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	transition: .2s ease all;
+}
+
+.opciones .contenido-opcion {
+	padding: 9px;
+}
+
+.opciones .contenido-opcion:hover {
+  background: #101010;
+}
+
+.sinopsis {
+  padding: 0 15px;
+  color: #eee;
+  font-size: 13px;
+  text-align: justify;
+  margin-bottom: 10px;
+}
+
+/*Chapters*/
+
+.episodes {
+	overflow: auto;
+	z-index: 100;
+	width: 100%;
+	display: block;
+}
+
+.episodes .contenido-opcion {
+	background: #090909;
+	padding: 0 10px 14px 10px;
+}
+
+.episodes .contenido-opcion:hover {
+  background: #000;
+}
+
+.contenido-opcion img {
+	width: auto;
+	height: 50px;
+	margin-right: 20px;
+	border-radius: 2px;
+}
+
+/*Responsive*/
+
+@media screen and (max-width: 800px){
+	.selectbox {
+		width: 100%;
+	}
+}
+
+
+
+
+
+
+/*Cards*/
+.card {
+	width: 100%;
+	height: 100vh;
+	max-width: 1100px;
+	position: fixed;
+  font-family: 'Montserrat', sans-serif;
+  top: 50%;
+  transform: translateY(-50%);
+	background: rgba(2, 2, 2, .7);
+	display: none;
+}
+
+.contenedor-card {
+  width: 95%;
+  position: fixed;
+  background: #111;
+  border-radius: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+
+.card .contenido-card h4 {
+  text-align: center;
+	margin-bottom: 10px;
+	color: #ddd;
+}
+
+.card .contenido-card p {
+  padding: 0 10px 10px ;
+	line-height: 1.5;
+	color: #ddd;
+	font-size: 14px;
+	margin-bottom: 5px;
+	text-align: justify;
+}
+
+iframe {
+  border-radius: 7px 7px 0 0;
+}
+
+.close {
+  font-size: 50px;
+  color: #fff;
+  position: absolute;
+  display: flex;
+  top: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.season2 {
+  display: none;
+}
+	  
+	</style>
+</head>
+<body id="body">
+	
+	<div class="contenedor">
+		<form action="">
+			<div class="selectbox">
+				<div class="select" id="select">
+					<div class="contenido-select">
+						<h1 class="titulo">Temporada 1</h1>
+					</div>
+					<i class="bi bi-chevron-down"></i>
+				</div>
+
+				<div class="opciones" id="opciones">
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season1">Temporada 1</h1>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="opcion">
+						<div class="contenido-opcion">
+							<div class="textos">
+								<h1 class="titulo" id="btn_season2">Temporada 2</h1>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<input type="hidden" id="inputSelect" value="">
+		</form>
+
+	</div>
+	
+	<!--Sinopsis-->
+	
+	<div class="sinopsis">
+	  <p>Tres milenios después de que un fenómeno misterioso convirtió a cada persona en la Tierra en piedra, dos buenos amigos, un genio de la ciencia y un hombre fuerte y apasionado, descubren una forma de revertir los efectos y reconstruir la civilización.</p>
+	</div>
+	
+	
+<!--Season1-->
+	
+	<div class="episodes" id="season1">
+					<a class="opcion" id="btn-t1e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/jNdIdz4cKsAvxJRh0QWocGaKN66.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Mundo de piedra</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/l7BW5GPY9EcnoxBZKHXWZfEKeOA.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Rey del mundo de piedra</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/n5lpLE1e4njZIn0d6jmb55OWwKH.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Armas de la ciencia</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/30pMZkqgpxvpxysB1nlOuKWWTgA.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Dispara la señal de humo</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/mM4UPEQJhUcFp3oTAYgQW90nQDz.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. El principio del mundo de piedra</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/71MPjVE59eUssTmByfFBYC5p8ad.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Dos países del mundo de piedra</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/w3Ybj8vPIEViNhvCjqmyGCj67ZT.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. El paradero de dos millones de años</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/vgeIE6xvK8wTDH345bBsz6eMIOO.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Camino de piedra</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/kVRz1t86UbFH6ILg9Lw9z1sqxL1.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. Que se haga la luz de la ciencia</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/sxqp8JCFDumCKbyQvX9hgGHqxsN.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. Una tenue alianza</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/bTpVChtIatCqNywNRdKMo1q612Z.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Mundo claro</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e12">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/yRZzEHHNfA9ZrxzgcxD0TS6ANJ6.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">12. Compañeros espalda con espalda</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e13">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/9gbwAqikwaXPcOUoe9Xbr4WjlJE.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">13. Guerrero enmascarado</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e14">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/vy91htvswf4IBaq9avUUvWeylY.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">14. Amo de la llama</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e15">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/n0S6WOWGXkpbph1wHWhWgd85ppW.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">15. La culminación de 2 millones de años</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e16">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/28Yz2QuiXD0Y9QmwnumXx82Xa2t.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">16. Una historia para la eternidad</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e17">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/qBxFPTtuh1jIBR9SXHuKeA4Lgxq.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">17. Cien noches y mil cielos</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e18">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/Ag27Brb9kGewPCdCeoNg4ylvIrx.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">18. Guerra de piedra</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e19">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/flqqYvXMcs7XW4NlJS4IedtaFfY.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">19. A la modernidad</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e20">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/r4CvVy6gVY7WBPbZic2IPrV8Wcs.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">20. La era de la energía</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e21">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/vKq2lSipWkHjwz6dtzAKIiZYTya.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">21. Club de manualidades pesadas</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e22">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/lodKfsJHpLNcIqqQHUrZ3imWOcj.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">22. El tesoro</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e23">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/fmsDl2bBSCy6g2WyQ6ecTjkIeOY.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">23. Ola de ciencia</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t1e24">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/mJC54TEmf2Sug3DLZT9fhqiGuxW.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">24. Oído a distancias infinitas</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+
+<!--Season2-->
+			
+	<div class="episodes season2" id="season2">
+					<a class="opcion" id="btn-t2e1">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/sKntVGbnQi3y4fAcyol0kDWOZSY.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">1. Comienzo de las guerras de Stone</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e2">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/kyRkW4ICLl1AZwvWk5lo9IAJwQj.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">2. Línea directa</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e3">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/fOM5gNKdSaFAOtetiZpUUP2ZZaW.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">3. Llamada de los muertos</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e4">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/26zuzVKclWR2LkQv8tpgmd5GlW6.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">4. Asalto completo</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e5">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/cQmIPzJqMyW3rcRmS0PfSAEHa9o.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">5. Gorila de vapor</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e6">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/2NWNAlp66FFJbCSjm1lN6V8dWlH.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">6. Fuga de la prisión</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e7">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/ya4F23qqeuALVhhSymEhmYH5Q7u.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">7. Misión secreta</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e8">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/oZusPVxwvyvnbwfPXQAlWUox8OB.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">8. Batalla final</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e9">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/i7xQPbGUTRV8lb7YF1Rta4cJmAa.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">9. Destruir y Salvar</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e10">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/mhN6xOV85cDaCA6cqGIUxvh1nCR.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">10. El equipo de etiqueta más fuerte de la humanidad</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+					<a class="opcion" id="btn-t2e11">
+						<div class="contenido-opcion">
+							<img src="https://www.themoviedb.org/t/p/w640_and_h360_bestv2/tutjWPr1ZBzfBOr3XTv79q8EPmx.jpg" alt="">
+							<div class="textos">
+								<h1 class="titulo">11. Prólogo del Dr. Stone</h1>
+								<p class="descripcion">24min</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div> 
+	
+
+
+
+
+
+
+	<!--Season1-->
+<div class="card" id="modal_t1e1">
+  
+<div class="close" id="close-t1e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Mundo de piedra</h4>
+		<p>La humanidad un día sufrió un golpe devastador: de pronto, todos los seres vivos del planeta se convirtieron en piedra. Milenios después, dos jóvenes que se convirtieron en piedra han conseguido "revivir".</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e2">
+  
+<div class="close" id="close-t1e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Rey del mundo de piedra</h4>
+		<p>Ahora que Taiju y Senku están juntos, su misión será salvar el mundo y devolverlo a la normalidad. Para ello, tendrán que empezar por revivir a más gente que los ayude en su tarea.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e3">
+  
+<div class="close" id="close-t1e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Armas de la ciencia</h4>
+		<p>Senku no se fía en absoluto de la motivación de Shishio, así que intentará ocultarle sus planes a un nuevo e imprevisto enemigo para su plan de revivir a la civilización.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e4">
+  
+<div class="close" id="close-t1e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Dispara la señal de humo</h4>
+		<p>Senku tiene la idea de crear pólvora para tener un modo de equilibrar la balanza y tener una oportunidad de derrotar a Shishio.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e5">
+  
+<div class="close" id="close-t1e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. El principio del mundo de piedra</h4>
+		<p>Shishio está decidido a acabar con la vida de Senku si no le promete en ese mismo instante que abandonará su idea de recuperar la civilización tal y como estaba antes del incidente.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e6">
+  
+<div class="close" id="close-t1e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Dos países del mundo de piedra</h4>
+		<p>Parece que hay gente viva en este mundo de piedra aparte de nuestros protagonistas, así que Senku tendrá que hacer lo que sea para ponerlos de su lado contra Shishio.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e7">
+  
+<div class="close" id="close-t1e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. El paradero de dos millones de años</h4>
+		<p>Senku conoce a Kohaku casi por casualidad, quien lo llevará a su aldea. Una vez allí conocerá al hechicero de la aldea, Chrome, a quien le hablará sobre la ciencia y el pasado de la humanidad.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e8">
+  
+<div class="close" id="close-t1e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Camino de piedra</h4>
+		<p>Senku intentará ganarse a la gente de la aldea con el poder de la ciencia, pero antes de eso deberá conseguir algún logro que esa gente pueda considerar como algo positivo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e9">
+  
+<div class="close" id="close-t1e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. Que se haga la luz de la ciencia</h4>
+		<p>Senku trabaja duro para conseguir mano de obra y así estar un paso más cerca de construir su reino de ciencia. Mientras tanto, aparece en la aldea un misterioso personaje.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e10">
+  
+<div class="close" id="close-t1e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. Una tenue alianza</h4>
+		<p>Parece que poco a poco Gen se va afianzando en el grupo de Senku y compañía, pero la sospecha de que pueda estar aliado con Shishio siempre está presente.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e11">
+  
+<div class="close" id="close-t1e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Mundo claro</h4>
+		<p>Suika nunca quiere mostrar su cara por algún motivo que solo unos pocos conocen. Por fortuna, Senku conoce la solución para su molesto problema.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e12">
+  
+<div class="close" id="close-t1e12"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e12" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>12. Compañeros espalda con espalda</h4>
+		<p>Cada vez están más cerca de conseguir la medicina que salvará a Ruri, pero esta vez tendrán que enfrentarse a un adversario terrible que hará que todos sientan auténtico terror.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e13">
+  
+<div class="close" id="close-t1e13"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e13" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>13. Guerrero enmascarado</h4>
+		<p>Va a comenzar ya la Gran Batalla. Todos están preparados para conseguir alzarse con la victoria y frenar a Magma, pero el orden en el sorteo no ha sido el más adecuado.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e14">
+  
+<div class="close" id="close-t1e14"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e14" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>14. Amo de la llama</h4>
+		<p>Gracias al poder de la ciencia, Kinro es capaz de luchar al mismo nivel que Magma, pero este último cree que puede estar incumpliendo las reglas.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e15">
+  
+<div class="close" id="close-t1e15"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e15" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>15. La culminación de 2 millones de años</h4>
+		<p>La Gran Batalla sigue adelante, pero ya sin Magma, que ha perdido contra Chrome. Ahora solo resta terminar la competencia por ver quién se casará con Ruri y terminar la medicina.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e16">
+  
+<div class="close" id="close-t1e16"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e16" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>16. Una historia para la eternidad</h4>
+		<p>La historia hace una pequeña pausa para centrarse en la historia de Byakuya, el padre de Senku. Dicha historia tiene lugar un poco antes de que la gente de la Tierra quedara petrificada.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e17">
+  
+<div class="close" id="close-t1e17"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e17" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>17. Cien noches y mil cielos</h4>
+		<p>La tripulación ve desde el espacio cómo la Tierra se queda petrificada, así que decide bajar para tratar de encontrar una causa y una solución.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e18">
+  
+<div class="close" id="close-t1e18"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e18" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>18. Guerra de piedra</h4>
+		<p>Parecía que la situación en la aldea se había calmado, pero Gen regresa para avisar a Senku y los demás acerca de una amenaza inminente: Tsukasa.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e19">
+  
+<div class="close" id="close-t1e19"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e19" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>19. A la modernidad</h4>
+		<p>El asedio a la aldea por parte de los seguidores de Tsukasa es violento y peligroso, pero parece que no tenían en cuenta el conocimiento científico.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e20">
+  
+<div class="close" id="close-t1e20"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e20" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>20. La era de la energía</h4>
+		<p>Senku tiene una idea que puede parecer disparatada: crear celulares. Para ello necesitará cumplir numerosos pasos, cada cual más complejo.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e21">
+  
+<div class="close" id="close-t1e21"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e21" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>21. Club de manualidades pesadas</h4>
+		<p>La creación de Chrome y Kaseki da un paso de gigante para la creación de los celulares, pero todavía queda mucho camino por recorrer.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e22">
+  
+<div class="close" id="close-t1e22"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e22" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>22. El tesoro</h4>
+		<p>Senku, Chrome y Magma irán hasta la cueva donde se encuentra una importante roca para uno de los experimentos de Senku. Allí comprobarán si tomaron la decisión correcta al pedirles a Magma que los acompañara.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e23">
+  
+<div class="close" id="close-t1e23"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e23" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>23. Ola de ciencia</h4>
+		<p>La creación del celular está cada vez más cerca, pero para ello Senku necesitará la ayuda de toda la aldea en la construcción de los materiales necesarios.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t1e24">
+  
+<div class="close" id="close-t1e24"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t1e24" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>24. Oído a distancias infinitas</h4>
+		<p>Ahora que tienen el primer celular completo, llega el momento de seguir preparando todo para su batalla contra el imperio de Tsukasa, pero ¿qué acaba de decir Ruri? ¿Su padre dejó algo más?</p>
+	</div>
+	</div>
+</div>
+
+
+
+
+<!--Season2-->
+<div class="card" id="modal_t2e1">
+  
+<div class="close" id="close-t2e1"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e1" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>1. Comienzo de las guerras de Stone</h4>
+		<p>Senku continúa tratando de hacer avanzar el Mundo de Piedra, esta vez hace "comida espacial", en realidad son fideos en taza. Después de que Senku termina su proyecto, Gen tiene una epifanía y diseña un plan para acabar con el ejército de Tsukasa sin violencia.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e2">
+  
+<div class="close" id="close-t2e2"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e2" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>2. Línea directa</h4>
+		<p>Si bien la distracción de Senku le da tiempo a Gen y a otros, pronto Homura se da cuenta de que algo no está bien.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e3">
+  
+<div class="close" id="close-t2e3"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e3" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>3. Llamada de los muertos</h4>
+		<p>Taiju y Yuzuriha están al borde de las lágrimas después de escuchar la voz de Senku, y Senku les informa de su plan para ganar la guerra sin derramamiento de sangre.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e4">
+  
+<div class="close" id="close-t2e4"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e4" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>4. Asalto completo</h4>
+		<p>Chrome y Magma luchan con Ukyo, mientras que Senku se ocupa de construir un invento; una nueva esperanza.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e5">
+  
+<div class="close" id="close-t2e5"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e5" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>5. Gorila de vapor</h4>
+		<p>Se hacen los toques finales al automóvil y se usa para transportar los suministros científicos a un acantilado fortificado que está cerca del imperio Tsukasa.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e6">
+  
+<div class="close" id="close-t2e6"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e6" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>6. Fuga de la prisión</h4>
+		<p>Chrome debe usar todo su conocimiento científico para escapar de su prisión y salvar a Senku y a los demás.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e7">
+  
+<div class="close" id="close-t2e7"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e7" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>7. Misión secreta</h4>
+		<p>Senku decide usar Steam-Gorilla para capturar The Miracle Cave. Usando la grabación de Lillian, Senku se gana la confianza de más hombres de Tsukasa.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e8">
+  
+<div class="close" id="close-t2e8"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e8" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>8. Batalla final</h4>
+		<p>La batalla final por la cueva milagrosa comienza cuando Senku y el Reino de la Ciencia realizan un asalto frontal a la cueva.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e9">
+  
+<div class="close" id="close-t2e9"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e9" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>9. Destruir y Salvar</h4>
+		<p>Tsukasa y Hyogo aparecen para intentar frenar a Senku y compañía. Y si eso fuera poco, Tsukasa destruye todo su arsenal científico.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e10">
+  
+<div class="close" id="close-t2e10"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e10" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>10. El equipo de etiqueta más fuerte de la humanidad</h4>
+		<p>¿Se puede conseguir la paz entre Tsukasa y Senku? Senku lo apuesta todo por tratar de salvar a la hermana de Tsukasa y así conseguir la anhelada paz.</p>
+	</div>
+	</div>
+</div>
+
+<div class="card" id="modal_t2e11">
+  
+<div class="close" id="close-t2e11"><i class="bi bi-x"></i></div>
+
+<div class="contenedor-card">
+
+	<figure>
+    <iframe allowfullscreen="" frameborder="0" height="210px" id="iframe_t2e11" onload="$('.iframe-loading').css('background-image', 'none');" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+	</figure>
+	<div class="contenido-card">
+		<h4>11. Prólogo del Dr. Stone</h4>
+		<p>El Reino de la Ciencia es victorioso, sin embargo, no ha terminado para Senku. Senku debe usar todo su conocimiento para curar a Tsukasa, quien está gravemente herido.</p>
+	</div>
+	</div>
+</div>
+
+
+	<script>
+	  
+//select
+const select = document.querySelector('#select');
+const opciones = document.querySelector('#opciones');
+const contenidoSelect = document.querySelector('#select .contenido-select');
+const hiddenInput = document.querySelector('#inputSelect');
+
+document.querySelectorAll('#opciones > .opcion').forEach((opcion) => {
+	opcion.addEventListener('click', (e) => {
+		e.preventDefault();
+		contenidoSelect.innerHTML = e.currentTarget.innerHTML;
+		select.classList.toggle('active');
+		opciones.classList.toggle('active');
+		hiddenInput.value = e.currentTarget.querySelector('.titulo').innerText;
+	});
+});
+
+select.addEventListener('click', () => {
+	select.classList.toggle('active');
+	opciones.classList.toggle('active');
+});
+
+
+
+
+
+
+/*open modal*/
+/*Season1*/
+function mostrar_modal_t1e1() {
+  modal_t1e1.style.display = "flex";
+  iframe_t1e1.src = "https://uqload.com/embed-luygxm33di90.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e2() {
+  modal_t1e2.style.display = "flex";
+  iframe_t1e2.src = "https://uqload.com/embed-uqp0p4ngbpom.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e3() {
+  modal_t1e3.style.display = "flex";
+  iframe_t1e3.src = "https://uqload.com/embed-nkat02jw987f.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e4() {
+  modal_t1e4.style.display = "flex";
+  iframe_t1e4.src = "https://uqload.com/embed-wdk55x0mabaa.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e5() {
+  modal_t1e5.style.display = "flex";
+  iframe_t1e5.src = "https://uqload.com/embed-lzllhjzrdo5q.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e6() {
+  modal_t1e6.style.display = "flex";
+  iframe_t1e6.src = "https://uqload.com/embed-qcqjjfkrx5vl.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e7() {
+  modal_t1e7.style.display = "flex";
+  iframe_t1e7.src = "https://uqload.com/embed-dvyfmqzjfqr2.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e8() {
+  modal_t1e8.style.display = "flex";
+  iframe_t1e8.src = "https://uqload.com/embed-6oyd4on9rb82.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e9() {
+  modal_t1e9.style.display = "flex";
+  iframe_t1e9.src = "https://uqload.com/embed-5v6dcv8m0sa1.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e10() {
+  modal_t1e10.style.display = "flex";
+  iframe_t1e10.src = "https://uqload.com/embed-8zcchsmyw7fz.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e11() {
+  modal_t1e11.style.display = "flex";
+  iframe_t1e11.src = "https://uqload.com/embed-9xq4uavp7yg4.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e12() {
+  modal_t1e12.style.display = "flex";
+  iframe_t1e12.src = "https://uqload.com/embed-dl7hnkunapap.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e13() {
+  modal_t1e13.style.display = "flex";
+  iframe_t1e13.src = "https://uqload.com/embed-u361fxvsn3o4.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e14() {
+  modal_t1e14.style.display = "flex";
+  iframe_t1e14.src = "https://uqload.com/embed-nie45sdjx8f1.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e15() {
+  modal_t1e15.style.display = "flex";
+  iframe_t1e15.src = "https://uqload.com/embed-0bkw71mr298w.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e16() {
+  modal_t1e16.style.display = "flex";
+  iframe_t1e16.src = "https://uqload.com/embed-56liafdol7h3.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e17() {
+  modal_t1e17.style.display = "flex";
+  iframe_t1e17.src = "https://uqload.com/embed-eg7br6cyrs8w.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e18() {
+  modal_t1e18.style.display = "flex";
+  iframe_t1e18.src = "https://uqload.com/embed-8zrf8flm8sg3.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e19() {
+  modal_t1e19.style.display = "flex";
+  iframe_t1e19.src = "https://uqload.com/embed-kpdu72w08nic.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e20() {
+  modal_t1e20.style.display = "flex";
+  iframe_t1e20.src = "https://uqload.com/embed-muahj00e85q0.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e21() {
+  modal_t1e21.style.display = "flex";
+  iframe_t1e21.src = "https://uqload.com/embed-wx06zrrli3nk.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e22() {
+  modal_t1e22.style.display = "flex";
+  iframe_t1e22.src = "https://uqload.com/embed-wxxknhal8u4j.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e23() {
+  modal_t1e23.style.display = "flex";
+  iframe_t1e23.src = "https://uqload.com/embed-yus6bdqd9ulv.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t1e24() {
+  modal_t1e24.style.display = "flex";
+  iframe_t1e24.src = "https://uqload.com/embed-rhkfg0tsu8te.html";
+  body.style.overflow = "hidden";
+}
+
+
+/*Season2*/
+function mostrar_modal_t2e1() {
+  modal_t2e1.style.display = "flex";
+  iframe_t2e1.src = "https://uqload.com/embed-l7d3o5ai7to5.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e2() {
+  modal_t2e2.style.display = "flex";
+  iframe_t2e2.src = "https://uqload.com/embed-16amfuw9fp7a.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e3() {
+  modal_t2e3.style.display = "flex";
+  iframe_t2e3.src = "https://uqload.com/embed-eqvmok0ijqqo.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e4() {
+  modal_t2e4.style.display = "flex";
+  iframe_t2e4.src = "https://uqload.com/embed-p4dj4zydvf57.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e5() {
+  modal_t2e5.style.display = "flex";
+  iframe_t2e5.src = "https://uqload.com/embed-qjdi1fw9ch6h.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e6() {
+  modal_t2e6.style.display = "flex";
+  iframe_t2e6.src = "https://uqload.com/embed-hnmh7qmxcmbt.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e7() {
+  modal_t2e7.style.display = "flex";
+  iframe_t2e7.src = "https://uqload.com/embed-eyzypzcvbo9k.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e8() {
+  modal_t2e8.style.display = "flex";
+  iframe_t2e8.src = "https://uqload.com/embed-0v39t3s7szwu.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e9() {
+  modal_t2e9.style.display = "flex";
+  iframe_t2e9.src = "https://uqload.com/embed-388n6gfkx0nn.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e10() {
+  modal_t2e10.style.display = "flex";
+  iframe_t2e10.src = "https://uqload.com/embed-qrhbxma2hbss.html";
+  body.style.overflow = "hidden";
+}
+function mostrar_modal_t2e11() {
+  modal_t2e11.style.display = "flex";
+  iframe_t2e11.src = "https://uqload.com/embed-oe9h2lmc7nnb.html";
+  body.style.overflow = "hidden";
+}
+
+
+
+/*close modal*/
+/*Season1*/
+function close_t1e1() {
+  modal_t1e1.style.display = "none";
+  iframe_t1e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e2() {
+  modal_t1e2.style.display = "none";
+  iframe_t1e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e3() {
+  modal_t1e3.style.display = "none";
+  iframe_t1e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e4() {
+  modal_t1e4.style.display = "none";
+  iframe_t1e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e5() {
+  modal_t1e5.style.display = "none";
+  iframe_t1e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e6() {
+  modal_t1e6.style.display = "none";
+  iframe_t1e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e7() {
+  modal_t1e7.style.display = "none";
+  iframe_t1e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e8() {
+  modal_t1e8.style.display = "none";
+  iframe_t1e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e9() {
+  modal_t1e9.style.display = "none";
+  iframe_t1e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e10() {
+  modal_t1e10.style.display = "none";
+  iframe_t1e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e11() {
+  modal_t1e11.style.display = "none";
+  iframe_t1e11.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e12() {
+  modal_t1e12.style.display = "none";
+  iframe_t1e12.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e13() {
+  modal_t1e13.style.display = "none";
+  iframe_t1e13.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e14() {
+  modal_t1e14.style.display = "none";
+  iframe_t1e14.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e15() {
+  modal_t1e15.style.display = "none";
+  iframe_t1e15.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e16() {
+  modal_t1e16.style.display = "none";
+  iframe_t1e16.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e17() {
+  modal_t1e17.style.display = "none";
+  iframe_t1e17.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e18() {
+  modal_t1e18.style.display = "none";
+  iframe_t1e18.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e19() {
+  modal_t1e19.style.display = "none";
+  iframe_t1e19.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e20() {
+  modal_t1e20.style.display = "none";
+  iframe_t1e20.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e21() {
+  modal_t1e21.style.display = "none";
+  iframe_t1e21.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e22() {
+  modal_t1e22.style.display = "none";
+  iframe_t1e22.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e23() {
+  modal_t1e23.style.display = "none";
+  iframe_t1e23.src = "";
+  body.style.overflow = "auto";
+}
+function close_t1e24() {
+  modal_t1e24.style.display = "none";
+  iframe_t1e24.src = "";
+  body.style.overflow = "auto";
+}
+
+
+
+/*Season2*/
+function close_t2e1() {
+  modal_t2e1.style.display = "none";
+  iframe_t2e1.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e2() {
+  modal_t2e2.style.display = "none";
+  iframe_t2e2.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e3() {
+  modal_t2e3.style.display = "none";
+  iframe_t2e3.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e4() {
+  modal_t2e4.style.display = "none";
+  iframe_t2e4.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e5() {
+  modal_t2e5.style.display = "none";
+  iframe_t2e5.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e6() {
+  modal_t2e6.style.display = "none";
+  iframe_t2e6.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e7() {
+  modal_t2e7.style.display = "none";
+  iframe_t2e7.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e8() {
+  modal_t2e8.style.display = "none";
+  iframe_t2e8.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e9() {
+  modal_t2e9.style.display = "none";
+  iframe_t2e9.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e10() {
+  modal_t2e10.style.display = "none";
+  iframe_t2e10.src = "";
+  body.style.overflow = "auto";
+}
+function close_t2e11() {
+  modal_t2e11.style.display = "none";
+  iframe_t2e11.src = "";
+  body.style.overflow = "auto";
+}
+
+
+/*Season1*/
+document.getElementById("btn-t1e1").addEventListener("click", mostrar_modal_t1e1);
+document.getElementById("btn-t1e2").addEventListener("click", mostrar_modal_t1e2);
+document.getElementById("btn-t1e3").addEventListener("click", mostrar_modal_t1e3);
+document.getElementById("btn-t1e4").addEventListener("click", mostrar_modal_t1e4);
+document.getElementById("btn-t1e5").addEventListener("click", mostrar_modal_t1e5);
+document.getElementById("btn-t1e6").addEventListener("click", mostrar_modal_t1e6);
+document.getElementById("btn-t1e7").addEventListener("click", mostrar_modal_t1e7);
+document.getElementById("btn-t1e8").addEventListener("click", mostrar_modal_t1e8);
+document.getElementById("btn-t1e9").addEventListener("click", mostrar_modal_t1e9);
+document.getElementById("btn-t1e10").addEventListener("click", mostrar_modal_t1e10);
+document.getElementById("btn-t1e11").addEventListener("click", mostrar_modal_t1e11);
+document.getElementById("btn-t1e12").addEventListener("click", mostrar_modal_t1e12);
+document.getElementById("btn-t1e13").addEventListener("click", mostrar_modal_t1e13);
+document.getElementById("btn-t1e14").addEventListener("click", mostrar_modal_t1e14);
+document.getElementById("btn-t1e15").addEventListener("click", mostrar_modal_t1e15);
+document.getElementById("btn-t1e16").addEventListener("click", mostrar_modal_t1e16);
+document.getElementById("btn-t1e17").addEventListener("click", mostrar_modal_t1e17);
+document.getElementById("btn-t1e18").addEventListener("click", mostrar_modal_t1e18);
+document.getElementById("btn-t1e19").addEventListener("click", mostrar_modal_t1e19);
+document.getElementById("btn-t1e20").addEventListener("click", mostrar_modal_t1e20);
+document.getElementById("btn-t1e21").addEventListener("click", mostrar_modal_t1e21);
+document.getElementById("btn-t1e22").addEventListener("click", mostrar_modal_t1e22);
+document.getElementById("btn-t1e23").addEventListener("click", mostrar_modal_t1e23);
+document.getElementById("btn-t1e24").addEventListener("click", mostrar_modal_t1e24);
+
+
+/*Season2*/
+document.getElementById("btn-t2e1").addEventListener("click", mostrar_modal_t2e1);
+document.getElementById("btn-t2e2").addEventListener("click", mostrar_modal_t2e2);
+document.getElementById("btn-t2e3").addEventListener("click", mostrar_modal_t2e3);
+document.getElementById("btn-t2e4").addEventListener("click", mostrar_modal_t2e4);
+document.getElementById("btn-t2e5").addEventListener("click", mostrar_modal_t2e5);
+document.getElementById("btn-t2e6").addEventListener("click", mostrar_modal_t2e6);
+document.getElementById("btn-t2e7").addEventListener("click", mostrar_modal_t2e7);
+document.getElementById("btn-t2e8").addEventListener("click", mostrar_modal_t2e8);
+document.getElementById("btn-t2e9").addEventListener("click", mostrar_modal_t2e9);
+document.getElementById("btn-t2e10").addEventListener("click", mostrar_modal_t2e10);
+document.getElementById("btn-t2e11").addEventListener("click", mostrar_modal_t2e11);
+
+
+/*Season1*/
+document.getElementById("close-t1e1").addEventListener("click", close_t1e1);
+document.getElementById("close-t1e2").addEventListener("click", close_t1e2);
+document.getElementById("close-t1e3").addEventListener("click", close_t1e3);
+document.getElementById("close-t1e4").addEventListener("click", close_t1e4);
+document.getElementById("close-t1e5").addEventListener("click", close_t1e5);
+document.getElementById("close-t1e6").addEventListener("click", close_t1e6);
+document.getElementById("close-t1e7").addEventListener("click", close_t1e7);
+document.getElementById("close-t1e8").addEventListener("click", close_t1e8);
+document.getElementById("close-t1e9").addEventListener("click", close_t1e9);
+document.getElementById("close-t1e10").addEventListener("click", close_t1e10);
+document.getElementById("close-t1e11").addEventListener("click", close_t1e11);
+document.getElementById("close-t1e12").addEventListener("click", close_t1e12);
+document.getElementById("close-t1e13").addEventListener("click", close_t1e13);
+document.getElementById("close-t1e14").addEventListener("click", close_t1e14);
+document.getElementById("close-t1e15").addEventListener("click", close_t1e15);
+document.getElementById("close-t1e16").addEventListener("click", close_t1e16);
+document.getElementById("close-t1e17").addEventListener("click", close_t1e17);
+document.getElementById("close-t1e18").addEventListener("click", close_t1e18);
+document.getElementById("close-t1e19").addEventListener("click", close_t1e19);
+document.getElementById("close-t1e20").addEventListener("click", close_t1e20);
+document.getElementById("close-t1e21").addEventListener("click", close_t1e21);
+document.getElementById("close-t1e22").addEventListener("click", close_t1e22);
+document.getElementById("close-t1e23").addEventListener("click", close_t1e23);
+document.getElementById("close-t1e24").addEventListener("click", close_t1e24);
+
+/*Season2*/
+document.getElementById("close-t2e1").addEventListener("click", close_t2e1);
+document.getElementById("close-t2e2").addEventListener("click", close_t2e2);
+document.getElementById("close-t2e3").addEventListener("click", close_t2e3);
+document.getElementById("close-t2e4").addEventListener("click", close_t2e4);
+document.getElementById("close-t2e5").addEventListener("click", close_t2e5);
+document.getElementById("close-t2e6").addEventListener("click", close_t2e6);
+document.getElementById("close-t2e7").addEventListener("click", close_t2e7);
+document.getElementById("close-t2e8").addEventListener("click", close_t2e8);
+document.getElementById("close-t2e9").addEventListener("click", close_t2e9);
+document.getElementById("close-t2e10").addEventListener("click", close_t2e10);
+document.getElementById("close-t2e11").addEventListener("click", close_t2e11);
+
+
+/*Seasons*/
+document.getElementById('btn_season1').addEventListener('click', showSeason1);
+document.getElementById('btn_season2').addEventListener('click', showSeason2);
+
+function showSeason1() {
+  season1.style.display = "block";
+  season2.style.display = "none";
+}
+
+function showSeason2() {
+  season1.style.display = "none";
+  season2.style.display = "block";
+}
+
+	  
+	</script>
+</body>
+</html>
